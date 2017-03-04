@@ -4,6 +4,7 @@ class CreateCompositions < ActiveRecord::Migration[5.0]
       t.string :name
       t.text :notes
       t.references :map, null: false
+      t.references :user
       t.timestamps
     end
   end

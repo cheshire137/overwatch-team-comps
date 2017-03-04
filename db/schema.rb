@@ -16,9 +16,11 @@ ActiveRecord::Schema.define(version: 20170304172632) do
     t.string   "name"
     t.text     "notes"
     t.integer  "map_id",     null: false
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["map_id"], name: "index_compositions_on_map_id"
+    t.index ["user_id"], name: "index_compositions_on_user_id"
   end
 
   create_table "heroes", force: :cascade do |t|
