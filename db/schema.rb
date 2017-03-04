@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20170304164830) do
   create_table "compositions", force: :cascade do |t|
     t.string   "name"
     t.text     "notes"
-    t.string   "slug"
     t.integer  "map_id",     null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -23,15 +22,14 @@ ActiveRecord::Schema.define(version: 20170304164830) do
   end
 
   create_table "heroes", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "maps", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       null: false
     t.string   "type"
-    t.string   "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
