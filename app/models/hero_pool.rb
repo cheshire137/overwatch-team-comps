@@ -1,0 +1,2 @@
+class HeroPool < ApplicationRecord
+end
