@@ -21,16 +21,6 @@ ActiveRecord::Schema.define(version: 20170304172631) do
     t.index ["map_id"], name: "index_compositions_on_map_id"
   end
 
-  create_table "hero_pools", force: :cascade do |t|
-    t.integer  "player_id",              null: false
-    t.integer  "hero_id",                null: false
-    t.integer  "confidence", default: 0, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.index ["hero_id"], name: "index_hero_pools_on_hero_id"
-    t.index ["player_id"], name: "index_hero_pools_on_player_id"
-  end
-
   create_table "heroes", force: :cascade do |t|
     t.string   "name",       null: false
     t.string   "role"
@@ -43,6 +33,16 @@ ActiveRecord::Schema.define(version: 20170304172631) do
     t.string   "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "player_heroes", force: :cascade do |t|
+    t.integer  "player_id",              null: false
+    t.integer  "hero_id",                null: false
+    t.integer  "confidence", default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["hero_id"], name: "index_player_heroes_on_hero_id"
+    t.index ["player_id"], name: "index_player_heroes_on_player_id"
   end
 
   create_table "player_selections", force: :cascade do |t|

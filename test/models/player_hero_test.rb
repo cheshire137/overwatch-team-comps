@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class HeroPoolTest < ActiveSupport::TestCase
+class PlayerHeroTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
