@@ -1,10 +1,21 @@
 class CompositionForm extends React.Component {
-  render() {
+  constructor() {
+    super()
     const players = [
       'Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6'
     ]
+    this.state = { players }
+  }
+
+  onPlayerNameChange(event, index) {
+    const players = this.state.players
+    players[index] = event.target.value
+    this.setState({ players })
+  }
+
+  render() {
     return (
-      <form>
+      <form className="composition-form">
         <div>
           <label htmlFor="composition_map_id">
             Map
@@ -36,10 +47,10 @@ class CompositionForm extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {players.map((player, index) => {
+            {this.state.players.map((player, index) => {
               const inputID = `player_${index}_name`
               return (
-                <tr key={player}>
+                <tr key={index}>
                   <td>
                     <label htmlFor={inputID}>Player {index + 1} name</label>
                     <input
@@ -47,6 +58,7 @@ class CompositionForm extends React.Component {
                       id={inputID}
                       placeholder="Player name"
                       value={player}
+                      onChange={e => this.onPlayerNameChange(e, index)}
                     />
                   </td>
                   <td><select><option>Select hero</option></select></td>
