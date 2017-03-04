@@ -50,4 +50,8 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# Use React on the front end and the Rails asset pipeline to compile ES6
 gem 'react-rails', '~> 1.10.0'
+
+# For authentication, including OAuth
+gem 'devise', '~> 4.2.0'
