@@ -34,7 +34,7 @@ class CompositionForm extends React.Component {
             id="composition_name"
           />
         </div>
-        <table>
+        <table className="players-table">
           <thead>
             <tr>
               <th></th>
