@@ -5,6 +5,8 @@ for every point of every map on both offense and defense. Players should be
 able to save their team comps as well as be able to easily share their team
 comps.
 
+Feature planning is done on [our Trello board](https://trello.com/b/STeIZ1td/project-overwatch-team-comp-organizer).
+
 ## App Structure
 
 - Ruby on Rails web app using [React](https://facebook.github.io/react/) for a speedy,
