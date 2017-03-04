@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170304164544) do
+ActiveRecord::Schema.define(version: 20170304164830) do
+
+  create_table "compositions", force: :cascade do |t|
+    t.string   "name"
+    t.text     "notes"
+    t.string   "slug"
+    t.integer  "map_id",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["map_id"], name: "index_compositions_on_map_id"
+  end
 
   create_table "heroes", force: :cascade do |t|
     t.string   "name"
