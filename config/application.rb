@@ -13,6 +13,6 @@ module OverwatchTeamComps
     # -- all .rb files in that directory are automatically loaded.
 
     # https://github.com/browserify-rails/browserify-rails#using-browserify-transforms
-    config.browserify_rails.commandline_options = "-t [ babelify --presets [ es2015 ] --extensions .es6 ]"
+    config.browserify_rails.commandline_options = "-t [ babelify --presets [ es2015 react ] --extensions .es6 ]"
   end
 end
