@@ -1,0 +1,14 @@
+.textarea {
+  display: block;
+  line-height: 1.25;
+  max-height: 600px;
+  max-width: 100%;
+  min-height: 120px;
+  min-width: 100%;
+  padding: 10px;
+  resize: vertical;
+}
+
+.label {
+  display: inline-block;
+}

@@ -45,7 +45,7 @@ class CompositionForm extends React.Component {
           <table className="players-table">
             <thead>
               <tr>
-                <th></th>
+                <th className="players-header">Team 6/6</th>
                 <th>Offense Payload 1</th>
                 <th>Offense Payload 2</th>
                 <th>Offense Payload 3</th>
@@ -59,8 +59,11 @@ class CompositionForm extends React.Component {
                 const inputID = `player_${index}_name`
                 return (
                   <tr key={index}>
-                    <td>
-                      <label htmlFor={inputID}>Player {index + 1} name:</label>
+                    <td className="player-cell">
+                      <label
+                        htmlFor={inputID}
+                        className="label"
+                      >{index + 1}</label>
                       <input
                         type="text"
                         id={inputID}
@@ -86,6 +89,7 @@ class CompositionForm extends React.Component {
             </label>
             <textarea
               id="composition_notes"
+              className="textarea"
               placeholder="Notes for this team composition"
             ></textarea>
             <p>
