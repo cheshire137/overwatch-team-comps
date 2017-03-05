@@ -23,5 +23,11 @@
     "browserify": "^14.1.0",
     "browserify-incremental": "^3.1.1",
     "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "eslint-config-xo-react": "^0.10.0",
+    "eslint-plugin-react": "^6.10.0",
+    "xo": "^0.17.1"
+  },
   }
 }
