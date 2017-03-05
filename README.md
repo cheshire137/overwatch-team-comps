@@ -47,7 +47,7 @@ brew install homebrew/services
 brew services start postgresql
 ```
 
-At anytime you can stop the postgresql service:
+At anytime you can stop the PostgreSQL service:
 
 ```shell
 brew services stop postgresql
