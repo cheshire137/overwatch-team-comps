@@ -1,5 +1,5 @@
 class MapsController < ApplicationController
   def index
-    @maps = Map.order(:name)
+    @maps = Map.includes(:segments).order(:name)
   end
 end
