@@ -17,7 +17,7 @@
     "url": "https://github.com/cheshire137/overwatch-team-comps/issues"
   },
   "scripts": {
-    "style": "node_modules/.bin/eslint app/assets/javascripts/application.js app/assets/javascripts/components app/assets/javascripts/models"
+    "style": "node_modules/.bin/eslint --ext .js --ext .jsx app/assets/javascripts/application.js app/assets/javascripts/components app/assets/javascripts/models"
   },
   "homepage": "https://github.com/cheshire137/overwatch-team-comps",
   "dependencies": {
