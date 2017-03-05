@@ -57,3 +57,6 @@ gem 'react-rails', '~> 1.10.0'
 
 # For authentication, including OAuth
 gem 'devise', '~> 4.2.0'
+
+# CommonJS so we can do require
+gem 'browserify-rails', '~> 4.1.0'
