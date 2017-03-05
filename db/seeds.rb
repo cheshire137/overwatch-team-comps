@@ -36,13 +36,35 @@ maps_by_type.each do |type, map_names|
 end
 
 map_segments_by_map = {
-  'Hanamura': ['First Point', 'Second Point'],
-  'Temple of Anubis': ['First Point', 'Second Point'],
-  'Volskaya Industries': ['First Point', 'Second Point']
+  'Hanamura' => ['First Point', 'Second Point'],
+  'Temple of Anubis' => ['First Point', 'Second Point'],
+  'Volskaya Industries' => ['First Point', 'Second Point'],
+  'Ilios' => ['Well', 'Ruins', 'Lighthouse'],
+  'Lijiang Tower' => ['Night Market', 'Control Center', 'Garden'],
+  'Nepal' => ['Village', 'Shrine', 'Sanctum'],
+  'Oasis' => ['City Center', 'Gardens', 'University'],
+  'Hollywood' => ['Capture Point 1', 'Payload 1', 'Payload 2'],
+  'Dorado' => ['Payload 1', 'Payload 2', 'Payload 3'],
+  "King's Row" => ['Capture Point 1', 'Payload 1', 'Payload 2'],
+  'Numbani' => ['Capture Point 1', 'Payload 1', 'Payload 2'],
+  'Route 66' => ['Payload 1', 'Payload 2', 'Payload 3'],
+  'Watchpoint: Gibraltar' => ['Payload 1', 'Payload 2', 'Payload 3']
 }
 
-map_segments_by_map.each do |map_name, segments|
+maps_without_defense = [
+  'Ilios', 'Ecopoint: Antarctica', 'Oasis', 'Lijiang Tower', 'Nepal'
+]
+team_roles = ['Attacking', 'Defending']
+
+map_segments_by_map.each do |map_name, base_segments|
   map = Map.find_by_name(map_name)
+  segments = if maps_without_defense.include?(map_name)
+    base_segments
+  else
+    team_roles.inject([]) do |out, role|
+      out.concat base_segments.map { |segment| "#{role}: #{segment}" }
+    end
+  end
   puts "Creating segments for map #{map.name}: #{segments.to_sentence}"
   segments.each do |segment|
     MapSegment.create(map_id: map.id, name: segment)
