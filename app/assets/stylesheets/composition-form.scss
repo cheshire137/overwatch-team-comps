@@ -2,4 +2,10 @@
   .players-table {
     width: 100%;
   }
+
+  .composition-form-header {
+    background-color: #f3d6da;
+    @include filter-gradient(#f3d6da, #daf0f8, horizontal);
+    @include background-image(linear-gradient(left, #f3d6da 0%,#daf0f8 100%));
+  }
 }
