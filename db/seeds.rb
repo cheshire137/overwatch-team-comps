@@ -24,11 +24,7 @@ maps_by_type = {
   assault: ['Hanamura', 'Temple of Anubis', 'Volskaya Industries'],
   escort: ['Dorado', 'Route 66', 'Watchpoint: Gibraltar'],
   hybrid: ['Eichenwalde', 'Hollywood', "King's Row", 'Numbani'],
-  control: ['Ilios: Lighthouse', 'Ilios: Well', 'Ilios: Ruins',
-            'Lijiang Tower: Night Market', 'Lijiang Tower: Garden',
-            'Lijiang Tower: Control Center',
-            'Nepal: Village', 'Nepal: Shrine', 'Nepal: Sanctum',
-            'Oasis: City Center', 'Oasis: Gardens', 'Oasis: University'],
+  control: ['Ilios', 'Lijiang Tower', 'Nepal', 'Oasis'],
   arcade: ['Ecopoint: Antarctica']
 }
 
