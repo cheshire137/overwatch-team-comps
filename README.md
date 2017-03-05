@@ -21,3 +21,10 @@ bundle install
 RAILS_ENV=test bin/rake db:migrate
 rake test
 ```
+
+## How to Deploy to Heroku
+
+```bash
+heroku buildpacks:add https://github.com/heroku/heroku-buildpack-nodejs.git
+heroku buildpacks:add https://github.com/heroku/heroku-buildpack-ruby.git
+```
