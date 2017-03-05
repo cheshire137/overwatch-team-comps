@@ -8,6 +8,7 @@ You will need Ruby and Rubygems installed.
 
 ```bash
 bundle install
+bin/rake db:migrate db:seed
 bundle exec rails s
 ```
 
