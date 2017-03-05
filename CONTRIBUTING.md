@@ -13,5 +13,5 @@ Feature planning is done on a Trello board; please open an issue and mention
 [@cheshire137](https://github.com/cheshire137) to get added.
 
 Please know we have a [Code of
-Conduct](https://github.com/cheshire137/overwatch-team-comps/blob/master/CODE_OF_CONDUCT.md) in place.
+Conduct](CODE_OF_CONDUCT.md) in place.
 If you experience any problems, please let us know immediately.
