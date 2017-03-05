@@ -18,23 +18,26 @@ class CompositionForm extends React.Component {
       <form className="composition-form">
         <header className="composition-form-header">
           <div className="container">
-            <div>
-              <label htmlFor="composition_map_id">
-                Choose a map:
-              </label>
-              <select id="composition_map_id">
-                <option>Watchpoint Gibraltar</option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="composition_name">
-                What do you want to call this team comp?
-              </label>
-              <input
-                type="text"
-                placeholder="Composition name"
-                id="composition_name"
-              />
+            <div className="map-photo-container"></div>
+            <div className="composition-meta">
+              <div>
+                <label htmlFor="composition_map_id">
+                  Choose a map:
+                </label>
+                <select id="composition_map_id">
+                  <option>Watchpoint Gibraltar</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="composition_name">
+                  What do you want to call this team comp?
+                </label>
+                <input
+                  type="text"
+                  placeholder="Composition name"
+                  id="composition_name"
+                />
+              </div>
             </div>
           </div>
         </header>
