@@ -5,7 +5,7 @@ class Fetcher {
     this.basePath = basePath
   }
 
-  checkStatus(response) {
+  static checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
       return response
     }
@@ -14,7 +14,7 @@ class Fetcher {
     throw error
   }
 
-  parseJson(response) {
+  static parseJson(response) {
     return response.json()
   }
 
@@ -28,8 +28,8 @@ class Fetcher {
     if (body) {
       data.body = JSON.stringify(body)
     }
-    return fetch(url, data).then(this.checkStatus).
-      then(this.parseJson)
+    return fetch(url, data).then(Fetcher.checkStatus).
+      then(Fetcher.parseJson)
   }
 }
 

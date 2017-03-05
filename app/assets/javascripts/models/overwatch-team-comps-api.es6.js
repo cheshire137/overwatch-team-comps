@@ -1,3 +1,5 @@
+/* global Fetcher */
+
 class OverwatchTeamCompsApi extends Fetcher {
   constructor() {
     super('/api')
