@@ -17,77 +17,81 @@ class CompositionForm extends React.Component {
     return (
       <form className="composition-form">
         <header className="composition-form-header">
-          <div>
-            <label htmlFor="composition_map_id">
-              Choose a map:
-            </label>
-            <select id="composition_map_id">
-              <option>Watchpoint Gibraltar</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor="composition_name">
-              What do you want to call this team comp?
-            </label>
-            <input
-              type="text"
-              placeholder="Composition name"
-              id="composition_name"
-            />
+          <div className="container">
+            <div>
+              <label htmlFor="composition_map_id">
+                Choose a map:
+              </label>
+              <select id="composition_map_id">
+                <option>Watchpoint Gibraltar</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="composition_name">
+                What do you want to call this team comp?
+              </label>
+              <input
+                type="text"
+                placeholder="Composition name"
+                id="composition_name"
+              />
+            </div>
           </div>
         </header>
-        <table className="players-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Offense Payload 1</th>
-              <th>Offense Payload 2</th>
-              <th>Offense Payload 3</th>
-              <th>Defense Payload 1</th>
-              <th>Defense Payload 2</th>
-              <th>Defense Payload 3</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.players.map((player, index) => {
-              const inputID = `player_${index}_name`
-              return (
-                <tr key={index}>
-                  <td>
-                    <label htmlFor={inputID}>Player {index + 1} name:</label>
-                    <input
-                      type="text"
-                      id={inputID}
-                      placeholder="Player name"
-                      value={player}
-                      onChange={e => this.onPlayerNameChange(e, index)}
-                    />
-                  </td>
-                  <td><select><option>Select hero</option></select></td>
-                  <td><select><option>Select hero</option></select></td>
-                  <td><select><option>Select hero</option></select></td>
-                  <td><select><option>Select hero</option></select></td>
-                  <td><select><option>Select hero</option></select></td>
-                  <td><select><option>Select hero</option></select></td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-        <div>
-          <label htmlFor="composition_notes">
-            Notes:
-          </label>
-          <textarea
-            id="composition_notes"
-            placeholder="Notes for this team composition"
-          ></textarea>
-          <p>
-            <a
-              href="https://daringfireball.net/projects/markdown/syntax"
-              target="_blank"
-            >Markdown supported</a>.
-          </p>
+        <div className="container">
+          <table className="players-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Offense Payload 1</th>
+                <th>Offense Payload 2</th>
+                <th>Offense Payload 3</th>
+                <th>Defense Payload 1</th>
+                <th>Defense Payload 2</th>
+                <th>Defense Payload 3</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.players.map((player, index) => {
+                const inputID = `player_${index}_name`
+                return (
+                  <tr key={index}>
+                    <td>
+                      <label htmlFor={inputID}>Player {index + 1} name:</label>
+                      <input
+                        type="text"
+                        id={inputID}
+                        placeholder="Player name"
+                        value={player}
+                        onChange={e => this.onPlayerNameChange(e, index)}
+                      />
+                    </td>
+                    <td><select><option>Select hero</option></select></td>
+                    <td><select><option>Select hero</option></select></td>
+                    <td><select><option>Select hero</option></select></td>
+                    <td><select><option>Select hero</option></select></td>
+                    <td><select><option>Select hero</option></select></td>
+                    <td><select><option>Select hero</option></select></td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+          <div>
+            <label htmlFor="composition_notes">
+              Notes:
+            </label>
+            <textarea
+              id="composition_notes"
+              placeholder="Notes for this team composition"
+            ></textarea>
+            <p>
+              <a
+                href="https://daringfireball.net/projects/markdown/syntax"
+                target="_blank"
+              >Markdown supported</a>.
+            </p>
+          </div>
         </div>
       </form>
     )
