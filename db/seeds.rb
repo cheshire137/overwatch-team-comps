@@ -35,6 +35,6 @@ maps_by_type = {
 maps_by_type.each do |type, map_names|
   puts "Creating #{type} maps: #{map_names.to_sentence}"
   map_names.each do |name|
-    Map.create(name: name, type: type)
+    Map.create(name: name, map_type: type)
   end
 end
