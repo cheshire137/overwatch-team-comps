@@ -16,3 +16,9 @@
 //= require react_ujs
 //= require components
 //= require_tree .
+
+const Promise = require('promise-polyfill')
+
+if (!window.Promise) {
+  window.Promise = Promise
+}
