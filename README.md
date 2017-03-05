@@ -4,15 +4,18 @@ Mystery project with Rob and Zion.
 
 ## How to Develop
 
-You will need Ruby and Rubygems installed.
+You will need Ruby, Rubygems, and npm installed.
 
 ```bash
 bundle install
+npm install
 bin/rake db:migrate db:seed
 bundle exec rails s
 ```
 
 Visit [localhost:3000](http://localhost:3000).
+
+To add a new JavaScript package: `npm install WHATEVER_PACKAGE --save`
 
 ## How to Test
 
@@ -23,6 +26,8 @@ rake test
 ```
 
 ## How to Deploy to Heroku
+
+WIP
 
 ```bash
 heroku buildpacks:add https://github.com/heroku/heroku-buildpack-nodejs.git
