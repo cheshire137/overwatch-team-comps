@@ -24,9 +24,11 @@ class CompositionForm extends React.Component {
                 <label htmlFor="composition_map_id">
                   Choose a map:
                 </label>
-                <select id="composition_map_id">
-                  <option>Watchpoint Gibraltar</option>
-                </select>
+                <span className="select">
+                  <select id="composition_map_id">
+                    <option>Watchpoint Gibraltar</option>
+                  </select>
+                </span>
               </div>
               <div>
                 <label htmlFor="composition_name">
@@ -72,12 +74,36 @@ class CompositionForm extends React.Component {
                         onChange={e => this.onPlayerNameChange(e, index)}
                       />
                     </td>
-                    <td><select><option>Select hero</option></select></td>
-                    <td><select><option>Select hero</option></select></td>
-                    <td><select><option>Select hero</option></select></td>
-                    <td><select><option>Select hero</option></select></td>
-                    <td><select><option>Select hero</option></select></td>
-                    <td><select><option>Select hero</option></select></td>
+                    <td>
+                      <span className="select">
+                        <select><option>Select hero</option></select>
+                      </span>
+                    </td>
+                    <td>
+                      <span className="select">
+                        <select><option>Select hero</option></select>
+                      </span>
+                    </td>
+                    <td>
+                      <span className="select">
+                        <select><option>Select hero</option></select>
+                      </span>
+                    </td>
+                    <td>
+                      <span className="select">
+                        <select><option>Select hero</option></select>
+                      </span>
+                    </td>
+                    <td>
+                      <span className="select">
+                        <select><option>Select hero</option></select>
+                      </span>
+                    </td>
+                    <td>
+                      <span className="select">
+                        <select><option>Select hero</option></select>
+                      </span>
+                    </td>
                   </tr>
                 )
               })}
