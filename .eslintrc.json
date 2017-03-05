@@ -12,6 +12,9 @@
         },
         "sourceType": "module"
     },
+    "globals": {
+        "React": true
+    },
     "plugins": [
         "react",
         "jsx-a11y",
@@ -19,6 +22,8 @@
     ],
     "rules": {
         "semi": [2, "never"],
-        "dot-location": [2, "object"]
+        "dot-location": [2, "object"],
+        "no-console": [2, { "allow": ["error"] }],
+        "no-multi-assign": 0
     }
 }
