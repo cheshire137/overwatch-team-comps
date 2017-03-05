@@ -1,0 +1,2 @@
+class PlayerHero < ApplicationRecord
+end

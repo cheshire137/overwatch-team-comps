@@ -1,0 +1,2 @@
+class PlayerSelection < ApplicationRecord
+end

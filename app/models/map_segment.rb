@@ -1,0 +1,2 @@
+class MapSegment < ApplicationRecord
+end
