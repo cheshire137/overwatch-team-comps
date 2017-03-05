@@ -11,13 +11,17 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require_self
 //= require react
 //= require react_ujs
-//= require components
-//= require_tree .
+
+window.React = global.React = require('react')
 
 const Promise = require('promise-polyfill')
 
 if (!window.Promise) {
   window.Promise = Promise
 }
+
+require('whatwg-fetch')
+require('./components')

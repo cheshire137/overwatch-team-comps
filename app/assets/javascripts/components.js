@@ -1,2 +1,3 @@
-//= require_tree ./models
-//= require_tree ./components
+require('babel-polyfill')
+
+global.App = require('./components/app.jsx')

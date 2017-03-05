@@ -1,6 +1,4 @@
-require('whatwg-fetch')
-
-class Fetcher {
+export default class Fetcher {
   constructor(basePath) {
     this.basePath = basePath
   }
@@ -32,5 +30,3 @@ class Fetcher {
       then(Fetcher.parseJson)
   }
 }
-
-window.Fetcher = Fetcher
