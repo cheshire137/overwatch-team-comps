@@ -46,12 +46,12 @@ class CompositionForm extends React.Component {
             <thead>
               <tr>
                 <th className="players-header">Team 6/6</th>
-                <th>Offense Payload 1</th>
-                <th>Offense Payload 2</th>
-                <th>Offense Payload 3</th>
-                <th>Defense Payload 1</th>
-                <th>Defense Payload 2</th>
-                <th>Defense Payload 3</th>
+                <th className="attack-cell">Offense Payload 1</th>
+                <th className="attack-cell">Offense Payload 2</th>
+                <th className="attack-cell">Offense Payload 3</th>
+                <th className="defend-cell">Defense Payload 1</th>
+                <th className="defend-cell">Defense Payload 2</th>
+                <th className="defend-cell">Defense Payload 3</th>
               </tr>
             </thead>
             <tbody>
@@ -83,7 +83,7 @@ class CompositionForm extends React.Component {
               })}
             </tbody>
           </table>
-          <div>
+          <div className="composition-notes-wrapper">
             <label htmlFor="composition_notes">
               Notes:
             </label>
