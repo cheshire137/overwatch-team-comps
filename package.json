@@ -17,7 +17,7 @@
     "url": "https://github.com/cheshire137/overwatch-team-comps/issues"
   },
   "scripts": {
-    "style": "node_modules/.bin/xo"
+    "style": "node_modules/.bin/eslint app/assets/javascripts/components app/assets/javascripts/models"
   },
   "homepage": "https://github.com/cheshire137/overwatch-team-comps",
   "dependencies": {
@@ -28,86 +28,10 @@
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
-    "eslint-config-xo-react": "^0.10.0",
-    "eslint-plugin-react": "^6.10.0",
-    "xo": "^0.17.1"
-  },
-  "xo": {
-    "esnext": true,
-    "space": true,
-    "extends": "xo-react",
-    "extensions": ["es6.jsx", "es6.js"],
-    "rules": {
-      "quotes": [
-        2,
-        "single",
-        {
-          "avoidEscape": true
-        }
-      ],
-      "object-curly-spacing": [
-        2,
-        "always"
-      ],
-      "semi": [
-        2,
-        "never"
-      ],
-      "space-before-function-paren": [
-        2,
-        "never"
-      ],
-      "brace-style": [
-        2,
-        "1tbs",
-        {
-          "allowSingleLine": true
-        }
-      ],
-      "react/jsx-closing-bracket-location": [
-        2,
-        "tag-aligned"
-      ],
-      "react/jsx-no-bind": [
-        2,
-        {
-          "allowArrowFunctions": true
-        }
-      ],
-      "react/jsx-space-before-closing": [
-        2,
-        "always"
-      ],
-      "unicorn/catch-error-name": 0,
-      "no-prototype-builtins": 0,
-      "no-mixed-operators": 0,
-      "dot-location": [
-        2,
-        "object"
-      ],
-      "react/prop-types": [
-        2,
-        {
-          "ignore": [
-            "children",
-            "location",
-            "router"
-          ]
-        }
-      ],
-      "camelcase": [
-        2,
-        {
-          "properties": "never"
-        }
-      ],
-      "prefer-arrow-callback": [
-        2,
-        {
-          "allowNamedFunctions": true
-        }
-      ],
-      "default-case": 0
-    }
+    "eslint": "^3.17.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0"
   }
 }
