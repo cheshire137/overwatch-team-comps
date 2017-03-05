@@ -38,3 +38,17 @@ maps_by_type.each do |type, map_names|
     Map.create(name: name, map_type: type)
   end
 end
+
+map_segments_by_map = {
+  'Hanamura': ['First Point', 'Second Point'],
+  'Temple of Anubis': ['First Point', 'Second Point'],
+  'Volskaya Industries': ['First Point', 'Second Point']
+}
+
+map_segments_by_map.each do |map_name, segments|
+  map = Map.find_by_name(map_name)
+  puts "Creating segments for map #{map.name}: #{segments.to_sentence}"
+  segments.each do |segment|
+    MapSegment.create(map_id: map.id, name: segment)
+  end
+end
