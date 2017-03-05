@@ -48,7 +48,9 @@ map_segments_by_map = {
   "King's Row" => ['Capture Point 1', 'Payload 1', 'Payload 2'],
   'Numbani' => ['Capture Point 1', 'Payload 1', 'Payload 2'],
   'Route 66' => ['Payload 1', 'Payload 2', 'Payload 3'],
-  'Watchpoint: Gibraltar' => ['Payload 1', 'Payload 2', 'Payload 3']
+  'Watchpoint: Gibraltar' => ['Payload 1', 'Payload 2', 'Payload 3'],
+  'Eichenwalde' => ['Capture Point 1', 'Payload 1', 'Payload 2'],
+  'Ecopoint: Antarctica' => ['Attack']
 }
 
 maps_without_defense = [
