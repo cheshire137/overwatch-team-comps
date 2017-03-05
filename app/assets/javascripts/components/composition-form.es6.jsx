@@ -18,7 +18,7 @@ class CompositionForm extends React.Component {
       <form className="composition-form">
         <div>
           <label htmlFor="composition_map_id">
-            Map
+            Choose a map:
           </label>
           <select id="composition_map_id">
             <option>Watchpoint Gibraltar</option>
@@ -26,7 +26,7 @@ class CompositionForm extends React.Component {
         </div>
         <div>
           <label htmlFor="composition_name">
-            Composition name
+            What do you want to call this team comp?
           </label>
           <input
             type="text"
@@ -52,7 +52,7 @@ class CompositionForm extends React.Component {
               return (
                 <tr key={index}>
                   <td>
-                    <label htmlFor={inputID}>Player {index + 1} name</label>
+                    <label htmlFor={inputID}>Player {index + 1} name:</label>
                     <input
                       type="text"
                       id={inputID}
@@ -74,12 +74,18 @@ class CompositionForm extends React.Component {
         </table>
         <div>
           <label htmlFor="composition_notes">
-            Notes
+            Notes:
           </label>
           <textarea
             id="composition_notes"
             placeholder="Notes for this team composition"
           ></textarea>
+          <p>
+            <a
+              href="https://daringfireball.net/projects/markdown/syntax"
+              target="_blank"
+            >Markdown supported</a>.
+          </p>
         </div>
       </form>
     )
