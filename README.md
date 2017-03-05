@@ -21,8 +21,10 @@ To add a new JavaScript package: `npm install WHATEVER_PACKAGE --save`
 
 ```bash
 bundle install
+npm install
+npm run style # to run the JavaScript style checker
 RAILS_ENV=test bin/rake db:migrate
-rake test
+rake test # to run Rails tests
 ```
 
 ## How to Deploy to Heroku
