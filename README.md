@@ -40,9 +40,10 @@ that will hit your local server. Start ngrok via `ngrok http 3000`;
 look at the https URL it spits out. In your Battle.net app, set
 `https://your-ngrok-id-here.ngrok.io/users/auth/bnet/callback` as
 the "Register Callback URL" value. Update .env so that `BNET_APP_HOST`
-is set to the same `your-ngrok-id-here` as ngrok spit out and you used
-in the Battle.net app; omit the https:// in .env. Start the Rails server
-via `bundle exec rails s`.
+is set to the same `your-ngrok-id-here.ngrok.io` as ngrok spit out and you used
+in the Battle.net app; omit the `https://` in .env. Start the Rails server
+via `bundle exec rails s`. Now you should be able to go to
+`https://your-ngrok-id-here.ngrok.io/users/sign_in` and click the Battle.net link.
 
 ### Installing PostgreSQL on mac os
 
