@@ -42,12 +42,19 @@ gem 'react-rails', '~> 1.10.0'
 # For authentication, including OAuth
 gem 'devise', '~> 4.2.0'
 
+# For Battle.net OAuth
+gem 'omniauth-oauth2', '1.3.1'
+gem 'omniauth-bnet', '~> 1.1.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 
   gem 'factory_girl_rails', '~> 4.8.0'
   gem 'rspec-rails', '~> 3.5.0'
+
+  # For environment variables
+  gem 'dotenv-rails', '~> 2.2.0'
 end
 
 group :development do

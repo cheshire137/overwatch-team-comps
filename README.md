@@ -34,6 +34,22 @@ Visit [localhost:3000](http://localhost:3000).
 
 To add a new JavaScript package: `npm install WHATEVER_PACKAGE --save`
 
+### OAuth in Local Development
+
+To test OAuth signin locally, you will need to
+[create a Battle.net API app](https://dev.battle.net),
+`cp dotenv.sample .env`, and
+copy your app key and secret into the .env file. You will also need to
+use a service like [ngrok](https://ngrok.com/) to have a public URL
+that will hit your local server. Start ngrok via `ngrok http 3000`;
+look at the https URL it spits out. In your Battle.net app, set
+`https://your-ngrok-id-here.ngrok.io/users/auth/bnet/callback` as
+the "Register Callback URL" value. Update .env so that `BNET_APP_HOST`
+is set to the same `your-ngrok-id-here.ngrok.io` as ngrok spit out and you used
+in the Battle.net app; omit the `https://` in .env. Start the Rails server
+via `bundle exec rails s`. Now you should be able to go to
+`https://your-ngrok-id-here.ngrok.io/users/sign_in` and click the Battle.net link.
+
 ### Installing PostgreSQL on macOS
 
 There are multiple ways to install PostgreSQL, but the recommended way is
