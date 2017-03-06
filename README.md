@@ -21,15 +21,20 @@ Feature planning is done on [our Trello board](https://trello.com/b/STeIZ1td/pro
 
 ## How to Develop
 
-You will need Ruby, Rubygems and PostgreSQL installed.
+You will need Ruby, Rubygems, PostgreSQL, and npm installed.
 
 ```bash
 bundle install
+npm install
 bin/rake db:setup
 bundle exec rails s
 ```
 
 Visit [localhost:3000](http://localhost:3000).
+
+To add a new JavaScript package: `npm install WHATEVER_PACKAGE --save`
+
+### OAuth in Local Development
 
 To test OAuth signin locally, you will need to
 [create a Battle.net API app](https://dev.battle.net),
@@ -45,7 +50,7 @@ in the Battle.net app; omit the `https://` in .env. Start the Rails server
 via `bundle exec rails s`. Now you should be able to go to
 `https://your-ngrok-id-here.ngrok.io/users/sign_in` and click the Battle.net link.
 
-### Installing PostgreSQL on mac os
+### Installing PostgreSQL on macOS
 
 There are multiple ways to install PostgreSQL, but the recommended way is
 through homebrew:
@@ -72,5 +77,15 @@ brew services stop postgresql
 After running through the development setup above, then:
 
 ```bash
-bundle exec rspec
+npm run style # to run the JavaScript style checker
+bundle exec rspec # to run Rails tests
+```
+
+## How to Deploy to Heroku
+
+WIP
+
+```bash
+heroku buildpacks:add https://github.com/heroku/heroku-buildpack-nodejs.git
+heroku buildpacks:add https://github.com/heroku/heroku-buildpack-ruby.git
 ```
