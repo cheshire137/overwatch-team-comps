@@ -5,11 +5,4 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   devise :omniauthable, omniauth_providers: [:bnet]
-
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.battletag = auth.extra.battletag
-      user.password = Devise.friendly_token[0,20]
-    end
-  end
 end
