@@ -8,4 +8,8 @@ export default class OverwatchTeamCompsApi extends Fetcher {
   getMaps() {
     return this.get('/maps').then(json => json.maps)
   }
+
+  getNewComposition() {
+    return this.get('/compositions/new').then(json => json.composition)
+  }
 }

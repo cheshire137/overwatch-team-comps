@@ -5,18 +5,28 @@ export default class CompositionForm extends React.Component {
     console.error('failed to load maps', error)
   }
 
+  static onNewCompositionError(error) {
+    console.error('failed to load new composition data', error)
+  }
+
   constructor() {
     super()
-    const players = [
-      'Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6'
-    ]
-    this.state = { maps: [], players }
+    this.state = { maps: [], players: [] }
   }
 
   componentDidMount() {
     const api = new OverwatchTeamCompsApi()
+
     api.getMaps().then(maps => this.onMapsFetched(maps)).
       catch(err => CompositionForm.onMapsError(err))
+
+    api.getNewComposition().then(comp => this.onNewCompositionFetched(comp)).
+      catch(err => CompositionForm.onNewCompositionError(err))
+  }
+
+  onNewCompositionFetched(composition) {
+    const players = composition.players.map(player => player.name)
+    this.setState({ players })
   }
 
   onMapsFetched(maps) {
