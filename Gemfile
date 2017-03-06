@@ -43,6 +43,7 @@ gem 'react-rails', '~> 1.10.0'
 gem 'devise', '~> 4.2.0'
 
 # For Battle.net OAuth
+gem 'omniauth-oauth2', '1.3.1'
 gem 'omniauth-bnet', '~> 1.1.1'
 
 group :development, :test do
