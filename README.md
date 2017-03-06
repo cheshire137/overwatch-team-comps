@@ -31,6 +31,11 @@ bundle exec rails s
 
 Visit [localhost:3000](http://localhost:3000).
 
+To test OAuth signin, you will need to
+[create a Battle.net API app](https://dev.battle.net),
+`cp dotenv.sample .env`, and
+copy your app key and secret into the .env file.
+
 ### Installing PostgreSQL on mac os
 
 There are multiple ways to install PostgreSQL, but the recommended way is
