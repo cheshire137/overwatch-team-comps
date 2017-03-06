@@ -53,3 +53,10 @@ At anytime you can stop the PostgreSQL service:
 brew services stop postgresql
 ```
 
+## How to Test
+
+After running through the development setup above, then:
+
+```bash
+bundle exec rspec
+```
