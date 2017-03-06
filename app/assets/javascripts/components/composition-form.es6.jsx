@@ -71,35 +71,36 @@ class CompositionForm extends React.Component {
                         id={inputID}
                         placeholder="Player name"
                         value={player}
+                        className="input"
                         onChange={e => this.onPlayerNameChange(e, index)}
                       />
                     </td>
-                    <td>
+                    <td className="hero-select-cell">
                       <span className="select">
                         <select><option>Select hero</option></select>
                       </span>
                     </td>
-                    <td>
+                    <td className="hero-select-cell">
                       <span className="select">
                         <select><option>Select hero</option></select>
                       </span>
                     </td>
-                    <td>
+                    <td className="hero-select-cell">
                       <span className="select">
                         <select><option>Select hero</option></select>
                       </span>
                     </td>
-                    <td>
+                    <td className="hero-select-cell">
                       <span className="select">
                         <select><option>Select hero</option></select>
                       </span>
                     </td>
-                    <td>
+                    <td className="hero-select-cell">
                       <span className="select">
                         <select><option>Select hero</option></select>
                       </span>
                     </td>
-                    <td>
+                    <td className="hero-select-cell">
                       <span className="select">
                         <select><option>Select hero</option></select>
                       </span>
