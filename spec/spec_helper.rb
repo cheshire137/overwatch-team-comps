@@ -97,6 +97,3 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
-
-FactoryGirl.definition_file_paths << File.expand_path('./factories.rb', __FILE__)
-FactoryGirl.find_definitions
