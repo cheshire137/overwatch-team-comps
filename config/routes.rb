@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   devise_for :users
 
   scope defaults: { format: :json }, path: "/api" do
+    resources :compositions, only: [:new]
+
     resources :maps, only: [:index]
   end
 
