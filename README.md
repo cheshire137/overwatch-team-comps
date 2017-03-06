@@ -21,12 +21,35 @@ Feature planning is done on [our Trello board](https://trello.com/b/STeIZ1td/pro
 
 ## How to Develop
 
-You will need Ruby and Rubygems installed.
+You will need Ruby, Rubygems and PostgreSQL installed.
 
 ```bash
 bundle install
-bin/rake db:migrate db:seed
+bin/rake db:setup
 bundle exec rails s
 ```
 
 Visit [localhost:3000](http://localhost:3000).
+
+### Installing PostgreSQL on mac os
+
+There are multiple ways to install PostgreSQL, but the recommended way is
+through homebrew:
+
+```shell
+brew install postgresql
+```
+
+To manage your installation of PostgreSQL, one way is to use `brew/services`:
+
+```shell
+brew install homebrew/services
+brew services start postgresql
+```
+
+At anytime you can stop the PostgreSQL service:
+
+```shell
+brew services stop postgresql
+```
+
