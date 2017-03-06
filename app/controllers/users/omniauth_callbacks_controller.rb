@@ -1,9 +1,10 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def bnet
+    auth = request.env['omniauth.auth']
     user = User.where(provider: auth.provider, uid: auth.uid).first
     return redirect_to root_path if user
 
-    session['devise.bnet_data'] = request.env['omniauth.auth']
+    session['devise.bnet_data'] = auth
     redirect_to users_finish_signup_path
   end
 
