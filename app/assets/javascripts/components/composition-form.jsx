@@ -1,10 +1,26 @@
-class CompositionForm extends React.Component {
+import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
+
+export default class CompositionForm extends React.Component {
+  static onMapsError(error) {
+    console.error('failed to load maps', error)
+  }
+
   constructor() {
     super()
     const players = [
       'Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6'
     ]
-    this.state = { players }
+    this.state = { maps: [], players }
+  }
+
+  componentDidMount() {
+    const api = new OverwatchTeamCompsApi()
+    api.getMaps().then(maps => this.onMapsFetched(maps)).
+      catch(err => CompositionForm.onMapsError(err))
+  }
+
+  onMapsFetched(maps) {
+    this.setState({ maps })
   }
 
   onPlayerNameChange(event, index) {
@@ -14,11 +30,12 @@ class CompositionForm extends React.Component {
   }
 
   render() {
+    const { maps } = this.state
     return (
       <form className="composition-form">
         <header className="composition-form-header">
           <div className="container">
-            <div className="map-photo-container"></div>
+            <div className="map-photo-container" />
             <div className="composition-meta">
               <div>
                 <label htmlFor="composition_map_id">
@@ -26,7 +43,7 @@ class CompositionForm extends React.Component {
                 </label>
                 <span className="select">
                   <select id="composition_map_id">
-                    <option>Watchpoint Gibraltar</option>
+                    {maps.map(map => <option key={map.name}>{map.name}</option>)}
                   </select>
                 </span>
               </div>
@@ -60,7 +77,7 @@ class CompositionForm extends React.Component {
               {this.state.players.map((player, index) => {
                 const inputID = `player_${index}_name`
                 return (
-                  <tr key={index}>
+                  <tr key={inputID}>
                     <td className="player-cell">
                       <label
                         htmlFor={inputID}
@@ -118,11 +135,12 @@ class CompositionForm extends React.Component {
               id="composition_notes"
               className="textarea"
               placeholder="Notes for this team composition"
-            ></textarea>
+            />
             <p>
               <a
                 href="https://daringfireball.net/projects/markdown/syntax"
                 target="_blank"
+                rel="noopener noreferrer"
               >Markdown supported</a>.
             </p>
           </div>

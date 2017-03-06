@@ -1,0 +1,33 @@
+{
+    "extends": "airbnb",
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "globals": {
+        "React": true
+    },
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "import"
+    ],
+    "rules": {
+        "semi": [2, "never"],
+        "dot-location": [2, "object"],
+        "no-console": [2, { "allow": ["error"] }],
+        "no-multi-assign": 0,
+        "comma-dangle": [2, { "arrays": "never" }],
+        "import/extensions": 0,
+        "func-names": 0,
+        "space-before-function-paren": [2, "never"]
+    }
+}
