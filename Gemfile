@@ -51,6 +51,9 @@ group :development, :test do
 
   gem 'factory_girl_rails', '~> 4.8.0'
   gem 'rspec-rails', '~> 3.5.0'
+
+  # For environment variables
+  gem 'dotenv-rails', '~> 2.2.0'
 end
 
 group :development do
