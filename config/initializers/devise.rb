@@ -249,7 +249,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :bnet, ENV['BNET_APP_ID'], ENV['BNET_APP_SECRET'],
-    callback_url: '/users/auth/bnet/callback'
+    callback_url: "https://#{ENV['BNET_APP_HOST']}/users/auth/bnet/callback"
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
