@@ -36,10 +36,13 @@ To test OAuth signin locally, you will need to
 `cp dotenv.sample .env`, and
 copy your app key and secret into the .env file. You will also need to
 use a service like [ngrok](https://ngrok.com/) to have a public URL
-that will hit your local server. In your Battle.net app, set
+that will hit your local server. Start ngrok via `ngrok http 3000`;
+look at the https URL it spits out. In your Battle.net app, set
 `https://your-ngrok-id-here.ngrok.io/users/auth/bnet/callback` as
-the "Register Callback URL" value. Start the Rails server via
-`bundle exec rails s` and then attach ngrok to it via `ngrok http 3000`.
+the "Register Callback URL" value. Update .env so that `BNET_APP_HOST`
+is set to the same `your-ngrok-id-here` as ngrok spit out and you used
+in the Battle.net app; omit the https:// in .env. Start the Rails server
+via `bundle exec rails s`.
 
 ### Installing PostgreSQL on mac os
 
