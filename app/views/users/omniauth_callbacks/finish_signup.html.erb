@@ -1,0 +1,9 @@
+<p>Hello <strong><%= @auth['info']['battletag'] %></strong>!</p>
+
+<%= form_tag users_finished_signup_path do %>
+  <div>
+    <label for="email">Email address:</label>
+    <input id="email" type="text" class="input" name="email" placeholder="Your email address">
+  </div>
+  <button type="submit">Sign Up</button>
+<% end %>
