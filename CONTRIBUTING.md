@@ -11,3 +11,7 @@ with how you'd like to contribute, if you want to introduce yourself.
 
 Feature planning is done on a Trello board; please open an issue and mention
 [@cheshire137](https://github.com/cheshire137) to get added.
+
+Please know we have a [Code of
+Conduct](CODE_OF_CONDUCT.md) in place.
+If you experience any problems, please let us know immediately.
