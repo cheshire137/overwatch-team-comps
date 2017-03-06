@@ -18,4 +18,5 @@
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   # hero -> heroes
   inflect.plural /^(hero)$/i, '\1es'
+  inflect.plural /^(player_hero)$/i, '\1es'
 end
