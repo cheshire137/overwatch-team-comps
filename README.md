@@ -58,5 +58,5 @@ brew services stop postgresql
 After running through the development setup above, then:
 
 ```bash
-rake test
+bundle exec rspec
 ```
