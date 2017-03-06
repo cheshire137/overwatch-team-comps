@@ -1,7 +1,40 @@
-body,
-button,
-input,
-select,
-textarea {
-  font-family: "Clear Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+$font-stack: "Clear Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+
+body, button, input, select, textarea {
+  font-family: $font-stack;
+}
+
+p {
+  color: $soft-text;
+  line-height: 1.4em;
+  margin: 0.5em 0 1em 0;
+}
+
+h1 {
+  color: $text;
+  font-size: 3em;
+  font-weight: 800;
+  line-height: 1.3em;
+  margin: 1em 0;
+}
+
+h2 {
+  color: $text;
+  font-weight: 400;
+}
+
+h3 {
+  color: $text;
+  font-size: 1.6em;
+  font-weight: 400;
+  line-height: 1.2em;
+  margin: 0.5em 0;
+}
+
+h4 {
+  color: $text;
+  font-size: 0.7em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
