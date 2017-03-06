@@ -16,7 +16,7 @@ export default class CompositionForm extends React.Component {
   componentDidMount() {
     const api = new OverwatchTeamCompsApi()
     api.getMaps().then(maps => this.onMapsFetched(maps)).
-      catch(err => App.onMapsError(err))
+      catch(err => CompositionForm.onMapsError(err))
   }
 
   onMapsFetched(maps) {
@@ -35,7 +35,7 @@ export default class CompositionForm extends React.Component {
       <form className="composition-form">
         <header className="composition-form-header">
           <div className="container">
-            <div className="map-photo-container"></div>
+            <div className="map-photo-container" />
             <div className="composition-meta">
               <div>
                 <label htmlFor="composition_map_id">
@@ -77,7 +77,7 @@ export default class CompositionForm extends React.Component {
               {this.state.players.map((player, index) => {
                 const inputID = `player_${index}_name`
                 return (
-                  <tr key={index}>
+                  <tr key={inputID}>
                     <td className="player-cell">
                       <label
                         htmlFor={inputID}
@@ -135,11 +135,12 @@ export default class CompositionForm extends React.Component {
               id="composition_notes"
               className="textarea"
               placeholder="Notes for this team composition"
-            ></textarea>
+            />
             <p>
               <a
                 href="https://daringfireball.net/projects/markdown/syntax"
                 target="_blank"
+                rel="noopener noreferrer"
               >Markdown supported</a>.
             </p>
           </div>

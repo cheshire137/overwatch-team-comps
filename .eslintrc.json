@@ -24,6 +24,10 @@
         "semi": [2, "never"],
         "dot-location": [2, "object"],
         "no-console": [2, { "allow": ["error"] }],
-        "no-multi-assign": 0
+        "no-multi-assign": 0,
+        "comma-dangle": [2, { "arrays": "never" }],
+        "import/extensions": 0,
+        "func-names": 0,
+        "space-before-function-paren": [2, "never"]
     }
 }
