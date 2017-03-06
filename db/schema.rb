@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170305013527) do
+ActiveRecord::Schema.define(version: 20170305162319) do
 
   create_table "compositions", force: :cascade do |t|
     t.string   "name"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170305013527) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["map_id"], name: "index_map_segments_on_map_id"
+    t.index ["name", "map_id"], name: "index_map_segments_on_name_and_map_id", unique: true
   end
 
   create_table "maps", force: :cascade do |t|
@@ -43,6 +44,7 @@ ActiveRecord::Schema.define(version: 20170305013527) do
     t.string   "map_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_maps_on_name", unique: true
   end
 
   create_table "player_heroes", force: :cascade do |t|
