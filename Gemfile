@@ -5,11 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
+gem 'pg', '~> 0.19'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -25,6 +23,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
@@ -33,11 +32,21 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Use React on the front end and the Rails asset pipeline to compile ES6
+gem 'react-rails', '~> 1.10.0'
+
+# For authentication, including OAuth
+gem 'devise', '~> 4.2.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 
-  gem 'factory_girl', '~> 4.8.0'
+  gem 'factory_girl_rails', '~> 4.8.0'
+  gem 'rspec-rails', '~> 3.5.0'
 end
 
 group :development do
@@ -48,15 +57,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-# Use React on the front end and the Rails asset pipeline to compile ES6
-gem 'react-rails', '~> 1.10.0'
-
-# For authentication, including OAuth
-gem 'devise', '~> 4.2.0'
 
 # CommonJS so we can do require
 gem 'browserify-rails', '~> 4.1.0'
