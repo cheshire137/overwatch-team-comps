@@ -1,10 +1,12 @@
+import HeroSelect from './hero-select.jsx'
+
 class EditPlayerSelectionRow extends React.Component {
   onPlayerNameChange(event) {
     this.props.onPlayerNameChange(event.target.value)
   }
 
   render() {
-    const { inputID, player, nameLabel } = this.props
+    const { inputID, player, nameLabel, onHeroSelection } = this.props
     return (
       <tr>
         <td className="player-cell">
@@ -22,34 +24,40 @@ class EditPlayerSelectionRow extends React.Component {
           />
         </td>
         <td className="hero-select-cell">
-          <span className="select">
-            <select><option>Select hero</option></select>
-          </span>
+          <HeroSelect
+            heroes={player.heroes}
+            onChange={hero => onHeroSelection(hero)}
+          />
         </td>
         <td className="hero-select-cell">
-          <span className="select">
-            <select><option>Select hero</option></select>
-          </span>
+          <HeroSelect
+            heroes={player.heroes}
+            onChange={hero => onHeroSelection(hero)}
+          />
         </td>
         <td className="hero-select-cell">
-          <span className="select">
-            <select><option>Select hero</option></select>
-          </span>
+          <HeroSelect
+            heroes={player.heroes}
+            onChange={hero => onHeroSelection(hero)}
+          />
         </td>
         <td className="hero-select-cell">
-          <span className="select">
-            <select><option>Select hero</option></select>
-          </span>
+          <HeroSelect
+            heroes={player.heroes}
+            onChange={hero => onHeroSelection(hero)}
+          />
         </td>
         <td className="hero-select-cell">
-          <span className="select">
-            <select><option>Select hero</option></select>
-          </span>
+          <HeroSelect
+            heroes={player.heroes}
+            onChange={hero => onHeroSelection(hero)}
+          />
         </td>
         <td className="hero-select-cell">
-          <span className="select">
-            <select><option>Select hero</option></select>
-          </span>
+          <HeroSelect
+            heroes={player.heroes}
+            onChange={hero => onHeroSelection(hero)}
+          />
         </td>
       </tr>
     )
@@ -60,7 +68,8 @@ EditPlayerSelectionRow.propTypes = {
   inputID: React.PropTypes.string.isRequired,
   player: React.PropTypes.object.isRequired,
   onPlayerNameChange: React.PropTypes.func.isRequired,
-  nameLabel: React.PropTypes.string.isRequired
+  nameLabel: React.PropTypes.string.isRequired,
+  onHeroSelection: React.PropTypes.func.isRequired
 }
 
 export default EditPlayerSelectionRow
