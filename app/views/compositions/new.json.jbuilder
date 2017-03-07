@@ -6,7 +6,7 @@ json.composition do
     json.type @composition.map.map_type
     json.segments @composition.map.segments.pluck(:name)
   end
-  json.players @composition.player_selections do |player_selection|
-    json.name player_selection.player_hero.player.name
+  json.players @players do |player|
+    json.name player.name
   end
 end

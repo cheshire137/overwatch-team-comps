@@ -10,18 +10,4 @@ class Composition < ApplicationRecord
   has_many :heroes, through: :player_heroes
 
   validates :map, presence: true
-
-  def self.build_new(user:, map:)
-    comp = Composition.new(map: map)
-
-    MAX_PLAYERS.times do |i|
-      player = Player.new(name: "Player #{i + 1}", user: user)
-      player_hero = PlayerHero.new(player: player)
-      comp.player_selections << PlayerSelection.new(
-        player_hero: player_hero, composition: comp
-      )
-    end
-
-    comp
-  end
 end
