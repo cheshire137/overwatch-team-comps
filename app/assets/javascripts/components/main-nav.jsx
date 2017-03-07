@@ -2,16 +2,25 @@ class MainNav extends React.Component {
   signInLink() {
     const { battletag, authPath } = this.props
     if (battletag.length > 0) {
-      return <span>Signed in as <strong>{battletag}</strong></span>
+      return (
+        <span className="nav-item">Signed in as <strong>{battletag}</strong></span>
+      )
     }
 
-    return <a href={authPath}>Sign in with Battle.net</a>
+    return (
+      <a
+        href={authPath}
+        className="nav-item"
+      >Sign in with Battle.net</a>
+    )
   }
 
   render() {
     return (
-      <nav>
-        {this.signInLink()}
+      <nav className="nav">
+        <div className="nav-right">
+          {this.signInLink()}
+        </div>
       </nav>
     )
   }

@@ -1,0 +1,28 @@
+.nav {
+  @include align-items(stretch);
+  @include display-flex(flex);
+  min-height: 3.5rem;
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+
+.nav-item {
+  font-size: 1rem;
+  padding: 0.85rem 0.75rem;
+  line-height: 1.5;
+}
+
+.nav-right {
+  @include align-items(stretch);
+  @include justify-content(flex-end);
+  @include flex-basis(0);
+  @include flex-grow(1);
+  @include flex-shrink(0);
+}
+
+@media screen and (min-width: 769px) {
+  .nav-right {
+    @include display-flex(flex);
+  }
+}
