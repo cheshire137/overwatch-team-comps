@@ -4,6 +4,8 @@ RSpec.describe 'compositions API' do
   before(:each) do
     @map = create(:map)
     @map_segment = create(:map_segment, map: @map)
+    @hero1 = create(:hero, name: 'Hanzo')
+    @hero2 = create(:hero, name: 'Mercy')
   end
 
   describe 'GET index' do
@@ -23,6 +25,28 @@ RSpec.describe 'compositions API' do
       expect(response.body).to include(@map.name)
       expect(response.body).to include(@map.map_type)
       expect(response.body).to include(@map_segment.name)
+    end
+
+    it 'includes heroes with confidence values for each player' do
+      get '/api/compositions/new'
+
+      json = JSON.parse(response.body)
+      expect(json).to have_key('composition')
+      expect(json['composition']).to have_key('players')
+
+      players = json['composition']['players']
+      expect(players.length).to eq(6)
+
+      players.each do |player_json|
+        expect(player_json).to have_key('heroes')
+        expect(player_json['heroes'].length).to eq(2)
+
+        expect(player_json['heroes'][0]['name']).to eq(@hero1.name)
+        expect(player_json['heroes'][1]['name']).to eq(@hero2.name)
+
+        expect(player_json['heroes'][0]['confidence']).to eq(0)
+        expect(player_json['heroes'][1]['confidence']).to eq(0)
+      end
     end
   end
 end

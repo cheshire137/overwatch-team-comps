@@ -4,13 +4,14 @@ class CompositionsController < ApplicationController
     @players = []
 
     Composition::MAX_PLAYERS.times do |i|
-      player = Player.new(name: "Player #{i + 1}", user: current_user)
-      @players << player
+      @players << Player.new(name: "Player #{i + 1}", user: current_user)
+    end
 
-      player_hero = PlayerHero.new(player: player)
-      @composition.player_selections << PlayerSelection.new(
-        player_hero: player_hero, composition: @composition
-      )
+    heroes = Hero.order(:name)
+    heroes.each do |hero|
+      @players.each do |player|
+        player.player_heroes << PlayerHero.new(player: player, hero: hero)
+      end
     end
   end
 end

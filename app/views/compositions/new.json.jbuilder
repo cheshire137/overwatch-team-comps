@@ -8,5 +8,9 @@ json.composition do
   end
   json.players @players do |player|
     json.name player.name
+    json.heroes player.player_heroes do |player_hero|
+      json.name player_hero.hero.name
+      json.confidence player_hero.confidence
+    end
   end
 end
