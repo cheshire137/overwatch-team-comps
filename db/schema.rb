@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170305162319) do
+ActiveRecord::Schema.define(version: 20170306180636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20170305162319) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["map_id"], name: "index_map_segments_on_map_id", using: :btree
-    t.index ["name", "map_id"], name: "index_map_segments_on_name_and_map_id", unique: true
+    t.index ["name", "map_id"], name: "index_map_segments_on_name_and_map_id", unique: true, using: :btree
   end
 
   create_table "maps", force: :cascade do |t|
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20170305162319) do
     t.string   "map_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_maps_on_name", unique: true
+    t.index ["name"], name: "index_maps_on_name", unique: true, using: :btree
   end
 
   create_table "player_heroes", force: :cascade do |t|
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20170305162319) do
 
   create_table "players", force: :cascade do |t|
     t.string   "name",       null: false
-    t.string   "battlenet"
+    t.string   "battletag"
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -92,6 +92,9 @@ ActiveRecord::Schema.define(version: 20170305162319) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "battletag"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end

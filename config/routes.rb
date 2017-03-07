@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+
+  devise_scope :user do
+    get "/users/finish_signup" => "users/omniauth_callbacks#finish_signup"
+    post "/users/finished_signup" => "users/omniauth_callbacks#finished_signup"
+  end
 
   scope defaults: { format: :json }, path: "/api" do
     resources :compositions, only: [:new]
