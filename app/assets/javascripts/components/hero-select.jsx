@@ -4,11 +4,20 @@ class HeroSelect extends React.Component {
   }
 
   render() {
+    const { heroes } = this.props
     return (
       <span className="select">
         <select
           onChange={e => this.onChange(e)}
-        ><option>Select hero</option></select>
+        >
+          <option>Select hero</option>
+          {heroes.map(hero => (
+            <option
+              key={hero.name}
+              value={hero.name}
+            >{hero.name}</option>
+          ))}
+        </select>
       </span>
     )
   }
