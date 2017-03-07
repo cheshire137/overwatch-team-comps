@@ -10,8 +10,16 @@ RSpec.describe 'compositions API' do
     it 'loads successfully' do
       get '/api/compositions/new'
       expect(response).to be_success
+    end
+
+    it 'includes player names' do
+      get '/api/compositions/new'
       expect(response.body).to include('Player 1')
       expect(response.body).to include('Player 6')
+    end
+
+    it 'includes map details' do
+      get '/api/compositions/new'
       expect(response.body).to include(@map.name)
       expect(response.body).to include(@map.map_type)
       expect(response.body).to include(@map_segment.name)
