@@ -1,0 +1,38 @@
+.color-palette {
+  margin-bottom: 2em;
+  overflow: hidden;
+  li {
+    display: inline-block;
+    float: left;
+    height: 50px;
+    margin-right: 2.5%;
+    width: 18%;
+    &:last-of-type {
+      margin-right: 0;
+    }
+    &.attack {
+      background: $attack;
+    }
+    &.defend {
+      background: $defend;
+    }
+    &.block {
+      background: $block;
+    }
+    &.form {
+      background: $form;
+    }
+    &.mix {
+      background: $mix;
+    }
+    &.text {
+      background: $text;
+    }
+    &.soft-text {
+      background: $soft-text;
+    }
+    &.soft-header {
+      background: $soft-header;
+    }
+  }
+}

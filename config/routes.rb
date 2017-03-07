@@ -14,3 +14,7 @@ Rails.application.routes.draw do
   # http://guides.rubyonrails.org/routing.html
   root to: 'home#index'
 end
+
+Rails.application.routes.draw do
+  get "/pages/:page" => "pages#show"
+end
