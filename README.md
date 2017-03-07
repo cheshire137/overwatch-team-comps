@@ -32,6 +32,9 @@ bundle exec rails s
 
 Visit [localhost:3000](http://localhost:3000).
 
+You can view the style guide at
+[localhost:3000/pages/styleguide](http://localhost:3000/pages/styleguide).
+
 To add a new JavaScript package: `npm install WHATEVER_PACKAGE --save`
 
 ### OAuth in Local Development

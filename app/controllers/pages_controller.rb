@@ -1,5 +1,10 @@
 class PagesController < ApplicationController
   def show
-    render template: "pages/#{params[:page]}"
+    case params[:page]
+    when "styleguide"
+      render template: 'pages/styleguide'
+    else
+      render_404
+    end
   end
 end
