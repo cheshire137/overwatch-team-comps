@@ -2,7 +2,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def bnet
     auth = request.env['omniauth.auth']
     user = User.where(provider: auth.provider, uid: auth.uid).first
-    return redirect_to root_path if user
+    return sign_in_and_redirect(user, event: :authentication) if user
 
     session['devise.bnet_data'] = auth
     redirect_to users_finish_signup_path
