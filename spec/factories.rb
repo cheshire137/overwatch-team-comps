@@ -1,4 +1,10 @@
 FactoryGirl.define do
+  factory :composition do
+    name 'Best Ever Dive Comp'
+    map
+    user
+  end
+
   factory :hero do
     name 'McCree'
     role 'offense'
@@ -22,6 +28,11 @@ FactoryGirl.define do
     player
     hero
     confidence 60
+  end
+
+  factory :player_selection do
+    player_hero
+    composition
   end
 
   factory :user do
