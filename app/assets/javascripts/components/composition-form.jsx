@@ -12,7 +12,8 @@ export default class CompositionForm extends React.Component {
 
   constructor() {
     super()
-    this.state = { maps: [], players: [] }
+    const composition = { players: [] }
+    this.state = { maps: [], composition }
   }
 
   componentDidMount() {
@@ -26,7 +27,7 @@ export default class CompositionForm extends React.Component {
   }
 
   onNewCompositionFetched(composition) {
-    this.setState({ players: composition.players })
+    this.setState({ composition })
   }
 
   onMapsFetched(maps) {
@@ -46,7 +47,7 @@ export default class CompositionForm extends React.Component {
   }
 
   render() {
-    const { maps, players } = this.state
+    const { maps, composition } = this.state
     return (
       <form className="composition-form">
         <header className="composition-form-header">
@@ -90,7 +91,7 @@ export default class CompositionForm extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {players.map((player, index) => {
+              {composition.players.map((player, index) => {
                 const inputID = `player_${index}_name`
                 return (
                   <EditPlayerSelectionRow
