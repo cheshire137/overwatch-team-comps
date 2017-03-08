@@ -25,10 +25,10 @@ class EditPlayerSelectionRow extends React.Component {
           />
         </td>
         {mapSegments.map(segment => (
-          <td key={segment} className="hero-select-cell">
+          <td key={segment.id} className="hero-select-cell">
             <HeroSelect
               heroes={player.heroes}
-              onChange={heroID => onHeroSelection(heroID)}
+              onChange={heroID => onHeroSelection(heroID, segment.id)}
             />
           </td>
         ))}
