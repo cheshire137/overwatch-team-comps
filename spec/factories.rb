@@ -3,6 +3,7 @@ FactoryGirl.define do
     name 'Best Dive Comp'
     map
     user
+    session_id '123abc'
   end
 
   factory :hero do
