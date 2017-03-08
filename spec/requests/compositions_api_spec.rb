@@ -6,6 +6,17 @@ RSpec.describe 'compositions API' do
     @map_segment = create(:map_segment, map: @map)
     @hero1 = create(:hero, name: 'Hanzo')
     @hero2 = create(:hero, name: 'Mercy')
+    @user = create(:user)
+  end
+
+  describe 'POST create' do
+    it 'loads successfully for authenticated user' do
+      sign_in @user
+      post '/api/compositions', params: {
+        player_name: 'chocotaco', hero_id: @hero1.id, map_id: @map.id
+      }
+      expect(response).to be_success, response.body
+    end
   end
 
   describe 'GET new' do
