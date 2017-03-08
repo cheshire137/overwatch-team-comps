@@ -1,3 +1,4 @@
+import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 export default class CompositionForm extends React.Component {
@@ -25,8 +26,7 @@ export default class CompositionForm extends React.Component {
   }
 
   onNewCompositionFetched(composition) {
-    const players = composition.players.map(player => player.name)
-    this.setState({ players })
+    this.setState({ players: composition.players })
   }
 
   onMapsFetched(maps) {
@@ -34,13 +34,19 @@ export default class CompositionForm extends React.Component {
   }
 
   onPlayerNameChange(event, index) {
-    const players = this.state.players
-    players[index] = event.target.value
+    const players = this.state.players.slice(0)
+    const player = Object.assign({}, players[index])
+    player.name = event.target.value
+    players[index] = player
     this.setState({ players })
   }
 
+  onHeroSelection(hero, player) {
+    // TODO: actually save the selection of player + hero
+  }
+
   render() {
-    const { maps } = this.state
+    const { maps, players } = this.state
     return (
       <form className="composition-form">
         <header className="composition-form-header">
@@ -84,55 +90,17 @@ export default class CompositionForm extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.players.map((player, index) => {
+              {players.map((player, index) => {
                 const inputID = `player_${index}_name`
                 return (
-                  <tr key={inputID}>
-                    <td className="player-cell">
-                      <label
-                        htmlFor={inputID}
-                        className="label"
-                      >{index + 1}</label>
-                      <input
-                        type="text"
-                        id={inputID}
-                        placeholder="Player name"
-                        value={player}
-                        className="input"
-                        onChange={e => this.onPlayerNameChange(e, index)}
-                      />
-                    </td>
-                    <td className="hero-select-cell">
-                      <span className="select">
-                        <select><option>Select hero</option></select>
-                      </span>
-                    </td>
-                    <td className="hero-select-cell">
-                      <span className="select">
-                        <select><option>Select hero</option></select>
-                      </span>
-                    </td>
-                    <td className="hero-select-cell">
-                      <span className="select">
-                        <select><option>Select hero</option></select>
-                      </span>
-                    </td>
-                    <td className="hero-select-cell">
-                      <span className="select">
-                        <select><option>Select hero</option></select>
-                      </span>
-                    </td>
-                    <td className="hero-select-cell">
-                      <span className="select">
-                        <select><option>Select hero</option></select>
-                      </span>
-                    </td>
-                    <td className="hero-select-cell">
-                      <span className="select">
-                        <select><option>Select hero</option></select>
-                      </span>
-                    </td>
-                  </tr>
+                  <EditPlayerSelectionRow
+                    key={inputID}
+                    inputID={inputID}
+                    player={player}
+                    nameLabel={String(index + 1)}
+                    onHeroSelection={hero => this.onHeroSelection(hero, player)}
+                    onPlayerNameChange={name => this.onPlayerNameChange(name, index)}
+                  />
                 )
               })}
             </tbody>
