@@ -6,5 +6,5 @@ class User < ApplicationRecord
 
   devise :omniauthable, omniauth_providers: [:bnet]
 
-  has_many :compositions
+  has_many :compositions, dependent: :destroy
 end
