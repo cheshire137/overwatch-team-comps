@@ -15,7 +15,7 @@ class CompositionsController < ApplicationController
     end
   end
 
-  def create
+  def save
     unless player.persisted? || player.save
       return render json: { player_errors: player.errors },
                     status: :unprocessable_entity
