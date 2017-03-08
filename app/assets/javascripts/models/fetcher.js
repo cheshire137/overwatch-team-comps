@@ -30,6 +30,9 @@ export default class Fetcher {
     if (body) {
       data.body = JSON.stringify(body)
     }
+    if (method !== 'GET') {
+      data.credentials = 'same-origin'
+    }
     return fetch(url, data).then(Fetcher.checkStatus).
       then(Fetcher.parseJson)
   }
