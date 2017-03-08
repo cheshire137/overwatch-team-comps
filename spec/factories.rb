@@ -18,6 +18,12 @@ FactoryGirl.define do
     name 'zion'
   end
 
+  factory :player_hero do
+    player
+    hero
+    confidence 60
+  end
+
   factory :user do
     email 'jimbob@example.com'
     password '123abcCatDog!'
