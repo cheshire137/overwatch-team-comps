@@ -10,6 +10,10 @@ export default class CompositionForm extends React.Component {
     console.error('failed to load new composition data', error)
   }
 
+  static onPlayerSelectionSaveError(error) {
+    console.error('failed to save hero selection for player', error)
+  }
+
   constructor() {
     super()
     const composition = { players: [] }
@@ -43,6 +47,17 @@ export default class CompositionForm extends React.Component {
   }
 
   onHeroSelection(heroID, player) {
+    const { composition } = this.state
+    console.log(heroID, player.name, composition.map.id)
+    const api = new OverwatchTeamCompsApi()
+
+    api.savePlayerSelection(heroID, player.name, composition.map.id).
+      then(newComp => this.onPlayerSelectionSaved(newComp)).
+      catch(err => CompositionForm.onPlayerSelectionSaveError(err))
+  }
+
+  onPlayerSelectionSaved(composition) {
+    console.log('saved', composition)
   }
 
   render() {
