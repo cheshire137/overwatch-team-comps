@@ -42,8 +42,7 @@ export default class CompositionForm extends React.Component {
     this.setState({ players })
   }
 
-  onHeroSelection(hero, player) {
-    // TODO: actually save the selection of player + hero
+  onHeroSelection(heroID, player) {
   }
 
   render() {
@@ -99,7 +98,7 @@ export default class CompositionForm extends React.Component {
                     inputID={inputID}
                     player={player}
                     nameLabel={String(index + 1)}
-                    onHeroSelection={hero => this.onHeroSelection(hero, player)}
+                    onHeroSelection={heroID => this.onHeroSelection(heroID, player)}
                     onPlayerNameChange={name => this.onPlayerNameChange(name, index)}
                   />
                 )

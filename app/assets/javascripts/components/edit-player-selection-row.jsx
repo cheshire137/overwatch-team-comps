@@ -26,37 +26,37 @@ class EditPlayerSelectionRow extends React.Component {
         <td className="hero-select-cell">
           <HeroSelect
             heroes={player.heroes}
-            onChange={hero => onHeroSelection(hero)}
+            onChange={heroID => onHeroSelection(heroID)}
           />
         </td>
         <td className="hero-select-cell">
           <HeroSelect
             heroes={player.heroes}
-            onChange={hero => onHeroSelection(hero)}
+            onChange={heroID => onHeroSelection(heroID)}
           />
         </td>
         <td className="hero-select-cell">
           <HeroSelect
             heroes={player.heroes}
-            onChange={hero => onHeroSelection(hero)}
+            onChange={heroID => onHeroSelection(heroID)}
           />
         </td>
         <td className="hero-select-cell">
           <HeroSelect
             heroes={player.heroes}
-            onChange={hero => onHeroSelection(hero)}
+            onChange={heroID => onHeroSelection(heroID)}
           />
         </td>
         <td className="hero-select-cell">
           <HeroSelect
             heroes={player.heroes}
-            onChange={hero => onHeroSelection(hero)}
+            onChange={heroID => onHeroSelection(heroID)}
           />
         </td>
         <td className="hero-select-cell">
           <HeroSelect
             heroes={player.heroes}
-            onChange={hero => onHeroSelection(hero)}
+            onChange={heroID => onHeroSelection(heroID)}
           />
         </td>
       </tr>
