@@ -97,6 +97,7 @@ export default class CompositionForm extends React.Component {
                     key={inputID}
                     inputID={inputID}
                     player={player}
+                    mapSegments={mapSegments}
                     nameLabel={String(index + 1)}
                     onHeroSelection={hero => this.onHeroSelection(hero, player)}
                     onPlayerNameChange={name => this.onPlayerNameChange(name, index)}
