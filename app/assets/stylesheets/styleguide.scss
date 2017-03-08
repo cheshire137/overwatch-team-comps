@@ -1,12 +1,12 @@
 // Colors
 .color-palette {
-  display: flex;
-  flex-direction: row;
+  @include display-flex;
+  @include flex-direction(row);
   margin-bottom: 2em;
   li {
-    display: flex;
+    @include display-flex;
     border-radius: 3px;
-    flex-grow: 1;
+    @include flex-grow(1);
     height: 60px;
     margin-right: 2.5%;
     &:last-of-type { margin-right: 0; }
@@ -38,10 +38,10 @@
 .flexbox-grid-demo {
   .flex-grid, .flex-grid-thirds, .flex-grid-half {
     .col {
-      align-items: center;
+      @include align-items(center);
+      @include display-flex;
       background: lighten($defend, 50%);
       border-radius: 3px;
-      display: flex;
       height: 60px;
       margin-bottom: 1em;
       padding: 1em;
