@@ -13,4 +13,12 @@ FactoryGirl.define do
     map
     name 'Attacking: Payload 1'
   end
+
+  factory :user do
+    email 'jimbob@example.com'
+    password '123abcCatDog!'
+    provider 'bnet'
+    uid '123456'
+    battletag 'jimbob#1234'
+  end
 end
