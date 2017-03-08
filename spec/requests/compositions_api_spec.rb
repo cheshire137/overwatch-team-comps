@@ -8,7 +8,7 @@ RSpec.describe 'compositions API' do
     @hero2 = create(:hero, name: 'Mercy')
   end
 
-  describe 'GET index' do
+  describe 'GET new' do
     it 'loads successfully' do
       get '/api/compositions/new'
       expect(response).to be_success
