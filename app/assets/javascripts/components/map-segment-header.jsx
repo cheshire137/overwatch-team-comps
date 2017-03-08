@@ -1,15 +1,14 @@
 class MapSegmentHeader extends React.Component {
   className() {
-    if (this.props.mapSegment.toLowerCase().indexOf('attacking') > -1) {
+    if (this.props.mapSegment.toLowerCase().indexOf('attack') > -1) {
       return 'attack-cell'
     }
+
     return 'defend-cell'
   }
 
   render() {
-    return (
-      <th className={this.className()}>{this.props.mapSegment}</th>
-    )
+    return <th className={this.className()}>{this.props.mapSegment}</th>
   }
 }
 
