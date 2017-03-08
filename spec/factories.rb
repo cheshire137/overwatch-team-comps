@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :composition do
-    name 'Best Dive Comp'
     map
     user
     session_id '123abc'

@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20170308042755) do
   enable_extension "plpgsql"
 
   create_table "compositions", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       null: false
     t.text     "notes"
     t.integer  "map_id",                             null: false
     t.integer  "user_id",                            null: false

@@ -5,4 +5,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :rememberable, :trackable, :validatable
 
   devise :omniauthable, omniauth_providers: [:bnet]
+
+  has_many :compositions, dependent: :destroy
 end

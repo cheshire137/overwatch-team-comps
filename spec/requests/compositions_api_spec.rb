@@ -6,9 +6,146 @@ RSpec.describe 'compositions API' do
     @map_segment = create(:map_segment, map: @map)
     @hero1 = create(:hero, name: 'Hanzo')
     @hero2 = create(:hero, name: 'Mercy')
+    @user = create(:user)
   end
 
-  describe 'GET index' do
+  describe 'POST save' do
+    it 'loads successfully for authenticated user' do
+      sign_in @user
+      post '/api/compositions', params: {
+        player_name: 'chocotaco', hero_id: @hero1.id,
+        map_segment_id: @map_segment.id
+      }
+      expect(response).to be_success, response.body
+    end
+
+    it 'creates a new composition' do
+      sign_in @user
+
+      expect do
+        post '/api/compositions', params: {
+          player_name: 'chocotaco', hero_id: @hero1.id,
+          map_segment_id: @map_segment.id
+        }
+      end.to change { Composition.count }.by(1)
+
+      json = JSON.parse(response.body)
+      expect(json).to have_key('composition')
+      expect(json['composition']['map']['name']).to eq(@map.name)
+    end
+
+    it 'creates a new player for new name' do
+      sign_in @user
+
+      expect do
+        post '/api/compositions', params: {
+          player_name: 'chocotaco', hero_id: @hero1.id,
+          map_segment_id: @map_segment.id
+        }
+      end.to change { Player.count }.by(1)
+
+      json = JSON.parse(response.body)
+      expect(json).to have_key('composition')
+      expect(json['composition']['players'][0]['name']).to eq('chocotaco')
+    end
+
+    it 'reuses existing player' do
+      sign_in @user
+      player = create(:player)
+
+      expect do
+        post '/api/compositions', params: {
+          player_name: player.name, hero_id: @hero1.id,
+          map_segment_id: @map_segment.id
+        }
+      end.not_to change { Player.count }
+
+      json = JSON.parse(response.body)
+      expect(json).to have_key('composition')
+      expect(json['composition']['players'][0]['name']).to eq(player.name)
+    end
+
+    it 'creates a new player-hero for new combination' do
+      sign_in @user
+
+      expect do
+        post '/api/compositions', params: {
+          player_name: 'chocotaco', hero_id: @hero1.id,
+          map_segment_id: @map_segment.id
+        }
+      end.to change { PlayerHero.count }.by(1)
+
+      json = JSON.parse(response.body)
+      expect(json).to have_key('composition')
+      expect(json['composition']['players'][0]['name']).to eq('chocotaco')
+
+      expect(json['composition']['players'][0]['heroes'][0]['name']).to eq(@hero1.name)
+    end
+
+    it 'reuses an existing player-hero combination' do
+      sign_in @user
+      player = create(:player)
+      player_hero = create(:player_hero, player: player, hero: @hero1)
+
+      expect do
+        post '/api/compositions', params: {
+          player_name: player.name, hero_id: @hero1.id,
+          map_segment_id: @map_segment.id
+        }
+      end.not_to change { PlayerHero.count }
+
+      json = JSON.parse(response.body)
+      expect(json).to have_key('composition')
+      expect(json['composition']['players'][0]['name']).to eq(player.name)
+
+      expect(json['composition']['players'][0]['heroes'][0]['name']).to eq(@hero1.name)
+    end
+
+    it 'creates a new player selection' do
+      sign_in @user
+
+      expect do
+        post '/api/compositions', params: {
+          player_name: 'chocotaco', hero_id: @hero1.id,
+          map_segment_id: @map_segment.id
+        }
+      end.to change { PlayerSelection.count }.by(1)
+
+      json = JSON.parse(response.body)
+      expect(json).to have_key('composition')
+      expect(json['composition']['players'][0]['name']).to eq('chocotaco')
+
+      expect(json['composition']['players'][0]['heroes'][0]['name']).to eq(@hero1.name)
+      expect(json['composition']['players'][0]['selectedHero']['name']).to eq(@hero1.name)
+    end
+
+    it 'no-op for existing player selection' do
+      sign_in @user
+
+      player = create(:player)
+      player_hero = create(:player_hero, player: player, hero: @hero1)
+      composition = create(:composition, user: @user, map: @map)
+      player_selection = create(:player_selection, composition: composition,
+                                player_hero: player_hero,
+                                map_segment: @map_segment)
+
+      expect do
+        post '/api/compositions', params: {
+          player_name: player.name, hero_id: @hero1.id,
+          composition_id: composition.id, map_segment_id: @map_segment.id
+        }
+      end.not_to change { PlayerSelection.count }
+
+      json = JSON.parse(response.body)
+      expect(json).to have_key('composition')
+      expect(json['composition']['players'][0]['name']).to eq(player.name)
+
+      expect(json['composition']['players'][0]['heroes'][0]['name']).to eq(@hero1.name)
+      expect(json['composition']['players'][0]['selectedHero']['name']).to eq(@hero1.name)
+    end
+  end
+
+  describe 'GET new' do
     it 'loads successfully' do
       get '/api/compositions/new'
       expect(response).to be_success

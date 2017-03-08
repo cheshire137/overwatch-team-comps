@@ -11,6 +11,10 @@ export default class CompositionForm extends React.Component {
     console.error('failed to load new composition data', error)
   }
 
+  static onPlayerSelectionSaveError(error) {
+    console.error('failed to save hero selection for player', error)
+  }
+
   constructor() {
     super()
     const composition = { players: [], map: { segments: [] } }
@@ -43,8 +47,28 @@ export default class CompositionForm extends React.Component {
     this.setState({ players })
   }
 
-  onHeroSelection(hero, player) {
-    // TODO: actually save the selection of player + hero
+  onHeroSelectedForPlayer(heroID, mapSegmentID, player) {
+    const { composition } = this.state
+    const api = new OverwatchTeamCompsApi()
+
+    const body = {
+      hero_id: heroID,
+      map_segment_id: mapSegmentID,
+      player_name: player.name
+    }
+    if (composition.id) {
+      body.composition_id = composition.id
+    }
+
+    api.savePlayerSelection(body).
+      then(newComp => this.onPlayerSelectionSaved(newComp)).
+      catch(err => CompositionForm.onPlayerSelectionSaveError(err))
+  }
+
+  onPlayerSelectionSaved(newComposition) {
+    const composition = Object.assign({}, this.state.composition)
+    composition.id = newComposition.id
+    this.setState({ composition })
   }
 
   render() {
@@ -85,21 +109,22 @@ export default class CompositionForm extends React.Component {
               <tr>
                 <th className="players-header">Team 6/6</th>
                 {mapSegments.map(segment =>
-                  <MapSegmentHeader key={segment} mapSegment={segment} />
+                  <MapSegmentHeader key={segment.id} mapSegment={segment.name} />
                 )}
               </tr>
             </thead>
             <tbody>
               {composition.players.map((player, index) => {
                 const inputID = `player_${index}_name`
+                const key = `${player.name}${index}`
                 return (
                   <EditPlayerSelectionRow
-                    key={inputID}
+                    key={key}
                     inputID={inputID}
                     player={player}
                     mapSegments={mapSegments}
                     nameLabel={String(index + 1)}
-                    onHeroSelection={hero => this.onHeroSelection(hero, player)}
+                    onHeroSelection={(h, m) => this.onHeroSelectedForPlayer(h, m, player)}
                     onPlayerNameChange={name => this.onPlayerNameChange(name, index)}
                   />
                 )
