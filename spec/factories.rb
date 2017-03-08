@@ -1,4 +1,9 @@
 FactoryGirl.define do
+  factory :anonymous_user, class: User do
+    email "anonymous@ghost.com"
+    password "passworD1"
+  end
+
   factory :hero do
     name 'McCree'
     role 'offense'
