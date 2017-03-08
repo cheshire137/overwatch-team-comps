@@ -16,15 +16,10 @@ export default class OverwatchTeamCompsApi extends Fetcher {
     return this.get('/compositions/new').then(json => json.composition)
   }
 
-  savePlayerSelection(heroID, playerName, mapID) {
+  savePlayerSelection(body) {
     const headers = {
       'X-CSRF-TOKEN': this.token,
       'Content-type': 'application/json'
-    }
-    const body = {
-      hero_id: heroID,
-      map_id: mapID,
-      player_name: playerName
     }
     return this.post('/compositions', headers, body).
       then(json => json.composition)

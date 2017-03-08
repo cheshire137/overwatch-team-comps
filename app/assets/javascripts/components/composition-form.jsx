@@ -46,18 +46,28 @@ export default class CompositionForm extends React.Component {
     this.setState({ players })
   }
 
-  onHeroSelection(heroID, player) {
+  onHeroSelectedForPlayer(heroID, player) {
     const { composition } = this.state
-    console.log(heroID, player.name, composition.map.id)
     const api = new OverwatchTeamCompsApi()
 
-    api.savePlayerSelection(heroID, player.name, composition.map.id).
+    const body = {
+      hero_id: heroID,
+      map_id: composition.map.id,
+      player_name: player.name
+    }
+    if (composition.id) {
+      body.composition_id = composition.id
+    }
+
+    api.savePlayerSelection(body).
       then(newComp => this.onPlayerSelectionSaved(newComp)).
       catch(err => CompositionForm.onPlayerSelectionSaveError(err))
   }
 
-  onPlayerSelectionSaved(composition) {
-    console.log('saved', composition)
+  onPlayerSelectionSaved(newComposition) {
+    const composition = Object.assign({}, this.state.composition)
+    composition.id = newComposition.id
+    this.setState({ composition })
   }
 
   render() {
@@ -113,7 +123,7 @@ export default class CompositionForm extends React.Component {
                     inputID={inputID}
                     player={player}
                     nameLabel={String(index + 1)}
-                    onHeroSelection={heroID => this.onHeroSelection(heroID, player)}
+                    onHeroSelection={heroID => this.onHeroSelectedForPlayer(heroID, player)}
                     onPlayerNameChange={name => this.onPlayerNameChange(name, index)}
                   />
                 )
