@@ -1,4 +1,9 @@
 FactoryGirl.define do
+  factory :anonymous_user, class: User do
+    email "anonymous@overwatch-team-comps.com"
+    password "passworD1"
+  end
+
   factory :composition do
     map
     user

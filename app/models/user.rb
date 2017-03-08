@@ -7,4 +7,8 @@ class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: [:bnet]
 
   has_many :compositions, dependent: :destroy
+
+  def self.anonymous
+    find_by_email "anonymous@overwatch-team-comps.com"
+  end
 end

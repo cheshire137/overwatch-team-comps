@@ -72,3 +72,9 @@ map_segments_by_map.each do |map_name, base_segments|
     MapSegment.create(map_id: map.id, name: segment)
   end
 end
+
+puts "Creating anonymous user"
+User.create(
+  email: "anonymous@overwatch-team-comps.com",
+  password: "passworD1"
+)
