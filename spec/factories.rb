@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :composition do
-    name 'Best Ever Dive Comp'
     map
     user
   end
