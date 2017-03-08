@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   end
 
   scope defaults: { format: :json }, path: "/api" do
+    resources :compositions, only: [:new]
+
     resources :maps, only: [:index]
   end
 
