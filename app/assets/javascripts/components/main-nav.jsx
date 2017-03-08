@@ -17,11 +17,13 @@ class MainNav extends React.Component {
 
   render() {
     return (
-      <nav className="nav">
-        <div className="nav-right">
-          {this.signInLink()}
-        </div>
-      </nav>
+      <div className="container">
+        <nav className="nav">
+          <div className="nav-right">
+            {this.signInLink()}
+          </div>
+        </nav>
+      </div>
     )
   }
 }
