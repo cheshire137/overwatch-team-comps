@@ -14,11 +14,11 @@
   }
 
   .attack-cell {
-    color: #ba182c;
+    color: $attack;
   }
 
   .defend-cell {
-    color: #0e9ed2;
+    color: $defend;
   }
 
   tbody td {
