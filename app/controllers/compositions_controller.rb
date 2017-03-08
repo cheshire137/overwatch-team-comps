@@ -66,6 +66,11 @@ class CompositionsController < ApplicationController
     @map = Map.find(params[:map_id])
   end
 
+  def map_segment
+    return @map_segment if defined? @map_segment
+    @map_segment = MapSegment.find(params[:map_segment_id])
+  end
+
   def composition
     return @composition if defined? @composition
     @composition = if params[:composition_id]
@@ -78,9 +83,10 @@ class CompositionsController < ApplicationController
   def player_selection
     @player_selection ||= if composition.persisted?
       PlayerSelection.where(composition_id: composition,
-                            player_hero_id: player_hero).first_or_initialize
+                            player_hero_id: player_hero,
+                            map_segment_id: map_segment).first_or_initialize
     else
-      PlayerSelection.new(player_hero: player_hero)
+      PlayerSelection.new(player_hero: player_hero, map_segment: map_segment)
     end
   end
 end
