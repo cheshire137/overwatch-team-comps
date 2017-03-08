@@ -1,38 +1,50 @@
+// Colors
 .color-palette {
+  display: flex;
+  flex-direction: row;
   margin-bottom: 2em;
-  overflow: hidden;
   li {
-    display: inline-block;
-    float: left;
-    height: 50px;
+    display: flex;
+    border-radius: 3px;
+    flex-grow: 1;
+    height: 60px;
     margin-right: 2.5%;
-    width: 18%;
-    &:last-of-type {
-      margin-right: 0;
+    &:last-of-type { margin-right: 0; }
+    .color-name, .color-hex {
+      color: $white;
+      font-size: 0.8em;
+      margin: auto;
     }
-    &.attack {
-      background: $attack;
-    }
-    &.defend {
-      background: $defend;
-    }
-    &.block {
-      background: $block;
-    }
-    &.form {
-      background: $form;
-    }
-    &.mix {
-      background: $mix;
-    }
-    &.text {
-      background: $text;
-    }
+    .color-hex { color: $transparent-light; }
+    &.text { background: $text; }
     &.soft-text {
       background: $soft-text;
+      .color-hex { color: $transparent-dark; }
     }
-    &.soft-header {
-      background: $soft-header;
+    &.soft-header { background: $soft-header; }
+    &.attack { background: $attack; }
+    &.mix { background: $mix; }
+    &.defend { background: $defend; }
+    &.block { background: $block; }
+    &.form {
+      background: $form;
+      .color-name { color: $soft-header; }
+      .color-hex { color: $transparent-dark; }
+    }
+  }
+}
+
+// Grid
+.flexbox-grid-demo {
+  .flex-grid, .flex-grid-thirds, .flex-grid-half {
+    .col {
+      align-items: center;
+      background: lighten($defend, 50%);
+      border-radius: 3px;
+      display: flex;
+      height: 60px;
+      margin-bottom: 1em;
+      padding: 1em;
     }
   }
 }

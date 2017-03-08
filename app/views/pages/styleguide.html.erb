@@ -2,19 +2,35 @@
   <h1>Style Guide</h1>
   <section>
     <h3>Color Palette</h3>
-    <p>Main UI</p>
-    <ul class="color-palette">
-      <li class="attack"></li>
-      <li class="mix"></li>
-      <li class="defend"></li>
-      <li class="block"></li>
-      <li class="form"></li>
+    <h4>Text Colors</h4>
+    <ul class="color-palette flex-grid">
+      <li class="text col"><span class="color-name">$text</span><span class="color-hex">#474b58</span></li>
+      <li class="soft-text col"><span class="color-name">$soft-text</span><span class="color-hex">#A9ADB4</span></li>
+      <li class="soft-header col"><span class="color-name">$soft-header</span><span class="color-hex">#787D88</span></li>
     </ul>
-    <p>Text Colors</p>
-    <ul class="color-palette">
-      <li class="text"></li>
-      <li class="soft-text"></li>
-      <li class="soft-header"></li>
+    <h4>Main UI</h4>
+    <ul class="color-palette flex-grid">
+      <li class="attack col"><span class="color-name">$attack</span><span class="color-hex">#BA182C</span></li>
+      <li class="mix col"><span class="color-name">$mix</span><span class="color-hex">#645398</span></li>
+      <li class="defend col"><span class="color-name">$defend</span><span class="color-hex">#0E9ED2</span></li>
+      <li class="block col"><span class="color-name">$block</span><span class="color-hex">#111318</span></li>
+      <li class="form col"><span class="color-name">$form</span><span class="color-hex">#F6F6F7</span></li>
     </ul>
+  </section>
+
+  <section class="flexbox-grid-demo">
+    <h3>Flexbox Grid</h3>
+    <div class="flex-grid">
+      <div class="col">column 1</div>
+    </div>
+    <div class="flex-grid-half">
+      <div class="col">column 1</div>
+      <div class="col">column 2</div>
+    </div>
+    <div class="flex-grid-thirds">
+      <div class="col">column 1</div>
+      <div class="col">column 2</div>
+      <div class="col">column 3</div>
+    </div>
   </section>
 </div>
