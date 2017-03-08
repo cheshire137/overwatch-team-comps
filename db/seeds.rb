@@ -75,6 +75,6 @@ end
 
 puts "Creating anonymous user"
 User.create(
-  email: "anonymous@ghost.com",
+  email: "anonymous@overwatch-team-comps.com",
   password: "passworD1"
 )

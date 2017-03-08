@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :anonymous_user, class: User do
-    email "anonymous@ghost.com"
+    email "anonymous@overwatch-team-comps.com"
     password "passworD1"
   end
 

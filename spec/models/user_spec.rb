@@ -6,11 +6,11 @@ describe User do
       create :anonymous_user
     end
 
-    it "is found via email" do
-      expect(User.find_by_email("anonymous@ghost.com")).to_not be_nil
+    it "found via email" do
+      expect(User.find_by_email("anonymous@overwatch-team-comps.com")).to_not be_nil
     end
 
-    it "is found via scope" do
+    it "found via anonymous method" do
       expect(User.anonymous).to_not be_nil
     end
   end
