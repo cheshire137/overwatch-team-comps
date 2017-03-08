@@ -1,4 +1,5 @@
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
+import MapSegmentHeader from './map-segment-header.jsx'
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 export default class CompositionForm extends React.Component {
@@ -10,9 +11,14 @@ export default class CompositionForm extends React.Component {
     console.error('failed to load new composition data', error)
   }
 
+  static onPlayerSelectionSaveError(error) {
+    console.error('failed to save hero selection for player', error)
+  }
+
   constructor() {
     super()
-    this.state = { maps: [], players: [] }
+    const composition = { players: [], map: { segments: [] } }
+    this.state = { maps: [], composition }
   }
 
   componentDidMount() {
@@ -26,7 +32,7 @@ export default class CompositionForm extends React.Component {
   }
 
   onNewCompositionFetched(composition) {
-    this.setState({ players: composition.players })
+    this.setState({ composition })
   }
 
   onMapsFetched(maps) {
@@ -41,12 +47,33 @@ export default class CompositionForm extends React.Component {
     this.setState({ players })
   }
 
-  onHeroSelection(hero, player) {
-    // TODO: actually save the selection of player + hero
+  onHeroSelectedForPlayer(heroID, mapSegmentID, player) {
+    const { composition } = this.state
+    const api = new OverwatchTeamCompsApi()
+
+    const body = {
+      hero_id: heroID,
+      map_segment_id: mapSegmentID,
+      player_name: player.name
+    }
+    if (composition.id) {
+      body.composition_id = composition.id
+    }
+
+    api.savePlayerSelection(body).
+      then(newComp => this.onPlayerSelectionSaved(newComp)).
+      catch(err => CompositionForm.onPlayerSelectionSaveError(err))
+  }
+
+  onPlayerSelectionSaved(newComposition) {
+    const composition = Object.assign({}, this.state.composition)
+    composition.id = newComposition.id
+    this.setState({ composition })
   }
 
   render() {
-    const { maps, players } = this.state
+    const { maps, composition } = this.state
+    const mapSegments = composition.map.segments
     return (
       <form className="composition-form">
         <header className="composition-form-header">
@@ -81,24 +108,23 @@ export default class CompositionForm extends React.Component {
             <thead>
               <tr>
                 <th className="players-header">Team 6/6</th>
-                <th className="attack-cell">Offense Payload 1</th>
-                <th className="attack-cell">Offense Payload 2</th>
-                <th className="attack-cell">Offense Payload 3</th>
-                <th className="defend-cell">Defense Payload 1</th>
-                <th className="defend-cell">Defense Payload 2</th>
-                <th className="defend-cell">Defense Payload 3</th>
+                {mapSegments.map(segment =>
+                  <MapSegmentHeader key={segment.id} mapSegment={segment.name} />
+                )}
               </tr>
             </thead>
             <tbody>
-              {players.map((player, index) => {
+              {composition.players.map((player, index) => {
                 const inputID = `player_${index}_name`
+                const key = `${player.name}${index}`
                 return (
                   <EditPlayerSelectionRow
-                    key={inputID}
+                    key={key}
                     inputID={inputID}
                     player={player}
+                    mapSegments={mapSegments}
                     nameLabel={String(index + 1)}
-                    onHeroSelection={hero => this.onHeroSelection(hero, player)}
+                    onHeroSelection={(h, m) => this.onHeroSelectedForPlayer(h, m, player)}
                     onPlayerNameChange={name => this.onPlayerNameChange(name, index)}
                   />
                 )

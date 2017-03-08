@@ -1,6 +1,7 @@
 class HeroSelect extends React.Component {
   onChange(event) {
-    this.props.onChange(event.target.value)
+    const heroID = event.target.value
+    this.props.onChange(heroID)
   }
 
   render() {
@@ -13,8 +14,8 @@ class HeroSelect extends React.Component {
           <option>Select hero</option>
           {heroes.map(hero => (
             <option
-              key={hero.name}
-              value={hero.name}
+              key={hero.id}
+              value={hero.id}
             >{hero.name}</option>
           ))}
         </select>

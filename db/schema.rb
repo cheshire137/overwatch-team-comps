@@ -10,18 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306180636) do
+ActiveRecord::Schema.define(version: 20170308042755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "compositions", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       null: false
     t.text     "notes"
-    t.integer  "map_id",     null: false
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "map_id",                             null: false
+    t.integer  "user_id",                            null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "video_url",             default: ""
+    t.string   "session_id", limit: 32,              null: false
     t.index ["map_id"], name: "index_compositions_on_map_id", using: :btree
     t.index ["user_id"], name: "index_compositions_on_user_id", using: :btree
   end
@@ -66,7 +68,9 @@ ActiveRecord::Schema.define(version: 20170306180636) do
     t.integer  "composition_id", null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "map_segment_id", null: false
     t.index ["composition_id"], name: "index_player_selections_on_composition_id", using: :btree
+    t.index ["map_segment_id", "composition_id", "player_hero_id"], name: "idx_player_selections_unique_combo", unique: true, using: :btree
     t.index ["player_hero_id"], name: "index_player_selections_on_player_hero_id", using: :btree
   end
 
