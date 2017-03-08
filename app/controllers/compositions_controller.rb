@@ -75,10 +75,12 @@ class CompositionsController < ApplicationController
 
   def composition
     return @composition if defined? @composition
+
     @composition = if params[:composition_id]
-      Composition.where(id: params[:composition_id], user: current_user).first
+      Composition.where(id: params[:composition_id]).
+        where("user_id = ? OR session_id = ?", current_user, session.id).first
     else
-      Composition.new(map: map, user: current_user)
+      Composition.new(map: map, user: current_user, session_id: session.id)
     end
   end
 
