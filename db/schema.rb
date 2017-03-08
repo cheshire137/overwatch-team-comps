@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308042755) do
+ActiveRecord::Schema.define(version: 20170308043204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20170308042755) do
     t.datetime "updated_at",     null: false
     t.integer  "map_segment_id", null: false
     t.index ["composition_id"], name: "index_player_selections_on_composition_id", using: :btree
+    t.index ["map_segment_id", "composition_id", "player_hero_id"], name: "idx_player_selections_unique_combo", unique: true, using: :btree
     t.index ["player_hero_id"], name: "index_player_selections_on_player_hero_id", using: :btree
   end
 
