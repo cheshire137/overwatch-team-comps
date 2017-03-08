@@ -1,4 +1,5 @@
 json.composition do
+  json.id @composition.id
   json.name @composition.name
   json.notes @composition.notes
   json.map do
