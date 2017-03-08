@@ -13,14 +13,6 @@
     @include background-image(linear-gradient(left, #f3d6da 0%,#daf0f8 100%));
   }
 
-  .attack-cell {
-    color: $attack;
-  }
-
-  .defend-cell {
-    color: $defend;
-  }
-
   tbody td {
     vertical-align: top;
   }

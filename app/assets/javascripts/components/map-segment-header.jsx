@@ -1,10 +1,10 @@
 class MapSegmentHeader extends React.Component {
   className() {
     if (this.props.mapSegment.toLowerCase().indexOf('attack') > -1) {
-      return 'attack-cell'
+      return 'text-attack'
     }
 
-    return 'defend-cell'
+    return 'text-defend'
   }
 
   render() {
