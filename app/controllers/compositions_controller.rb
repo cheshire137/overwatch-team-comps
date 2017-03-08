@@ -26,7 +26,7 @@ class CompositionsController < ApplicationController
                     status: :unprocessable_entity
     end
 
-    unless composition.save
+    unless composition.persisted? || composition.save
       return render json: { composition_errors: composition.errors },
                     status: :unprocessable_entity
     end
@@ -36,7 +36,10 @@ class CompositionsController < ApplicationController
                     status: :unprocessable_entity
     end
 
-    @players = composition.players.includes(:player_heroes)
+    @composition = composition
+    @map = map
+    @player_selection = player_selection
+    @players = @composition.players.includes(:player_heroes)
   end
 
   private
@@ -64,12 +67,20 @@ class CompositionsController < ApplicationController
   end
 
   def composition
-    @composition ||= Composition.new(map: map, user: current_user)
+    return @composition if defined? @composition
+    @composition = if params[:composition_id]
+      Composition.where(id: params[:composition_id], user: current_user).first
+    else
+      Composition.new(map: map, user: current_user)
+    end
   end
 
   def player_selection
-    @player_selection ||= PlayerSelection.
-      where(composition_id: composition, player_hero_id: player_hero).
-      first_or_initialize
+    @player_selection ||= if composition.persisted?
+      PlayerSelection.where(composition_id: composition,
+                            player_hero_id: player_hero).first_or_initialize
+    else
+      PlayerSelection.new(player_hero: player_hero)
+    end
   end
 end

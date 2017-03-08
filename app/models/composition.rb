@@ -19,6 +19,6 @@ class Composition < ApplicationRecord
     return if name.present?
 
     num_comps = user.compositions.count
-    self.name = "Composition #{num_comps}"
+    self.name = "Composition #{num_comps + 1}"
   end
 end
