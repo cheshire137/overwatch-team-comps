@@ -17,29 +17,35 @@ class CompositionsController < ApplicationController
 
   def create
     unless player.persisted? || player.save
-      return render json: player.errors, status: :unprocessable_entity
+      return render json: { player_errors: player.errors },
+                    status: :unprocessable_entity
     end
 
     unless player_hero.persisted? || player_hero.save
-      return render json: player_hero.errors, status: :unprocessable_entity
+      return render json: { player_hero_errors: player_hero.errors },
+                    status: :unprocessable_entity
     end
 
-    composition = Composition.new(map: map, user: current_user)
     unless composition.save
-      return render json: composition.errors, status: :unprocessable_entity
+      return render json: { composition_errors: composition.errors },
+                    status: :unprocessable_entity
     end
 
-    player_selection = PlayerSelection.new(composition: composition,
-                                           player_hero: player_hero)
-    unless player_selection.save
-      return render json: player_selection.errors, status: :unprocessable_entity
+    unless player_selection.persisted? || player_selection.save
+      return render json: { player_selection_errors: player_selection.errors },
+                    status: :unprocessable_entity
     end
+
+    @players = composition.players.includes(:player_heroes)
   end
 
   private
 
   def player
-    @player ||= Player.where(name: params[:player_name]).first_or_initialize
+    return @player if @player
+    @player = Player.where(name: params[:player_name])
+    @player = @player.where(user_id: current_user) if user_signed_in?
+    @player = @player.first_or_initialize
   end
 
   def hero
@@ -58,5 +64,15 @@ class CompositionsController < ApplicationController
   def map
     return @map if defined? @map
     @map = Map.find(params[:map_id])
+  end
+
+  def composition
+    @composition ||= Composition.new(map: map, user: current_user)
+  end
+
+  def player_selection
+    @player_selection ||= PlayerSelection.
+      where(composition_id: composition, player_hero_id: player_hero).
+      first_or_initialize
   end
 end
