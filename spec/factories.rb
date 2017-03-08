@@ -14,6 +14,10 @@ FactoryGirl.define do
     name 'Attacking: Payload 1'
   end
 
+  factory :player do
+    name 'zion'
+  end
+
   factory :user do
     email 'jimbob@example.com'
     password '123abcCatDog!'
