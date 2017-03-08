@@ -20,6 +20,10 @@ export default class Fetcher {
     return this.makeRequest('GET', path, headers)
   }
 
+  post(path, headers, body) {
+    return this.makeRequest('POST', path, headers, body)
+  }
+
   makeRequest(method, path, headers, body) {
     const url = `${this.basePath}${path}`
     const data = { method, headers }
