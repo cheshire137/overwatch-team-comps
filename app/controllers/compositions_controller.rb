@@ -14,4 +14,49 @@ class CompositionsController < ApplicationController
       end
     end
   end
+
+  def create
+    unless player.persisted? || player.save
+      return render json: player.errors, status: :unprocessable_entity
+    end
+
+    unless player_hero.persisted? || player_hero.save
+      return render json: player_hero.errors, status: :unprocessable_entity
+    end
+
+    composition = Composition.new(map: map, user: current_user)
+    unless composition.save
+      return render json: composition.errors, status: :unprocessable_entity
+    end
+
+    player_selection = PlayerSelection.new(composition: composition,
+                                           player_hero: player_hero)
+    unless player_selection.save
+      return render json: player_selection.errors, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def player
+    @player ||= Player.where(name: params[:player_name]).first_or_initialize
+  end
+
+  def hero
+    return @hero if defined? @hero
+    @hero = Hero.find(params[:hero_id])
+  end
+
+  def player_hero
+    return @player_hero if @player_hero
+    return @player_hero = nil unless hero && player.persisted?
+
+    @player_hero = PlayerHero.where(player_id: player, hero_id: hero).
+      first_or_initialize
+  end
+
+  def map
+    return @map if defined? @map
+    @map = Map.find(params[:map_id])
+  end
 end
