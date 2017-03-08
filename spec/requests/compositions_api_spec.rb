@@ -109,7 +109,7 @@ RSpec.describe 'compositions API' do
       expect(json['composition']['players'][0]['name']).to eq('chocotaco')
 
       expect(json['composition']['players'][0]['heroes'][0]['name']).to eq(@hero1.name)
-      expect(json['composition']['players'][0]['heroes'][0]['selected']).to eq(true)
+      expect(json['composition']['players'][0]['selectedHero']['name']).to eq(@hero1.name)
     end
 
     it 'no-op for existing player selection' do
@@ -133,7 +133,7 @@ RSpec.describe 'compositions API' do
       expect(json['composition']['players'][0]['name']).to eq(player.name)
 
       expect(json['composition']['players'][0]['heroes'][0]['name']).to eq(@hero1.name)
-      expect(json['composition']['players'][0]['heroes'][0]['selected']).to eq(true)
+      expect(json['composition']['players'][0]['selectedHero']['name']).to eq(@hero1.name)
     end
   end
 

@@ -9,10 +9,12 @@ json.composition do
   end
   json.players @players do |player|
     json.name player.name
+    json.selectedHero do
+      json.name @player_selection.player_hero.hero.name
+    end
     json.heroes player.player_heroes do |player_hero|
       json.name player_hero.hero.name
       json.confidence player_hero.confidence
-      json.selected @player_selection.player_hero == player_hero
     end
   end
 end
