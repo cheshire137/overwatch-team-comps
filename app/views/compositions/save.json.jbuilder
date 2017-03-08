@@ -6,7 +6,10 @@ json.composition do
     json.id @map.id
     json.name @map.name
     json.type @map.map_type
-    json.segments @map.segments.pluck(:name)
+    json.segments @map.segments do |map_segment|
+      json.id map_segment.id
+      json.name map_segment.name
+    end
   end
   json.players @players do |player|
     json.name player.name
