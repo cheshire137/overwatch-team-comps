@@ -9,8 +9,12 @@
     <%= stylesheet_link_tag 'application', media: 'all' %>
   </head>
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if alert.present? %>
+      <p class="alert text-attack"><%= alert %></p>
+    <% end %>
+    <% if notice.present? %>
+      <p class="notice text-defend"><%= notice %></p>
+    <% end %>
     <%= yield %>
     <%= javascript_include_tag 'application' %>
   </body>
