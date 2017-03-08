@@ -6,7 +6,8 @@ class EditPlayerSelectionRow extends React.Component {
   }
 
   render() {
-    const { inputID, player, nameLabel, onHeroSelection } = this.props
+    const { inputID, player, nameLabel, onHeroSelection,
+            mapSegments } = this.props
     return (
       <tr>
         <td className="player-cell">
@@ -23,42 +24,14 @@ class EditPlayerSelectionRow extends React.Component {
             onChange={e => this.onPlayerNameChange(e)}
           />
         </td>
-        <td className="hero-select-cell">
-          <HeroSelect
-            heroes={player.heroes}
-            onChange={heroID => onHeroSelection(heroID)}
-          />
-        </td>
-        <td className="hero-select-cell">
-          <HeroSelect
-            heroes={player.heroes}
-            onChange={heroID => onHeroSelection(heroID)}
-          />
-        </td>
-        <td className="hero-select-cell">
-          <HeroSelect
-            heroes={player.heroes}
-            onChange={heroID => onHeroSelection(heroID)}
-          />
-        </td>
-        <td className="hero-select-cell">
-          <HeroSelect
-            heroes={player.heroes}
-            onChange={heroID => onHeroSelection(heroID)}
-          />
-        </td>
-        <td className="hero-select-cell">
-          <HeroSelect
-            heroes={player.heroes}
-            onChange={heroID => onHeroSelection(heroID)}
-          />
-        </td>
-        <td className="hero-select-cell">
-          <HeroSelect
-            heroes={player.heroes}
-            onChange={heroID => onHeroSelection(heroID)}
-          />
-        </td>
+        {mapSegments.map(segment => (
+          <td key={segment} className="hero-select-cell">
+            <HeroSelect
+              heroes={player.heroes}
+              onChange={heroID => onHeroSelection(heroID)}
+            />
+          </td>
+        ))}
       </tr>
     )
   }
@@ -69,7 +42,8 @@ EditPlayerSelectionRow.propTypes = {
   player: React.PropTypes.object.isRequired,
   onPlayerNameChange: React.PropTypes.func.isRequired,
   nameLabel: React.PropTypes.string.isRequired,
-  onHeroSelection: React.PropTypes.func.isRequired
+  onHeroSelection: React.PropTypes.func.isRequired,
+  mapSegments: React.PropTypes.array.isRequired
 }
 
 export default EditPlayerSelectionRow
