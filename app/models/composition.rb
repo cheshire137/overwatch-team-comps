@@ -9,5 +9,5 @@ class Composition < ApplicationRecord
   has_many :players, through: :player_heroes
   has_many :heroes, through: :player_heroes
 
-  validates :map, presence: true
+  validates :map, :name, presence: true
 end

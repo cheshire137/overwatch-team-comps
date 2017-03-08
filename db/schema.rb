@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306180636) do
+ActiveRecord::Schema.define(version: 20170308033102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "compositions", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       null: false
     t.text     "notes"
     t.integer  "map_id",     null: false
     t.integer  "user_id"
