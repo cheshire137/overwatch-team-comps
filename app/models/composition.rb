@@ -11,7 +11,7 @@ class Composition < ApplicationRecord
 
   before_validation :set_name
 
-  validates :map, :name, presence: true
+  validates :map, :session_id, :name, presence: true
   validates :name, uniqueness: { scope: [:map_id, :user_id] }
 
   def set_name
