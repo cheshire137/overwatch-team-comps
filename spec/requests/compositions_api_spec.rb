@@ -13,7 +13,7 @@ RSpec.describe 'compositions API' do
     it 'loads successfully for authenticated user' do
       sign_in @user
       post '/api/compositions', params: {
-        player_name: 'chocotaco', hero_id: @hero1.id, map_id: @map.id,
+        player_name: 'chocotaco', hero_id: @hero1.id,
         map_segment_id: @map_segment.id
       }
       expect(response).to be_success, response.body
@@ -24,7 +24,7 @@ RSpec.describe 'compositions API' do
 
       expect do
         post '/api/compositions', params: {
-          player_name: 'chocotaco', hero_id: @hero1.id, map_id: @map.id,
+          player_name: 'chocotaco', hero_id: @hero1.id,
           map_segment_id: @map_segment.id
         }
       end.to change { Composition.count }.by(1)
@@ -39,7 +39,7 @@ RSpec.describe 'compositions API' do
 
       expect do
         post '/api/compositions', params: {
-          player_name: 'chocotaco', hero_id: @hero1.id, map_id: @map.id,
+          player_name: 'chocotaco', hero_id: @hero1.id,
           map_segment_id: @map_segment.id
         }
       end.to change { Player.count }.by(1)
@@ -55,7 +55,7 @@ RSpec.describe 'compositions API' do
 
       expect do
         post '/api/compositions', params: {
-          player_name: player.name, hero_id: @hero1.id, map_id: @map.id,
+          player_name: player.name, hero_id: @hero1.id,
           map_segment_id: @map_segment.id
         }
       end.not_to change { Player.count }
@@ -70,7 +70,7 @@ RSpec.describe 'compositions API' do
 
       expect do
         post '/api/compositions', params: {
-          player_name: 'chocotaco', hero_id: @hero1.id, map_id: @map.id,
+          player_name: 'chocotaco', hero_id: @hero1.id,
           map_segment_id: @map_segment.id
         }
       end.to change { PlayerHero.count }.by(1)
@@ -89,7 +89,7 @@ RSpec.describe 'compositions API' do
 
       expect do
         post '/api/compositions', params: {
-          player_name: player.name, hero_id: @hero1.id, map_id: @map.id,
+          player_name: player.name, hero_id: @hero1.id,
           map_segment_id: @map_segment.id
         }
       end.not_to change { PlayerHero.count }
@@ -106,7 +106,7 @@ RSpec.describe 'compositions API' do
 
       expect do
         post '/api/compositions', params: {
-          player_name: 'chocotaco', hero_id: @hero1.id, map_id: @map.id,
+          player_name: 'chocotaco', hero_id: @hero1.id,
           map_segment_id: @map_segment.id
         }
       end.to change { PlayerSelection.count }.by(1)
@@ -131,7 +131,7 @@ RSpec.describe 'compositions API' do
 
       expect do
         post '/api/compositions', params: {
-          player_name: player.name, hero_id: @hero1.id, map_id: @map.id,
+          player_name: player.name, hero_id: @hero1.id,
           composition_id: composition.id, map_segment_id: @map_segment.id
         }
       end.not_to change { PlayerSelection.count }

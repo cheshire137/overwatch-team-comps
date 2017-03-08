@@ -61,14 +61,16 @@ class CompositionsController < ApplicationController
       first_or_initialize
   end
 
-  def map
-    return @map if defined? @map
-    @map = Map.find(params[:map_id])
-  end
-
   def map_segment
     return @map_segment if defined? @map_segment
     @map_segment = MapSegment.find(params[:map_segment_id])
+  end
+
+  def map
+    return @map if defined? @map
+    @map = if map_segment
+      map_segment.map
+    end
   end
 
   def composition
