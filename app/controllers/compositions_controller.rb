@@ -42,10 +42,7 @@ class CompositionsController < ApplicationController
   private
 
   def player
-    return @player if @player
-    @player = Player.where(name: params[:player_name])
-    @player = @player.where(user_id: current_user) if user_signed_in?
-    @player = @player.first_or_initialize
+    @player ||= Player.where(name: params[:player_name]).first_or_initialize
   end
 
   def hero
