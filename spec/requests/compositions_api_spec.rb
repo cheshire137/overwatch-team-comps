@@ -10,15 +10,6 @@ RSpec.describe 'compositions API' do
   end
 
   describe 'POST save' do
-    it 'loads successfully for authenticated user' do
-      sign_in @user
-      post '/api/compositions', params: {
-        player_name: 'chocotaco', hero_id: @hero1.id,
-        map_segment_id: @map_segment.id
-      }
-      expect(response).to be_success, response.body
-    end
-
     it 'creates a new composition' do
       sign_in @user
 
