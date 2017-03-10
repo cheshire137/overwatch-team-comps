@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310230642) do
+ActiveRecord::Schema.define(version: 20170310233529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20170310230642) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.string   "video_url",             default: ""
-    t.string   "session_id", limit: 32,              null: false
+    t.string   "session_id", limit: 32
     t.index ["map_id"], name: "index_compositions_on_map_id", using: :btree
     t.index ["user_id"], name: "index_compositions_on_user_id", using: :btree
   end
