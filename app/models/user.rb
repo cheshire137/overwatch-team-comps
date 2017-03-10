@@ -7,6 +7,7 @@ class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: [:bnet]
 
   has_many :compositions, dependent: :destroy
+  has_many :created_players, class_name: 'Player', foreign_key: 'creator_id'
 
   ANONYMOUS_EMAIL = 'anonymous@overwatch-team-comps.com'.freeze
 
