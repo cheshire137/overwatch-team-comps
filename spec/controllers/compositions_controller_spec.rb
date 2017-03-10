@@ -41,6 +41,15 @@ RSpec.describe CompositionsController do
       end.to change { Composition.count }.by(1)
     end
 
+    it 'creates a new composition for anonymous user' do
+      expect do
+        post :save, params: {
+          player_name: 'FabulousPrizes', hero_id: @hero1.id,
+          map_segment_id: @map_segment.id, format: :json
+        }
+      end.to change { @anon_user.compositions.count }.by(1)
+    end
+
     it 'creates a new player for new name for authenticated user' do
       sign_in @user
 
@@ -50,6 +59,15 @@ RSpec.describe CompositionsController do
           map_segment_id: @map_segment.id, format: :json
         }
       end.to change { Player.count }.by(1)
+    end
+
+    it 'creates a new player for new name for anonymous user' do
+      expect do
+        post :save, params: {
+          player_name: 'NiftyThrifty618', hero_id: @hero1.id,
+          map_segment_id: @map_segment.id, format: :json
+        }
+      end.to change { @anon_user.created_players.count }.by(1)
     end
 
     it 'reuses existing player for authenticated user' do
