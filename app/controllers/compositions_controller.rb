@@ -87,10 +87,25 @@ class CompositionsController < ApplicationController
     return @composition if defined? @composition
 
     @composition = if params[:composition_id]
-      Composition.where(id: params[:composition_id]).
-        where("user_id = ? OR session_id = ?", current_user, session.id).first
+      scope = Composition.where(id: params[:composition_id])
+
+      if user_signed_in?
+        scope = scope.where(user_id: current_user)
+      else
+        scope = scope.where(user_id: User.anonymous, session_id: session.id)
+      end
+
+      scope.first
     else
-      Composition.new(map: map, user: current_user, session_id: session.id)
+      attrs = {map: map}
+      if user_signed_in?
+        attrs[:user] = current_user
+      else
+        attrs[:session_id] = session.id
+        attrs[:user] = User.anonymous
+      end
+
+      Composition.new(attrs)
     end
   end
 
