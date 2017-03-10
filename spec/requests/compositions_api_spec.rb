@@ -51,7 +51,7 @@ RSpec.describe 'compositions API' do
 
     it 'reuses existing player' do
       sign_in @user
-      player = create(:player)
+      player = create(:player, creator: @user)
 
       expect do
         post '/api/compositions', params: {
@@ -84,7 +84,7 @@ RSpec.describe 'compositions API' do
 
     it 'reuses an existing player-hero combination' do
       sign_in @user
-      player = create(:player)
+      player = create(:player, creator: @user)
       player_hero = create(:player_hero, player: player, hero: @hero1)
 
       expect do
@@ -122,7 +122,7 @@ RSpec.describe 'compositions API' do
     it 'no-op for existing player selection' do
       sign_in @user
 
-      player = create(:player)
+      player = create(:player, creator: @user)
       player_hero = create(:player_hero, player: player, hero: @hero1)
       composition = create(:composition, user: @user, map: @map)
       player_selection = create(:player_selection, composition: composition,
