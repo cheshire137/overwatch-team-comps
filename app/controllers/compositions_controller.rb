@@ -45,7 +45,17 @@ class CompositionsController < ApplicationController
   private
 
   def player
-    @player ||= Player.where(name: params[:player_name]).first_or_initialize
+    return @player if @player
+
+    scope = Player.where(name: params[:player_name])
+    if user_signed_in?
+      scope = scope.where(creator: current_user)
+    else
+      scope = scope.where(creator: User.anonymous,
+                          creator_session_id: session.id)
+    end
+
+    @player = scope.first_or_initialize
   end
 
   def hero
