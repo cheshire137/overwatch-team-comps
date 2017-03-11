@@ -36,7 +36,8 @@ FactoryGirl.define do
   end
 
   factory :player_selection do
-    player_hero
+    player
+    hero
     composition
     map_segment { create(:map_segment, map: composition.map) }
   end
