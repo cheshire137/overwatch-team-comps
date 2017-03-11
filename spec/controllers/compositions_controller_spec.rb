@@ -94,6 +94,19 @@ RSpec.describe CompositionsController do
       expect(composition.players.pluck(:name)).to eq(['newName64'])
     end
 
+    it 'allows creating a player in a new composition' do
+      sign_in @user
+
+      expect do
+        post :save, params: {
+          player_name: 'newName64', format: :json, map_segment_id: @map_segment.id
+        }
+      end.to change { @user.created_players.count }.by(1)
+      expect(response).to be_success
+      expect(@user.compositions.last).not_to be_nil
+      expect(@user.compositions.last.players.pluck(:name)).to eq(['newName64'])
+    end
+
     it 'allows updating just a player name' do
       sign_in @user
       player = create(:player, name: 'oldName32', creator: @user)
