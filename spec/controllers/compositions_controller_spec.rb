@@ -65,6 +65,22 @@ RSpec.describe CompositionsController do
       expect(response).to have_http_status(400)
     end
 
+    it "does not allow updating another user's composition" do
+      sign_in @user
+      composition = create(:composition, map: @map)
+      new_map = create(:map, name: 'Oasis')
+      map_segment = create(:map_segment, map: new_map)
+
+      expect do
+        post :save, params: {
+          format: :json, composition_id: composition.id,
+          map_segment_id: map_segment.id
+        }
+      end.not_to change { Composition.count }
+      expect(composition.reload.map).to eq(@map)
+      expect(response).to have_http_status(400)
+    end
+
     it 'allows updating just a player name' do
       sign_in @user
       player = create(:player, name: 'oldName32', creator: @user)

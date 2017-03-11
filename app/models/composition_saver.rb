@@ -93,6 +93,9 @@ class CompositionSaver
         scope = scope.where(user_id: User.anonymous, session_id: @session_id)
       end
       comp = scope.first
+      unless comp
+        raise CompositionSaver::Error, 'No such composition for creator'
+      end
       comp.map = map if map
       comp
     else
