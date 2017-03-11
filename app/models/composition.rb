@@ -13,6 +13,7 @@ class Composition < ApplicationRecord
 
   validates :map, :user, :name, presence: true
   validate :session_id_set_if_anonymous
+  validate :user_has_not_used_name_before
 
   scope :anonymous, ->{ where(user_id: User.anonymous) }
 
@@ -21,7 +22,7 @@ class Composition < ApplicationRecord
     return if name.present?
 
     num_comps = if user.anonymous?
-      Composition.where(session_id: session_id).count
+      self.class.anonymous.where(session_id: session_id).count
     else
       user.compositions.count
     end
@@ -30,6 +31,18 @@ class Composition < ApplicationRecord
   end
 
   private
+
+  def user_has_not_used_name_before
+    return unless user && name
+
+    scope = self.class.where(name: name, user_id: user)
+    scope = scope.where(session_id: session_id) if user.anonymous?
+    scope = scope.where('id <> ?', id) if persisted?
+
+    if scope.count > 0
+      errors.add(:name, 'has already been used for one of your compositions.')
+    end
+  end
 
   def session_id_set_if_anonymous
     return unless user && user.anonymous?
