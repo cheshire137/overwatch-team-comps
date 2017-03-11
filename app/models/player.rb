@@ -21,6 +21,17 @@ class Player < ApplicationRecord
     "Player #{next_number}"
   end
 
+  # Returns the given list of heroes reordered such that the ones the player is most
+  # confidence on are first. Sorted secondarily by hero name.
+  def heroes_by_confidence(heroes)
+    confidence_by_hero_id = PlayerHero.where(player_id: id).order('confidence DESC').
+      map { |ph| [ph.hero_id, ph.confidence] }.to_h
+    heroes.sort_by do |hero|
+      confidence = confidence_by_hero_id[hero.id] || 0
+      [confidence, hero.name]
+    end
+  end
+
   private
 
   def creator_session_id_set_if_anonymous
