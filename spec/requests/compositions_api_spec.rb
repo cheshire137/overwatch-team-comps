@@ -40,53 +40,12 @@ RSpec.describe 'compositions API' do
 
       post '/api/compositions', params: {
         player_name: player.name, hero_id: @hero1.id,
-        map_segment_id: @map_segment.id
+        map_segment_id: @map_segment.id, player_id: player.id
       }
 
       json = JSON.parse(response.body)
       expect(json).to have_key('composition')
       expect(json['composition']['players'][0]['name']).to eq(player.name)
-    end
-
-    it 'returns new player-hero info for new combination for auth user' do
-      sign_in @user
-      post '/api/compositions', params: {
-        player_name: 'chocotaco', hero_id: @hero1.id,
-        map_segment_id: @map_segment.id
-      }
-
-      json = JSON.parse(response.body)
-      expect(json).to have_key('composition')
-      expect(json['composition']['players'][0]['name']).to eq('chocotaco')
-
-      expect(json['composition']['players'][0]['heroes'][0]['name']).to eq(@hero1.name)
-    end
-
-    it 'returns existing player-hero combination for auth user' do
-      sign_in @user
-      player = create(:player, creator: @user)
-      player_hero = create(:player_hero, player: player, hero: @hero1)
-
-      post '/api/compositions', params: {
-        player_name: player.name, hero_id: @hero1.id,
-        map_segment_id: @map_segment.id
-      }
-
-      json = JSON.parse(response.body)
-      expect(json).to have_key('composition')
-
-      player_json = json['composition']['players'].detect do |pj|
-        pj['name'] == player.name
-      end
-      expect(player_json).not_to be_nil
-      expect(player_json['heroes'].length).to eq(2)
-
-      selected_json = player_json['heroes'].detect do |sj|
-        sj['mapSegmentID'] != nil
-      end
-      expect(selected_json).not_to be_nil
-      expect(selected_json['name']).to eq(@hero1.name)
-      expect(selected_json['mapSegmentID']).to eq(@map_segment.id)
     end
 
     it 'returns new player selection for authenticated user' do
@@ -110,19 +69,19 @@ RSpec.describe 'compositions API' do
       sign_in @user
 
       player = create(:player, creator: @user)
-      player_hero = create(:player_hero, player: player, hero: @hero1)
       composition = create(:composition, user: @user, map: @map)
       player_selection = create(:player_selection, composition: composition,
-                                player_hero: player_hero,
+                                player: player, hero: @hero1,
                                 map_segment: @map_segment)
 
       post '/api/compositions', params: {
         player_name: player.name, hero_id: @hero1.id,
-        composition_id: composition.id, map_segment_id: @map_segment.id
+        composition_id: composition.id, map_segment_id: @map_segment.id,
+        player_id: player.id
       }
 
       json = JSON.parse(response.body)
-      expect(json).to have_key('composition')
+      expect(json).to have_key('composition'), response.body
       expect(json['composition']['players'][0]['name']).to eq(player.name)
 
       player_json = json['composition']['players'].detect do |pj|

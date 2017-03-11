@@ -103,30 +103,6 @@ RSpec.describe CompositionsController do
       expect(player.reload.name).to eq('gloriousNewPerson')
     end
 
-    it 'creates a new player-hero for new combination for auth user' do
-      sign_in @user
-
-      expect do
-        post :save, params: {
-          player_name: 'chocotaco', hero_id: @hero1.id,
-          map_segment_id: @map_segment.id, format: :json
-        }
-      end.to change { PlayerHero.count }.by(1)
-    end
-
-    it 'reuses an existing player-hero combination for auth user' do
-      sign_in @user
-      player = create(:player, creator: @user)
-      player_hero = create(:player_hero, player: player, hero: @hero1)
-
-      expect do
-        post :save, params: {
-          player_name: player.name, hero_id: @hero1.id,
-          map_segment_id: @map_segment.id, format: :json, player_id: player.id
-        }
-      end.not_to change { PlayerHero.count }
-    end
-
     it 'creates a new player selection for authenticated user' do
       sign_in @user
 
@@ -142,19 +118,19 @@ RSpec.describe CompositionsController do
       sign_in @user
 
       player = create(:player, creator: @user)
-      player_hero = create(:player_hero, player: player, hero: @hero1)
       composition = create(:composition, user: @user, map: @map)
       player_selection = create(:player_selection, composition: composition,
-                                player_hero: player_hero,
+                                player: player, hero: @hero1,
                                 map_segment: @map_segment)
 
       expect do
         post :save, params: {
-          player_name: player.name, hero_id: @hero1.id, format: :json,
+          player_name: player.name, hero_id: @hero2.id, format: :json,
           composition_id: composition.id, map_segment_id: @map_segment.id,
           player_id: player.id
         }
       end.not_to change { PlayerSelection.count }
+      expect(player_selection.reload.hero).to eq(@hero2)
     end
   end
 end
