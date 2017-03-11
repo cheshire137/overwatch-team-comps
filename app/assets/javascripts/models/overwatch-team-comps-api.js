@@ -6,10 +6,15 @@ export default class OverwatchTeamCompsApi extends Fetcher {
 
     const tokenMeta = document.querySelector('meta[name="csrf-token"]')
     this.token = tokenMeta.content
+
+    this.defaultHeaders = {
+      'X-CSRF-TOKEN': this.token,
+      'Content-type': 'application/json'
+    }
   }
 
   getMaps() {
-    return this.get('/maps').then(json => json.maps)
+    return this.get('/maps', this.defaultHeaders).then(json => json.maps)
   }
 
   getNewComposition() {
@@ -17,11 +22,7 @@ export default class OverwatchTeamCompsApi extends Fetcher {
   }
 
   savePlayerSelection(body) {
-    const headers = {
-      'X-CSRF-TOKEN': this.token,
-      'Content-type': 'application/json'
-    }
-    return this.post('/compositions', headers, body).
+    return this.post('/compositions', this.defaultHeaders, body).
       then(json => json.composition)
   }
 }
