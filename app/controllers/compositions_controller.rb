@@ -45,7 +45,17 @@ class CompositionsController < ApplicationController
   private
 
   def player
-    @player ||= Player.where(name: params[:player_name]).first_or_initialize
+    return @player if @player
+
+    scope = Player.where(name: params[:player_name])
+    if user_signed_in?
+      scope = scope.where(creator: current_user)
+    else
+      scope = scope.where(creator: User.anonymous,
+                          creator_session_id: session.id)
+    end
+
+    @player = scope.first_or_initialize
   end
 
   def hero
@@ -76,11 +86,27 @@ class CompositionsController < ApplicationController
   def composition
     return @composition if defined? @composition
 
-    @composition = if params[:composition_id]
-      Composition.where(id: params[:composition_id]).
-        where("user_id = ? OR session_id = ?", current_user, session.id).first
+    @composition = if user_signed_in?
+      composition_for_authenticated_user
     else
-      Composition.new(map: map, user: current_user, session_id: session.id)
+      composition_for_anonymous_user
+    end
+  end
+
+  def composition_for_authenticated_user
+    if id = params[:composition_id]
+      Composition.where(id: id, user_id: current_user).first
+    else
+      Composition.new(map: map, user: current_user)
+    end
+  end
+
+  def composition_for_anonymous_user
+    if id = params[:composition_id]
+      Composition.where(id: id, user_id: User.anonymous,
+                        session_id: session.id).first
+    else
+      Composition.new(map: map, session_id: session.id, user: User.anonymous)
     end
   end
 

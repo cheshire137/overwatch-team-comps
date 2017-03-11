@@ -5,9 +5,8 @@ FactoryGirl.define do
   end
 
   factory :composition do
-    map
+    map { Map.first || create(:map) }
     user
-    session_id '123abc'
   end
 
   factory :hero do
@@ -27,6 +26,7 @@ FactoryGirl.define do
 
   factory :player do
     name 'zion'
+    association :creator, factory: :user
   end
 
   factory :player_hero do
@@ -42,10 +42,10 @@ FactoryGirl.define do
   end
 
   factory :user do
-    email 'jimbob@example.com'
+    email { "jimbob#{User.count}@example.com" }
     password '123abcCatDog!'
     provider 'bnet'
-    uid '123456'
-    battletag 'jimbob#1234'
+    uid { "123456#{User.count}" }
+    battletag { "jimbob#123#{User.count}" }
   end
 end
