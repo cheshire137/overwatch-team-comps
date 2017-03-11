@@ -1,3 +1,5 @@
+import update from 'immutability-helper'
+
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
 import MapSegmentHeader from './map-segment-header.jsx'
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
@@ -39,12 +41,12 @@ export default class CompositionForm extends React.Component {
     this.setState({ maps })
   }
 
-  onPlayerNameChange(event, index) {
-    const players = this.state.players.slice(0)
-    const player = Object.assign({}, players[index])
-    player.name = event.target.value
-    players[index] = player
-    this.setState({ players })
+  onPlayerNameChange(name, index) {
+    const playerChanges = {}
+    playerChanges[index] = { name: { $set: name } }
+    const changes = { players: playerChanges }
+    const composition = update(this.state.composition, changes)
+    this.setState({ composition })
   }
 
   onHeroSelectedForPlayer(heroID, mapSegmentID, player) {
