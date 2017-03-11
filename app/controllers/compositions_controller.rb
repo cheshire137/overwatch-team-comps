@@ -11,27 +11,15 @@ class CompositionsController < ApplicationController
   end
 
   def save
-    unless player.persisted? || player.save
-      return render json: { player_errors: player.errors },
-                    status: :unprocessable_entity
+    saver = CompositionSaver.new(user: current_user, session_id: session.id)
+    if saver.save(params)
+    else
+      render json: {
+        "#{saver.error_type}_errors" => saver.error_value
+      }, status: :unprocessable_entity
     end
 
-    unless player_hero.persisted? || player_hero.save
-      return render json: { player_hero_errors: player_hero.errors },
-                    status: :unprocessable_entity
-    end
-
-    unless composition.persisted? || composition.save
-      return render json: { composition_errors: composition.errors },
-                    status: :unprocessable_entity
-    end
-
-    unless player_selection.persisted? || player_selection.save
-      return render json: { player_selection_errors: player_selection.errors },
-                    status: :unprocessable_entity
-    end
-
-    @composition = composition
+    @composition = saver.composition
     @players = get_players_for(@composition)
 
     heroes = Hero.order(:name)
@@ -110,45 +98,6 @@ class CompositionsController < ApplicationController
     result
   end
 
-  def player
-    return @player if @player
-
-    scope = Player.where(name: params[:player_name])
-    if user_signed_in?
-      scope = scope.where(creator: current_user)
-    else
-      scope = scope.where(creator: User.anonymous,
-                          creator_session_id: session.id)
-    end
-
-    @player = scope.first_or_initialize
-  end
-
-  def hero
-    return @hero if defined? @hero
-    @hero = Hero.find(params[:hero_id])
-  end
-
-  def player_hero
-    return @player_hero if @player_hero
-    return @player_hero = nil unless hero && player.persisted?
-
-    @player_hero = PlayerHero.where(player_id: player, hero_id: hero).
-      first_or_initialize
-  end
-
-  def map_segment
-    return @map_segment if defined? @map_segment
-    @map_segment = MapSegment.find(params[:map_segment_id])
-  end
-
-  def map
-    return @map if defined? @map
-    @map = if map_segment
-      map_segment.map
-    end
-  end
-
   def new_composition
     map = Map.first
 
@@ -156,43 +105,6 @@ class CompositionsController < ApplicationController
       Composition.new(map: map, user: current_user)
     else
       Composition.new(map: map, user: User.anonymous, session_id: session.id)
-    end
-  end
-
-  def composition
-    return @composition if defined? @composition
-
-    @composition = if user_signed_in?
-      composition_for_authenticated_user
-    else
-      composition_for_anonymous_user
-    end
-  end
-
-  def composition_for_authenticated_user
-    if id = params[:composition_id]
-      Composition.where(id: id, user_id: current_user).first
-    else
-      Composition.new(map: map, user: current_user)
-    end
-  end
-
-  def composition_for_anonymous_user
-    if id = params[:composition_id]
-      Composition.where(id: id, user_id: User.anonymous,
-                        session_id: session.id).first
-    else
-      Composition.new(map: map, session_id: session.id, user: User.anonymous)
-    end
-  end
-
-  def player_selection
-    @player_selection ||= if composition.persisted?
-      PlayerSelection.where(composition_id: composition,
-                            player_hero_id: player_hero,
-                            map_segment_id: map_segment).first_or_initialize
-    else
-      PlayerSelection.new(player_hero: player_hero, map_segment: map_segment)
     end
   end
 end
