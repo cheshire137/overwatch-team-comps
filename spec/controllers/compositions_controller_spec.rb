@@ -50,6 +50,27 @@ RSpec.describe CompositionsController do
       expect(response).to be_success, response.body
     end
 
+    it 'allows updating just a player name' do
+      sign_in @user
+      player = create(:player, name: 'oldName32', creator: @user)
+      composition = create(:composition, map: @map, user: @user)
+      selection = create(:player_selection, composition: composition,
+                         player: player, map_segment: @map_segment,
+                         hero: @hero1)
+
+      expect do
+        post :save, params: {
+          player_name: 'newName64', player_id: player.id, format: :json,
+          composition_id: composition.id
+        }
+      end.not_to change { Player.count }
+      expect(player.reload.name).to eq('newName64')
+      expect(composition.reload.map).to eq(@map)
+      expect(selection.reload.player).to eq(player)
+      expect(selection.map_segment).to eq(@map_segment)
+      expect(selection.hero).to eq(@hero1)
+    end
+
     it 'creates a new composition for authenticated user' do
       sign_in @user
 

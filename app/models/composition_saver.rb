@@ -19,21 +19,24 @@ class CompositionSaver
     if data[:map_segment_id]
       map_segment = MapSegment.find(data[:map_segment_id])
       map = map_segment.map
+    end
+
+    if data[:composition_id] || map
       @composition = init_composition(data, map: map)
       unless @composition.persisted? || @composition.save
         @error_type = 'composition'
         @error_value = @composition.errors
         return
       end
+    end
 
-      if player && data[:hero_id]
-        selection = init_player_selection(data, composition: @composition,
-                                          player: player, map_segment: map_segment)
-        unless selection.persisted? && !selection.changed? || selection.save
-          @error_type = 'player_selection'
-          @error_value = selection.errors
-          return
-        end
+    if player && map_segment && data[:hero_id]
+      selection = init_player_selection(data, composition: @composition,
+                                        player: player, map_segment: map_segment)
+      unless selection.persisted? && !selection.changed? || selection.save
+        @error_type = 'player_selection'
+        @error_value = selection.errors
+        return
       end
     end
 
@@ -85,7 +88,7 @@ class CompositionSaver
         scope = scope.where(user_id: User.anonymous, session_id: @session_id)
       end
       comp = scope.first
-      comp.map = map
+      comp.map = map if map
       comp
     else
       Composition.new(map: map, user: @user)
