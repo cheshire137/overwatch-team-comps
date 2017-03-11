@@ -1,6 +1,8 @@
 class CompositionSaver
   attr_reader :error_type, :error_value, :composition
 
+  class Error < StandardError; end
+
   def initialize(user:, session_id:)
     @user = user
     @session_id = session_id
@@ -55,6 +57,9 @@ class CompositionSaver
                             creator_session_id: @session_id)
       end
       player = scope.first
+      unless player
+        raise CompositionSaver::Error, 'No such player for creator'
+      end
       player.name = data[:player_name]
       player
     else

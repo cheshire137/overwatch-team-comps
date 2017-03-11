@@ -12,9 +12,18 @@ class CompositionsController < ApplicationController
 
   def save
     saver = CompositionSaver.new(user: current_user, session_id: session.id)
-    unless saver.save(composition_params)
+
+    success = begin
+      saver.save(composition_params)
+    rescue CompositionSaver::Error => ex
+      return render json: { error: ex.message }, status: :bad_request
+    end
+
+    unless success
       return render json: {
-        "#{saver.error_type}_errors" => saver.error_value
+        error: {
+          saver.error_type => saver.error_value.full_messages
+        }
       }, status: :unprocessable_entity
     end
 

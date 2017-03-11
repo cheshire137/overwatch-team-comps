@@ -50,6 +50,21 @@ RSpec.describe CompositionsController do
       expect(response).to be_success, response.body
     end
 
+    it "does not allow updating another user's player" do
+      sign_in @user
+      player = create(:player, name: 'oldName32')
+      composition = create(:composition, map: @map, user: @user)
+
+      expect do
+        post :save, params: {
+          player_name: 'newName64', player_id: player.id, format: :json,
+          composition_id: composition.id
+        }
+      end.not_to change { Player.count }
+      expect(player.reload.name).to eq('oldName32')
+      expect(response).to have_http_status(400)
+    end
+
     it 'allows updating just a player name' do
       sign_in @user
       player = create(:player, name: 'oldName32', creator: @user)
