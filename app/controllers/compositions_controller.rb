@@ -63,9 +63,9 @@ class CompositionsController < ApplicationController
 
   def get_players_for(composition)
     players = []
-    players.concat(composition.players.uniq) if composition.persisted?
+    players.concat(composition.players) if composition.persisted?
 
-    existing_names = players.map(&:name)
+    existing_names = players.pluck(:name)
     while players.length < Composition::MAX_PLAYERS
       name = Player.get_name(existing_names)
       players << Player.new(name: name)

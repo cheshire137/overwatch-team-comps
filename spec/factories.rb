@@ -30,7 +30,7 @@ FactoryGirl.define do
   end
 
   factory :player do
-    name 'zion'
+    name { "zion#{Player.count}" }
     association :creator, factory: :user
   end
 

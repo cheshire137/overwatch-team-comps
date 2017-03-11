@@ -22,4 +22,12 @@ RSpec.describe CompositionPlayer, type: :model do
                           player: comp_player.player)
     expect(comp_player2.position).to eq(1)
   end
+
+  it 'disallows more than 6 players per composition' do
+    composition = create(:composition)
+    6.times { create(:composition_player, composition: composition) }
+    seventh = build(:composition_player, composition: composition)
+    expect(seventh.valid?).to be_falsey
+    expect(seventh.errors[:composition].any?).to be_truthy
+  end
 end
