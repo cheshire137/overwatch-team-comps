@@ -29,6 +29,7 @@
         "import/extensions": 0,
         "func-names": 0,
         "space-before-function-paren": [2, "never"],
-        "react/forbid-prop-types": [2, { "forbid": ["any"] }]
+        "react/forbid-prop-types": [2, { "forbid": ["any"] }],
+        "react/require-default-props": 0
     }
 }
