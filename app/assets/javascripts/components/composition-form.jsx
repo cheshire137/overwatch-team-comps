@@ -99,7 +99,7 @@ export default class CompositionForm extends React.Component {
             <div className="map-photo-container" />
             <div className="composition-meta">
               <div>
-                <span className="select">
+                <span className="select map-select">
                   <select
                     aria-label="Choose a map"
                     id="composition_map_id"
@@ -115,10 +115,14 @@ export default class CompositionForm extends React.Component {
                   </select>
                 </span>
               </div>
-              <div>
+              <div className="composition-name-container">
+                <i
+                  className="fa fa-pencil-square-o"
+                  aria-hidden="true"
+                />
                 <input
                   type="text"
-                  className="input"
+                  className="input composition-name-input"
                   placeholder="Composition name"
                   id="composition_name"
                   aria-label="Name of this team composition"
