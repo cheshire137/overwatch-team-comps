@@ -96,10 +96,11 @@ RSpec.describe CompositionsController do
 
       expect do
         post :save, params: {
-          player_name: player.name, hero_id: @hero1.id,
-          map_segment_id: @map_segment.id, format: :json
+          player_name: 'gloriousNewPerson', hero_id: @hero1.id,
+          map_segment_id: @map_segment.id, format: :json, player_id: player.id
         }
       end.not_to change { Player.count }
+      expect(player.reload.name).to eq('gloriousNewPerson')
     end
 
     it 'creates a new player-hero for new combination for auth user' do
@@ -121,7 +122,7 @@ RSpec.describe CompositionsController do
       expect do
         post :save, params: {
           player_name: player.name, hero_id: @hero1.id,
-          map_segment_id: @map_segment.id, format: :json
+          map_segment_id: @map_segment.id, format: :json, player_id: player.id
         }
       end.not_to change { PlayerHero.count }
     end
@@ -150,7 +151,8 @@ RSpec.describe CompositionsController do
       expect do
         post :save, params: {
           player_name: player.name, hero_id: @hero1.id, format: :json,
-          composition_id: composition.id, map_segment_id: @map_segment.id
+          composition_id: composition.id, map_segment_id: @map_segment.id,
+          player_id: player.id
         }
       end.not_to change { PlayerSelection.count }
     end

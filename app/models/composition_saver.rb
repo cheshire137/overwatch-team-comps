@@ -7,16 +7,17 @@ class CompositionSaver
   end
 
   def save(data)
-    player = init_player(data)
-    unless player.persisted? || player.save
-      @error_type = 'player'
-      @error_value = player.errors
-      return
+    if data[:player_id] || data[:player_name]
+      player = init_player(data)
+      unless player.persisted? && !player.changed? || player.save
+        @error_type = 'player'
+        @error_value = player.errors
+        return
+      end
     end
 
-    if data[:hero_id]
-      hero = Hero.find(data[:hero_id])
-      player_hero = init_player_hero(hero: hero, player: player)
+    if player && data[:hero_id]
+      player_hero = init_player_hero(data, player: player)
       unless player_hero.persisted? || player_hero.save
         @error_type = 'player_hero'
         @error_value = player_hero.errors
@@ -34,13 +35,15 @@ class CompositionSaver
         return
       end
 
-      player_selection = init_player_selection(composition: @composition,
-                                               player_hero: player_hero,
-                                               map_segment: map_segment)
-      unless player_selection.persisted? || player_selection.save
-        @error_type = 'player_selection'
-        @error_value = player_selection.errors
-        return
+      if player_hero
+        player_selection = init_player_selection(composition: @composition,
+                                                 player_hero: player_hero,
+                                                 map_segment: map_segment)
+        unless player_selection.persisted? || player_selection.save
+          @error_type = 'player_selection'
+          @error_value = player_selection.errors
+          return
+        end
       end
     end
 
@@ -50,19 +53,32 @@ class CompositionSaver
   private
 
   def init_player(data)
-    scope = Player.where(name: data[:player_name])
-    if @user
-      scope = scope.where(creator: @user)
+    if id = data[:player_id]
+      scope = Player.where(id: id)
+      if @user
+        scope = scope.where(creator: @user)
+      else
+        scope = scope.where(creator: User.anonymous,
+                            creator_session_id: @session_id)
+      end
+      player = scope.first
+      player.name = data[:player_name]
+      player
     else
-      scope = scope.where(creator: User.anonymous,
-                          creator_session_id: @session_id)
+      attrs = {name: data[:player_name]}
+      if @user
+        attrs[:creator] = @user
+      else
+        attrs[:creator] = User.anonymous
+        attrs[:creator_session_id] = @session_id
+      end
+      Player.new(attrs)
     end
-    scope.first_or_initialize
   end
 
-  def init_player_hero(hero:, player:)
+  def init_player_hero(data, player:)
+    hero = Hero.find(data[:hero_id])
     return nil unless hero && player.persisted?
-
     PlayerHero.where(player_id: player, hero_id: hero).first_or_initialize
   end
 
