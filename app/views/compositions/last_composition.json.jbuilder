@@ -1,4 +1,7 @@
 json.composition do
+  if @composition.persisted?
+    json.id @composition.id
+  end
   json.name @composition.name
   json.notes @composition.notes
   json.map do
@@ -11,11 +14,15 @@ json.composition do
     end
   end
   json.players @players do |player|
+    if player.persisted?
+      json.id player.id
+    end
     json.name player.name
-    json.heroes player.player_heroes do |player_hero|
-      json.id player_hero.hero.id
-      json.name player_hero.hero.name
-      json.confidence player_hero.confidence
+    json.heroes @heroes_by_player_name[player.name] do |hero|
+      json.id hero.id
+      json.name hero.name
+      json.confidence @hero_confidences[hero.id][player.name]
+      json.mapSegmentID @map_segment_ids[hero.id][player.name]
     end
   end
 end

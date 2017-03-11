@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   end
 
   scope defaults: { format: :json }, path: "/api" do
+    get "/composition/last" => "compositions#last_composition", as: :last_composition
     post "/compositions" => "compositions#save", as: :compositions
-    resources :compositions, only: [:new]
 
     resources :maps, only: [:index]
   end
