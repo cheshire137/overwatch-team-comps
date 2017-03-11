@@ -17,8 +17,9 @@ export default class OverwatchTeamCompsApi extends Fetcher {
     return this.get('/maps', this.defaultHeaders).then(json => json.maps)
   }
 
-  getNewComposition() {
-    return this.get('/compositions/new').then(json => json.composition)
+  getLastComposition() {
+    return this.get('/composition/last', this.defaultHeaders).
+      then(json => json.composition)
   }
 
   savePlayerSelection(body) {

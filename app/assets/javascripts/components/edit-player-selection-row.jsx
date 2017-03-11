@@ -5,6 +5,16 @@ class EditPlayerSelectionRow extends React.Component {
     this.props.onPlayerNameChange(event.target.value)
   }
 
+  getSelectedHeroID(segment) {
+    const needle = segment.id
+    const haystack = this.props.player.heroes
+    const heroes = haystack.filter(hero => hero.mapSegmentID === needle)
+    if (heroes.length > 0) {
+      return heroes[0].id
+    }
+    return null
+  }
+
   render() {
     const { inputID, player, nameLabel, onHeroSelection,
             mapSegments } = this.props
@@ -28,6 +38,7 @@ class EditPlayerSelectionRow extends React.Component {
           <td key={segment.id} className="hero-select-cell">
             <HeroSelect
               heroes={player.heroes}
+              selectedHeroID={this.getSelectedHeroID(segment)}
               onChange={heroID => onHeroSelection(heroID, segment.id)}
             />
           </td>

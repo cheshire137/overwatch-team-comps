@@ -7,8 +7,8 @@ export default class CompositionForm extends React.Component {
     console.error('failed to load maps', error)
   }
 
-  static onNewCompositionError(error) {
-    console.error('failed to load new composition data', error)
+  static onCompositionFetchError(error) {
+    console.error('failed to load composition data', error)
   }
 
   static onPlayerSelectionSaveError(error) {
@@ -27,11 +27,11 @@ export default class CompositionForm extends React.Component {
     api.getMaps().then(maps => this.onMapsFetched(maps)).
       catch(err => CompositionForm.onMapsError(err))
 
-    api.getNewComposition().then(comp => this.onNewCompositionFetched(comp)).
-      catch(err => CompositionForm.onNewCompositionError(err))
+    api.getLastComposition().then(comp => this.onCompositionFetched(comp)).
+      catch(err => CompositionForm.onCompositionFetchError(err))
   }
 
-  onNewCompositionFetched(composition) {
+  onCompositionFetched(composition) {
     this.setState({ composition })
   }
 
