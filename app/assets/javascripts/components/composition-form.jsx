@@ -38,6 +38,13 @@ export default class CompositionForm extends React.Component {
     this.setState({ composition })
   }
 
+  onCompositionNameChange(event) {
+    const name = event.target.value
+    const changes = { name: { $set: name } }
+    const composition = update(this.state.composition, changes)
+    this.setState({ composition })
+  }
+
   onCompositionNotesChange(event) {
     const notes = event.target.value
     const changes = { notes: { $set: notes } }
@@ -125,6 +132,8 @@ export default class CompositionForm extends React.Component {
                   className="input composition-name-input"
                   placeholder="Composition name"
                   id="composition_name"
+                  value={composition.name || ''}
+                  onChange={e => this.onCompositionNameChange(e)}
                   aria-label="Name of this team composition"
                 />
               </div>
