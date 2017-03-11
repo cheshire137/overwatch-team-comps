@@ -78,7 +78,15 @@ class CompositionSaver
 
   def composition_for_authenticated_user(map:, id:)
     if id
-      Composition.where(id: id, user_id: @user).first
+      scope = Composition.where(id: id)
+      if @user
+        scope = scope.where(user_id: @user)
+      else
+        scope = scope.where(user_id: User.anonymous, session_id: @session_id)
+      end
+      comp = scope.first
+      comp.map = map
+      comp
     else
       Composition.new(map: map, user: @user)
     end
