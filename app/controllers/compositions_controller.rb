@@ -86,26 +86,27 @@ class CompositionsController < ApplicationController
   def composition
     return @composition if defined? @composition
 
-    @composition = if params[:composition_id]
-      scope = Composition.where(id: params[:composition_id])
-
-      if user_signed_in?
-        scope = scope.where(user_id: current_user)
-      else
-        scope = scope.where(user_id: User.anonymous, session_id: session.id)
-      end
-
-      scope.first
+    @composition = if user_signed_in?
+      composition_for_authenticated_user
     else
-      attrs = {map: map}
-      if user_signed_in?
-        attrs[:user] = current_user
-      else
-        attrs[:session_id] = session.id
-        attrs[:user] = User.anonymous
-      end
+      composition_for_anonymous_user
+    end
+  end
 
-      Composition.new(attrs)
+  def composition_for_authenticated_user
+    if id = params[:composition_id]
+      Composition.where(id: id, user_id: current_user).first
+    else
+      Composition.new(map: map, user: current_user)
+    end
+  end
+
+  def composition_for_anonymous_user
+    if id = params[:composition_id]
+      Composition.where(id: id, user_id: User.anonymous,
+                        session_id: session.id).first
+    else
+      Composition.new(map: map, session_id: session.id, user: User.anonymous)
     end
   end
 
