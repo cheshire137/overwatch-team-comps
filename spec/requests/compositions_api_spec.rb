@@ -121,27 +121,27 @@ RSpec.describe 'compositions API' do
     end
   end
 
-  describe 'GET new' do
+  describe 'GET last_composition' do
     it 'loads successfully' do
-      get '/api/compositions/new'
+      get '/api/composition/last'
       expect(response).to be_success
     end
 
     it 'includes player names' do
-      get '/api/compositions/new'
+      get '/api/composition/last'
       expect(response.body).to include('Player 1')
       expect(response.body).to include('Player 6')
     end
 
     it 'includes map details' do
-      get '/api/compositions/new'
+      get '/api/composition/last'
       expect(response.body).to include(@map.name)
       expect(response.body).to include(@map.map_type)
       expect(response.body).to include(@map_segment.name)
     end
 
     it 'includes heroes with confidence values for each player' do
-      get '/api/compositions/new'
+      get '/api/composition/last'
 
       json = JSON.parse(response.body)
       expect(json).to have_key('composition')
