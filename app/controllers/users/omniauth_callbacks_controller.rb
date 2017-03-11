@@ -13,10 +13,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def finished_signup
-    auth = session['devise.bnet_data']
-    user = User.new(provider: auth['provider'], uid: auth['uid'],
+    @auth = session['devise.bnet_data']
+    user = User.new(provider: @auth['provider'], uid: @auth['uid'],
                     email: params[:email],
-                    battletag: auth['info']['battletag'],
+                    battletag: @auth['info']['battletag'],
                     password: Devise.friendly_token[0,20])
 
     if user.save
@@ -24,7 +24,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       set_flash_message(:notice, :success, kind: "Battle.net")
       sign_in_and_redirect user, event: :authentication
     else
-      redirect_to new_user_registration_url
+      flash[:alert] = 'Please provide an email address.'
+      render :finish_signup
     end
   end
 
