@@ -10,8 +10,11 @@ RSpec.describe Users::OmniauthCallbacksController do
       info: { battletag: 'coollady#1965' }
     )
 
+    @request.session.id = '8675309'
     @request.env['devise.mapping'] = Devise.mappings[:user]
     @request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:bnet]
+
+    @anon_user = create(:anonymous_user)
   end
 
   describe 'POST bnet' do
@@ -55,6 +58,38 @@ RSpec.describe Users::OmniauthCallbacksController do
       expect(user.provider).to eq('bnet')
       expect(user.uid).to eq('123456')
       expect(user.battletag).to eq('coollady#1965')
+    end
+
+    it 'updates existing composition for new user' do
+      composition = create(:composition, user: @anon_user, session_id: '8675309')
+
+      expect do
+        post :finished_signup, params: { email: 'test@example.com' },
+          session: { 'devise.bnet_data' => OmniAuth.config.mock_auth[:bnet] }
+      end.to change { @anon_user.compositions.count }.by(-1)
+
+      expect(response).to redirect_to('/')
+
+      user = User.last
+      expect(user.anonymous?).to eq(false)
+      expect(user.email).to eq('test@example.com')
+      expect(user.compositions).to eq([composition])
+    end
+
+    it 'updates existing player for new user' do
+      player = create(:player, creator: @anon_user, creator_session_id: '8675309')
+
+      expect do
+        post :finished_signup, params: { email: 'test@example.com' },
+          session: { 'devise.bnet_data' => OmniAuth.config.mock_auth[:bnet] }
+      end.to change { @anon_user.created_players.count }.by(-1)
+
+      expect(response).to redirect_to('/')
+
+      user = User.last
+      expect(user.anonymous?).to eq(false)
+      expect(user.email).to eq('test@example.com')
+      expect(user.created_players).to eq([player])
     end
 
     it 'does not save user when email is omitted' do
