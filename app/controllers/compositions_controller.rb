@@ -12,7 +12,7 @@ class CompositionsController < ApplicationController
 
   def save
     saver = CompositionSaver.new(user: current_user, session_id: session.id)
-    if saver.save(params)
+    if saver.save(composition_params)
     else
       render json: {
         "#{saver.error_type}_errors" => saver.error_value
@@ -29,6 +29,10 @@ class CompositionsController < ApplicationController
   end
 
   private
+
+  def composition_params
+    params.permit(:player_name, :composition_id, :hero_id, :map_segment_id)
+  end
 
   def get_map_segment_ids(heroes, composition)
     result = {}
