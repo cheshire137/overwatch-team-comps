@@ -22,7 +22,7 @@ export default class OverwatchTeamCompsApi extends Fetcher {
       then(json => json.composition)
   }
 
-  savePlayerSelection(body) {
+  saveComposition(body) {
     return this.post('/compositions', this.defaultHeaders, body).
       then(json => json.composition)
   }

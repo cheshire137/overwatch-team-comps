@@ -13,8 +13,8 @@ export default class CompositionForm extends React.Component {
     console.error('failed to load composition data', error)
   }
 
-  static onPlayerSelectionSaveError(error) {
-    console.error('failed to save hero selection for player', error)
+  static onCompositionSaveError(error) {
+    console.error('failed to save composition', error)
   }
 
   constructor() {
@@ -56,12 +56,23 @@ export default class CompositionForm extends React.Component {
     this.setState({ maps })
   }
 
-  onPlayerNameChange(name, index) {
-    const playerChanges = {}
-    playerChanges[index] = { name: { $set: name } }
-    const changes = { players: playerChanges }
-    const composition = update(this.state.composition, changes)
-    this.setState({ composition })
+  onPlayerNameChange(playerID, name) {
+    const { composition } = this.state
+    const api = new OverwatchTeamCompsApi()
+
+    const body = {
+      map_id: composition.map.id,
+      player_id: playerID,
+      player_name: name
+    }
+    if (composition.id) {
+      body.composition_id = composition.id
+    }
+
+    console.log(body)
+    api.saveComposition(body).
+      then(newComp => this.onCompositionSaved(newComp)).
+      catch(err => CompositionForm.onCompositionSaveError(err))
   }
 
   onHeroSelectedForPlayer(heroID, mapSegmentID, player) {
@@ -71,18 +82,19 @@ export default class CompositionForm extends React.Component {
     const body = {
       hero_id: heroID,
       map_segment_id: mapSegmentID,
+      player_id: player.id,
       player_name: player.name
     }
     if (composition.id) {
       body.composition_id = composition.id
     }
 
-    api.savePlayerSelection(body).
-      then(newComp => this.onPlayerSelectionSaved(newComp)).
-      catch(err => CompositionForm.onPlayerSelectionSaveError(err))
+    api.saveComposition(body).
+      then(newComp => this.onCompositionSaved(newComp)).
+      catch(err => CompositionForm.onCompositionSaveError(err))
   }
 
-  onPlayerSelectionSaved(composition) {
+  onCompositionSaved(composition) {
     this.setState({ composition })
   }
 
@@ -161,8 +173,10 @@ export default class CompositionForm extends React.Component {
                     player={player}
                     mapSegments={mapSegments}
                     nameLabel={String(index + 1)}
-                    onHeroSelection={(h, m) => this.onHeroSelectedForPlayer(h, m, player)}
-                    onPlayerNameChange={name => this.onPlayerNameChange(name, index)}
+                    onHeroSelection={(heroID, mapSegmentID) =>
+                      this.onHeroSelectedForPlayer(heroID, mapSegmentID, player)
+                    }
+                    onPlayerNameChange={name => this.onPlayerNameChange(player.id, name)}
                   />
                 )
               })}
