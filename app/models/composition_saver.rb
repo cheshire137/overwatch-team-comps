@@ -18,9 +18,11 @@ class CompositionSaver
       end
     end
 
-    if data[:map_segment_id]
+    map = if data[:map_segment_id]
       map_segment = MapSegment.find(data[:map_segment_id])
-      map = map_segment.map
+      map_segment.map
+    elsif data[:map_id]
+      Map.find(data[:map_id])
     end
 
     if data[:composition_id] || map
