@@ -79,6 +79,16 @@ export default class CompositionForm extends React.Component {
     this.setState({ composition })
   }
 
+  onMapChange(event) {
+    // TODO: instead, submit new map ID to server and update composition
+    // when response comes back
+    const mapID = parseInt(event.target.value, 10)
+    const map = this.state.maps.filter(m => m.id === mapID)[0]
+    const changes = { map: { $set: map } }
+    const composition = update(this.state.composition, changes)
+    this.setState({ composition })
+  }
+
   render() {
     const { maps, composition } = this.state
     const mapSegments = composition.map.segments
@@ -89,23 +99,29 @@ export default class CompositionForm extends React.Component {
             <div className="map-photo-container" />
             <div className="composition-meta">
               <div>
-                <label htmlFor="composition_map_id">
-                  Choose a map:
-                </label>
                 <span className="select">
-                  <select id="composition_map_id">
-                    {maps.map(map => <option key={map.name}>{map.name}</option>)}
+                  <select
+                    aria-label="Choose a map"
+                    id="composition_map_id"
+                    value={composition.map.id}
+                    onChange={e => this.onMapChange(e)}
+                  >
+                    {maps.map(map =>
+                      <option
+                        key={map.id}
+                        value={map.id}
+                      >{map.name}</option>
+                    )}
                   </select>
                 </span>
               </div>
               <div>
-                <label htmlFor="composition_name">
-                  What do you want to call this team comp?
-                </label>
                 <input
                   type="text"
+                  className="input"
                   placeholder="Composition name"
                   id="composition_name"
+                  aria-label="Name of this team composition"
                 />
               </div>
             </div>
