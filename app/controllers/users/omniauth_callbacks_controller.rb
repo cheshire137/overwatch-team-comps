@@ -21,7 +21,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if user.save
       Player.where(creator_id: User.anonymous, creator_session_id: session.id).
-             update_all(user_id: user.id)
+             update_all(creator_id: user.id)
       Composition.where(user_id: User.anonymous, session_id: session.id).
                   update_all(user_id: user.id)
 
