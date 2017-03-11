@@ -8,6 +8,7 @@ class PlayerSelection < ApplicationRecord
   validates :player_id,
     uniqueness: { scope: [:composition_id, :map_segment_id] }
   validate :map_segment_matches_composition_map
+  validate :player_is_in_composition
 
   private
 
@@ -16,6 +17,14 @@ class PlayerSelection < ApplicationRecord
 
     unless map_segment.map == composition.map
       errors.add(:map_segment, 'must match the composition map.')
+    end
+  end
+
+  def player_is_in_composition
+    return unless player && composition
+
+    unless composition.players.include?(player)
+      errors.add(:player, 'is not part of the composition.')
     end
   end
 end

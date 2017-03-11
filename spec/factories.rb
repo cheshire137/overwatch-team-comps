@@ -45,6 +45,11 @@ FactoryGirl.define do
     hero
     composition
     map_segment { create(:map_segment, map: composition.map) }
+
+    before(:create) do |player_selection, evaluator|
+      create(:composition_player, composition: player_selection.composition,
+             player: player_selection.player)
+    end
   end
 
   factory :user do

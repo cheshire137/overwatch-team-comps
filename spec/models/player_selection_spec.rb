@@ -19,6 +19,18 @@ describe PlayerSelection do
     expect(ps.errors[:composition].any?).to be_truthy
   end
 
+  it 'requires player belong to composition' do
+    player = create(:player)
+    hero = create(:hero)
+    map = create(:map)
+    comp = create(:composition, map: map)
+    map_segment = create(:map_segment, map: map)
+    ps = PlayerSelection.new(player: player, composition: comp,
+                             hero: hero, map_segment: map_segment)
+    expect(ps.valid?).to be_falsey
+    expect(ps.errors[:player].any?).to be_truthy
+  end
+
   it 'requires a map segment' do
     ps = PlayerSelection.new
     expect(ps.valid?).to be_falsey
