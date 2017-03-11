@@ -91,11 +91,11 @@ RSpec.describe 'compositions API' do
       expect(player_json['heroes'].length).to eq(2)
 
       selected_json = player_json['heroes'].detect do |sj|
-        sj['mapSegmentID'] != nil
+        sj['mapSegmentIDs'] != nil
       end
       expect(selected_json).not_to be_nil
       expect(selected_json['name']).to eq(@hero1.name)
-      expect(selected_json['mapSegmentID']).to eq(@map_segment.id)
+      expect(selected_json['mapSegmentIDs']).to eq([@map_segment.id])
     end
   end
 

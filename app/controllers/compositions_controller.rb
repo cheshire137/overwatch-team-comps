@@ -55,7 +55,8 @@ class CompositionsController < ApplicationController
     player_selections.each do |player_selection|
       hero_id = player_selection.hero_id
       player_name = player_selection.player.name
-      result[hero_id][player_name] = player_selection.map_segment_id
+      result[hero_id][player_name] ||= []
+      result[hero_id][player_name] << player_selection.map_segment_id
     end
 
     result

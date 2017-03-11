@@ -10,7 +10,9 @@ class EditPlayerSelectionRow extends React.Component {
   getSelectedHeroID(segment) {
     const needle = segment.id
     const haystack = this.props.player.heroes
-    const heroes = haystack.filter(hero => hero.mapSegmentID === needle)
+    const heroes = haystack.filter(hero =>
+      hero.mapSegmentIDs && hero.mapSegmentIDs.indexOf(needle) > -1
+    )
     if (heroes.length > 0) {
       return heroes[0].id
     }

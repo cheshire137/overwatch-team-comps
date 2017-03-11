@@ -22,7 +22,7 @@ json.composition do
       json.id hero.id
       json.name hero.name
       json.confidence @hero_confidences[hero.id][player.name]
-      json.mapSegmentID @map_segment_ids[hero.id][player.name]
+      json.mapSegmentIDs @map_segment_ids[hero.id][player.name]
     end
   end
 end

@@ -69,7 +69,6 @@ export default class CompositionForm extends React.Component {
       body.composition_id = composition.id
     }
 
-    console.log(body)
     api.saveComposition(body).
       then(newComp => this.onCompositionSaved(newComp)).
       catch(err => CompositionForm.onCompositionSaveError(err))
