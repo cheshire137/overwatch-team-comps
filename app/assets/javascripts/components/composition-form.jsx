@@ -65,9 +65,7 @@ export default class CompositionForm extends React.Component {
       catch(err => CompositionForm.onPlayerSelectionSaveError(err))
   }
 
-  onPlayerSelectionSaved(newComposition) {
-    const composition = Object.assign({}, this.state.composition)
-    composition.id = newComposition.id
+  onPlayerSelectionSaved(composition) {
     this.setState({ composition })
   }
 

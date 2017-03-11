@@ -32,9 +32,12 @@ class CompositionsController < ApplicationController
     end
 
     @composition = composition
-    @map = map
-    @player_selection = player_selection
-    @players = @composition.players.includes(:player_heroes)
+    @players = get_players_for(@composition)
+
+    heroes = Hero.order(:name)
+    @map_segment_ids = get_map_segment_ids(heroes, @composition)
+    @heroes_by_player_name = get_heroes_by_player_name(heroes, @players)
+    @hero_confidences = get_hero_confidences(heroes, @players)
   end
 
   private
