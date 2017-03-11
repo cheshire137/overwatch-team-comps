@@ -1,19 +1,10 @@
-import { debounce } from 'throttle-debounce'
+import DebounceInput from 'react-debounce-input'
 
 import HeroSelect from './hero-select.jsx'
 
 class EditPlayerSelectionRow extends React.Component {
-  constructor(props) {
-    super(props)
-    this.onPlayerNameChange = debounce(500, this.onPlayerNameChange)
-  }
-
-  onPlayerNameChange(name) {
-    this.props.onPlayerNameChange(name)
-  }
-
-  onPlayerNameKeyUp(event) {
-    this.onPlayerNameChange(event.target.value)
+  onPlayerNameChange(event) {
+    this.props.onPlayerNameChange(event.target.value)
   }
 
   getSelectedHeroID(segment) {
@@ -36,13 +27,13 @@ class EditPlayerSelectionRow extends React.Component {
             htmlFor={inputID}
             className="label"
           >{nameLabel}</label>
-          <input
-            type="text"
+          <DebounceInput
+            debounceTimeout={500}
+            onChange={e => this.onPlayerNameChange(e)}
             id={inputID}
             placeholder="Player name"
-            defaultValue={player.name}
+            value={player.name}
             className="input"
-            onKeyUp={this.onPlayerNameKeyUp.bind(this)}
           />
         </td>
         {mapSegments.map(segment => (
