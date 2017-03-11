@@ -1,3 +1,4 @@
+import { debounce } from 'throttle-debounce'
 import update from 'immutability-helper'
 
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
@@ -19,8 +20,11 @@ export default class CompositionForm extends React.Component {
 
   constructor() {
     super()
+
     const composition = { players: [], map: { segments: [] } }
     this.state = { maps: [], composition }
+
+    this.onCompositionNotesChange = debounce(500, this.onCompositionNotesChange)
   }
 
   componentDidMount() {
@@ -35,6 +39,16 @@ export default class CompositionForm extends React.Component {
 
   onCompositionFetched(composition) {
     this.setState({ composition })
+  }
+
+  onCompositionNotesChange(notes) {
+    const changes = { notes: { $set: notes } }
+    const composition = update(this.state.composition, changes)
+    this.setState({ composition })
+  }
+
+  onCompositionNotesKeyUp(event) {
+    this.onCompositionNotesChange(event.target.value)
   }
 
   onMapsFetched(maps) {
@@ -139,6 +153,8 @@ export default class CompositionForm extends React.Component {
               id="composition_notes"
               className="textarea"
               placeholder="Notes for this team composition"
+              defaultValue={composition.notes || ''}
+              onKeyUp={this.onCompositionNotesKeyUp.bind(this)}
             />
             <p>
               <a
