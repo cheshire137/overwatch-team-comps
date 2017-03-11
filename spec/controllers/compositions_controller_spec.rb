@@ -12,6 +12,26 @@ RSpec.describe CompositionsController do
     @request.env['devise.mapping'] = Devise.mappings[:user]
   end
 
+  describe 'GET last_composition' do
+    it 'loads successfully for auth user without a composition' do
+      sign_in @user
+      get :last_composition, params: { format: :json }
+      expect(response).to be_success, response.body
+    end
+
+    it 'loads successfully for auth user with a composition' do
+      create(:composition, user: @user)
+      sign_in @user
+      get :last_composition, params: { format: :json }
+      expect(response).to be_success, response.body
+    end
+
+    it 'loads successfully for anon user' do
+      get :last_composition, params: { format: :json }
+      expect(response).to be_success, response.body
+    end
+  end
+
   describe 'POST save' do
     it 'loads successfully for authenticated user' do
       sign_in @user

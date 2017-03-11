@@ -6,22 +6,24 @@ export default class OverwatchTeamCompsApi extends Fetcher {
 
     const tokenMeta = document.querySelector('meta[name="csrf-token"]')
     this.token = tokenMeta.content
-  }
 
-  getMaps() {
-    return this.get('/maps').then(json => json.maps)
-  }
-
-  getNewComposition() {
-    return this.get('/compositions/new').then(json => json.composition)
-  }
-
-  savePlayerSelection(body) {
-    const headers = {
+    this.defaultHeaders = {
       'X-CSRF-TOKEN': this.token,
       'Content-type': 'application/json'
     }
-    return this.post('/compositions', headers, body).
+  }
+
+  getMaps() {
+    return this.get('/maps', this.defaultHeaders).then(json => json.maps)
+  }
+
+  getLastComposition() {
+    return this.get('/composition/last', this.defaultHeaders).
+      then(json => json.composition)
+  }
+
+  savePlayerSelection(body) {
+    return this.post('/compositions', this.defaultHeaders, body).
       then(json => json.composition)
   }
 }

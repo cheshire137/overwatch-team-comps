@@ -1,3 +1,5 @@
+import update from 'immutability-helper'
+
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
 import MapSegmentHeader from './map-segment-header.jsx'
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
@@ -7,8 +9,8 @@ export default class CompositionForm extends React.Component {
     console.error('failed to load maps', error)
   }
 
-  static onNewCompositionError(error) {
-    console.error('failed to load new composition data', error)
+  static onCompositionFetchError(error) {
+    console.error('failed to load composition data', error)
   }
 
   static onPlayerSelectionSaveError(error) {
@@ -17,6 +19,7 @@ export default class CompositionForm extends React.Component {
 
   constructor() {
     super()
+
     const composition = { players: [], map: { segments: [] } }
     this.state = { maps: [], composition }
   }
@@ -27,11 +30,25 @@ export default class CompositionForm extends React.Component {
     api.getMaps().then(maps => this.onMapsFetched(maps)).
       catch(err => CompositionForm.onMapsError(err))
 
-    api.getNewComposition().then(comp => this.onNewCompositionFetched(comp)).
-      catch(err => CompositionForm.onNewCompositionError(err))
+    api.getLastComposition().then(comp => this.onCompositionFetched(comp)).
+      catch(err => CompositionForm.onCompositionFetchError(err))
   }
 
-  onNewCompositionFetched(composition) {
+  onCompositionFetched(composition) {
+    this.setState({ composition })
+  }
+
+  onCompositionNameChange(event) {
+    const name = event.target.value
+    const changes = { name: { $set: name } }
+    const composition = update(this.state.composition, changes)
+    this.setState({ composition })
+  }
+
+  onCompositionNotesChange(event) {
+    const notes = event.target.value
+    const changes = { notes: { $set: notes } }
+    const composition = update(this.state.composition, changes)
     this.setState({ composition })
   }
 
@@ -39,12 +56,12 @@ export default class CompositionForm extends React.Component {
     this.setState({ maps })
   }
 
-  onPlayerNameChange(event, index) {
-    const players = this.state.players.slice(0)
-    const player = Object.assign({}, players[index])
-    player.name = event.target.value
-    players[index] = player
-    this.setState({ players })
+  onPlayerNameChange(name, index) {
+    const playerChanges = {}
+    playerChanges[index] = { name: { $set: name } }
+    const changes = { players: playerChanges }
+    const composition = update(this.state.composition, changes)
+    this.setState({ composition })
   }
 
   onHeroSelectedForPlayer(heroID, mapSegmentID, player) {
@@ -65,9 +82,17 @@ export default class CompositionForm extends React.Component {
       catch(err => CompositionForm.onPlayerSelectionSaveError(err))
   }
 
-  onPlayerSelectionSaved(newComposition) {
-    const composition = Object.assign({}, this.state.composition)
-    composition.id = newComposition.id
+  onPlayerSelectionSaved(composition) {
+    this.setState({ composition })
+  }
+
+  onMapChange(event) {
+    // TODO: instead, submit new map ID to server and update composition
+    // when response comes back
+    const mapID = parseInt(event.target.value, 10)
+    const map = this.state.maps.filter(m => m.id === mapID)[0]
+    const changes = { map: { $set: map } }
+    const composition = update(this.state.composition, changes)
     this.setState({ composition })
   }
 
@@ -81,23 +106,35 @@ export default class CompositionForm extends React.Component {
             <div className="map-photo-container" />
             <div className="composition-meta">
               <div>
-                <label htmlFor="composition_map_id">
-                  Choose a map:
-                </label>
-                <span className="select">
-                  <select id="composition_map_id">
-                    {maps.map(map => <option key={map.name}>{map.name}</option>)}
+                <span className="select map-select">
+                  <select
+                    aria-label="Choose a map"
+                    id="composition_map_id"
+                    value={composition.map.id}
+                    onChange={e => this.onMapChange(e)}
+                  >
+                    {maps.map(map =>
+                      <option
+                        key={map.id}
+                        value={map.id}
+                      >{map.name}</option>
+                    )}
                   </select>
                 </span>
               </div>
-              <div>
-                <label htmlFor="composition_name">
-                  What do you want to call this team comp?
-                </label>
+              <div className="composition-name-container">
+                <i
+                  className="fa fa-pencil-square-o"
+                  aria-hidden="true"
+                />
                 <input
                   type="text"
+                  className="input composition-name-input"
                   placeholder="Composition name"
                   id="composition_name"
+                  value={composition.name || ''}
+                  onChange={e => this.onCompositionNameChange(e)}
+                  aria-label="Name of this team composition"
                 />
               </div>
             </div>
@@ -139,6 +176,8 @@ export default class CompositionForm extends React.Component {
               id="composition_notes"
               className="textarea"
               placeholder="Notes for this team composition"
+              value={composition.notes || ''}
+              onChange={e => this.onCompositionNotesChange(e)}
             />
             <p>
               <a

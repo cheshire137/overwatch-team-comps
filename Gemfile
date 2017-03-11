@@ -70,3 +70,6 @@ end
 
 # CommonJS so we can do require
 gem 'browserify-rails', '~> 4.1.0'
+
+# Font library for icons
+gem 'font-awesome-rails', '~> 4.7.0.1'

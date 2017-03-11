@@ -1,8 +1,29 @@
+import { debounce } from 'throttle-debounce'
+
 import HeroSelect from './hero-select.jsx'
 
 class EditPlayerSelectionRow extends React.Component {
-  onPlayerNameChange(event) {
-    this.props.onPlayerNameChange(event.target.value)
+  constructor(props) {
+    super(props)
+    this.onPlayerNameChange = debounce(500, this.onPlayerNameChange)
+  }
+
+  onPlayerNameChange(name) {
+    this.props.onPlayerNameChange(name)
+  }
+
+  onPlayerNameKeyUp(event) {
+    this.onPlayerNameChange(event.target.value)
+  }
+
+  getSelectedHeroID(segment) {
+    const needle = segment.id
+    const haystack = this.props.player.heroes
+    const heroes = haystack.filter(hero => hero.mapSegmentID === needle)
+    if (heroes.length > 0) {
+      return heroes[0].id
+    }
+    return null
   }
 
   render() {
@@ -19,15 +40,16 @@ class EditPlayerSelectionRow extends React.Component {
             type="text"
             id={inputID}
             placeholder="Player name"
-            value={player.name}
+            defaultValue={player.name}
             className="input"
-            onChange={e => this.onPlayerNameChange(e)}
+            onKeyUp={this.onPlayerNameKeyUp.bind(this)}
           />
         </td>
         {mapSegments.map(segment => (
           <td key={segment.id} className="hero-select-cell">
             <HeroSelect
               heroes={player.heroes}
+              selectedHeroID={this.getSelectedHeroID(segment)}
               onChange={heroID => onHeroSelection(heroID, segment.id)}
             />
           </td>
