@@ -15,6 +15,8 @@ class Composition < ApplicationRecord
   validates :name, uniqueness: { scope: [:map_id, :user_id] }
   validate :session_id_set_if_anonymous
 
+  scope :anonymous, ->{ where(user_id: User.anonymous) }
+
   def set_name
     return unless user
     return if name.present?
