@@ -81,6 +81,19 @@ RSpec.describe CompositionsController do
       expect(response).to have_http_status(400)
     end
 
+    it 'allows creating just a player in the composition' do
+      sign_in @user
+      composition = create(:composition, map: @map, user: @user)
+
+      expect do
+        post :save, params: {
+          player_name: 'newName64', format: :json, composition_id: composition.id
+        }
+      end.to change { @user.created_players.count }.by(1)
+      expect(response).to be_success
+      expect(composition.players.pluck(:name)).to eq(['newName64'])
+    end
+
     it 'allows updating just a player name' do
       sign_in @user
       player = create(:player, name: 'oldName32', creator: @user)
@@ -95,6 +108,7 @@ RSpec.describe CompositionsController do
           composition_id: composition.id
         }
       end.not_to change { Player.count }
+      expect(response).to be_success
       expect(player.reload.name).to eq('newName64')
       expect(composition.reload.map).to eq(@map)
       expect(selection.reload.player).to eq(player)
@@ -111,6 +125,7 @@ RSpec.describe CompositionsController do
           map_segment_id: @map_segment.id, format: :json
         }
       end.to change { Composition.count }.by(1)
+      expect(response).to be_success
     end
 
     it 'creates a new composition for anonymous user' do
@@ -120,6 +135,7 @@ RSpec.describe CompositionsController do
           map_segment_id: @map_segment.id, format: :json
         }
       end.to change { @anon_user.compositions.count }.by(1)
+      expect(response).to be_success
     end
 
     it 'creates a new player for new name for authenticated user' do
@@ -131,6 +147,7 @@ RSpec.describe CompositionsController do
           map_segment_id: @map_segment.id, format: :json
         }
       end.to change { Player.count }.by(1)
+      expect(response).to be_success
       expect(@user.compositions.last.players.pluck(:name)).to eq(['chocotaco'])
     end
 
@@ -141,6 +158,7 @@ RSpec.describe CompositionsController do
           map_segment_id: @map_segment.id, format: :json
         }
       end.to change { @anon_user.created_players.count }.by(1)
+      expect(response).to be_success
       expect(@anon_user.compositions.last.players.pluck(:name)).to eq(['NiftyThrifty618'])
     end
 
@@ -154,6 +172,7 @@ RSpec.describe CompositionsController do
           map_segment_id: @map_segment.id, format: :json, player_id: player.id
         }
       end.not_to change { Player.count }
+      expect(response).to be_success
       expect(player.reload.name).to eq('gloriousNewPerson')
     end
 
@@ -166,6 +185,7 @@ RSpec.describe CompositionsController do
           map_segment_id: @map_segment.id, format: :json
         }
       end.to change { PlayerSelection.count }.by(1)
+      expect(response).to be_success
     end
 
     it 'no-op for existing player selection for authenticated user' do
@@ -184,6 +204,7 @@ RSpec.describe CompositionsController do
           player_id: player.id
         }
       end.not_to change { PlayerSelection.count }
+      expect(response).to be_success
       expect(player_selection.reload.hero).to eq(@hero2)
     end
   end
