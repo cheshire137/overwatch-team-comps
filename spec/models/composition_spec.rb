@@ -28,10 +28,35 @@ describe Composition do
     expect(composition.name).not_to be_nil
   end
 
-  it 'requires a unique name per user + map combo' do
+  it 'sets composition name for anonymous user scoped by session' do
+    anon_user = create(:anonymous_user)
+
+    session1 = '123abc'
+    session2 = '987zyx'
+
+    session1_comp = create(:composition, user: anon_user, session_id: session1)
+    expect(session1_comp.name).to eq('Composition 1')
+
+    session2_comp = create(:composition, user: anon_user, session_id: session2)
+    expect(session2_comp.name).to eq('Composition 1')
+
+    session1_comp2 = build(:composition, user: anon_user, session_id: session1)
+    session1_comp2.valid?
+    expect(session1_comp2.name).to eq('Composition 2')
+  end
+
+  it 'requires a unique name per user for authenticated user' do
     existing = create(:composition)
-    composition = Composition.new(name: existing.name, map: existing.map,
-                                  user: existing.user)
+    composition = Composition.new(name: existing.name, user: existing.user)
+    expect(composition.valid?).to be_falsey
+    expect(composition.errors[:name].any?).to be_truthy
+  end
+
+  it 'requires a unique name per user for anonymous user' do
+    anon_user = create(:anonymous_user)
+    existing = create(:composition, user: anon_user, session_id: '123abc')
+    composition = Composition.new(name: existing.name, user: existing.user,
+                                  session_id: existing.session_id)
     expect(composition.valid?).to be_falsey
     expect(composition.errors[:name].any?).to be_truthy
   end

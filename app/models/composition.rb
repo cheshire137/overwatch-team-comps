@@ -12,7 +12,6 @@ class Composition < ApplicationRecord
   before_validation :set_name
 
   validates :map, :user, :name, presence: true
-  validates :name, uniqueness: { scope: [:map_id, :user_id] }
   validate :session_id_set_if_anonymous
 
   scope :anonymous, ->{ where(user_id: User.anonymous) }

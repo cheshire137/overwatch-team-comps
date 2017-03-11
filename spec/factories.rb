@@ -5,9 +5,8 @@ FactoryGirl.define do
   end
 
   factory :composition do
-    map
+    map { Map.first || create(:map) }
     user
-    session_id '123abc'
   end
 
   factory :hero do
