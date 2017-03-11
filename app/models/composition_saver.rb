@@ -32,6 +32,16 @@ class CompositionSaver
       end
     end
 
+    if player && @composition
+      comp_player = init_composition_player(data, player: player,
+                                            composition: @composition)
+      unless comp_player.persisted? || comp_player.save
+        @error_type = 'composition_player'
+        @error_value = comp_player.errors
+        return
+      end
+    end
+
     if player && map_segment && data[:hero_id]
       selection = init_player_selection(data, composition: @composition,
                                         player: player, map_segment: map_segment)
@@ -72,6 +82,14 @@ class CompositionSaver
       end
       Player.new(attrs)
     end
+  end
+
+  def init_composition_player(data, player:, composition:)
+    comp_player = CompositionPlayer.where(composition_id: composition,
+                                          player_id: player).
+                                    first_or_initialize
+    comp_player.position = data[:player_position] if data[:player_position]
+    comp_player
   end
 
   def init_composition(data, map:)

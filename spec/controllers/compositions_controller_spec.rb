@@ -131,6 +131,7 @@ RSpec.describe CompositionsController do
           map_segment_id: @map_segment.id, format: :json
         }
       end.to change { Player.count }.by(1)
+      expect(@user.compositions.last.players.pluck(:name)).to eq(['chocotaco'])
     end
 
     it 'creates a new player for new name for anonymous user' do
@@ -140,6 +141,7 @@ RSpec.describe CompositionsController do
           map_segment_id: @map_segment.id, format: :json
         }
       end.to change { @anon_user.created_players.count }.by(1)
+      expect(@anon_user.compositions.last.players.pluck(:name)).to eq(['NiftyThrifty618'])
     end
 
     it 'reuses existing player for authenticated user' do

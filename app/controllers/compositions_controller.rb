@@ -40,7 +40,7 @@ class CompositionsController < ApplicationController
 
   def composition_params
     params.permit(:player_name, :composition_id, :hero_id, :map_segment_id,
-                  :player_id)
+                  :player_id, :player_position)
   end
 
   def get_map_segment_ids(heroes, composition)
