@@ -16,15 +16,6 @@ class CompositionSaver
       end
     end
 
-    if player && data[:hero_id]
-      player_hero = init_player_hero(data, player: player)
-      unless player_hero.persisted? || player_hero.save
-        @error_type = 'player_hero'
-        @error_value = player_hero.errors
-        return
-      end
-    end
-
     if data[:map_segment_id]
       map_segment = MapSegment.find(data[:map_segment_id])
       map = map_segment.map
@@ -35,13 +26,12 @@ class CompositionSaver
         return
       end
 
-      if player_hero
-        player_selection = init_player_selection(composition: @composition,
-                                                 player_hero: player_hero,
-                                                 map_segment: map_segment)
-        unless player_selection.persisted? || player_selection.save
+      if player && data[:hero_id]
+        selection = init_player_selection(data, composition: @composition,
+                                          player: player, map_segment: map_segment)
+        unless selection.persisted? && !selection.changed? || selection.save
           @error_type = 'player_selection'
-          @error_value = player_selection.errors
+          @error_value = selection.errors
           return
         end
       end
@@ -76,12 +66,6 @@ class CompositionSaver
     end
   end
 
-  def init_player_hero(data, player:)
-    hero = Hero.find(data[:hero_id])
-    return nil unless hero && player.persisted?
-    PlayerHero.where(player_id: player, hero_id: hero).first_or_initialize
-  end
-
   def init_composition(data, map:)
     id = data[:composition_id]
 
@@ -110,13 +94,18 @@ class CompositionSaver
     end
   end
 
-  def init_player_selection(composition:, player_hero:, map_segment:)
+  def init_player_selection(data, composition:, player:, map_segment:)
+    hero = Hero.find(data[:hero_id])
+
     if composition.persisted?
-      PlayerSelection.where(composition_id: composition,
-                            player_hero_id: player_hero,
-                            map_segment_id: map_segment).first_or_initialize
+      selection = PlayerSelection.
+        where(composition_id: composition, player_id: player,
+              map_segment_id: map_segment).first_or_initialize
+      selection.hero = hero
+      selection
     else
-      PlayerSelection.new(player_hero: player_hero, map_segment: map_segment)
+      PlayerSelection.new(player: player, hero: hero, map_segment: map_segment,
+                          composition: composition)
     end
   end
 end

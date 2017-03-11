@@ -12,9 +12,8 @@ class CompositionsController < ApplicationController
 
   def save
     saver = CompositionSaver.new(user: current_user, session_id: session.id)
-    if saver.save(composition_params)
-    else
-      render json: {
+    unless saver.save(composition_params)
+      return render json: {
         "#{saver.error_type}_errors" => saver.error_value
       }, status: :unprocessable_entity
     end
@@ -43,10 +42,10 @@ class CompositionsController < ApplicationController
     end
 
     player_selections = composition.player_selections.
-      includes(player_hero: :player)
+      includes(:player)
     player_selections.each do |player_selection|
-      hero_id = player_selection.player_hero.hero_id
-      player_name = player_selection.player_hero.player.name
+      hero_id = player_selection.hero_id
+      player_name = player_selection.player.name
       result[hero_id][player_name] = player_selection.map_segment_id
     end
 
