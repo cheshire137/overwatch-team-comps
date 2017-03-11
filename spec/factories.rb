@@ -9,6 +9,11 @@ FactoryGirl.define do
     user
   end
 
+  factory :composition_player do
+    composition
+    player
+  end
+
   factory :hero do
     name 'McCree'
     role 'offense'

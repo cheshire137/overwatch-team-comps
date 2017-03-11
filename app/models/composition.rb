@@ -4,8 +4,10 @@ class Composition < ApplicationRecord
   belongs_to :map
   belongs_to :user
 
+  has_many :composition_players, dependent: :destroy
+  has_many :players, through: :composition_players
+
   has_many :player_selections, dependent: :destroy
-  has_many :players, through: :player_selections
   has_many :heroes, through: :player_selections
 
   before_validation :set_name
