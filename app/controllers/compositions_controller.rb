@@ -68,7 +68,7 @@ class CompositionsController < ApplicationController
   # from for filling out a team composition.
   def get_available_players
     Player.created_by(user: current_user, session_id: session.id).
-           order(:name)
+           order_by_name
   end
 
   def get_players_for(composition)

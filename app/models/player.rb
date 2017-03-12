@@ -18,6 +18,8 @@ class Player < ApplicationRecord
     end
   }
 
+  scope :order_by_name, ->{ order('UPPER(name) ASC') }
+
   # Given a list of names for players already in a composition, this will
   # return a reasonable default name for a new player.
   def self.get_name(existing_names)
