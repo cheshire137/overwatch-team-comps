@@ -18,6 +18,16 @@ class Composition < ApplicationRecord
 
   scope :anonymous, ->{ where(user_id: User.anonymous) }
 
+  # Returns a list of Compositions created by the given User, or by the anonymous
+  # user in the given session if the User is nil.
+  scope :created_by, ->(user:, session_id:) {
+    if user
+      where(user_id: user)
+    else
+      where(user_id: User.anonymous, session_id: session_id)
+    end
+  }
+
   # Returns the most recently saved Composition record for the given User,
   # if any. If the given User is nil, the most recently saved Composition
   # record by the anonymous user with the given session ID will be returned.
