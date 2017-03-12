@@ -2,13 +2,8 @@ class CompositionsController < ApplicationController
   def last_composition
     @composition = Composition.last_saved(current_user, session.id) ||
       new_composition
-    @players = get_players_for(@composition)
+    @rows = CompositionRow.for_composition(@composition)
     @available_players = get_available_players(@composition)
-
-    heroes = Hero.order(:name)
-    @map_segment_ids = get_map_segment_ids(heroes, @composition, @players)
-    @heroes_by_player = get_heroes_by_player(heroes, @players)
-    @hero_confidences = get_hero_confidences(heroes, @players)
   end
 
   def save
@@ -29,13 +24,8 @@ class CompositionsController < ApplicationController
     end
 
     @composition = saver.composition
-    @players = get_players_for(@composition)
+    @rows = CompositionRow.for_composition(@composition)
     @available_players = get_available_players(@composition)
-
-    heroes = Hero.order(:name)
-    @map_segment_ids = get_map_segment_ids(heroes, @composition, @players)
-    @heroes_by_player = get_heroes_by_player(heroes, @players)
-    @hero_confidences = get_hero_confidences(heroes, @players)
   end
 
   private
@@ -58,9 +48,11 @@ class CompositionsController < ApplicationController
       end
     end
 
-    composition.player_selections.each do |player_selection|
+    player_selections = composition.player_selections.
+      includes(:composition_player)
+    player_selections.each do |player_selection|
       hero_id = player_selection.hero_id
-      player_id = player_selection.player_id
+      player_id = player_selection.composition_player.player_id
 
       result[player_id][hero_id] << player_selection.map_segment_id
     end
@@ -70,20 +62,10 @@ class CompositionsController < ApplicationController
 
   # Returns a list of Players the current user has created and can choose
   # from for filling out a team composition.
-  def get_available_players
-    Player.created_by(user: current_user, session_id: session.id).
-           not_default_name.order_by_name
-  end
-
-  def get_players_for(composition)
-    players = []
-    players.concat(composition.players) if composition.persisted?
-
-    while players.length < Composition::MAX_PLAYERS
-      players << Player.default
-    end
-
-    players
+  def get_available_players(composition)
+    player_pool = Player.created_by(user: current_user, session_id: session.id)
+    players_in_comp = composition.players.not_default
+    (player_pool | players_in_comp).sort_by { |player| player.name.downcase }
   end
 
   # Returns a hash with hero IDs as keys and another hash as the value. The

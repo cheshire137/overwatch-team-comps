@@ -17,16 +17,14 @@ json.composition do
     json.id player.id
     json.name player.name
   end
-
-  # Six players, one per row in composition form:
-  json.players @players do |player|
-    json.id player.id
-    json.name player.name
-    json.heroes @heroes_by_player[player.id] do |hero|
+  json.players @rows do |row|
+    json.id row.player.id
+    json.name row.player.name
+    json.heroes row.heroes do |hero|
       json.id hero.id
       json.name hero.name
-      json.confidence @hero_confidences[player.id][hero.id]
-      json.mapSegmentIDs @map_segment_ids[player.id][hero.id]
+      json.confidence row.hero_confidence(hero)
+      json.mapSegmentIDs row.map_segment_ids(hero)
     end
   end
 end
