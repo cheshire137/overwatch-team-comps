@@ -106,13 +106,7 @@ class CompositionSaver
 
   def composition_for_authenticated_user(map:, id:)
     if id
-      scope = Composition.where(id: id)
-      if @user
-        scope = scope.where(user_id: @user)
-      else
-        scope = scope.where(user_id: User.anonymous, session_id: @session_id)
-      end
-      comp = scope.first
+      comp = Composition.where(user: @user, id: id).first
       unless comp
         raise CompositionSaver::Error, 'No such composition for creator'
       end
