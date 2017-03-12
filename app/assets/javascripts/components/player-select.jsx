@@ -17,7 +17,15 @@ class PlayerSelect extends React.Component {
   }
 
   onNewNameSet(event) {
-    this.props.onChange(null, event.target.value)
+    const name = event.target.value
+    if (name.trim().length < 1) {
+      return
+    }
+    const existingNames = this.props.players.map(p => p.name)
+    if (existingNames.indexOf(name) > -1) {
+      return
+    }
+    this.props.onChange(null, name)
   }
 
   selectOrTextField() {
