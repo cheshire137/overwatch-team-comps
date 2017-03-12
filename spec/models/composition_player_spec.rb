@@ -53,4 +53,13 @@ RSpec.describe CompositionPlayer, type: :model do
     expect(comp_player.valid?).to be_falsey
     expect(comp_player.errors[:player_id].any?).to be_truthy
   end
+
+  it 'requires same owner for composition and non-default player' do
+    composition = create(:composition)
+    player = create(:player)
+    comp_player = build(:composition_player, composition: composition,
+                        player: player)
+    expect(comp_player.valid?).to be_falsey
+    expect(comp_player.errors[:player].any?).to be_truthy
+  end
 end
