@@ -14,11 +14,6 @@ FactoryGirl.define do
     player { create(:player, creator: composition.user) }
   end
 
-  factory :default_player, class: Player do
-    name { Player::DEFAULT_NAME }
-    creator { User.anonymous || create(:anonymous_user) }
-  end
-
   factory :hero do
     name 'McCree'
     role 'offense'
