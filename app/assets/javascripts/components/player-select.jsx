@@ -49,9 +49,9 @@ class PlayerSelect extends React.Component {
       <span className="select player-select">
         <select
           onChange={e => this.onChange(e)}
-          value={selectedPlayer.id || ''}
+          value={typeof selectedPlayer.id === 'number' ? selectedPlayer.id : ''}
         >
-          <option value="">&mdash;</option>
+          <option value="">Choose a player</option>
           {players.map(player => (
             <option
               key={player.id}
