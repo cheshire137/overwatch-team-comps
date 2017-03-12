@@ -1,4 +1,7 @@
 class Player < ApplicationRecord
+  DEFAULT_NAMES = ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5',
+                   'Player 6'].freeze
+
   belongs_to :user
   belongs_to :creator, class_name: 'User'
 
@@ -18,13 +21,15 @@ class Player < ApplicationRecord
     end
   }
 
+  scope :not_default_name, ->{ where('name NOT IN (?)', DEFAULT_NAMES) }
+
   scope :order_by_name, ->{ order('UPPER(name) ASC') }
 
   # Given a list of names for players already in a composition, this will
   # return a reasonable default name for a new player.
   def self.get_name(existing_names)
     existing_default_names = existing_names.uniq.sort.select do |name|
-      name =~ /Player \d/
+      DEFAULT_NAMES.include?(name)
     end
     existing_numbers = existing_default_names.map do |name|
       name.split('Player ')[1].to_i
