@@ -1,15 +1,15 @@
 class PlayersController < ApplicationController
   def create
-    @player = Player.new(player_params)
+    player = Player.new(player_params)
     if user_signed_in?
-      @player.creator = current_user
+      player.creator = current_user
     else
-      @player.creator = User.anonymous
-      @player.creator_session_id = session.id
+      player.creator = User.anonymous
+      player.creator_session_id = session.id
     end
 
-    unless @player.save
-      return render json: { error: { player: @player.errors.full_messages } },
+    unless player.save
+      return render json: { error: { player: player.errors.full_messages } },
                     status: :unprocessable_entity
     end
 
@@ -20,16 +20,21 @@ class PlayersController < ApplicationController
       } }, status: :unprocessable_entity
     end
 
-    @comp_player = CompositionPlayer.
+    comp_player = CompositionPlayer.
       where(position: params[:position], composition_id: @composition).
       first_or_initialize
-    @comp_player = @player
+    comp_player.player = player
 
-    unless @comp_player.save
+    unless comp_player.save
       return render json: { error: {
-        composition_player: @comp_player.errors.full_messages
+        composition_player: comp_player.errors.full_messages
       } }, status: :unprocessable_entity
     end
+
+    @rows = CompositionRow.for_composition(@composition)
+    @available_players = @composition.available_players(user: current_user, session_id: session.id)
+
+    render template: 'compositions/show'
   end
 
   private
