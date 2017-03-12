@@ -56,11 +56,11 @@ export default class CompositionForm extends React.Component {
     this.setState({ maps })
   }
 
-  onPlayerSelected(playerID, playerName) {
+  onPlayerSelected(playerID, playerName, position) {
     const { composition } = this.state
     const api = new OverwatchTeamCompsApi()
 
-    const body = { map_id: composition.map.id }
+    const body = { map_id: composition.map.id, player_position: position }
     if (playerID) {
       body.player_id = playerID
     }
@@ -179,7 +179,7 @@ export default class CompositionForm extends React.Component {
                       this.onHeroSelectedForPlayer(heroID, mapSegmentID, player)
                     }
                     onPlayerSelection={(playerID, name) =>
-                      this.onPlayerSelected(playerID, name)
+                      this.onPlayerSelected(playerID, name, index)
                     }
                   />
                 )
