@@ -51,7 +51,7 @@ class PlayerSelect extends React.Component {
           onChange={e => this.onChange(e)}
           value={selectedPlayer.id || ''}
         >
-          <option value="">Choose a player</option>
+          <option value="">&mdash;</option>
           {players.map(player => (
             <option
               key={player.id}

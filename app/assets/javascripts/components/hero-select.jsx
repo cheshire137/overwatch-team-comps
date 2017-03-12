@@ -13,7 +13,7 @@ class HeroSelect extends React.Component {
           value={selectedHeroID || ''}
           disabled={disabled}
         >
-          <option>Select hero</option>
+          <option>&mdash;</option>
           {heroes.map(hero => (
             <option
               key={hero.id}
