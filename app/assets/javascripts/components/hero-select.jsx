@@ -5,12 +5,13 @@ class HeroSelect extends React.Component {
   }
 
   render() {
-    const { heroes, selectedHeroID } = this.props
+    const { heroes, selectedHeroID, disabled } = this.props
     return (
       <span className="select">
         <select
           onChange={e => this.onChange(e)}
           value={selectedHeroID || ''}
+          disabled={disabled}
         >
           <option>Select hero</option>
           {heroes.map(hero => (
@@ -28,7 +29,8 @@ class HeroSelect extends React.Component {
 HeroSelect.propTypes = {
   heroes: React.PropTypes.array.isRequired,
   onChange: React.PropTypes.func.isRequired,
-  selectedHeroID: React.PropTypes.number
+  selectedHeroID: React.PropTypes.number,
+  disabled: React.PropTypes.bool.isRequired
 }
 
 export default HeroSelect
