@@ -119,6 +119,17 @@ export default class CompositionForm extends React.Component {
     this.setState({ composition })
   }
 
+  // Returns a list of players. Includes only players not selected in
+  // other rows. Always includes the given player.
+  getPlayerOptionsForRow(playerForRow) {
+    const { composition } = this.state
+    const { availablePlayers, players } = composition
+    const playerIDsInComp = players.map(player => player.id)
+    return availablePlayers.filter(player =>
+      playerIDsInComp.indexOf(player.id) < 0 || player.id === playerForRow.id
+    )
+  }
+
   render() {
     const { maps, composition } = this.state
 
@@ -184,13 +195,14 @@ export default class CompositionForm extends React.Component {
                 const key = `${player.name}${index}`
                 const heroes = player.id ? composition.heroes[player.id] : []
                 const selections = player.id ? composition.selections[player.id] : {}
+                const players = this.getPlayerOptionsForRow(player)
 
                 return (
                   <EditPlayerSelectionRow
                     key={key}
                     inputID={inputID}
                     selectedPlayer={player}
-                    players={composition.availablePlayers}
+                    players={players}
                     heroes={heroes}
                     selections={selections}
                     mapSegments={mapSegments}
