@@ -7,6 +7,7 @@ class CompositionPlayer < ApplicationRecord
   validates :player, :composition, :position, presence: true
   validates :position, numericality: { only_integer: true },
     inclusion: 0...Composition::MAX_PLAYERS
+  validates :player_id, uniqueness: { scope: :composition_id }
   validate :composition_does_not_have_max_players
 
   default_scope { order(:position) }

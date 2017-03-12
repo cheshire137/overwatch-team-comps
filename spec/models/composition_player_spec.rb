@@ -18,8 +18,7 @@ RSpec.describe CompositionPlayer, type: :model do
     expect(comp_player.position).to eq(0)
 
     comp_player2 = create(:composition_player, position: nil,
-                          composition: comp_player.composition,
-                          player: comp_player.player)
+                          composition: comp_player.composition)
     expect(comp_player2.position).to eq(1)
   end
 
@@ -41,5 +40,16 @@ RSpec.describe CompositionPlayer, type: :model do
     seventh = build(:composition_player, composition: composition)
     expect(seventh.valid?).to be_falsey
     expect(seventh.errors[:composition].any?).to be_truthy
+  end
+
+  it 'requires a unique player per composition' do
+    composition = create(:composition)
+    player = create(:player)
+    create(:composition_player, composition: composition,
+           player: player)
+    comp_player = build(:composition_player, composition: composition,
+                        player: player)
+    expect(comp_player.valid?).to be_falsey
+    expect(comp_player.errors[:player_id].any?).to be_truthy
   end
 end
