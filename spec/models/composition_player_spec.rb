@@ -23,6 +23,18 @@ RSpec.describe CompositionPlayer, type: :model do
     expect(comp_player2.position).to eq(1)
   end
 
+  it 'disallows position less than 0' do
+    comp_player = build(:composition_player, position: -1)
+    expect(comp_player.valid?).to be_falsey
+    expect(comp_player.errors[:position].any?).to be_truthy
+  end
+
+  it 'disallows position greater than 5' do
+    comp_player = build(:composition_player, position: 6)
+    expect(comp_player.valid?).to be_falsey
+    expect(comp_player.errors[:position].any?).to be_truthy
+  end
+
   it 'disallows more than 6 players per composition' do
     composition = create(:composition)
     6.times { create(:composition_player, composition: composition) }

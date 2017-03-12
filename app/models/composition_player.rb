@@ -5,7 +5,8 @@ class CompositionPlayer < ApplicationRecord
   before_validation :set_position
 
   validates :player, :composition, :position, presence: true
-  validates :position, numericality: { only_integer: true }
+  validates :position, numericality: { only_integer: true },
+    inclusion: 0...Composition::MAX_PLAYERS
   validate :composition_does_not_have_max_players
 
   default_scope { order(:position) }
