@@ -2,6 +2,8 @@ class CompositionPlayer < ApplicationRecord
   belongs_to :composition
   belongs_to :player
 
+  has_many :player_selections, dependent: :destroy
+
   before_validation :set_position
 
   validates :player, :composition, :position, presence: true
