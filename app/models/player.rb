@@ -1,6 +1,4 @@
 class Player < ApplicationRecord
-  DEFAULT_NAME = 'Player'.freeze
-
   belongs_to :user
   belongs_to :creator, class_name: 'User'
 
@@ -20,34 +18,21 @@ class Player < ApplicationRecord
     end
   }
 
-  scope :not_default, ->{ where('name <> ?', DEFAULT_NAME) }
-
   scope :order_by_name, ->{ order('UPPER(name) ASC') }
 
   # Returns the Player with the given ID, but only if that Player is
-  # a) the default player or b) owned by the given User/session.
+  # owned by the given User/session.
   #
   # Returns Player or nil.
   def self.find_if_allowed(id, user:, session_id:)
     scope = if user
-      where('id = ? AND (creator_id = ? OR name = ?)',
-            id, user, DEFAULT_NAME)
+      where('id = ? AND creator_id = ?', id, user)
     else
-      where('id = ? AND ((creator_id = ? AND creator_session_id = ?) OR name = ?)',
-            id, User.anonymous, session_id, DEFAULT_NAME)
+      where('id = ? AND creator_id = ? AND creator_session_id = ?',
+            id, User.anonymous, session_id)
     end
 
     scope.first
-  end
-
-  # Returns the 'default' player for use when a user selects a hero first
-  # before choosing a player.
-  def self.default
-    find_by_name DEFAULT_NAME
-  end
-
-  def default?
-    name == DEFAULT_NAME
   end
 
   # Returns the given list of heroes reordered such that the ones the player is most
@@ -66,7 +51,6 @@ class Player < ApplicationRecord
   def creator_session_id_set_if_anonymous
     return unless creator && creator.anonymous?
     return if creator_session_id.present?
-    return if default? # don't care about session for 'default' Player
 
     errors.add(:creator_session_id, 'is required if creator is anonymous user.')
   end

@@ -21,7 +21,7 @@ class EditPlayerSelectionRow extends React.Component {
           <td key={segment.id} className="hero-select-cell">
             <HeroSelect
               heroes={heroes}
-              disabled={typeof selectedPlayer !== 'object'}
+              disabled={typeof selectedPlayer.id !== 'number'}
               selectedHeroID={selections[segment.id]}
               onChange={heroID => onHeroSelection(heroID, segment.id)}
             />

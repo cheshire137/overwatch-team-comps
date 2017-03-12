@@ -36,7 +36,6 @@ class CompositionPlayer < ApplicationRecord
 
   def player_is_allowed_for_comp_owner
     return unless player && composition
-    return if player.default? # anyone can use default player
 
     if player.creator.anonymous?
       unless composition.user.anonymous? &&

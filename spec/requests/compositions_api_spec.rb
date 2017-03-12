@@ -7,7 +7,6 @@ RSpec.describe 'compositions API' do
     @hero1 = create(:hero, name: 'Hanzo')
     @hero2 = create(:hero, name: 'Mercy')
     @user = create(:user)
-    @default_player = create(:default_player)
   end
 
   describe 'POST save' do

@@ -50,18 +50,6 @@ describe Player do
       expect(result).to be_nil
     end
 
-    it 'returns default player for anonymous user' do
-      player = create(:default_player)
-      result = Player.find_if_allowed(player.id, user: nil, session_id: '123')
-      expect(result).to eq(player)
-    end
-
-    it 'returns default player for authenticated user' do
-      player = create(:default_player)
-      result = Player.find_if_allowed(player.id, user: create(:user), session_id: '123')
-      expect(result).to eq(player)
-    end
-
     it 'returns owned player for anonymous user' do
       anon_user = create(:anonymous_user)
       player = create(:player, creator: anon_user, creator_session_id: '123')

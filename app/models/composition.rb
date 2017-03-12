@@ -48,8 +48,7 @@ class Composition < ApplicationRecord
       order_by_name
     return player_pool if new_record?
 
-    players_in_comp = players.not_default
-    (player_pool | players_in_comp).sort_by { |player| player.name.downcase }
+    (player_pool | players).sort_by { |player| player.name.downcase }
   end
 
   def set_name

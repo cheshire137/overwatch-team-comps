@@ -182,14 +182,17 @@ export default class CompositionForm extends React.Component {
               {composition.players.map((player, index) => {
                 const inputID = `player_${index}_name`
                 const key = `${player.name}${index}`
+                const heroes = player.id ? composition.heroes[player.id] : []
+                const selections = player.id ? composition.selections[player.id] : {}
+
                 return (
                   <EditPlayerSelectionRow
                     key={key}
                     inputID={inputID}
                     selectedPlayer={player}
                     players={composition.availablePlayers}
-                    heroes={composition.heroes[player.id]}
-                    selections={composition.selections[player.id]}
+                    heroes={heroes}
+                    selections={selections}
                     mapSegments={mapSegments}
                     nameLabel={String(index + 1)}
                     onHeroSelection={(heroID, mapSegmentID) =>

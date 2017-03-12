@@ -10,9 +10,8 @@ class CompositionRow
                   all_heroes: heroes)
     end
 
-    default_player = Player.default
     (rows.length).upto(Composition::MAX_PLAYERS - 1) do |i|
-      rows << new(number: i, player: default_player, composition: composition,
+      rows << new(number: i, player: nil, composition: composition,
                   all_heroes: heroes)
     end
 
@@ -27,15 +26,15 @@ class CompositionRow
   end
 
   def heroes
-    if player.default?
-      @all_heroes
-    else
+    if player
       player.heroes_by_confidence(@all_heroes)
+    else
+      @all_heroes
     end
   end
 
   def hero_confidence(hero)
-    return 0 if player.default?
+    return 0 unless player
 
     # TODO: remove n+1 query by prefetching player-hero records
     player_hero = PlayerHero.where(player_id: player, hero_id: hero).first
@@ -47,6 +46,8 @@ class CompositionRow
   end
 
   def selected_hero(map_segment)
+    return unless player
+
     selection = PlayerSelection.joins(:composition_player).
       where(map_segment_id: map_segment, composition_players: {
         position: number, player_id: player

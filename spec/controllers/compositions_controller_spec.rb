@@ -4,7 +4,6 @@ RSpec.describe CompositionsController do
   before(:each) do
     @user = create(:user)
     @anon_user = create(:anonymous_user)
-    @default_player = create(:default_player)
     @map = create(:map)
     @map_segment = create(:map_segment, map: @map)
     @hero1 = create(:hero, name: 'Mei')
