@@ -1,5 +1,5 @@
 class CompositionRow
-  attr_reader :player, :composition, :number
+  attr_reader :player, :map_segments, :number
 
   def self.for_composition(composition)
     rows = []
@@ -8,23 +8,25 @@ class CompositionRow
     player_selections = composition.player_selections.
       select(:map_segment_id, :position, :player_id, :hero_id).to_a
 
+    map_segments = composition.map_segments
+
     composition.players.each_with_index do |player, i|
-      rows << new(number: i, player: player, composition: composition,
+      rows << new(number: i, player: player, map_segments: map_segments,
                   all_heroes: heroes, player_selections: player_selections)
     end
 
     (rows.length).upto(Composition::MAX_PLAYERS - 1) do |i|
-      rows << new(number: i, player: nil, composition: composition,
+      rows << new(number: i, player: nil, map_segments: map_segments,
                   all_heroes: heroes, player_selections: player_selections)
     end
 
     rows
   end
 
-  def initialize(number:, player:, composition:, all_heroes:, player_selections:)
+  def initialize(number:, player:, map_segments:, all_heroes:, player_selections:)
     @number = number
     @player = player
-    @composition = composition
+    @map_segments = map_segments
     @all_heroes = all_heroes
     @player_selections = player_selections
   end
@@ -35,10 +37,6 @@ class CompositionRow
     else
       @all_heroes
     end
-  end
-
-  def map_segments
-    composition.map_segments
   end
 
   def selected_hero(map_segment)
