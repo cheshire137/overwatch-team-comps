@@ -21,4 +21,11 @@ class User < ApplicationRecord
   def anonymous?
     email == ANONYMOUS_EMAIL
   end
+
+  def migrate_session_records(session_id)
+    Player.where(creator_id: self.class.anonymous,
+                 creator_session_id: session_id).update_all(creator_id: id)
+    Composition.where(user_id: self.class.anonymous,
+                      session_id: session_id).update_all(user_id: id)
+  end
 end
