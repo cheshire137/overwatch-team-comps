@@ -8,6 +8,7 @@ class Composition < ApplicationRecord
   has_many :players, through: :composition_players
   has_many :player_selections, through: :composition_players
   has_many :heroes, through: :player_selections
+  has_many :map_segments, through: :map
 
   before_validation :set_name
 
