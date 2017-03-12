@@ -61,14 +61,8 @@ class CompositionSaver
 
   def init_player(data)
     if id = data[:player_id]
-      scope = Player.where(id: id)
-      if @user
-        scope = scope.where(creator: @user)
-      else
-        scope = scope.where(creator: User.anonymous,
-                            creator_session_id: @session_id)
-      end
-      player = scope.first
+      player = Player.created_by(user: @user, session_id: @session_id).
+        where(id: id).first
       unless player
         raise CompositionSaver::Error, 'No such player for creator'
       end
