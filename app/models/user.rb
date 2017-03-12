@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   ANONYMOUS_EMAIL = 'anonymous@overwatch-team-comps.com'.freeze
 
+  alias_attribute :to_s, :email
+
   # Returns the special User for representing anonymous site visitors.
   def self.anonymous
     find_by_email ANONYMOUS_EMAIL
