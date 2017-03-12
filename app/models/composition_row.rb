@@ -5,24 +5,28 @@ class CompositionRow
     rows = []
     heroes = Hero.order(:name)
 
+    player_selections = composition.player_selections.
+      select(:map_segment_id, :position, :player_id, :hero_id).to_a
+
     composition.players.each_with_index do |player, i|
       rows << new(number: i, player: player, composition: composition,
-                  all_heroes: heroes)
+                  all_heroes: heroes, player_selections: player_selections)
     end
 
     (rows.length).upto(Composition::MAX_PLAYERS - 1) do |i|
       rows << new(number: i, player: nil, composition: composition,
-                  all_heroes: heroes)
+                  all_heroes: heroes, player_selections: player_selections)
     end
 
     rows
   end
 
-  def initialize(number:, player:, composition:, all_heroes:)
+  def initialize(number:, player:, composition:, all_heroes:, player_selections:)
     @number = number
     @player = player
     @composition = composition
     @all_heroes = all_heroes
+    @player_selections = player_selections
   end
 
   def heroes
@@ -40,10 +44,10 @@ class CompositionRow
   def selected_hero(map_segment)
     return unless player
 
-    selection = PlayerSelection.joins(:composition_player).
-      where(map_segment_id: map_segment, composition_players: {
-        position: number, player_id: player
-      }).first
+    selection = @player_selections.detect do |ps|
+      ps.map_segment_id == map_segment.id &&
+        ps.position == number && ps.player_id == player.id
+    end
     selection ? selection.hero_id : nil
   end
 end
