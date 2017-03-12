@@ -20,10 +20,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                     password: Devise.friendly_token[0,20])
 
     if user.save
-      Player.where(creator_id: User.anonymous, creator_session_id: session.id).
-             update_all(creator_id: user.id)
-      Composition.where(user_id: User.anonymous, session_id: session.id).
-                  update_all(user_id: user.id)
+      user.migrate_session_records(session.id)
 
       session['devise.bnet_data'] = nil
       set_flash_message(:notice, :success, kind: "Battle.net")
