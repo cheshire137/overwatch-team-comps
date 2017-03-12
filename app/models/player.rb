@@ -8,6 +8,8 @@ class Player < ApplicationRecord
   validate :creator_session_id_set_if_anonymous
   validate :name_is_unique_to_creator
 
+  scope :order_by_name, ->{ order('UPPER(name) ASC') }
+
   # Returns a list of Players created by the given User, or by the anonymous
   # user in the given session if the User is nil.
   scope :created_by, ->(user:, session_id:) {
@@ -17,8 +19,6 @@ class Player < ApplicationRecord
       where(creator_id: User.anonymous, creator_session_id: session_id)
     end
   }
-
-  scope :order_by_name, ->{ order('UPPER(name) ASC') }
 
   # Returns the Player with the given ID, but only if that Player is
   # owned by the given User/session.
