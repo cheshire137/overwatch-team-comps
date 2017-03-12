@@ -13,6 +13,10 @@ json.composition do
       json.name map_segment.name
     end
   end
+  json.availablePlayers @available_players do |player|
+    json.id player.id
+    json.name player.name
+  end
   json.players @players do |player|
     if player.persisted?
       json.id player.id

@@ -3,6 +3,7 @@ class CompositionsController < ApplicationController
     @composition = Composition.last_saved(current_user, session.id) ||
       new_composition
     @players = get_players_for(@composition)
+    @available_players = get_available_players
 
     heroes = Hero.order(:name)
     @map_segment_ids = get_map_segment_ids(heroes, @composition)
@@ -29,6 +30,7 @@ class CompositionsController < ApplicationController
 
     @composition = saver.composition
     @players = get_players_for(@composition)
+    @available_players = get_available_players
 
     heroes = Hero.order(:name)
     @map_segment_ids = get_map_segment_ids(heroes, @composition)
@@ -60,6 +62,13 @@ class CompositionsController < ApplicationController
     end
 
     result
+  end
+
+  # Returns a list of Players the current user has created and can choose
+  # from for filling out a team composition.
+  def get_available_players
+    Player.created_by(user: current_user, session_id: session.id).
+           order(:name)
   end
 
   def get_players_for(composition)
