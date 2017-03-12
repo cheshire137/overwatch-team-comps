@@ -24,6 +24,22 @@ class Player < ApplicationRecord
 
   scope :order_by_name, ->{ order('UPPER(name) ASC') }
 
+  # Returns the Player with the given ID, but only if that Player is
+  # a) the default player or b) owned by the given User/session.
+  #
+  # Returns Player or nil.
+  def self.find_if_allowed(id, user:, session_id:)
+    scope = if user
+      where('id = ? AND (creator_id = ? OR name = ?)',
+            id, user, DEFAULT_NAME)
+    else
+      where('id = ? AND ((creator_id = ? AND creator_session_id = ?) OR name = ?)',
+            id, User.anonymous, session_id, DEFAULT_NAME)
+    end
+
+    scope.first
+  end
+
   # Returns the 'default' player for use when a user selects a hero first
   # before choosing a player.
   def self.default

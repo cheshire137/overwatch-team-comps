@@ -36,4 +36,44 @@ describe Player do
     expect(player.valid?).to be_falsey
     expect(player.errors[:creator_session_id].any?).to be_truthy
   end
+
+  context '#find_if_allowed' do
+    it 'returns nil when anonymous user does not own player' do
+      player = create(:player)
+      result = Player.find_if_allowed(player.id, user: nil, session_id: '123')
+      expect(result).to be_nil
+    end
+
+    it 'returns nil when authenticated user does not own player' do
+      player = create(:player)
+      result = Player.find_if_allowed(player.id, user: create(:user), session_id: nil)
+      expect(result).to be_nil
+    end
+
+    it 'returns default player for anonymous user' do
+      player = create(:default_player)
+      result = Player.find_if_allowed(player.id, user: nil, session_id: '123')
+      expect(result).to eq(player)
+    end
+
+    it 'returns default player for authenticated user' do
+      player = create(:default_player)
+      result = Player.find_if_allowed(player.id, user: create(:user), session_id: '123')
+      expect(result).to eq(player)
+    end
+
+    it 'returns owned player for anonymous user' do
+      anon_user = create(:anonymous_user)
+      player = create(:player, creator: anon_user, creator_session_id: '123')
+      result = Player.find_if_allowed(player.id, user: nil, session_id: '123')
+      expect(result).to eq(player)
+    end
+
+    it 'returns owned player for authenticated user' do
+      user = create(:user)
+      player = create(:player, creator: user)
+      result = Player.find_if_allowed(player.id, user: user, session_id: nil)
+      expect(result).to eq(player)
+    end
+  end
 end
