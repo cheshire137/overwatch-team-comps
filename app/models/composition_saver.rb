@@ -91,21 +91,26 @@ class CompositionSaver
   def init_composition(data, map:)
     id = data[:composition_id]
 
-    if @user
+    composition = if @user
       composition_for_authenticated_user(map: map, id: id)
     else
       composition_for_anonymous_user(map: map, id: id)
     end
+
+    unless composition
+      raise CompositionSaver::Error, 'No such composition for creator'
+    end
+
+    if composition.persisted?
+      composition.map = map if map
+    end
+
+    composition
   end
 
   def composition_for_authenticated_user(map:, id:)
     if id
-      comp = Composition.where(user: @user, id: id).first
-      unless comp
-        raise CompositionSaver::Error, 'No such composition for creator'
-      end
-      comp.map = map if map
-      comp
+      Composition.where(user: @user, id: id).first
     else
       Composition.new(map: map, user: @user)
     end
