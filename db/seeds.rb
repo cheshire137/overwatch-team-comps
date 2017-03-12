@@ -16,7 +16,7 @@ heroes_by_role = {
 heroes_by_role.each do |role, hero_names|
   puts "Creating #{role} heroes: #{hero_names.to_sentence}"
   hero_names.each do |name|
-    Hero.create(name: name, role: role)
+    Hero.create!(name: name, role: role)
   end
 end
 
@@ -31,7 +31,7 @@ maps_by_type = {
 maps_by_type.each do |type, map_names|
   puts "Creating #{type} maps: #{map_names.to_sentence}"
   map_names.each do |name|
-    Map.create(name: name, map_type: type)
+    Map.create!(name: name, map_type: type)
   end
 end
 
@@ -69,12 +69,12 @@ map_segments_by_map.each do |map_name, base_segments|
   end
   puts "Creating segments for map #{map.name}: #{segments.to_sentence}"
   segments.each do |segment|
-    MapSegment.create(map_id: map.id, name: segment)
+    MapSegment.create!(map_id: map.id, name: segment)
   end
 end
 
 puts "Creating anonymous user"
-User.create(
-  email: "anonymous@overwatch-team-comps.com",
-  password: "passworD1"
-)
+anon_user = User.create!(email: User::ANONYMOUS_EMAIL, password: "passworD1")
+
+puts 'Creating default player'
+Player.create!(name: Player::DEFAULT_NAME, creator: anon_user)

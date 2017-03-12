@@ -1,6 +1,5 @@
 class Player < ApplicationRecord
-  DEFAULT_NAMES = ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5',
-                   'Player 6'].freeze
+  DEFAULT_NAME = 'Player'.freeze
 
   belongs_to :user
   belongs_to :creator, class_name: 'User'
@@ -25,18 +24,14 @@ class Player < ApplicationRecord
 
   scope :order_by_name, ->{ order('UPPER(name) ASC') }
 
-  # Given a list of names for players already in a composition, this will
-  # return a reasonable default name for a new player.
-  def self.get_name(existing_names)
-    existing_default_names = existing_names.uniq.sort.select do |name|
-      DEFAULT_NAMES.include?(name)
-    end
-    existing_numbers = existing_default_names.map do |name|
-      name.split('Player ')[1].to_i
-    end
-    default_numbers = [1, 2, 3, 4, 5, 6]
-    next_number = (default_numbers - existing_numbers).first
-    "Player #{next_number}"
+  # Returns the 'default' player for use when a user selects a hero first
+  # before choosing a player.
+  def self.default
+    find_by_name DEFAULT_NAME
+  end
+
+  def default?
+    name == DEFAULT_NAME
   end
 
   # Returns the given list of heroes reordered such that the ones the player is most
@@ -55,6 +50,7 @@ class Player < ApplicationRecord
   def creator_session_id_set_if_anonymous
     return unless creator && creator.anonymous?
     return if creator_session_id.present?
+    return if default? # don't care about session for 'default' Player
 
     errors.add(:creator_session_id, 'is required if creator is anonymous user.')
   end
