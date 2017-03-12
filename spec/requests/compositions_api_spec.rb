@@ -65,6 +65,25 @@ RSpec.describe 'compositions API' do
       expect(json['composition']['players'][0]['heroes'][0]['name']).to eq(@hero1.name)
     end
 
+    it 'includes players created by the authenticated user' do
+      player = create(:player, creator: @user)
+
+      sign_in @user
+
+      post '/api/compositions', params: {
+        player_id: player.id, hero_id: @hero1.id,
+        map_segment_id: @map_segment.id
+      }
+
+      json = JSON.parse(response.body)
+      expect(json['composition']).to have_key('availablePlayers')
+
+      avail_players = json['composition']['availablePlayers']
+      expect(avail_players.size).to eq(1)
+      expect(avail_players[0]['id']).to eq(player.id)
+      expect(avail_players[0]['name']).to eq(player.name)
+    end
+
     it 'no-op for existing player selection for authenticated user' do
       sign_in @user
 
@@ -116,6 +135,21 @@ RSpec.describe 'compositions API' do
       expect(response.body).to include(@map.name)
       expect(response.body).to include(@map.map_type)
       expect(response.body).to include(@map_segment.name)
+    end
+
+    it 'includes players created by the authenticated user' do
+      player = create(:player, creator: @user)
+
+      sign_in @user
+      get '/api/composition/last'
+
+      json = JSON.parse(response.body)
+      expect(json['composition']).to have_key('availablePlayers')
+
+      avail_players = json['composition']['availablePlayers']
+      expect(avail_players.size).to eq(1)
+      expect(avail_players[0]['id']).to eq(player.id)
+      expect(avail_players[0]['name']).to eq(player.name)
     end
 
     it 'includes heroes with confidence values for each player' do
