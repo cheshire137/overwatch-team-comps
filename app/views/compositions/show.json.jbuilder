@@ -20,11 +20,26 @@ json.composition do
   json.players @rows do |row|
     json.id row.player.id
     json.name row.player.name
-    json.heroes row.heroes do |hero|
-      json.id hero.id
-      json.name hero.name
-      json.confidence row.hero_confidence(hero)
-      json.mapSegmentIDs row.map_segment_ids(hero)
+  end
+
+  # Hash of player ID => heroes
+  json.heroes do
+    @rows.each do |row|
+      json.set! row.player.id, row.heroes do |hero|
+        json.id hero.id
+        json.name hero.name
+      end
+    end
+  end
+
+  # Hash of player ID => map segment ID => hero ID
+  json.selections do
+    @rows.each do |row|
+      json.set! row.player.id do
+        row.map_segments.each do |map_segment|
+          json.set! map_segment.id, row.selected_hero(map_segment)
+        end
+      end
     end
   end
 end

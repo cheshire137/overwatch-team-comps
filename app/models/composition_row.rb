@@ -27,7 +27,11 @@ class CompositionRow
   end
 
   def heroes
-    @all_heroes
+    if player.default?
+      @all_heroes
+    else
+      player.heroes_by_confidence(@all_heroes)
+    end
   end
 
   def hero_confidence(hero)
@@ -38,13 +42,15 @@ class CompositionRow
     player_hero ? player_hero.confidence : 0
   end
 
-  # Returns an array of MapSegment IDs where the given Hero is selected
-  # in this row.
-  def map_segment_ids(hero)
-    comp_player_ids = CompositionPlayer.unscoped.
-      where(position: number, composition_id: composition).select(:id)
-    composition.player_selections.
-      where(hero_id: hero, composition_player_id: comp_player_ids).
-      pluck(:map_segment_id)
+  def map_segments
+    composition.map_segments
+  end
+
+  def selected_hero(map_segment)
+    selection = PlayerSelection.joins(:composition_player).
+      where(map_segment_id: map_segment, composition_players: {
+        position: number, player_id: player
+      }).first
+    selection ? selection.hero_id : nil
   end
 end
