@@ -78,14 +78,13 @@ RSpec.describe 'compositions API' do
         pj['name'] == player.name
       end
       expect(player_json).not_to be_nil
-      expect(player_json['heroes'].length).to eq(2)
 
-      selected_json = player_json['heroes'].detect do |sj|
-        sj['mapSegmentIDs'] != nil
-      end
-      expect(selected_json).not_to be_nil
-      expect(selected_json['name']).to eq(@hero1.name)
-      expect(selected_json['mapSegmentIDs']).to eq([@map_segment.id])
+      expect(json['composition']['selections'].length).to eq(1)
+      expect(json['composition']['selections']).to have_key(player.id.to_s)
+      expect(json['composition']['selections'][player.id.to_s]).
+        to have_key(@map_segment.id.to_s)
+      expect(json['composition']['selections'][player.id.to_s][@map_segment.id.to_s]).
+        to eq(@hero1.id)
     end
   end
 
@@ -95,9 +94,13 @@ RSpec.describe 'compositions API' do
       expect(response).to be_success
     end
 
-    it 'includes player names' do
+    it 'includes names of players created by the user' do
+      player = create(:player, creator: @user)
+
+      sign_in @user
+
       get '/api/composition/last'
-      expect(response.body).to include('"' + Player::DEFAULT_NAME + '"')
+      expect(response.body).to include('"' + player.name + '"')
     end
 
     it 'includes map details' do
@@ -120,28 +123,6 @@ RSpec.describe 'compositions API' do
       expect(avail_players.size).to eq(1)
       expect(avail_players[0]['id']).to eq(player.id)
       expect(avail_players[0]['name']).to eq(player.name)
-    end
-
-    it 'includes heroes with confidence values for each player' do
-      get '/api/composition/last'
-
-      json = JSON.parse(response.body)
-      expect(json).to have_key('composition')
-      expect(json['composition']).to have_key('players')
-
-      players = json['composition']['players']
-      expect(players.length).to eq(Composition::MAX_PLAYERS)
-
-      players.each do |player_json|
-        expect(player_json).to have_key('heroes')
-        expect(player_json['heroes'].length).to eq(2)
-
-        expect(player_json['heroes'][0]['name']).to eq(@hero1.name)
-        expect(player_json['heroes'][1]['name']).to eq(@hero2.name)
-
-        expect(player_json['heroes'][0]['confidence']).to eq(0)
-        expect(player_json['heroes'][1]['confidence']).to eq(0)
-      end
     end
   end
 end

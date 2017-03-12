@@ -33,14 +33,6 @@ class CompositionRow
     end
   end
 
-  def hero_confidence(hero)
-    return 0 unless player
-
-    # TODO: remove n+1 query by prefetching player-hero records
-    player_hero = PlayerHero.where(player_id: player, hero_id: hero).first
-    player_hero ? player_hero.confidence : 0
-  end
-
   def map_segments
     composition.map_segments
   end
