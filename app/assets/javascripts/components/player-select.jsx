@@ -1,26 +1,70 @@
 import DebounceInput from 'react-debounce-input'
 
 class PlayerSelect extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = { showNewNameField: false }
+  }
+
   onChange(event) {
-    this.props.onChange(event.target.value)
+    const playerID = event.target.value
+    if (playerID === 'new') {
+      this.setState({ showNewNameField: true })
+    } else {
+      this.props.onChange(playerID, null)
+    }
+  }
+
+  onNewNameSet(event) {
+    this.props.onChange(null, event.target.value)
+  }
+
+  selectOrTextField() {
+    const { selectedPlayer, inputID, players } = this.props
+
+    if (this.state.showNewNameField) {
+      return (
+        <DebounceInput
+          debounceTimeout={500}
+          onChange={e => this.onNewNameSet(e)}
+          id={inputID}
+          placeholder="Player name"
+          value={selectedPlayer.name}
+          className="input"
+          autoFocus
+        />
+      )
+    }
+
+    return (
+      <span className="select">
+        <select
+          onChange={e => this.onChange(e)}
+          value={selectedPlayer.id || ''}
+        >
+          <option value="">Choose a player</option>
+          {players.map(player => (
+            <option
+              key={player.id}
+              value={player.id}
+            >{player.name}</option>
+          ))}
+          <option value="new">Add a player</option>
+        </select>
+      </span>
+    )
   }
 
   render() {
-    const { inputID, player, label } = this.props
+    const { inputID, label } = this.props
     return (
       <div>
         <label
           htmlFor={inputID}
           className="label"
         >{label}</label>
-        <DebounceInput
-          debounceTimeout={500}
-          onChange={e => this.onChange(e)}
-          id={inputID}
-          placeholder="Player name"
-          value={player.name}
-          className="input"
-        />
+        {this.selectOrTextField()}
       </div>
     )
   }
@@ -28,7 +72,8 @@ class PlayerSelect extends React.Component {
 
 PlayerSelect.propTypes = {
   inputID: React.PropTypes.string.isRequired,
-  player: React.PropTypes.object.isRequired,
+  selectedPlayer: React.PropTypes.object.isRequired,
+  players: React.PropTypes.array.isRequired,
   onChange: React.PropTypes.func.isRequired,
   label: React.PropTypes.string.isRequired
 }
