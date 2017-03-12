@@ -46,7 +46,7 @@ class PlayerSelect extends React.Component {
     }
 
     return (
-      <span className="select">
+      <span className="select player-select">
         <select
           onChange={e => this.onChange(e)}
           value={selectedPlayer.id || ''}
