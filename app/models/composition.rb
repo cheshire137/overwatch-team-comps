@@ -8,7 +8,7 @@ class Composition < ApplicationRecord
   has_many :players, through: :composition_players
   has_many :player_selections, through: :composition_players
   has_many :heroes, through: :player_selections
-  has_many :map_segments, through: :map
+  has_many :map_segments, through: :map, source: :segments
 
   before_validation :set_name
 
@@ -41,6 +41,15 @@ class Composition < ApplicationRecord
     end
 
     scope.order('updated_at DESC').first
+  end
+
+  def available_players(user:, session_id:)
+    player_pool = Player.created_by(user: user, session_id: session_id).
+      order_by_name
+    return player_pool if new_record?
+
+    players_in_comp = players.not_default
+    (player_pool | players_in_comp).sort_by { |player| player.name.downcase }
   end
 
   def set_name
