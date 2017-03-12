@@ -9,6 +9,11 @@ FactoryGirl.define do
     user
   end
 
+  factory :composition_player do
+    composition
+    player
+  end
+
   factory :hero do
     name 'McCree'
     role 'offense'
@@ -25,7 +30,7 @@ FactoryGirl.define do
   end
 
   factory :player do
-    name 'zion'
+    name { "zion#{Player.count}" }
     association :creator, factory: :user
   end
 
@@ -36,9 +41,15 @@ FactoryGirl.define do
   end
 
   factory :player_selection do
-    player_hero
+    player
+    hero
     composition
     map_segment { create(:map_segment, map: composition.map) }
+
+    before(:create) do |player_selection, evaluator|
+      create(:composition_player, composition: player_selection.composition,
+             player: player_selection.player)
+    end
   end
 
   factory :user do
