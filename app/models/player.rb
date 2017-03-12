@@ -16,10 +16,9 @@ class Player < ApplicationRecord
   # Returns Player or nil.
   def self.find_if_allowed(id, user:, session_id:)
     scope = if user
-      where('id = ? AND creator_id = ?', id, user)
+      where(id: id, creator_id: user)
     else
-      where('id = ? AND creator_id = ? AND creator_session_id = ?',
-            id, User.anonymous, session_id)
+      where(id: id, creator_id: User.anonymous, creator_session_id: session_id)
     end
 
     scope.first
