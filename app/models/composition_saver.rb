@@ -66,7 +66,7 @@ class CompositionSaver
       unless player
         raise CompositionSaver::Error, 'No such player for creator'
       end
-      player.name = data[:player_name]
+      player.name = data[:player_name] if data[:player_name]
       player
     else
       attrs = {name: data[:player_name]}
