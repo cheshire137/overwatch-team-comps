@@ -2,7 +2,7 @@ class CompositionsController < ApplicationController
   def last_composition
     @composition = Composition.last_saved(current_user, session.id) ||
       new_composition
-    @rows = CompositionRow.for_composition(@composition)
+    @builder = CompositionFormBuilder.new(@composition)
     @available_players = @composition.available_players(user: current_user, session_id: session.id)
 
     render template: 'compositions/show'
@@ -26,7 +26,7 @@ class CompositionsController < ApplicationController
     end
 
     @composition = saver.composition
-    @rows = CompositionRow.for_composition(@composition)
+    @builder = CompositionFormBuilder.new(@composition)
     @available_players = @composition.available_players(user: current_user, session_id: session.id)
 
     render template: 'compositions/show'

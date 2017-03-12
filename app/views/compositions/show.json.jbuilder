@@ -17,7 +17,7 @@ json.composition do
     json.id player.id
     json.name player.name
   end
-  json.players @rows do |row|
+  json.players @builder.rows do |row|
     if row.player
       json.id row.player.id
       json.name row.player.name
@@ -28,7 +28,7 @@ json.composition do
 
   # Hash of player ID => heroes
   json.heroes do
-    @rows.each do |row|
+    @builder.rows.each do |row|
       if row.player
         json.set! row.player.id, row.heroes do |hero|
           json.id hero.id
@@ -40,10 +40,10 @@ json.composition do
 
   # Hash of player ID => map segment ID => hero ID
   json.selections do
-    @rows.each do |row|
+    @builder.rows.each do |row|
       if row.player
         json.set! row.player.id do
-          row.map_segments.each do |map_segment|
+          @builder.map_segments.each do |map_segment|
             json.set! map_segment.id, row.selected_hero(map_segment)
           end
         end

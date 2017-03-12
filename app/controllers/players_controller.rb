@@ -31,7 +31,7 @@ class PlayersController < ApplicationController
       } }, status: :unprocessable_entity
     end
 
-    @rows = CompositionRow.for_composition(@composition)
+    @builder = CompositionFormBuilder.new(@composition)
     @available_players = @composition.available_players(user: current_user, session_id: session.id)
 
     render template: 'compositions/show'

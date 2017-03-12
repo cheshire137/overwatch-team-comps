@@ -1,48 +1,24 @@
 class CompositionRow
-  attr_reader :player, :map_segments, :number
+  attr_reader :player, :number
 
-  def self.for_composition(composition)
-    rows = []
-    heroes = Hero.order(:name)
-
-    player_selections = composition.player_selections.
-      select(:map_segment_id, :position, :player_id, :hero_id).to_a
-
-    map_segments = composition.map_segments
-
-    composition.players.each_with_index do |player, i|
-      rows << new(number: i, player: player, map_segments: map_segments,
-                  all_heroes: heroes, player_selections: player_selections)
-    end
-
-    (rows.length).upto(Composition::MAX_PLAYERS - 1) do |i|
-      rows << new(number: i, player: nil, map_segments: map_segments,
-                  all_heroes: heroes, player_selections: player_selections)
-    end
-
-    rows
-  end
-
-  def initialize(number:, player:, map_segments:, all_heroes:, player_selections:)
+  def initialize(number:, player:, builder:)
     @number = number
     @player = player
-    @map_segments = map_segments
-    @all_heroes = all_heroes
-    @player_selections = player_selections
+    @builder = builder
   end
 
   def heroes
     if player
-      player.heroes_by_confidence(@all_heroes)
+      player.heroes_by_confidence(@builder.heroes)
     else
-      @all_heroes
+      @builder.heroes
     end
   end
 
   def selected_hero(map_segment)
     return unless player
 
-    selection = @player_selections.detect do |ps|
+    selection = @builder.player_selections.detect do |ps|
       ps.map_segment_id == map_segment.id &&
         ps.position == number && ps.player_id == player.id
     end
