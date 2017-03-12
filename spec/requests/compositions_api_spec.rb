@@ -23,47 +23,17 @@ RSpec.describe 'compositions API' do
       expect(json['composition']['map']['name']).to eq(@map.name)
     end
 
-    it 'returns new player info for authenticated user' do
-      sign_in @user
-      post '/api/compositions', params: {
-        player_name: 'chocotaco', hero_id: @hero1.id,
-        map_segment_id: @map_segment.id
-      }
-
-      json = JSON.parse(response.body)
-      expect(json).to have_key('composition')
-      expect(json['composition']['players'][0]['name']).to eq('chocotaco')
-    end
-
     it 'returns existing player info for authenticated user' do
       sign_in @user
       player = create(:player, creator: @user)
 
       post '/api/compositions', params: {
-        player_name: player.name, hero_id: @hero1.id,
-        map_segment_id: @map_segment.id, player_id: player.id
+        hero_id: @hero1.id, map_segment_id: @map_segment.id, player_id: player.id
       }
 
       json = JSON.parse(response.body)
       expect(json).to have_key('composition')
       expect(json['composition']['players'][0]['name']).to eq(player.name)
-    end
-
-    it 'returns new player selection for authenticated user' do
-      sign_in @user
-
-      expect do
-        post '/api/compositions', params: {
-          player_name: 'chocotaco', hero_id: @hero1.id,
-          map_segment_id: @map_segment.id
-        }
-      end.to change { PlayerSelection.count }.by(1)
-
-      json = JSON.parse(response.body)
-      expect(json).to have_key('composition')
-      expect(json['composition']['players'][0]['name']).to eq('chocotaco')
-
-      expect(json['composition']['players'][0]['heroes'][0]['name']).to eq(@hero1.name)
     end
 
     it 'includes players created by the authenticated user' do

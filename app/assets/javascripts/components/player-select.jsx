@@ -58,7 +58,7 @@ class PlayerSelect extends React.Component {
               value={player.id}
             >{player.name}</option>
           ))}
-          <option value="new">Add a player</option>
+          <option value="new">Add new player</option>
         </select>
       </span>
     )

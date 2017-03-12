@@ -18,9 +18,7 @@ json.composition do
 
   # Six players, one per row in composition form:
   json.players @players do |player|
-    if player.persisted? && !player.default?
-      json.id player.id
-    end
+    json.id player.id
     json.name player.name
     json.heroes @heroes_by_player[player.id] do |hero|
       json.id hero.id

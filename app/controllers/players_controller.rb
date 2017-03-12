@@ -1,6 +1,4 @@
 class PlayersController < ApplicationController
-  before_filter :require_composition
-
   def create
     @player = Player.new(player_params)
     if user_signed_in?
@@ -15,8 +13,15 @@ class PlayersController < ApplicationController
                     status: :unprocessable_entity
     end
 
+    @composition = get_composition
+    unless @composition.persisted? || @composition.save
+      return render json: { error: {
+        composition: @composition.errors.full_messages
+      } }, status: :unprocessable_entity
+    end
+
     @comp_player = CompositionPlayer.
-      where(position: params[:position], composition_id: composition).
+      where(position: params[:position], composition_id: @composition).
       first_or_initialize
     @comp_player = @player
 
@@ -33,13 +38,19 @@ class PlayersController < ApplicationController
     params.permit(:name, :battletag)
   end
 
-  def require_composition
-    head :not_found unless composition
-  end
-
-  def composition
-    Composition.
-      created_by(user: current_user, session_id: session.id).
-      where(id: params[:composition_id]).first
+  def get_composition
+    if params[:composition_id]
+      Composition.
+        created_by(user: current_user, session_id: session.id).
+        where(id: params[:composition_id]).first
+    else
+      comp = if user_signed_in?
+        Composition.new(user: current_user)
+      else
+        Composition.new(user: User.anonymous, session_id: session.id)
+      end
+      comp.map_id = params[:map_id]
+      comp
+    end
   end
 end
