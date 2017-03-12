@@ -8,6 +8,23 @@ class Player < ApplicationRecord
   validate :creator_session_id_set_if_anonymous
   validate :name_is_unique_to_creator
 
+  scope :order_by_name, ->{ order('UPPER(name) ASC') }
+
+  # Returns the Player with the given ID, but only if that Player is
+  # owned by the given User/session.
+  #
+  # Returns Player or nil.
+  def self.find_if_allowed(id, user:, session_id:)
+    scope = if user
+      where('id = ? AND creator_id = ?', id, user)
+    else
+      where('id = ? AND creator_id = ? AND creator_session_id = ?',
+            id, User.anonymous, session_id)
+    end
+
+    scope.first
+  end
+
   # Given a list of names for players already in a composition, this will
   # return a reasonable default name for a new player.
   def self.get_name(existing_names)
