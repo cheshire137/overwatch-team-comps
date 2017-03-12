@@ -17,6 +17,10 @@ export default class CompositionForm extends React.Component {
     console.error('failed to save composition', error)
   }
 
+  static onPlayerCreationError(error) {
+    console.error('failed to create player', error)
+  }
+
   constructor() {
     super()
 
@@ -60,20 +64,32 @@ export default class CompositionForm extends React.Component {
     const { composition } = this.state
     const api = new OverwatchTeamCompsApi()
 
-    const body = { map_id: composition.map.id, player_position: position }
-    if (playerID) {
-      body.player_id = playerID
+    if (playerID) { // update existing player
+      const body = {
+        map_id: composition.map.id,
+        player_position: position,
+        player_id: playerID,
+        composition_id: composition.id
+      }
+      console.log('update', body)
+      api.saveComposition(body).
+        then(newComp => this.onCompositionSaved(newComp)).
+        catch(err => CompositionForm.onCompositionSaveError(err))
+    } else { // create new player
+      const body = {
+        name: playerName,
+        composition_id: composition.id,
+        map_id: composition.map.id,
+        position
+      }
+      api.createPlayer(body).
+        then(compPlayer => this.onPlayerCreated(compPlayer)).
+        catch(err => CompositionForm.onPlayerCreationError(err))
     }
-    if (playerName) {
-      body.player_name = playerName
-    }
-    if (composition.id) {
-      body.composition_id = composition.id
-    }
+  }
 
-    api.saveComposition(body).
-      then(newComp => this.onCompositionSaved(newComp)).
-      catch(err => CompositionForm.onCompositionSaveError(err))
+  onPlayerCreated(compositionPlayer) {
+    console.log('created', compositionPlayer)
   }
 
   onHeroSelectedForPlayer(heroID, mapSegmentID, player, position) {
