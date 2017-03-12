@@ -43,8 +43,9 @@ RSpec.describe CompositionPlayer, type: :model do
   end
 
   it 'requires a unique player per composition' do
-    composition = create(:composition)
-    player = create(:player)
+    owner = create(:user)
+    composition = create(:composition, user: owner)
+    player = create(:player, creator: owner)
     create(:composition_player, composition: composition,
            player: player)
     comp_player = build(:composition_player, composition: composition,

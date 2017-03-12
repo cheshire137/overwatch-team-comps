@@ -11,7 +11,7 @@ FactoryGirl.define do
 
   factory :composition_player do
     composition
-    player
+    player { create(:player, creator: composition.user) }
   end
 
   factory :default_player, class: Player do

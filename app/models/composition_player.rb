@@ -38,7 +38,8 @@ class CompositionPlayer < ApplicationRecord
     return unless player && composition
 
     if player.creator.anonymous?
-      unless composition.user.anonymous? && composition.session_id == creator_session_id
+      unless composition.user.anonymous? &&
+             composition.session_id == player.creator_session_id
         errors.add(:player, 'is not valid.')
       end
     else
