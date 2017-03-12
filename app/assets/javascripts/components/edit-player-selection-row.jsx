@@ -2,21 +2,10 @@ import HeroSelect from './hero-select.jsx'
 import PlayerSelect from './player-select.jsx'
 
 class EditPlayerSelectionRow extends React.Component {
-  getSelectedHeroID(segment) {
-    const needle = segment.id
-    const haystack = this.props.selectedPlayer.heroes
-    const heroes = haystack.filter(hero =>
-      hero.mapSegmentIDs && hero.mapSegmentIDs.indexOf(needle) > -1
-    )
-    if (heroes.length > 0) {
-      return heroes[0].id
-    }
-    return null
-  }
-
   render() {
     const { inputID, selectedPlayer, nameLabel, onHeroSelection,
-            mapSegments, onPlayerSelection, players } = this.props
+            mapSegments, onPlayerSelection, players, heroes,
+            selections } = this.props
     return (
       <tr>
         <td className="player-cell">
@@ -31,8 +20,8 @@ class EditPlayerSelectionRow extends React.Component {
         {mapSegments.map(segment => (
           <td key={segment.id} className="hero-select-cell">
             <HeroSelect
-              heroes={selectedPlayer.heroes}
-              selectedHeroID={this.getSelectedHeroID(segment)}
+              heroes={heroes}
+              selectedHeroID={selections[segment.id]}
               onChange={heroID => onHeroSelection(heroID, segment.id)}
             />
           </td>
@@ -49,7 +38,9 @@ EditPlayerSelectionRow.propTypes = {
   onPlayerSelection: React.PropTypes.func.isRequired,
   nameLabel: React.PropTypes.string.isRequired,
   onHeroSelection: React.PropTypes.func.isRequired,
-  mapSegments: React.PropTypes.array.isRequired
+  mapSegments: React.PropTypes.array.isRequired,
+  heroes: React.PropTypes.array.isRequired,
+  selections: React.PropTypes.object.isRequired
 }
 
 export default EditPlayerSelectionRow

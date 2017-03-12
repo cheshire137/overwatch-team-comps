@@ -23,9 +23,7 @@ export default class CompositionForm extends React.Component {
 
   constructor() {
     super()
-
-    const composition = { players: [], map: { segments: [] } }
-    this.state = { maps: [], composition }
+    this.state = {}
   }
 
   componentDidMount() {
@@ -71,7 +69,6 @@ export default class CompositionForm extends React.Component {
         player_id: playerID,
         composition_id: composition.id
       }
-      console.log('update', body)
       api.saveComposition(body).
         then(newComp => this.onCompositionSaved(newComp)).
         catch(err => CompositionForm.onCompositionSaveError(err))
@@ -83,13 +80,9 @@ export default class CompositionForm extends React.Component {
         position
       }
       api.createPlayer(body).
-        then(compPlayer => this.onPlayerCreated(compPlayer)).
+        then(comp => this.onCompositionSaved(comp)).
         catch(err => CompositionForm.onPlayerCreationError(err))
     }
-  }
-
-  onPlayerCreated(compositionPlayer) {
-    console.log('created', compositionPlayer)
   }
 
   onHeroSelectedForPlayer(heroID, mapSegmentID, player, position) {
@@ -128,6 +121,11 @@ export default class CompositionForm extends React.Component {
 
   render() {
     const { maps, composition } = this.state
+
+    if (typeof maps === 'undefined' || typeof composition === 'undefined') {
+      return <p>Loading...</p>
+    }
+
     const mapSegments = composition.map.segments
     return (
       <form className="composition-form">
@@ -190,6 +188,8 @@ export default class CompositionForm extends React.Component {
                     inputID={inputID}
                     selectedPlayer={player}
                     players={composition.availablePlayers}
+                    heroes={composition.heroes[player.id]}
+                    selections={composition.selections[player.id]}
                     mapSegments={mapSegments}
                     nameLabel={String(index + 1)}
                     onHeroSelection={(heroID, mapSegmentID) =>
