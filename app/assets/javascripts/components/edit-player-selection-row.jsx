@@ -1,12 +1,7 @@
-import DebounceInput from 'react-debounce-input'
-
 import HeroSelect from './hero-select.jsx'
+import PlayerSelect from './player-select.jsx'
 
 class EditPlayerSelectionRow extends React.Component {
-  onPlayerNameChange(event) {
-    this.props.onPlayerNameChange(event.target.value)
-  }
-
   getSelectedHeroID(segment) {
     const needle = segment.id
     const haystack = this.props.player.heroes
@@ -25,17 +20,11 @@ class EditPlayerSelectionRow extends React.Component {
     return (
       <tr>
         <td className="player-cell">
-          <label
-            htmlFor={inputID}
-            className="label"
-          >{nameLabel}</label>
-          <DebounceInput
-            debounceTimeout={500}
-            onChange={e => this.onPlayerNameChange(e)}
-            id={inputID}
-            placeholder="Player name"
-            value={player.name}
-            className="input"
+          <PlayerSelect
+            inputID={inputID}
+            label={nameLabel}
+            player={player}
+            onChange={name => this.props.onPlayerNameChange(name)}
           />
         </td>
         {mapSegments.map(segment => (
