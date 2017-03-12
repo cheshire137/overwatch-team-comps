@@ -7,6 +7,16 @@ class Player < ApplicationRecord
   validates :name, :creator, presence: true
   validate :creator_session_id_set_if_anonymous
 
+  # Returns a list of Players created by the given User, or by the anonymous
+  # user in the given session if the User is nil.
+  scope :created_by, ->(user:, session_id:) {
+    if user
+      where(creator_id: user)
+    else
+      where(creator_id: User.anonymous, creator_session_id: session_id)
+    end
+  }
+
   # Given a list of names for players already in a composition, this will
   # return a reasonable default name for a new player.
   def self.get_name(existing_names)
