@@ -162,7 +162,7 @@ RSpec.describe 'compositions API' do
       expect(json['composition']).to have_key('players')
 
       players = json['composition']['players']
-      expect(players.length).to eq(6)
+      expect(players.length).to eq(Composition::MAX_PLAYERS)
 
       players.each do |player_json|
         expect(player_json).to have_key('heroes')
