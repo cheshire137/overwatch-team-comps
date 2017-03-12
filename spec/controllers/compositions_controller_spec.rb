@@ -117,9 +117,8 @@ RSpec.describe CompositionsController do
       composition = create(:composition, map: @map, user: @user)
       comp_player = create(:composition_player, composition: composition,
                            player: player)
-      selection = create(:player_selection, composition: composition,
-                         player: player, map_segment: @map_segment,
-                         hero: @hero1)
+      selection = create(:player_selection, composition_player: comp_player,
+                         map_segment: @map_segment, hero: @hero1)
 
       expect do
         post :save, params: {
@@ -217,9 +216,8 @@ RSpec.describe CompositionsController do
       composition = create(:composition, user: @user, map: @map)
       comp_player = create(:composition_player, composition: composition,
                            player: player)
-      player_selection = create(:player_selection, composition: composition,
-                                player: player, hero: @hero1,
-                                map_segment: @map_segment)
+      player_selection = create(:player_selection, composition_player: comp_player,
+                                hero: @hero1, map_segment: @map_segment)
 
       expect do
         post :save, params: {

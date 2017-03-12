@@ -92,9 +92,8 @@ RSpec.describe 'compositions API' do
       composition = create(:composition, user: @user, map: @map)
       comp_player = create(:composition_player, player: player,
                            composition: composition)
-      player_selection = create(:player_selection, composition: composition,
-                                player: player, hero: @hero1,
-                                map_segment: @map_segment)
+      player_selection = create(:player_selection, composition_player: comp_player,
+                                hero: @hero1, map_segment: @map_segment)
 
       post '/api/compositions', params: {
         hero_id: @hero1.id, composition_id: composition.id,
