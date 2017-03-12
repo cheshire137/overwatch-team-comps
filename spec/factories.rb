@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :anonymous_user, class: User do
-    email "anonymous@overwatch-team-comps.com"
+    email { User::ANONYMOUS_EMAIL }
     password "passworD1"
   end
 
@@ -12,6 +12,11 @@ FactoryGirl.define do
   factory :composition_player do
     composition
     player
+  end
+
+  factory :default_player, class: Player do
+    name { Player::DEFAULT_NAME }
+    creator { User.anonymous || create(:anonymous_user) }
   end
 
   factory :hero do
@@ -47,8 +52,9 @@ FactoryGirl.define do
     map_segment { create(:map_segment, map: composition.map) }
 
     before(:create) do |player_selection, evaluator|
-      create(:composition_player, composition: player_selection.composition,
-             player: player_selection.player)
+      CompositionPlayer.where(composition_id: player_selection.composition,
+                              player_id: player_selection.player).
+                        first_or_create
     end
   end
 

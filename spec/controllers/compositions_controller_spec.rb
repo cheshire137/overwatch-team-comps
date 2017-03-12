@@ -4,6 +4,7 @@ RSpec.describe CompositionsController do
   before(:each) do
     @user = create(:user)
     @anon_user = create(:anonymous_user)
+    @default_player = create(:default_player)
     @map = create(:map)
     @map_segment = create(:map_segment, map: @map)
     @hero1 = create(:hero, name: 'Mei')
@@ -114,6 +115,8 @@ RSpec.describe CompositionsController do
       sign_in @user
       player = create(:player, name: 'oldName32', creator: @user)
       composition = create(:composition, map: @map, user: @user)
+      comp_player = create(:composition_player, composition: composition,
+                           player: player)
       selection = create(:player_selection, composition: composition,
                          player: player, map_segment: @map_segment,
                          hero: @hero1)
@@ -121,10 +124,12 @@ RSpec.describe CompositionsController do
       expect do
         post :save, params: {
           player_name: 'newName64', player_id: player.id, format: :json,
-          composition_id: composition.id
+          composition_id: composition.id,
+          player_position: comp_player.position
         }
       end.not_to change { Player.count }
-      expect(response).to be_success
+
+      expect(response).to be_success, response.body
       expect(player.reload.name).to eq('newName64')
       expect(composition.reload.map).to eq(@map)
       expect(selection.reload.player).to eq(player)
@@ -194,10 +199,11 @@ RSpec.describe CompositionsController do
 
     it 'creates a new player selection for authenticated user' do
       sign_in @user
+      player = create(:player, creator: @user)
 
       expect do
         post :save, params: {
-          player_name: 'chocotaco', hero_id: @hero1.id,
+          player_id: player.id, hero_id: @hero1.id,
           map_segment_id: @map_segment.id, format: :json
         }
       end.to change { PlayerSelection.count }.by(1)
@@ -209,18 +215,21 @@ RSpec.describe CompositionsController do
 
       player = create(:player, creator: @user)
       composition = create(:composition, user: @user, map: @map)
+      comp_player = create(:composition_player, composition: composition,
+                           player: player)
       player_selection = create(:player_selection, composition: composition,
                                 player: player, hero: @hero1,
                                 map_segment: @map_segment)
 
       expect do
         post :save, params: {
-          player_name: player.name, hero_id: @hero2.id, format: :json,
+          hero_id: @hero2.id, format: :json, player_id: player.id,
           composition_id: composition.id, map_segment_id: @map_segment.id,
-          player_id: player.id
+          player_position: comp_player.position
         }
       end.not_to change { PlayerSelection.count }
-      expect(response).to be_success
+
+      expect(response).to be_success, response.body
       expect(player_selection.reload.hero).to eq(@hero2)
     end
   end

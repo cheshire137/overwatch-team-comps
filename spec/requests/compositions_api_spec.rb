@@ -7,6 +7,7 @@ RSpec.describe 'compositions API' do
     @hero1 = create(:hero, name: 'Hanzo')
     @hero2 = create(:hero, name: 'Mercy')
     @user = create(:user)
+    @default_player = create(:default_player)
   end
 
   describe 'POST save' do
@@ -89,14 +90,16 @@ RSpec.describe 'compositions API' do
 
       player = create(:player, creator: @user)
       composition = create(:composition, user: @user, map: @map)
+      comp_player = create(:composition_player, player: player,
+                           composition: composition)
       player_selection = create(:player_selection, composition: composition,
                                 player: player, hero: @hero1,
                                 map_segment: @map_segment)
 
       post '/api/compositions', params: {
-        player_name: player.name, hero_id: @hero1.id,
-        composition_id: composition.id, map_segment_id: @map_segment.id,
-        player_id: player.id
+        hero_id: @hero1.id, composition_id: composition.id,
+        map_segment_id: @map_segment.id, player_id: player.id,
+        player_position: comp_player.position
       }
 
       json = JSON.parse(response.body)
@@ -126,8 +129,7 @@ RSpec.describe 'compositions API' do
 
     it 'includes player names' do
       get '/api/composition/last'
-      expect(response.body).to include('Player 1')
-      expect(response.body).to include('Player 6')
+      expect(response.body).to include('"' + Player::DEFAULT_NAME + '"')
     end
 
     it 'includes map details' do
