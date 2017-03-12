@@ -6,6 +6,7 @@ class Player < ApplicationRecord
 
   validates :name, :creator, presence: true
   validate :creator_session_id_set_if_anonymous
+  validate :name_is_unique_to_creator
 
   # Given a list of names for players already in a composition, this will
   # return a reasonable default name for a new player.
@@ -39,5 +40,21 @@ class Player < ApplicationRecord
     return if creator_session_id.present?
 
     errors.add(:creator_session_id, 'is required if creator is anonymous user.')
+  end
+
+  def name_is_unique_to_creator
+    return unless name && creator
+
+    scope = self.class.where(name: name, creator_id: creator)
+
+    if creator.anonymous?
+      scope = scope.where(creator_session_id: creator_session_id)
+    end
+
+    scope = scope.where('id <> ?', id) if persisted?
+
+    if scope.count > 0
+      errors.add(:name, 'has already been taken.')
+    end
   end
 end
