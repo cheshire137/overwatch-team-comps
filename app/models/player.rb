@@ -20,7 +20,7 @@ class Player < ApplicationRecord
     end
   }
 
-  scope :not_default_name, ->{ where('name NOT IN (?)', DEFAULT_NAMES) }
+  scope :not_default, ->{ where('name <> ?', DEFAULT_NAME) }
 
   scope :order_by_name, ->{ order('UPPER(name) ASC') }
 
