@@ -60,23 +60,37 @@ class CompositionSaver
   private
 
   def init_player(data)
-    if id = data[:player_id]
-      player = Player.created_by(user: @user, session_id: @session_id).
-        where(id: id).first
-      unless player
-        raise CompositionSaver::Error, 'No such player for creator'
-      end
-      player.name = data[:player_name] if data[:player_name]
-      player
+    id = data[:player_id]
+
+    player = if @user
+      player_for_authenticated_user(id: id)
     else
-      attrs = {name: data[:player_name]}
-      if @user
-        attrs[:creator] = @user
-      else
-        attrs[:creator] = User.anonymous
-        attrs[:creator_session_id] = @session_id
-      end
-      Player.new(attrs)
+      player_for_anonymous_user(id: id)
+    end
+
+    unless player
+      raise CompositionSaver::Error, 'No such player for creator'
+    end
+
+    player.name = data[:player_name] if data[:player_name]
+    player
+  end
+
+  def player_for_authenticated_user(id:)
+    if id
+      Player.where(creator_id: @user, id: id).first
+    else
+      Player.new(creator: @user)
+    end
+  end
+
+  def player_for_anonymous_user(id:)
+    if id
+      Player.where(creator_id: User.anonymous, id: id,
+                   creator_session_id: @session_id).first
+    else
+      Player.new(creator: User.anonymous,
+                 creator_session_id: @session_id)
     end
   end
 
