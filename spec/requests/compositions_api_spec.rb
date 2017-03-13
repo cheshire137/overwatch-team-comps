@@ -94,6 +94,14 @@ RSpec.describe 'compositions API' do
       expect(response).to be_success
     end
 
+    it 'loads requested map' do
+      map = create(:map)
+      get "/api/composition/last?map_id=#{map.id}"
+      expect(response).to be_success
+      expect(response.body).to include(map.id.to_s)
+      expect(response.body).to include('"' + map.name + '"')
+    end
+
     it 'includes names of players created by the user' do
       player = create(:player, creator: @user)
 
