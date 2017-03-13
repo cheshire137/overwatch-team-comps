@@ -1,5 +1,3 @@
-import update from 'immutability-helper'
-
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 class CompositionHeader extends React.Component {
@@ -24,13 +22,7 @@ class CompositionHeader extends React.Component {
   }
 
   onMapChange(event) {
-    // TODO: instead, submit new map ID to server and update composition
-    // when response comes back
-    const mapID = parseInt(event.target.value, 10)
-    // const map = this.state.maps.filter(m => m.id === mapID)[0]
-    // const changes = { map: { $set: map } }
-    // const composition = update(this.state.composition, changes)
-    // this.setState({ composition })
+    this.props.onMapChange(event.target.value)
   }
 
   render() {
@@ -85,7 +77,8 @@ class CompositionHeader extends React.Component {
 }
 
 CompositionHeader.propTypes = {
-  composition: React.PropTypes.object.isRequired
+  composition: React.PropTypes.object.isRequired,
+  onMapChange: React.PropTypes.func.isRequired
 }
 
 export default CompositionHeader

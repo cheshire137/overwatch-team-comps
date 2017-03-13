@@ -24,14 +24,15 @@ export default class CompositionForm extends React.Component {
   }
 
   componentDidMount() {
-    const api = new OverwatchTeamCompsApi()
-
-    api.getLastComposition().then(comp => this.onCompositionFetched(comp)).
-      catch(err => CompositionForm.onCompositionFetchError(err))
+    this.loadComposition()
   }
 
   onCompositionFetched(composition) {
     this.setState({ composition })
+  }
+
+  onMapChange(mapID) {
+    this.loadComposition(mapID)
   }
 
   onCompositionNameChange(event) {
@@ -110,6 +111,13 @@ export default class CompositionForm extends React.Component {
     )
   }
 
+  loadComposition(mapID) {
+    const api = new OverwatchTeamCompsApi()
+
+    api.getLastComposition(mapID).then(comp => this.onCompositionFetched(comp)).
+      catch(err => CompositionForm.onCompositionFetchError(err))
+  }
+
   render() {
     const { composition } = this.state
 
@@ -126,6 +134,7 @@ export default class CompositionForm extends React.Component {
       <form className="composition-form">
         <CompositionHeader
           composition={composition}
+          onMapChange={mapID => this.onMapChange(mapID)}
         />
         <div className="container">
           <table className="players-table">
