@@ -1,7 +1,6 @@
 class CompositionsController < ApplicationController
   def last_composition
-    @composition = Composition.last_saved(current_user, session.id) ||
-      new_composition
+    @composition = most_recent_composition || new_composition
     @builder = CompositionFormBuilder.new(@composition)
     @available_players = @composition.available_players(user: current_user, session_id: session.id)
 
@@ -37,6 +36,12 @@ class CompositionsController < ApplicationController
   def composition_params
     params.permit(:player_name, :composition_id, :hero_id, :map_segment_id,
                   :player_id, :player_position, :map_id)
+  end
+
+  def most_recent_composition
+    scope = Composition.most_recent(user: current_user, session_id: session.id)
+    scope = scope.where(map_id: params[:map_id]) if params[:map_id]
+    scope.first
   end
 
   def new_composition
