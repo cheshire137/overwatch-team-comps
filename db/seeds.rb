@@ -56,7 +56,7 @@ map_segments_by_map = {
 maps_without_defense = [
   'Ilios', 'Ecopoint: Antarctica', 'Oasis', 'Lijiang Tower', 'Nepal'
 ]
-team_roles = ['Attacking', 'Defending']
+team_roles = ['Attack', 'Defend']
 
 map_segments_by_map.each do |map_name, base_segments|
   map = Map.find_by_name(map_name)
