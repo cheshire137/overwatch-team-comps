@@ -43,13 +43,13 @@ map_segments_by_map = {
   'Lijiang Tower' => ['Night Market', 'Control Center', 'Garden'],
   'Nepal' => ['Village', 'Shrine', 'Sanctum'],
   'Oasis' => ['City Center', 'Gardens', 'University'],
-  'Hollywood' => ['Capture Point 1', 'Payload 1', 'Payload 2'],
+  'Hollywood' => ['Point 1', 'Payload 1', 'Payload 2'],
   'Dorado' => ['Payload 1', 'Payload 2', 'Payload 3'],
-  "King's Row" => ['Capture Point 1', 'Payload 1', 'Payload 2'],
-  'Numbani' => ['Capture Point 1', 'Payload 1', 'Payload 2'],
+  "King's Row" => ['Point 1', 'Payload 1', 'Payload 2'],
+  'Numbani' => ['Point 1', 'Payload 1', 'Payload 2'],
   'Route 66' => ['Payload 1', 'Payload 2', 'Payload 3'],
   'Watchpoint: Gibraltar' => ['Payload 1', 'Payload 2', 'Payload 3'],
-  'Eichenwalde' => ['Capture Point 1', 'Payload 1', 'Payload 2'],
+  'Eichenwalde' => ['Point 1', 'Payload 1', 'Payload 2'],
   'Ecopoint: Antarctica' => ['Attack']
 }
 
