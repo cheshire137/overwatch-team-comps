@@ -28,20 +28,11 @@ class Composition < ApplicationRecord
     end
   }
 
-  # Returns the most recently saved Composition record for the given User,
-  # if any. If the given User is nil, the most recently saved Composition
-  # record by the anonymous user with the given session ID will be returned.
-  #
-  # Returns: Composition or nil
-  def self.last_saved(authenticated_user, session_id)
-    scope = if authenticated_user
-      where(user_id: authenticated_user)
-    else
-      where(user_id: User.anonymous, session_id: session_id)
-    end
-
-    scope.order('updated_at DESC').first
-  end
+  # Returns compositions created by the given User/session with the most
+  # recently modified first.
+  scope :most_recent, ->(user:, session_id:) {
+    created_by(user: user, session_id: session_id).order('updated_at DESC')
+  }
 
   def available_players(user:, session_id:)
     player_pool = Player.created_by(user: user, session_id: session_id).

@@ -17,8 +17,12 @@ export default class OverwatchTeamCompsApi extends Fetcher {
     return this.get('/maps', this.defaultHeaders).then(json => json.maps)
   }
 
-  getLastComposition() {
-    return this.get('/composition/last', this.defaultHeaders).
+  getLastComposition(mapID) {
+    let path = '/composition/last'
+    if (typeof mapID !== 'undefined') {
+      path = `${path}?map_id=${mapID}`
+    }
+    return this.get(path, this.defaultHeaders).
       then(json => json.composition)
   }
 

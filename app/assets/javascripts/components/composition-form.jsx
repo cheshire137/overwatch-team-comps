@@ -1,14 +1,11 @@
 import update from 'immutability-helper'
 
+import CompositionHeader from './composition-header.jsx'
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
 import MapSegmentHeader from './map-segment-header.jsx'
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 export default class CompositionForm extends React.Component {
-  static onMapsError(error) {
-    console.error('failed to load maps', error)
-  }
-
   static onCompositionFetchError(error) {
     console.error('failed to load composition data', error)
   }
@@ -27,17 +24,15 @@ export default class CompositionForm extends React.Component {
   }
 
   componentDidMount() {
-    const api = new OverwatchTeamCompsApi()
-
-    api.getMaps().then(maps => this.onMapsFetched(maps)).
-      catch(err => CompositionForm.onMapsError(err))
-
-    api.getLastComposition().then(comp => this.onCompositionFetched(comp)).
-      catch(err => CompositionForm.onCompositionFetchError(err))
+    this.loadComposition()
   }
 
   onCompositionFetched(composition) {
     this.setState({ composition })
+  }
+
+  onMapChange(mapID) {
+    this.loadComposition(mapID)
   }
 
   onCompositionNameChange(event) {
@@ -52,10 +47,6 @@ export default class CompositionForm extends React.Component {
     const changes = { notes: { $set: notes } }
     const composition = update(this.state.composition, changes)
     this.setState({ composition })
-  }
-
-  onMapsFetched(maps) {
-    this.setState({ maps })
   }
 
   onPlayerSelected(playerID, playerName, position) {
@@ -109,16 +100,6 @@ export default class CompositionForm extends React.Component {
     this.setState({ composition })
   }
 
-  onMapChange(event) {
-    // TODO: instead, submit new map ID to server and update composition
-    // when response comes back
-    const mapID = parseInt(event.target.value, 10)
-    const map = this.state.maps.filter(m => m.id === mapID)[0]
-    const changes = { map: { $set: map } }
-    const composition = update(this.state.composition, changes)
-    this.setState({ composition })
-  }
-
   // Returns a list of players. Includes only players not selected in
   // other rows. Always includes the given player.
   getPlayerOptionsForRow(playerForRow) {
@@ -130,55 +111,31 @@ export default class CompositionForm extends React.Component {
     )
   }
 
-  render() {
-    const { maps, composition } = this.state
+  loadComposition(mapID) {
+    const api = new OverwatchTeamCompsApi()
 
-    if (typeof maps === 'undefined' || typeof composition === 'undefined') {
-      return <p>Loading...</p>
+    api.getLastComposition(mapID).then(comp => this.onCompositionFetched(comp)).
+      catch(err => CompositionForm.onCompositionFetchError(err))
+  }
+
+  render() {
+    const { composition } = this.state
+
+    if (typeof composition === 'undefined') {
+      return (
+        <div className="container">
+          <p>Loading...</p>
+        </div>
+      )
     }
 
     const mapSegments = composition.map.segments
     return (
       <form className="composition-form">
-        <header className="composition-form-header">
-          <div className="container">
-            <div className="map-photo-container" />
-            <div className="composition-meta">
-              <div>
-                <span className="select map-select">
-                  <select
-                    aria-label="Choose a map"
-                    id="composition_map_id"
-                    value={composition.map.id}
-                    onChange={e => this.onMapChange(e)}
-                  >
-                    {maps.map(map =>
-                      <option
-                        key={map.id}
-                        value={map.id}
-                      >{map.name}</option>
-                    )}
-                  </select>
-                </span>
-              </div>
-              <div className="composition-name-container">
-                <i
-                  className="fa fa-pencil-square-o"
-                  aria-hidden="true"
-                />
-                <input
-                  type="text"
-                  className="input composition-name-input"
-                  placeholder="Composition name"
-                  id="composition_name"
-                  value={composition.name || ''}
-                  onChange={e => this.onCompositionNameChange(e)}
-                  aria-label="Name of this team composition"
-                />
-              </div>
-            </div>
-          </div>
-        </header>
+        <CompositionHeader
+          composition={composition}
+          onMapChange={mapID => this.onMapChange(mapID)}
+        />
         <div className="container">
           <table className="players-table">
             <thead>
