@@ -10,6 +10,16 @@ class Player < ApplicationRecord
 
   scope :order_by_name, ->{ order('UPPER(name) ASC') }
 
+  # Returns a list of Players created by the given User, or by the anonymous
+  # user in the given session if the User is nil.
+  scope :created_by, ->(user:, session_id:) {
+    if user
+      where(creator_id: user)
+    else
+      where(creator_id: User.anonymous, creator_session_id: session_id)
+    end
+  }
+
   # Returns the Player with the given ID, but only if that Player is
   # owned by the given User/session.
   #
@@ -22,20 +32,6 @@ class Player < ApplicationRecord
     end
 
     scope.first
-  end
-
-  # Given a list of names for players already in a composition, this will
-  # return a reasonable default name for a new player.
-  def self.get_name(existing_names)
-    existing_default_names = existing_names.uniq.sort.select do |name|
-      name =~ /Player \d/
-    end
-    existing_numbers = existing_default_names.map do |name|
-      name.split('Player ')[1].to_i
-    end
-    default_numbers = [1, 2, 3, 4, 5, 6]
-    next_number = (default_numbers - existing_numbers).first
-    "Player #{next_number}"
   end
 
   # Returns the given list of heroes reordered such that the ones the player is most

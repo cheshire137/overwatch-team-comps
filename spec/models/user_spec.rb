@@ -7,7 +7,7 @@ describe User do
     end
 
     it "found via email" do
-      expect(User.find_by_email("anonymous@overwatch-team-comps.com")).to_not be_nil
+      expect(User.find_by_email(User::ANONYMOUS_EMAIL)).to_not be_nil
     end
 
     it "found via anonymous method" do

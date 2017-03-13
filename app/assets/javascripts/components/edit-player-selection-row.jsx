@@ -1,48 +1,28 @@
-import DebounceInput from 'react-debounce-input'
-
 import HeroSelect from './hero-select.jsx'
+import PlayerSelect from './player-select.jsx'
 
 class EditPlayerSelectionRow extends React.Component {
-  onPlayerNameChange(event) {
-    this.props.onPlayerNameChange(event.target.value)
-  }
-
-  getSelectedHeroID(segment) {
-    const needle = segment.id
-    const haystack = this.props.player.heroes
-    const heroes = haystack.filter(hero =>
-      hero.mapSegmentIDs && hero.mapSegmentIDs.indexOf(needle) > -1
-    )
-    if (heroes.length > 0) {
-      return heroes[0].id
-    }
-    return null
-  }
-
   render() {
-    const { inputID, player, nameLabel, onHeroSelection,
-            mapSegments } = this.props
+    const { inputID, selectedPlayer, nameLabel, onHeroSelection,
+            mapSegments, onPlayerSelection, players, heroes,
+            selections } = this.props
     return (
       <tr>
         <td className="player-cell">
-          <label
-            htmlFor={inputID}
-            className="label"
-          >{nameLabel}</label>
-          <DebounceInput
-            debounceTimeout={500}
-            onChange={e => this.onPlayerNameChange(e)}
-            id={inputID}
-            placeholder="Player name"
-            value={player.name}
-            className="input"
+          <PlayerSelect
+            inputID={inputID}
+            label={nameLabel}
+            selectedPlayer={selectedPlayer}
+            players={players}
+            onChange={(playerID, name) => onPlayerSelection(playerID, name)}
           />
         </td>
         {mapSegments.map(segment => (
           <td key={segment.id} className="hero-select-cell">
             <HeroSelect
-              heroes={player.heroes}
-              selectedHeroID={this.getSelectedHeroID(segment)}
+              heroes={heroes}
+              disabled={typeof selectedPlayer.id !== 'number'}
+              selectedHeroID={selections[segment.id]}
               onChange={heroID => onHeroSelection(heroID, segment.id)}
             />
           </td>
@@ -54,11 +34,14 @@ class EditPlayerSelectionRow extends React.Component {
 
 EditPlayerSelectionRow.propTypes = {
   inputID: React.PropTypes.string.isRequired,
-  player: React.PropTypes.object.isRequired,
-  onPlayerNameChange: React.PropTypes.func.isRequired,
+  selectedPlayer: React.PropTypes.object.isRequired,
+  players: React.PropTypes.array.isRequired,
+  onPlayerSelection: React.PropTypes.func.isRequired,
   nameLabel: React.PropTypes.string.isRequired,
   onHeroSelection: React.PropTypes.func.isRequired,
-  mapSegments: React.PropTypes.array.isRequired
+  mapSegments: React.PropTypes.array.isRequired,
+  heroes: React.PropTypes.array.isRequired,
+  selections: React.PropTypes.object.isRequired
 }
 
 export default EditPlayerSelectionRow

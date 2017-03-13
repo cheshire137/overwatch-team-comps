@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     get "/composition/last" => "compositions#last_composition", as: :last_composition
     post "/compositions" => "compositions#save", as: :compositions
 
+    resources :players, only: [:create]
+
     resources :maps, only: [:index]
   end
 

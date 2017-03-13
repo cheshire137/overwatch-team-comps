@@ -9,15 +9,6 @@ class CompositionSaver
   end
 
   def save(data)
-    if data[:player_id] || data[:player_name]
-      player = init_player(data)
-      unless player.persisted? && !player.changed? || player.save
-        @error_type = 'player'
-        @error_value = player.errors
-        return
-      end
-    end
-
     map = if data[:map_segment_id]
       map_segment = MapSegment.find(data[:map_segment_id])
       map_segment.map
@@ -34,19 +25,21 @@ class CompositionSaver
       end
     end
 
-    if player && @composition
-      comp_player = init_composition_player(data, player: player,
+    position = data[:player_position]
+
+    if data[:player_id] && @composition
+      comp_player = init_composition_player(data, position: position,
                                             composition: @composition)
-      unless comp_player.persisted? || comp_player.save
+      unless comp_player.persisted? && !comp_player.changed? || comp_player.save
         @error_type = 'composition_player'
         @error_value = comp_player.errors
         return
       end
     end
 
-    if player && map_segment && data[:hero_id]
-      selection = init_player_selection(data, composition: @composition,
-                                        player: player, map_segment: map_segment)
+    if map_segment && comp_player && data[:hero_id]
+      selection = init_player_selection(data, composition_player: comp_player,
+                                        map_segment: map_segment)
       unless selection.persisted? && !selection.changed? || selection.save
         @error_type = 'player_selection'
         @error_value = selection.errors
@@ -59,92 +52,61 @@ class CompositionSaver
 
   private
 
-  def init_player(data)
-    if id = data[:player_id]
-      scope = Player.where(id: id)
-      if @user
-        scope = scope.where(creator: @user)
-      else
-        scope = scope.where(creator: User.anonymous,
-                            creator_session_id: @session_id)
-      end
-      player = scope.first
-      unless player
-        raise CompositionSaver::Error, 'No such player for creator'
-      end
-      player.name = data[:player_name]
-      player
-    else
-      attrs = {name: data[:player_name]}
-      if @user
-        attrs[:creator] = @user
-      else
-        attrs[:creator] = User.anonymous
-        attrs[:creator_session_id] = @session_id
-      end
-      Player.new(attrs)
-    end
-  end
+  def init_composition_player(data, position:, composition:)
+    comp_player = CompositionPlayer.
+      where(composition_id: composition, position: position).
+      first_or_initialize
 
-  def init_composition_player(data, player:, composition:)
-    comp_player = CompositionPlayer.where(composition_id: composition,
-                                          player_id: player).
-                                    first_or_initialize
-    comp_player.position = data[:player_position] if data[:player_position]
+    comp_player.player_id = data[:player_id]
     comp_player
   end
 
   def init_composition(data, map:)
     id = data[:composition_id]
 
-    if @user
-      composition_for_authenticated_user(map: map, id: id)
+    composition = if @user
+      composition_for_authenticated_user(id: id)
     else
-      composition_for_anonymous_user(map: map, id: id)
+      composition_for_anonymous_user(id: id)
     end
+
+    unless composition
+      raise CompositionSaver::Error, 'No such composition for creator'
+    end
+
+    composition.map = map if map
+    composition
   end
 
-  def composition_for_authenticated_user(map:, id:)
+  def composition_for_authenticated_user(id:)
     if id
-      scope = Composition.where(id: id)
-      if @user
-        scope = scope.where(user_id: @user)
-      else
-        scope = scope.where(user_id: User.anonymous, session_id: @session_id)
-      end
-      comp = scope.first
-      unless comp
-        raise CompositionSaver::Error, 'No such composition for creator'
-      end
-      comp.map = map if map
-      comp
+      Composition.where(user: @user, id: id).first
     else
-      Composition.new(map: map, user: @user)
+      Composition.new(user: @user)
     end
   end
 
-  def composition_for_anonymous_user(map:, id:)
+  def composition_for_anonymous_user(id:)
     if id
       Composition.where(id: id, user_id: User.anonymous,
                         session_id: @session_id).first
     else
-      Composition.new(map: map, session_id: @session_id,
-                      user: User.anonymous)
+      Composition.new(session_id: @session_id, user: User.anonymous)
     end
   end
 
-  def init_player_selection(data, composition:, player:, map_segment:)
+  def init_player_selection(data, composition_player:, map_segment:)
     hero = Hero.find(data[:hero_id])
 
-    if composition.persisted?
+    if composition_player.persisted?
       selection = PlayerSelection.
-        where(composition_id: composition, player_id: player,
+        where(composition_player_id: composition_player,
               map_segment_id: map_segment).first_or_initialize
       selection.hero = hero
       selection
     else
-      PlayerSelection.new(player: player, hero: hero, map_segment: map_segment,
-                          composition: composition)
+      PlayerSelection.new(hero: hero, map_segment: map_segment,
+                          composition_player: composition_player)
     end
   end
 end
