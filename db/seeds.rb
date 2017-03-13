@@ -75,6 +75,3 @@ end
 
 puts "Creating anonymous user"
 anon_user = User.create!(email: User::ANONYMOUS_EMAIL, password: "passworD1")
-
-puts 'Creating default player'
-Player.create!(name: Player::DEFAULT_NAME, creator: anon_user)
