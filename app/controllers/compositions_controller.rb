@@ -39,31 +39,6 @@ class CompositionsController < ApplicationController
                   :player_id, :player_position, :map_id)
   end
 
-  def get_map_segment_ids(heroes, composition, players)
-    result = {}
-
-    # Ensure all 6 players are represented and each player has a slot for
-    # each hero.
-    players.each do |player|
-      result[player.id] ||= {}
-
-      heroes.each do |hero|
-        result[player.id][hero.id] = []
-      end
-    end
-
-    player_selections = composition.player_selections.
-      includes(:composition_player)
-    player_selections.each do |player_selection|
-      hero_id = player_selection.hero_id
-      player_id = player_selection.composition_player.player_id
-
-      result[player_id][hero_id] << player_selection.map_segment_id
-    end
-
-    result
-  end
-
   def new_composition
     map = Map.first
 
