@@ -45,7 +45,11 @@ class CompositionsController < ApplicationController
   end
 
   def new_composition
-    map = Map.first
+    map = if params[:map_id]
+      Map.find(params[:map_id])
+    else
+      Map.first
+    end
 
     if user_signed_in?
       Composition.new(map: map, user: current_user)
