@@ -7,6 +7,8 @@ comps.
 
 Feature planning is done on [our Trello board](https://trello.com/b/STeIZ1td/project-overwatch-team-comp-organizer).
 
+If interested, see also [our requirements document](https://trello.com/c/GCIwE5We/5-end-user-requirements-version-1) that contains a high-level description of all the end-user features of this product.
+
 ## App Structure
 
 - Ruby on Rails web app using [React](https://facebook.github.io/react/) for a speedy,
