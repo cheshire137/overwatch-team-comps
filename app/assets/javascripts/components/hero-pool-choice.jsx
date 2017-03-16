@@ -19,21 +19,22 @@ class HeroPoolChoice extends React.Component {
 
     return (
       <div key={hero.id}>
-        {hero.name}
-        <div>
-          {ranks.map(rank => {
-            return (
-              <div key={rank}>
-                <input
-                  name={hero.name}
-                  type="radio"
-                  checked={hero.confidence === confidenceRanks[rank]}
-                  value={confidenceRanks[rank]}
-                  onChange={e => this.onChange(e)}
-                />
-              </div>
-            )
-          })}
+        <div className="hero-pool-hero">{hero.name}</div>
+        <div className="hero-pool-inputs-container">
+          {ranks.map(rank => (
+            <div
+              key={rank}
+              className="hero-pool-confidence-container"
+            >
+              <input
+                name={hero.name}
+                type="radio"
+                checked={hero.confidence === confidenceRanks[rank]}
+                value={confidenceRanks[rank]}
+                onChange={e => this.onChange(e)}
+              />
+            </div>
+          ))}
         </div>
       </div>
     )
