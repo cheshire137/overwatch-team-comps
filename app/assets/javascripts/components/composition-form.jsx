@@ -59,6 +59,7 @@ export default class CompositionForm extends React.Component {
 
   onHeroSelectedForPlayer(heroID, mapSegmentID, playerID, position) {
     this.saveHeroSelection(heroID, mapSegmentID, playerID, position)
+    this.propagateHeroSelection(heroID, mapSegmentID, playerID, position)
   }
 
   onCompositionSaved(composition) {
@@ -96,6 +97,17 @@ export default class CompositionForm extends React.Component {
     api.createPlayer(body).
       then(comp => this.onCompositionSaved(comp)).
       catch(err => CompositionForm.onPlayerCreationError(err))
+  }
+
+  propagateHeroSelection(heroID, mapSegmentID, playerID, position) {
+    const { composition } = this.state
+    const playerSelections = composition.selections[playerID]
+    const mapSegmentIDs = Object.keys(playerSelections).filter(id => {
+      return id !== mapSegmentID && playerSelections[id] === null
+    })
+    for (let i = 0; i < mapSegmentIDs.length; i++) {
+      this.saveHeroSelection(heroID, mapSegmentIDs[i], playerID, position)
+    }
   }
 
   saveHeroSelection(heroID, mapSegmentID, playerID, position) {
