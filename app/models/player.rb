@@ -21,12 +21,13 @@ class Player < ApplicationRecord
   }
 
   # Returns the Player with the given ID, but only if that Player is
-  # owned by the given User/session.
+  # owned by the given User/session or if that Player represents the given
+  # user.
   #
   # Returns Player or nil.
   def self.find_if_allowed(id, user:, session_id:)
     scope = if user
-      where(id: id, creator_id: user)
+      where(id: id).where("creator_id = ? OR user_id = ?", user.id)
     else
       where(id: id, creator_id: User.anonymous, creator_session_id: session_id)
     end
