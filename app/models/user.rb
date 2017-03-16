@@ -18,6 +18,17 @@ class User < ApplicationRecord
     find_by_email ANONYMOUS_EMAIL
   end
 
+  # The Player that represents this User.
+  def self_player
+    player = Player.where(user_id: id).first_or_initialize
+    if player.new_record?
+      player.name = battletag
+      player.creator_id = id
+      player.save
+    end
+    player
+  end
+
   # Returns true if this User is the special User that represents an anonymous visitor
   # to the site.
   def anonymous?
