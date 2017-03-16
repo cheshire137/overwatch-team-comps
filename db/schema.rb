@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170312174742) do
+ActiveRecord::Schema.define(version: 20170316233302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20170312174742) do
     t.integer  "confidence", default: 0, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.index ["hero_id"], name: "index_player_heroes_on_hero_id", using: :btree
+    t.index ["hero_id", "player_id"], name: "index_player_heroes_on_hero_id_and_player_id", unique: true, using: :btree
     t.index ["player_id"], name: "index_player_heroes_on_player_id", using: :btree
   end
 
