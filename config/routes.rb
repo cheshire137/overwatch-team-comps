@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     resources :players, only: [:create]
 
     resources :maps, only: [:index]
+
+    get "/heroes/pool" => "heroes#pool", as: :hero_pool
   end
 
   # For details on the DSL available within this file, see
