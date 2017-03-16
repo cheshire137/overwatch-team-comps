@@ -22,7 +22,7 @@ json.composition do
       json.id row.player.id
       json.name row.player.name
     else
-      json.name 'Player'
+      json.name ''
     end
   end
 

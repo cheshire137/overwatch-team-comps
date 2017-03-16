@@ -5,7 +5,8 @@ RSpec.describe CompositionsController do
     @user = create(:user)
     @anon_user = create(:anonymous_user)
     @map = create(:map)
-    @map_segment = create(:map_segment, map: @map)
+    @map_segment1 = create(:map_segment, map: @map)
+    @map_segment2 = create(:map_segment, map: @map)
     @hero1 = create(:hero, name: 'Mei')
     @hero2 = create(:hero, name: 'Soldier: 76')
 
@@ -40,7 +41,7 @@ RSpec.describe CompositionsController do
       sign_in @user
       post :save, params: {
         player_id: player.id, hero_id: @hero1.id,
-        map_segment_id: @map_segment.id, format: :json
+        map_segment_id: @map_segment1.id, format: :json
       }
 
       expect(response).to be_success, response.body
@@ -51,7 +52,7 @@ RSpec.describe CompositionsController do
 
       post :save, params: {
         player_id: player.id, hero_id: @hero1.id,
-        map_segment_id: @map_segment.id, format: :json
+        map_segment_id: @map_segment1.id, format: :json
       }
 
       expect(response).to be_success, response.body
@@ -79,7 +80,7 @@ RSpec.describe CompositionsController do
       expect do
         post :save, params: {
           player_name: 'chocotaco', hero_id: @hero1.id,
-          map_segment_id: @map_segment.id, format: :json
+          map_segment_id: @map_segment1.id, format: :json
         }
       end.to change { Composition.count }.by(1)
       expect(response).to be_success
@@ -89,45 +90,48 @@ RSpec.describe CompositionsController do
       expect do
         post :save, params: {
           player_name: 'FabulousPrizes', hero_id: @hero1.id,
-          map_segment_id: @map_segment.id, format: :json
+          map_segment_id: @map_segment1.id, format: :json
         }
       end.to change { @anon_user.compositions.count }.by(1)
       expect(response).to be_success
     end
 
-    it 'creates a new player selection for authenticated user' do
+    it 'populates heroes for each map segment for authenticated user' do
       sign_in @user
       player = create(:player, creator: @user)
 
       expect do
         post :save, params: {
           player_id: player.id, hero_id: @hero1.id,
-          map_segment_id: @map_segment.id, format: :json
+          map_segment_id: @map_segment1.id, format: :json
         }
-      end.to change { PlayerSelection.count }.by(1)
+      end.to change { PlayerSelection.count }.by(2)
       expect(response).to be_success
     end
 
-    it 'no-op for existing player selection for authenticated user' do
+    it 'updates existing player selection for authenticated user' do
       sign_in @user
 
       player = create(:player, creator: @user)
       composition = create(:composition, user: @user, map: @map)
       comp_player = create(:composition_player, composition: composition,
                            player: player)
-      player_selection = create(:player_selection, composition_player: comp_player,
-                                hero: @hero1, map_segment: @map_segment)
+      player_selection1 = create(:player_selection, composition_player: comp_player,
+                                 hero: @hero1, map_segment: @map_segment1)
+      player_selection2 = create(:player_selection, composition_player: comp_player,
+                                 hero: @hero1, map_segment: @map_segment2)
 
       expect do
         post :save, params: {
           hero_id: @hero2.id, format: :json, player_id: player.id,
-          composition_id: composition.id, map_segment_id: @map_segment.id,
+          composition_id: composition.id, map_segment_id: @map_segment1.id,
           player_position: comp_player.position
         }
       end.not_to change { PlayerSelection.count }
 
       expect(response).to be_success, response.body
-      expect(player_selection.reload.hero).to eq(@hero2)
+      expect(player_selection1.reload.hero).to eq(@hero2)
+      expect(player_selection2.reload.hero).to eq(@hero1)
     end
   end
 end
