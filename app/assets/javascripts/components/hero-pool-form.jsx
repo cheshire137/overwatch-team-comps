@@ -1,8 +1,15 @@
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
+import HeroPoolChoice from './hero-pool-choice.jsx'
 
 class HeroPoolForm extends React.Component {
   static onHeroPoolFetchError(error) {
     console.error('failed to load hero pool', error)
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.state = { heroes: [] }
   }
 
   componentDidMount() {
@@ -11,6 +18,7 @@ class HeroPoolForm extends React.Component {
 
   onHeroPoolLoaded(heroPool) {
     console.log('heroPool', heroPool)
+    this.setState({ heroes: heroPool.heroes })
   }
 
   loadHeroPool() {
@@ -22,9 +30,14 @@ class HeroPoolForm extends React.Component {
   }
 
   render() {
+    const { heroes } = this.state
+    if (heroes.length < 1) {
+      return <p className="container">Loading...</p>
+    }
+
     return (
       <form className="container">
-        <p>Hero pool form here</p>
+        {heroes.map(hero => <HeroPoolChoice hero={hero} key={hero.id} />)}
       </form>
     )
   }
