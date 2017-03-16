@@ -21,4 +21,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   get "/pages/:page" => "pages#show", as: :page
+
+  # Catch-all route so React can handle routing
+  get '*path' => 'home#index'
 end
