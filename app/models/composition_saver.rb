@@ -38,11 +38,14 @@ class CompositionSaver
     end
 
     if map_segment && comp_player && data[:hero_id]
-      selection = init_player_selection(data, composition_player: comp_player,
-                                        map_segment: map_segment)
-      unless selection.persisted? && !selection.changed? || selection.save
+      selections = init_player_selections(data, composition_player: comp_player,
+                                          map_segment: map_segment)
+      results = selections.map do |selection|
+        selection.persisted? && !selection.changed? || selection.save
+      end
+      unless results.all?
         @error_type = 'player_selection'
-        @error_value = selection.errors
+        @error_value = selections.map(&:errors)
         return
       end
     end
@@ -95,18 +98,25 @@ class CompositionSaver
     end
   end
 
-  def init_player_selection(data, composition_player:, map_segment:)
+  def init_player_selections(data, composition_player:, map_segment:)
     hero = Hero.find(data[:hero_id])
+    all_segments = map_segment.map.segment_ids
+    filled_segments = composition_player.player_selections.pluck(:map_segment_id)
+    blank_segments = all_segments - filled_segments
 
-    if composition_player.persisted?
-      selection = PlayerSelection.
+    # All have already been initialized, just need to update the
+    # specified map segment for the player to use the given hero.
+    if blank_segments.empty?
+      updated_selection = PlayerSelection.
         where(composition_player_id: composition_player,
-              map_segment_id: map_segment).first_or_initialize
-      selection.hero = hero
-      selection
+              map_segment_id: map_segment).first
+      updated_selection.hero = hero
+      [updated_selection]
     else
-      PlayerSelection.new(hero: hero, map_segment: map_segment,
-                          composition_player: composition_player)
+      blank_segments.map do |map_segment_id|
+        PlayerSelection.new(hero: hero, map_segment_id: map_segment_id,
+                            composition_player: composition_player)
+      end
     end
   end
 end

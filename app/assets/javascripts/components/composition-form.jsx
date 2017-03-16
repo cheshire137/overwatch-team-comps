@@ -58,8 +58,22 @@ export default class CompositionForm extends React.Component {
   }
 
   onHeroSelectedForPlayer(heroID, mapSegmentID, playerID, position) {
-    this.saveHeroSelection(heroID, mapSegmentID, playerID, position)
-    this.propagateHeroSelection(heroID, mapSegmentID, playerID, position)
+    const { composition } = this.state
+    const api = new OverwatchTeamCompsApi()
+
+    const body = {
+      hero_id: heroID,
+      map_segment_id: mapSegmentID,
+      player_id: playerID,
+      player_position: position
+    }
+    if (composition.id) {
+      body.composition_id = composition.id
+    }
+
+    api.saveComposition(body).
+      then(newComp => this.onCompositionSaved(newComp)).
+      catch(err => CompositionForm.onCompositionSaveError(err))
   }
 
   onCompositionSaved(composition) {
@@ -97,36 +111,6 @@ export default class CompositionForm extends React.Component {
     api.createPlayer(body).
       then(comp => this.onCompositionSaved(comp)).
       catch(err => CompositionForm.onPlayerCreationError(err))
-  }
-
-  propagateHeroSelection(heroID, mapSegmentID, playerID, position) {
-    const { composition } = this.state
-    const playerSelections = composition.selections[playerID]
-    const mapSegmentIDs = Object.keys(playerSelections).filter(id => {
-      return id !== mapSegmentID && playerSelections[id] === null
-    })
-    for (let i = 0; i < mapSegmentIDs.length; i++) {
-      this.saveHeroSelection(heroID, mapSegmentIDs[i], playerID, position)
-    }
-  }
-
-  saveHeroSelection(heroID, mapSegmentID, playerID, position) {
-    const { composition } = this.state
-    const api = new OverwatchTeamCompsApi()
-
-    const body = {
-      hero_id: heroID,
-      map_segment_id: mapSegmentID,
-      player_id: playerID,
-      player_position: position
-    }
-    if (composition.id) {
-      body.composition_id = composition.id
-    }
-
-    api.saveComposition(body).
-      then(newComp => this.onCompositionSaved(newComp)).
-      catch(err => CompositionForm.onCompositionSaveError(err))
   }
 
   updatePlayer(playerID, position) {
