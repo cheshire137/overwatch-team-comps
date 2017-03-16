@@ -8,7 +8,11 @@ class App extends React.Component {
 
     let activeView = 'composition-form'
     if (window.location.pathname === '/hero-pool') {
-      activeView = 'hero-pool-form'
+      if (props.battletag) {
+        activeView = 'hero-pool-form'
+      } else {
+        window.location.href = '/'
+      }
     }
 
     this.state = { activeView }
