@@ -37,13 +37,28 @@
   display: inline-block;
   line-height: 1.4rem;
   font-size: 1rem;
+  color: $text;
   transition: 0.28s ease;
   @include user-select(none);
 }
 
+.hero-pool-radio:not(:checked) + label {
+  color: $soft-header;
+
+  &:hover,
+  &:focus {
+    color: $text;
+
+    &:before,
+    &:after {
+      border-color: $text;
+    }
+  }
+}
+
 .hero-pool-radio:not(:checked) + label:before,
 .hero-pool-radio:not(:checked) + label:after {
-  border: 2px solid #5a5a5a;
+  border: 2px solid $soft-header;
 }
 
 .hero-pool-radio:not(:checked) + label:before,
@@ -53,8 +68,8 @@
   @include border-radius(50%);
 }
 
-.hero-pool-radio+label:before,
-.hero-pool-radio+label:after {
+.hero-pool-radio + label:before,
+.hero-pool-radio + label:after {
   content: '';
   position: absolute;
   left: 0;
@@ -68,12 +83,6 @@
 
 .hero-pool-radio:checked + label:after {
   @include scale(1.02);
-}
-
-.hero-pool-radio:checked + label:after {
-  background-color: #26a69a;
-}
-
-.hero-pool-radio:checked + label:after {
-  border: 2px solid #26a69a;
+  background-color: $defend;
+  border: 2px solid $defend;
 }
