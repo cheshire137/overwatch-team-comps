@@ -19,7 +19,14 @@ class HeroPoolChoice extends React.Component {
 
     return (
       <div className="hero-pool-choice">
-        <div className="hero-pool-hero">{hero.name}</div>
+        <div className="hero-pool-hero">
+          <img
+            src={hero.image}
+            alt={hero.name}
+            className="hero-pool-portrait"
+          />
+          {hero.name}
+        </div>
         <div className="hero-pool-inputs-container">
           {ranks.map(rank => {
             const confidence = confidenceRanks[rank]

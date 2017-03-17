@@ -8,6 +8,8 @@
 }
 
 .hero-pool-choice {
+  @include display-flex;
+  @include align-items(center);
   margin-bottom: 35px;
 }
 
@@ -89,4 +91,13 @@
   @include scale(1.02);
   background-color: $defend;
   border: 2px solid $defend;
+}
+
+.hero-pool-portrait {
+  display: block;
+  width: 80px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
 }
