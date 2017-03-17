@@ -1,5 +1,79 @@
+.hero-pool-form {
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+
+.hero-pool-choice {
+  margin-bottom: 35px;
+}
+
 .hero-pool-hero,
 .hero-pool-inputs-container,
 .hero-pool-confidence-container {
   display: inline-block;
+}
+
+.hero-pool-hero {
+  width: 200px;
+  text-align: center;
+}
+
+.hero-pool-confidence-container {
+  margin-right: 20px;
+}
+
+.hero-pool-radio:not(:checked),
+.hero-pool-radio:checked {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+}
+
+.hero-pool-radio:not(:checked) + label,
+.hero-pool-radio:checked + label {
+  position: relative;
+  padding-left: 26px;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1.4rem;
+  font-size: 1rem;
+  transition: 0.28s ease;
+  @include user-select(none);
+}
+
+.hero-pool-radio:not(:checked) + label:before,
+.hero-pool-radio:not(:checked) + label:after {
+  border: 2px solid #5a5a5a;
+}
+
+.hero-pool-radio:not(:checked) + label:before,
+.hero-pool-radio:not(:checked) + label:after,
+.hero-pool-radio:checked + label:before,
+.hero-pool-radio:checked + label:after {
+  @include border-radius(50%);
+}
+
+.hero-pool-radio+label:before,
+.hero-pool-radio+label:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 4px;
+  width: 16px;
+  height: 16px;
+  z-index: 0;
+  transition: 0.28s ease;
+}
+
+.hero-pool-radio:checked + label:after {
+  @include scale(1.02);
+}
+
+.hero-pool-radio:checked + label:after {
+  background-color: #26a69a;
+}
+
+.hero-pool-radio:checked + label:after {
+  border: 2px solid #26a69a;
 }

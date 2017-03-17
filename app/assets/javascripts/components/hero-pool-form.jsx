@@ -36,7 +36,7 @@ class HeroPoolForm extends React.Component {
     }
 
     return (
-      <form className="container">
+      <form className="container hero-pool-form">
         {heroes.map(hero => <HeroPoolChoice hero={hero} key={hero.id} />)}
       </form>
     )
