@@ -6,6 +6,10 @@ class HeroPoolForm extends React.Component {
     console.error('failed to load hero pool', error)
   }
 
+  static onHeroPoolSaveError(error) {
+    console.error('failed to save your hero confidence', error)
+  }
+
   constructor(props) {
     super(props)
 
@@ -17,8 +21,18 @@ class HeroPoolForm extends React.Component {
   }
 
   onHeroPoolLoaded(heroPool) {
-    console.log('heroPool', heroPool)
     this.setState({ heroes: heroPool.heroes })
+  }
+
+  onConfidenceChange(heroID, confidence) {
+    const body = {
+      hero_id: heroID,
+      confidence
+    }
+    const api = new OverwatchTeamCompsApi()
+    api.saveHeroPool(body).
+      then(heroPool => this.onHeroPoolLoaded(heroPool)).
+      catch(err => HeroPoolForm.onHeroPoolSaveError(err))
   }
 
   loadHeroPool() {
@@ -37,7 +51,13 @@ class HeroPoolForm extends React.Component {
 
     return (
       <form className="container hero-pool-form">
-        {heroes.map(hero => <HeroPoolChoice hero={hero} key={hero.id} />)}
+        {heroes.map(hero => (
+          <HeroPoolChoice
+            hero={hero}
+            key={hero.id}
+            onChange={confidence => this.onConfidenceChange(hero.id, confidence)}
+          />
+        ))}
       </form>
     )
   }

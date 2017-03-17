@@ -22,6 +22,11 @@ export default class OverwatchTeamCompsApi extends Fetcher {
       then(json => json.heroPool)
   }
 
+  saveHeroPool(body) {
+    return this.post('/heroes/pool', this.defaultHeaders, body).
+      then(json => json.heroPool)
+  }
+
   getLastComposition(mapID) {
     let path = '/composition/last'
     if (typeof mapID !== 'undefined') {

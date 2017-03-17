@@ -10,7 +10,7 @@ const confidenceRanks = {
 
 class HeroPoolChoice extends React.Component {
   onChange(event) {
-    console.log(this.props.hero.name, event.target.value)
+    this.props.onChange(event.target.value)
   }
 
   render() {
@@ -51,7 +51,8 @@ class HeroPoolChoice extends React.Component {
 }
 
 HeroPoolChoice.propTypes = {
-  hero: React.PropTypes.object.isRequired
+  hero: React.PropTypes.object.isRequired,
+  onChange: React.PropTypes.func.isRequired
 }
 
 export default HeroPoolChoice

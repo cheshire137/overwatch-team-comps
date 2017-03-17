@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :maps, only: [:index]
 
     get "/heroes/pool" => "heroes#pool", as: :hero_pool
+    post "/heroes/pool" => "heroes#save"
   end
 
   # For details on the DSL available within this file, see
