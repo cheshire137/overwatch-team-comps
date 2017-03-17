@@ -32,6 +32,7 @@ json.composition do
       if row.player
         json.set! row.player.id, row.heroes do |hero|
           json.id hero.id
+          json.slug hero.slug
           json.name hero.name
         end
       end

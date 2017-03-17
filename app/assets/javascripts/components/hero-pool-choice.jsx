@@ -27,7 +27,9 @@ class HeroPoolChoice extends React.Component {
           />
         </div>
         <div className="hero-pool-inputs-container">
-          <h3 className="hero-pool-hero-name">{hero.name}</h3>
+          <h3
+            className={`hero-pool-hero-name text-${hero.slug}`}
+          >{hero.name}</h3>
           {ranks.map(rank => {
             const confidence = confidenceRanks[rank]
             const inputID = `${hero.id}${confidence}`

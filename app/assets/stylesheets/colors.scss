@@ -13,11 +13,12 @@ $defend: #0E9ED2;
 $block: #111318;
 $form: #F6F6F7;
 
+// Heroes
 $ana: #408fff;
-$bastion: #84ae7b;
+$bastion: #bac1c9;
 $dva: #ffb3f3;
 $genji: #8cff9a;
-$hanzo: #5a607d;
+$hanzo: #776931;
 $lucio: #2cd13f;
 $mccree: #d44124;
 $mei: #009be8;
@@ -25,15 +26,17 @@ $mercy: #ffe100;
 $orisa: #9fbc30;
 $pharah: #008ff5;
 $reaper: #000000;
-$reinhardt: #b0bef8;
-$roadhog: #6b6b6b;
+$reinhardt: #81736b;
+$roadhog: #f9c907;
 $soldier76: #fd0d15;
+$sombra: #9743ad;
 $symmetra: #00ccff;
 $torbjorn: #ffc400;
 $tracer: #ffb803;
-$widowmaker: #4c3b70;
+$widowmaker: #95a2ea;
+$winston: #414f68;
 $zarya: #ea4d98;
-$zenyatta: #f3ebaf;
+$zenyatta: #b7b0a1;
 
 .text-attack {
   color: $attack;
@@ -53,4 +56,96 @@ a:visited, a:active {
 
 a:hover, a:focus {
   color: $attack;
+}
+
+.text-ana {
+  color: $ana;
+}
+
+.text-bastion {
+  color: $bastion;
+}
+
+.text-dva {
+  color: $dva;
+}
+
+.text-genji {
+  color: $genji;
+}
+
+.text-hanzo {
+  color: $hanzo;
+}
+
+.text-lucio {
+  color: $lucio;
+}
+
+.text-mccree {
+  color: $mccree;
+}
+
+.text-mei {
+  color: $mei;
+}
+
+.text-mercy {
+  color: $mercy;
+}
+
+.text-orisa {
+  color: $orisa;
+}
+
+.text-pharah {
+  color: $pharah;
+}
+
+.text-reaper {
+  color: $reaper;
+}
+
+.text-reinhardt {
+  color: $reinhardt;
+}
+
+.text-roadhog {
+  color: $roadhog;
+}
+
+.text-soldier76 {
+  color: $soldier76;
+}
+
+.text-sombra {
+  color: $sombra;
+}
+
+.text-symmetra {
+  color: $symmetra;
+}
+
+.text-torbjorn {
+  color: $torbjorn;
+}
+
+.text-tracer {
+  color: $tracer;
+}
+
+.text-widowmaker {
+  color: $widowmaker;
+}
+
+.text-winston {
+  color: $winston;
+}
+
+.text-zarya {
+  color: $zarya;
+}
+
+.text-zenyatta {
+  color: $zenyatta;
 }
