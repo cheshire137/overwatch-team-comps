@@ -19,7 +19,7 @@ class HeroPoolChoice extends React.Component {
 
     return (
       <div className="hero-pool-choice">
-        <div className="hero-pool-hero">
+        <div className={`hero-pool-hero border-${hero.slug}`}>
           <img
             src={hero.image}
             alt={hero.name}

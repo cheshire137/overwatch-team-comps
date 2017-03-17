@@ -26,8 +26,12 @@
 }
 
 .hero-pool-hero {
-  width: 10em;
-  text-align: center;
+  width: 92px;
+  padding: 5px;
+  margin-right: 20px;
+  background-color: #fefefe;
+  border-width: 1px;
+  border-style: solid;
 }
 
 .hero-pool-confidence-container {
@@ -102,8 +106,4 @@
 .hero-pool-portrait {
   display: block;
   width: 80px;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 10px;
 }
