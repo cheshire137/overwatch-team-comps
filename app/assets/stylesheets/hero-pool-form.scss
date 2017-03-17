@@ -1,6 +1,10 @@
 .hero-pool-form {
   margin-bottom: 40px;
   margin-top: 40px;
+
+  p {
+    color: $text;
+  }
 }
 
 .hero-pool-choice {
@@ -14,7 +18,7 @@
 }
 
 .hero-pool-hero {
-  width: 200px;
+  width: 10em;
   text-align: center;
 }
 
