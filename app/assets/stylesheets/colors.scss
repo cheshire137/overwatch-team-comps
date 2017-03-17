@@ -20,3 +20,15 @@ $form: #F6F6F7;
 .text-defend {
   color: $defend;
 }
+
+a, a:link {
+  color: $defend;
+}
+
+a:visited, a:active {
+  color: $mix;
+}
+
+a:hover, a:focus {
+  color: $attack;
+}
