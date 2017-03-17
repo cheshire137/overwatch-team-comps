@@ -7,6 +7,12 @@
   }
 }
 
+.hero-pool-hero-name {
+  margin-bottom: 10px;
+  margin-top: 0;
+  line-height: 1;
+}
+
 .hero-pool-choice {
   @include display-flex;
   @include align-items(center);
