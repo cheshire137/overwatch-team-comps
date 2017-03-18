@@ -57,6 +57,8 @@ group :development, :test do
   gem 'dotenv-rails', '~> 2.2.0'
 
   gem 'pry', '~> 0.10.4'
+
+  gem 'foreman', '~> 0.83.0'
 end
 
 group :development do
