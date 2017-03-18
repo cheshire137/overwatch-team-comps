@@ -1,4 +1,7 @@
 .hero-pool-form {
+  @include display-flex;
+  @include align-items(center);
+  @include flex-direction(column);
   margin-bottom: 40px;
   margin-top: 40px;
 
@@ -8,7 +11,7 @@
 }
 
 .hero-pool-hero-name {
-  margin-bottom: 10px;
+  margin-bottom: 0;
   margin-top: 0;
   line-height: 1;
 }
@@ -48,12 +51,12 @@
 .hero-pool-radio:not(:checked) + label,
 .hero-pool-radio:checked + label {
   position: relative;
-  padding-left: 26px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
   cursor: pointer;
-  display: inline-block;
-  line-height: 1.4rem;
-  font-size: 1rem;
-  color: $text;
+  display: block;
+  width: 16px;
   transition: 0.28s ease;
   @include user-select(none);
 }
@@ -90,7 +93,6 @@
   position: absolute;
   left: 0;
   top: 0;
-  margin: 4px;
   width: 16px;
   height: 16px;
   z-index: 0;
@@ -106,4 +108,50 @@
 .hero-pool-portrait {
   display: block;
   width: 80px;
+}
+
+.competitive-rank-chevron {
+  &.rank-bronze {
+    width: 55px;
+  }
+
+  &.rank-silver {
+    width: 55px;
+  }
+
+  &.rank-gold {
+    width: 55px;
+  }
+
+  &.rank-platinum {
+    width: 60px;
+  }
+
+  &.rank-diamond {
+    width: 72px;
+  }
+
+  &.rank-master {
+    width: 75px;
+  }
+
+  &.rank-grandmaster {
+    width: 92px;
+    margin-top: -1px;
+  }
+}
+
+.competitive-rank-chevron-label {
+  display: block;
+}
+
+.competitive-rank-text {
+  position: relative;
+  left: -9999px;
+  opacity: 0;
+}
+
+.competitive-ranks-container {
+  @include display-flex;
+  @include align-items(center);
 }
