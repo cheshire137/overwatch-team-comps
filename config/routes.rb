@@ -23,7 +23,6 @@ Rails.application.routes.draw do
   # http://guides.rubyonrails.org/routing.html
   root to: 'home#index'
 
-  get "/comp/:slug" => "compositions#static", as: :static_composition
   get "/pages/:page" => "pages#show", as: :page
 
   # Catch-all route so React can handle routing

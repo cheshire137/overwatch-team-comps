@@ -31,10 +31,6 @@ class CompositionsController < ApplicationController
     render template: 'compositions/show'
   end
 
-  def static
-    @composition = Composition.friendly.find(params[:slug])
-  end
-
   private
 
   def composition_params
