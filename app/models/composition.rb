@@ -1,4 +1,7 @@
 class Composition < ApplicationRecord
+  extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
+
   MAX_PLAYERS = 6
 
   belongs_to :map
@@ -53,6 +56,18 @@ class Composition < ApplicationRecord
     end
 
     self.name = "Composition #{num_comps + 1}"
+  end
+
+  def map_name
+    map.name
+  end
+
+  # Try building a slug based on the following fields in
+  # increasing order of specificity.
+  def slug_candidates
+    [
+      [:map_name, :name]
+    ]
   end
 
   private
