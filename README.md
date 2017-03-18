@@ -96,7 +96,8 @@ bundle exec rspec # to run Rails tests
 
 ## How to Deploy to Heroku
 
-WIP
+Create a [Battle.net app](https://dev.battle.net) and set its "Register Callback URL" to
+`https://your-heroku-app.herokuapp.com/users/auth/bnet/callback`.
 
 ```bash
 heroku buildpacks:add https://github.com/heroku/heroku-buildpack-nodejs.git
