@@ -2,6 +2,9 @@ json.composition do
   if @composition.persisted?
     json.id @composition.id
   end
+  json.user do
+    json.battletag @composition.user.try(:battletag)
+  end
   json.slug @composition.slug
   json.name @composition.name
   json.notes @composition.notes
