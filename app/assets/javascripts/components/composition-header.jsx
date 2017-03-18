@@ -71,7 +71,7 @@ class CompositionHeader extends React.Component {
             </div>
             <div className="composition-link-container">
               <a
-                href={composition.url}
+                href={`/comp/${composition.slug}`}
                 className="composition-link"
               >
                 <i
