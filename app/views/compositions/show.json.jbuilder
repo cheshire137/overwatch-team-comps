@@ -1,6 +1,7 @@
 json.composition do
   if @composition.persisted?
     json.id @composition.id
+    json.updatedAt @composition.updated_at.iso8601
   end
   json.user do
     json.battletag @composition.user.try(:battletag)

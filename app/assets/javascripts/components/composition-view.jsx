@@ -1,7 +1,7 @@
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 import MapSegmentHeader from './map-segment-header.jsx'
-import PlayerSelection from './player-selection.jsx'
+import PlayerRowView from './player-row-view.jsx'
 
 class CompositionView extends React.Component {
   static onCompositionFetchError(error) {
@@ -62,7 +62,7 @@ class CompositionView extends React.Component {
           </div>
         </header>
         <div className="container">
-          <table className="players-table">
+          <table className="players-view-table players-table">
             <thead>
               <tr>
                 <th className="players-header">Team 6/6</th>
@@ -78,7 +78,7 @@ class CompositionView extends React.Component {
                 const heroes = typeof player.id === 'number' ? composition.heroes[player.id] : []
 
                 return (
-                  <PlayerSelection
+                  <PlayerRowView
                     key={key}
                     player={player}
                     heroes={heroes}
@@ -89,6 +89,12 @@ class CompositionView extends React.Component {
               })}
             </tbody>
           </table>
+          <div className="composition-notes-wrapper">
+            <p>Notes:</p>
+            <div>
+              {composition.notes}
+            </div>
+          </div>
         </div>
       </div>
     )
