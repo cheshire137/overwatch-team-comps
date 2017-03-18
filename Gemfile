@@ -73,3 +73,6 @@ gem 'browserify-rails', '~> 4.1.0'
 
 # Font library for icons
 gem 'font-awesome-rails', '~> 4.7.0.1'
+
+# For URL slugs
+gem 'friendly_id', '~> 5.2.0'
