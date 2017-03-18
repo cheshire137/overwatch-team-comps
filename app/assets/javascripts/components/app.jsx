@@ -7,7 +7,8 @@ class App extends React.Component {
     super(props)
 
     let activeView = 'composition-form'
-    if (window.location.pathname === '/hero-pool') {
+    const route = window.location.pathname
+    if (route === '/hero-pool') {
       if (props.battletag) {
         activeView = 'hero-pool-form'
       } else {
