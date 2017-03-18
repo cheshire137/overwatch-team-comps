@@ -131,7 +131,7 @@ export default class CompositionForm extends React.Component {
     const { composition } = this.state
 
     if (typeof composition === 'undefined') {
-      return <p>Loading...</p>
+      return <p className="container">Loading...</p>
     }
 
     const mapSegments = composition.map.segments

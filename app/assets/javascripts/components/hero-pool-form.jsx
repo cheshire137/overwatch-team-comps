@@ -49,19 +49,21 @@ class HeroPoolForm extends React.Component {
     }
 
     return (
-      <form className="hero-pool-form">
-        <p>Rank your ability on each hero.</p>
-        <div>
-          {heroes.map(hero => (
-            <HeroPoolChoice
-              hero={hero}
-              key={hero.id}
-              ranks={ranks}
-              onChange={confidence => this.onConfidenceChange(hero.id, confidence)}
-            />
-          ))}
-        </div>
-      </form>
+      <div className="container">
+        <form className="hero-pool-form">
+          <p>Rank your ability on each hero.</p>
+          <div>
+            {heroes.map(hero => (
+              <HeroPoolChoice
+                hero={hero}
+                key={hero.id}
+                ranks={ranks}
+                onChange={confidence => this.onConfidenceChange(hero.id, confidence)}
+              />
+            ))}
+          </div>
+        </form>
+      </div>
     )
   }
 }

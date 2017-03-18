@@ -35,9 +35,7 @@ class App extends React.Component {
           authPath={authPath}
           activeView={this.state.activeView}
         />
-        <div className="container">
-          {this.renderActiveView()}
-        </div>
+        {this.renderActiveView()}
       </div>
     )
   }
