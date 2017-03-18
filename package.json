@@ -27,12 +27,11 @@
     "babelify": "^7.3.0",
     "browserify": "^14.1.0",
     "browserify-incremental": "^3.1.1",
-    "history": "^4.6.1",
     "immutability-helper": "^2.1.2",
     "promise-polyfill": "^6.0.2",
     "react": "^15.4.2",
     "react-debounce-input": "^2.4.2",
-    "react-router": "^4.0.0",
+    "react-router": "^3.0.2",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
