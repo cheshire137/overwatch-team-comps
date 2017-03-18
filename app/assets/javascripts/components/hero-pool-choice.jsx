@@ -1,21 +1,11 @@
-const confidenceRanks = {
-  bronze: 0,
-  silver: 15,
-  gold: 30,
-  platinum: 45,
-  diamond: 60,
-  master: 75,
-  grandmaster: 100
-}
-
 class HeroPoolChoice extends React.Component {
   onChange(event) {
     this.props.onChange(event.target.value)
   }
 
   render() {
-    const { hero } = this.props
-    const ranks = Object.keys(confidenceRanks)
+    const { hero, ranks } = this.props
+    const rankNames = Object.keys(ranks)
 
     return (
       <div className="hero-pool-choice">
@@ -30,29 +20,44 @@ class HeroPoolChoice extends React.Component {
           <h3
             className={`hero-pool-hero-name text-${hero.slug}`}
           >{hero.name}</h3>
-          {ranks.map(rank => {
-            const confidence = confidenceRanks[rank]
-            const inputID = `${hero.id}${confidence}`
-            return (
-              <div
-                key={rank}
-                className="hero-pool-confidence-container"
-              >
-                <input
-                  id={inputID}
-                  name={hero.name}
-                  className="hero-pool-radio"
-                  type="radio"
-                  checked={hero.confidence === confidence}
-                  value={confidence}
-                  onChange={e => this.onChange(e)}
-                />
-                <label
-                  htmlFor={inputID}
-                >{rank}</label>
-              </div>
-            )
-          })}
+          <div className="competitive-ranks-container">
+            {rankNames.map(rankName => {
+              const confidence = ranks[rankName].confidence
+              const inputID = `${hero.id}${confidence}`
+              return (
+                <div
+                  key={rankName}
+                  className="hero-pool-confidence-container"
+                >
+                  <input
+                    id={inputID}
+                    name={hero.name}
+                    className="hero-pool-radio"
+                    type="radio"
+                    checked={hero.confidence === confidence}
+                    value={confidence}
+                    onChange={e => this.onChange(e)}
+                  />
+                  <label
+                    htmlFor={inputID}
+                    className="competitive-rank-radio-label"
+                  >
+                    <span className="competitive-rank-text">{rankName}</span>
+                  </label>
+                  <label
+                    htmlFor={inputID}
+                    className="competitive-rank-chevron-label"
+                  >
+                    <img
+                      alt={rankName}
+                      src={ranks[rankName].image}
+                      className={`competitive-rank-chevron rank-${rankName}`}
+                    />
+                  </label>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     )
@@ -61,7 +66,8 @@ class HeroPoolChoice extends React.Component {
 
 HeroPoolChoice.propTypes = {
   hero: React.PropTypes.object.isRequired,
-  onChange: React.PropTypes.func.isRequired
+  onChange: React.PropTypes.func.isRequired,
+  ranks: React.PropTypes.object.isRequired
 }
 
 export default HeroPoolChoice

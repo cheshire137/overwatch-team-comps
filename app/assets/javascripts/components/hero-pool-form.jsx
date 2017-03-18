@@ -13,7 +13,7 @@ class HeroPoolForm extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { heroes: [] }
+    this.state = { heroes: [], ranks: {} }
   }
 
   componentDidMount() {
@@ -21,7 +21,7 @@ class HeroPoolForm extends React.Component {
   }
 
   onHeroPoolLoaded(heroPool) {
-    this.setState({ heroes: heroPool.heroes })
+    this.setState({ heroes: heroPool.heroes, ranks: heroPool.ranks })
   }
 
   onConfidenceChange(heroID, confidence) {
@@ -37,26 +37,26 @@ class HeroPoolForm extends React.Component {
 
   loadHeroPool() {
     const api = new OverwatchTeamCompsApi()
-
     api.getHeroPool().
       then(heroPool => this.onHeroPoolLoaded(heroPool)).
       catch(err => HeroPoolForm.onHeroPoolFetchError(err))
   }
 
   render() {
-    const { heroes } = this.state
+    const { heroes, ranks } = this.state
     if (heroes.length < 1) {
       return <p className="container">Loading...</p>
     }
 
     return (
-      <form className="container hero-pool-form">
+      <form className="hero-pool-form">
         <p>Rank your ability on each hero.</p>
         <div>
           {heroes.map(hero => (
             <HeroPoolChoice
               hero={hero}
               key={hero.id}
+              ranks={ranks}
               onChange={confidence => this.onConfidenceChange(hero.id, confidence)}
             />
           ))}
