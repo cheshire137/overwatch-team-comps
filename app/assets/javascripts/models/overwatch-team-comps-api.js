@@ -13,6 +13,10 @@ export default class OverwatchTeamCompsApi extends Fetcher {
     }
   }
 
+  getUser() {
+    return this.get('/user', this.defaultHeaders)
+  }
+
   getMaps() {
     return this.get('/maps', this.defaultHeaders).then(json => json.maps)
   }
