@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   scope defaults: { format: :json }, path: "/api" do
     get "/composition/last" => "compositions#last_composition", as: :last_composition
+    get "/composition/:slug" => "compositions#show", as: :composition
     post "/compositions" => "compositions#save", as: :compositions
 
     resources :players, only: [:create]
