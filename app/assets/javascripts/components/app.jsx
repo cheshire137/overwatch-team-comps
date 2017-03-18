@@ -6,11 +6,13 @@ import CompositionForm from './composition-form.jsx'
 import HeroPoolForm from './hero-pool-form.jsx'
 import NotFound from './not-found.jsx'
 
+import LocalStorage from '../models/local-storage'
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 function requireAuth(nextState, replace, callback) {
   const api = new OverwatchTeamCompsApi()
   api.getUser().then(json => {
+    LocalStorage.set('battletag', json.battletag)
     if (!json.auth) {
       replace({
         pathname: '/',
@@ -23,6 +25,7 @@ function requireAuth(nextState, replace, callback) {
 function redirectIfSignedIn(nextState, replace, callback) {
   const api = new OverwatchTeamCompsApi()
   api.getUser().then(json => {
+    LocalStorage.set('battletag', json.battletag)
     if (json.auth) {
       replace({
         pathname: '/user',
