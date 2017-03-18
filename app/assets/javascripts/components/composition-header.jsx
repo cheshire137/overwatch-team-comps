@@ -69,6 +69,18 @@ class CompositionHeader extends React.Component {
                 aria-label="Name of this team composition"
               />
             </div>
+            <div className="composition-link-container">
+              <a
+                href={composition.url}
+                className="composition-link"
+              >
+                <i
+                  className="fa fa-link"
+                  aria-hidden="true"
+                />
+                Share this composition
+              </a>
+            </div>
           </div>
         </div>
       </header>

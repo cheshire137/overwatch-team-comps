@@ -1,6 +1,7 @@
 json.composition do
   if @composition.persisted?
     json.id @composition.id
+    json.url static_composition_path(@composition)
   end
   json.name @composition.name
   json.notes @composition.notes

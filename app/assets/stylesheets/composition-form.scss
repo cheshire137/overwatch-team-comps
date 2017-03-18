@@ -129,3 +129,22 @@
   display: inline-block;
   vertical-align: middle;
 }
+
+.composition-link-container {
+  margin-top: 10px;
+
+  .composition-link {
+    color: $soft-text;
+    text-decoration: none;
+    font-size: 0.9rem;
+
+    &:hover,
+    &:focus {
+      color: $form;
+    }
+
+    .fa {
+      margin-right: 5px;
+    }
+  }
+}
