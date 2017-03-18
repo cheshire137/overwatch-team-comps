@@ -1,5 +1,8 @@
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
+import MapSegmentHeader from './map-segment-header.jsx'
+import PlayerSelection from './player-selection.jsx'
+
 class CompositionView extends React.Component {
   static onCompositionFetchError(error) {
     console.error('failed to load composition data', error)
@@ -41,21 +44,53 @@ class CompositionView extends React.Component {
       return <p className="container">Loading...</p>
     }
 
+    const mapSegments = composition.map.segments
     return (
-      <header className="composition-header">
-        <div className="container">
-          <div className="map-photo-container" />
-          <div className="composition-meta">
-            <div className="composition-map-name">
-              {composition.map.name}
+      <div>
+        <header className="composition-header">
+          <div className="container">
+            <div className="map-photo-container" />
+            <div className="composition-meta">
+              <div className="composition-map-name">
+                {composition.map.name}
+              </div>
+              <div className="composition-name">
+                {composition.name}
+              </div>
+              {this.compositionCreator()}
             </div>
-            <div className="composition-name">
-              {composition.name}
-            </div>
-            {this.compositionCreator()}
           </div>
+        </header>
+        <div className="container">
+          <table className="players-table">
+            <thead>
+              <tr>
+                <th className="players-header">Team 6/6</th>
+                {mapSegments.map(segment =>
+                  <MapSegmentHeader key={segment.id} mapSegment={segment.name} />
+                )}
+              </tr>
+            </thead>
+            <tbody>
+              {composition.players.map((player, index) => {
+                const key = `${player.name}${index}`
+                const selections = typeof player.id === 'number' ? composition.selections[player.id] : {}
+                const heroes = typeof player.id === 'number' ? composition.heroes[player.id] : []
+
+                return (
+                  <PlayerSelection
+                    key={key}
+                    player={player}
+                    heroes={heroes}
+                    selections={selections}
+                    mapSegments={mapSegments}
+                  />
+                )
+              })}
+            </tbody>
+          </table>
         </div>
-      </header>
+      </div>
     )
   }
 }

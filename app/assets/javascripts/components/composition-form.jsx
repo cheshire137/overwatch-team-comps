@@ -155,8 +155,8 @@ export default class CompositionForm extends React.Component {
               {composition.players.map((player, index) => {
                 const inputID = `player_${index}_name`
                 const key = `${player.name}${index}`
-                const heroes = player.id ? composition.heroes[player.id] : []
-                const selections = player.id ? composition.selections[player.id] : {}
+                const heroes = typeof player.id === 'number' ? composition.heroes[player.id] : []
+                const selections = typeof player.id === 'number' ? composition.selections[player.id] : {}
                 const players = this.getPlayerOptionsForRow(player)
 
                 return (
