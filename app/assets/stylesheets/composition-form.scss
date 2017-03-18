@@ -51,11 +51,10 @@
       padding-left: 0.25em;
       padding-right: 0.25em;
       box-shadow: none;
-      background-color: inherit;
       border: none;
-      border-radius: 0;
       border-bottom: 1px solid transparent;
       width: auto;
+      margin-right: 2px;
 
       &:focus,
       &:active {
@@ -124,4 +123,9 @@
     margin-top: -6px;
     color: $text;
   }
+}
+
+.player-new-name-container {
+  display: inline-block;
+  vertical-align: middle;
 }

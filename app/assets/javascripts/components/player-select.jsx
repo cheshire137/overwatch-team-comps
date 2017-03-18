@@ -1,10 +1,11 @@
-import DebounceInput from 'react-debounce-input'
-
 class PlayerSelect extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { showNewNameField: false }
+    this.state = {
+      name: props.selectedPlayer.name,
+      showNewNameField: false
+    }
   }
 
   onChange(event) {
@@ -17,7 +18,12 @@ class PlayerSelect extends React.Component {
   }
 
   onNewNameSet(event) {
-    const name = event.target.value
+    this.setState({ name: event.target.value })
+  }
+
+  saveNewName(event) {
+    event.preventDefault()
+    const name = this.state.name
     if (name.trim().length < 1) {
       return
     }
@@ -33,15 +39,22 @@ class PlayerSelect extends React.Component {
 
     if (this.state.showNewNameField) {
       return (
-        <DebounceInput
-          debounceTimeout={500}
-          onChange={e => this.onNewNameSet(e)}
-          id={inputID}
-          placeholder="Player name"
-          value={selectedPlayer.name}
-          className="input"
-          autoFocus
-        />
+        <div className="player-new-name-container">
+          <input
+            type="text"
+            id={inputID}
+            placeholder="Player name"
+            value={this.state.name}
+            onChange={e => this.onNewNameSet(e)}
+            className="input"
+            autoFocus
+          />
+          <button
+            type="button"
+            className="button"
+            onClick={e => this.saveNewName(e)}
+          ><i className="fa fa-check" aria-hidden="true" /></button>
+        </div>
       )
     }
 
