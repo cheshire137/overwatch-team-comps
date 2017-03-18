@@ -1,16 +1,31 @@
+.composition-header {
+  padding: 40px 0;
+  margin-bottom: 35px;
+  background-color: #f3d6da;
+  @include filter-gradient(#f3d6da, #daf0f8, horizontal);
+  @include background-image(linear-gradient(left, #f3d6da 0%,#daf0f8 100%));
+
+  .map-photo-container {
+    width: 175px;
+    height: 175px;
+    background-color: #644043;
+  }
+
+  .composition-meta {
+    position: absolute;
+    left: 120px;
+    top: 55px;
+    background-color: #111319;
+    padding: 20px;
+    color: #a9acb4;
+  }
+}
+
 .composition-form {
   margin-bottom: 60px;
 
   .players-table {
     width: 100%;
-  }
-
-  .composition-form-header {
-    padding: 40px 0;
-    margin-bottom: 35px;
-    background-color: #f3d6da;
-    @include filter-gradient(#f3d6da, #daf0f8, horizontal);
-    @include background-image(linear-gradient(left, #f3d6da 0%,#daf0f8 100%));
   }
 
   tbody td {
@@ -61,21 +76,6 @@
         border-bottom-color: #0e9ed2;
       }
     }
-  }
-
-  .map-photo-container {
-    width: 175px;
-    height: 175px;
-    background-color: #644043;
-  }
-
-  .composition-meta {
-    position: absolute;
-    left: 120px;
-    top: 55px;
-    background-color: #111319;
-    padding: 20px;
-    color: #a9acb4;
   }
 
   .composition-notes-wrapper {
