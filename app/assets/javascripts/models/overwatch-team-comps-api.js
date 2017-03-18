@@ -40,6 +40,11 @@ export default class OverwatchTeamCompsApi extends Fetcher {
       then(json => json.composition)
   }
 
+  getComposition(slug) {
+    return this.get(`/composition/${slug}`, this.defaultHeaders).
+      then(json => json.composition)
+  }
+
   saveComposition(body) {
     return this.post('/compositions', this.defaultHeaders, body).
       then(json => json.composition)
