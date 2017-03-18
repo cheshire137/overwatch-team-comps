@@ -1,6 +1,6 @@
 import update from 'immutability-helper'
 
-import CompositionHeader from './composition-header.jsx'
+import CompositionFormHeader from './composition-form-header.jsx'
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
 import MapSegmentHeader from './map-segment-header.jsx'
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
@@ -137,7 +137,7 @@ export default class CompositionForm extends React.Component {
     const mapSegments = composition.map.segments
     return (
       <form className="composition-form">
-        <CompositionHeader
+        <CompositionFormHeader
           composition={composition}
           onMapChange={mapID => this.onMapChange(mapID)}
         />
