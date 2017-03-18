@@ -107,7 +107,7 @@ heroku buildpacks:add https://github.com/heroku/heroku-buildpack-nodejs.git
 heroku buildpacks:add https://github.com/heroku/heroku-buildpack-ruby.git
 heroku config:set BNET_APP_ID=your_app_id_here
 heroku config:set BNET_APP_SECRET=your_app_secret_here
-heroku config:set BNET_APP_HOST=your_heroku_host_here
+heroku config:set BNET_APP_HOST=your-heroku-app.herokuapp.com
 git push heroku master
 heroku run rake db:migrate
 heroku run rake db:seed
