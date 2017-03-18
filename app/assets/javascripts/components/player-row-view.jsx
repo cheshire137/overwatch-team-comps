@@ -13,7 +13,12 @@ class PlayerRowView extends React.Component {
     const hero = heroes.filter(h => h.id === heroID)[0]
     return (
       <td key={segment.id} className="hero-select-cell">
-        {hero.name}
+        <img
+          src={hero.image}
+          alt={hero.name}
+          className="hero-portrait"
+        />
+        <span className="hero-name">{hero.name}</span>
       </td>
     )
   }

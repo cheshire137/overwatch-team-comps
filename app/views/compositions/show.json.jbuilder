@@ -39,6 +39,7 @@ json.composition do
           json.id hero.id
           json.slug hero.slug
           json.name hero.name
+          json.image image_path(hero.image_name)
         end
       end
     end

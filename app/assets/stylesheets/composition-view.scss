@@ -18,8 +18,27 @@
 
 .players-view-table.players-table {
   tbody td {
-    padding-left: 0.75em;
-    padding-right: 0.75em;
-    line-height: 1.5;
+    padding: 0.25em 0.75em;
+  }
+
+  .player-cell,
+  .hero-name {
+    line-height: 40px;
+  }
+
+  .hero-portrait,
+  .hero-name {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .hero-portrait {
+    width: 40px;
+    @include border-radius(4px);
+  }
+
+  .hero-name {
+    margin-left: 5px;
+    white-space: nowrap;
   }
 }
