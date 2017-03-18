@@ -21,12 +21,13 @@ class Player < ApplicationRecord
   }
 
   # Returns the Player with the given ID, but only if that Player is
-  # owned by the given User/session.
+  # owned by the given User/session or if that Player represents the given
+  # user.
   #
   # Returns Player or nil.
   def self.find_if_allowed(id, user:, session_id:)
     scope = if user
-      where(id: id, creator_id: user)
+      where(id: id).where("creator_id = ? OR user_id = ?", user.id)
     else
       where(id: id, creator_id: User.anonymous, creator_session_id: session_id)
     end
@@ -37,11 +38,11 @@ class Player < ApplicationRecord
   # Returns the given list of heroes reordered such that the ones the player is most
   # confidence on are first. Sorted secondarily by hero name.
   def heroes_by_confidence(heroes)
-    confidence_by_hero_id = PlayerHero.where(player_id: id).order('confidence DESC').
+    confidence_by_hero_id = PlayerHero.where(player_id: id).
       map { |ph| [ph.hero_id, ph.confidence] }.to_h
     heroes.sort_by do |hero|
       confidence = confidence_by_hero_id[hero.id] || 0
-      [confidence, hero.name]
+      [-confidence, hero.name]
     end
   end
 

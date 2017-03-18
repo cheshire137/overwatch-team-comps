@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     resources :players, only: [:create]
 
     resources :maps, only: [:index]
+
+    get "/heroes/pool" => "heroes#pool", as: :hero_pool
+    post "/heroes/pool" => "heroes#save"
   end
 
   # For details on the DSL available within this file, see
@@ -21,4 +24,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   get "/pages/:page" => "pages#show", as: :page
+
+  # Catch-all route so React can handle routing
+  get '*path' => 'home#index'
 end

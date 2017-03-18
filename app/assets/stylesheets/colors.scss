@@ -13,10 +13,231 @@ $defend: #0E9ED2;
 $block: #111318;
 $form: #F6F6F7;
 
+// Heroes
+$ana: #408fff;
+$bastion: #bac1c9;
+$dva: #ffb3f3;
+$genji: #8cff9a;
+$hanzo: #776931;
+$lucio: #2cd13f;
+$mccree: #d44124;
+$mei: #009be8;
+$mercy: #ffe100;
+$orisa: #9fbc30;
+$pharah: #008ff5;
+$reaper: #000000;
+$reinhardt: #81736b;
+$roadhog: #f9c907;
+$soldier76: #fd0d15;
+$sombra: #9743ad;
+$symmetra: #00ccff;
+$torbjorn: #ffc400;
+$tracer: #ffb803;
+$widowmaker: #95a2ea;
+$winston: #414f68;
+$zarya: #ea4d98;
+$zenyatta: #b7b0a1;
+
 .text-attack {
   color: $attack;
 }
 
 .text-defend {
   color: $defend;
+}
+
+a, a:link {
+  color: $defend;
+}
+
+a:visited, a:active {
+  color: $mix;
+}
+
+a:hover, a:focus {
+  color: $attack;
+}
+
+.text-ana {
+  color: $ana;
+}
+
+.text-bastion {
+  color: $bastion;
+}
+
+.text-dva {
+  color: $dva;
+}
+
+.text-genji {
+  color: $genji;
+}
+
+.text-hanzo {
+  color: $hanzo;
+}
+
+.text-lucio {
+  color: $lucio;
+}
+
+.text-mccree {
+  color: $mccree;
+}
+
+.text-mei {
+  color: $mei;
+}
+
+.text-mercy {
+  color: $mercy;
+}
+
+.text-orisa {
+  color: $orisa;
+}
+
+.text-pharah {
+  color: $pharah;
+}
+
+.text-reaper {
+  color: $reaper;
+}
+
+.text-reinhardt {
+  color: $reinhardt;
+}
+
+.text-roadhog {
+  color: $roadhog;
+}
+
+.text-soldier76 {
+  color: $soldier76;
+}
+
+.text-sombra {
+  color: $sombra;
+}
+
+.text-symmetra {
+  color: $symmetra;
+}
+
+.text-torbjorn {
+  color: $torbjorn;
+}
+
+.text-tracer {
+  color: $tracer;
+}
+
+.text-widowmaker {
+  color: $widowmaker;
+}
+
+.text-winston {
+  color: $winston;
+}
+
+.text-zarya {
+  color: $zarya;
+}
+
+.text-zenyatta {
+  color: $zenyatta;
+}
+
+.border-ana {
+  border-color: $ana;
+}
+
+.border-bastion {
+  border-color: $bastion;
+}
+
+.border-dva {
+  border-color: $dva;
+}
+
+.border-genji {
+  border-color: $genji;
+}
+
+.border-hanzo {
+  border-color: $hanzo;
+}
+
+.border-lucio {
+  border-color: $lucio;
+}
+
+.border-mccree {
+  border-color: $mccree;
+}
+
+.border-mei {
+  border-color: $mei;
+}
+
+.border-mercy {
+  border-color: $mercy;
+}
+
+.border-orisa {
+  border-color: $orisa;
+}
+
+.border-pharah {
+  border-color: $pharah;
+}
+
+.border-reaper {
+  border-color: $reaper;
+}
+
+.border-reinhardt {
+  border-color: $reinhardt;
+}
+
+.border-roadhog {
+  border-color: $roadhog;
+}
+
+.border-soldier76 {
+  border-color: $soldier76;
+}
+
+.border-sombra {
+  border-color: $sombra;
+}
+
+.border-symmetra {
+  border-color: $symmetra;
+}
+
+.border-torbjorn {
+  border-color: $torbjorn;
+}
+
+.border-tracer {
+  border-color: $tracer;
+}
+
+.border-widowmaker {
+  border-color: $widowmaker;
+}
+
+.border-winston {
+  border-color: $winston;
+}
+
+.border-zarya {
+  border-color: $zarya;
+}
+
+.border-zenyatta {
+  border-color: $zenyatta;
 }

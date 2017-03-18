@@ -34,8 +34,8 @@ class CompositionsController < ApplicationController
   private
 
   def composition_params
-    params.permit(:player_name, :composition_id, :hero_id, :map_segment_id,
-                  :player_id, :player_position, :map_id)
+    params.permit(:composition_id, :hero_id, :map_segment_id, :player_id,
+                  :player_position, :map_id)
   end
 
   def most_recent_composition

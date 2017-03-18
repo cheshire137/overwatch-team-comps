@@ -1,7 +1,6 @@
 .nav {
   @include align-items(stretch);
   @include display-flex(flex);
-  min-height: 3.5rem;
   position: relative;
   text-align: center;
   z-index: 2;
@@ -11,6 +10,19 @@
   font-size: 1rem;
   padding: 0.85rem 0.75rem;
   line-height: 1.5;
+  color: $text;
+  display: inline-block;
+  border-bottom: 1px solid transparent;
+
+  &.is-active {
+    color: $text;
+    border-bottom-color: $defend;
+  }
+}
+
+a.nav-item {
+  color: $defend;
+  text-decoration: none;
 }
 
 .nav-right {
