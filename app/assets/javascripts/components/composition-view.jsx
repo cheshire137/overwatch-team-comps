@@ -65,10 +65,14 @@ class CompositionView extends React.Component {
           <table className="players-view-table players-table">
             <thead>
               <tr>
-                <th className="players-header">Team 6/6</th>
-                {mapSegments.map(segment =>
-                  <MapSegmentHeader key={segment.id} mapSegment={segment.name} />
-                )}
+                <th className="players-header"></th>
+                {mapSegments.map((segment, i) => (
+                  <MapSegmentHeader
+                    key={segment.id}
+                    mapSegment={segment.name}
+                    index={i}
+                  />
+                ))}
               </tr>
             </thead>
             <tbody>

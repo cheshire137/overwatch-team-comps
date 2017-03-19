@@ -16,8 +16,11 @@ const EditPlayerSelectionRow = function(props) {
           onChange={(playerID, name) => onPlayerSelection(playerID, name)}
         />
       </td>
-      {mapSegments.map(segment => (
-        <td key={segment.id} className="hero-select-cell">
+      {mapSegments.map((segment, i) => (
+        <td
+          key={segment.id}
+          className={`hero-select-cell ${i % 2 === 0 ? 'even' : 'odd'}-column`}
+        >
           <HeroSelect
             heroes={heroes}
             disabled={typeof selectedPlayer.id !== 'number'}

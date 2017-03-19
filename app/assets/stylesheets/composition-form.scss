@@ -24,6 +24,10 @@
 .players-table {
   width: 100%;
 
+  .odd-column {
+    background-color: #fbfbfb;
+  }
+
   .players-header {
     text-transform: uppercase;
     color: #727783;

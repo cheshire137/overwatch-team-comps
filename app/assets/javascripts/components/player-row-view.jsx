@@ -1,10 +1,13 @@
 class PlayerRowView extends React.Component {
-  mapSegment(segment) {
+  mapSegment(segment, index) {
     const { heroes, selections } = this.props
     const heroID = selections[segment.id]
+    const classes = ['hero-select-cell', index % 2 === 0 ? 'even-column' : 'odd-column']
+
     if (typeof heroID !== 'number') {
+      classes.push('empty-selection')
       return (
-        <td key={segment.id} className="empty-selection hero-select-cell">
+        <td key={segment.id} className={classes.join(' ')}>
           &mdash;
         </td>
       )
@@ -12,7 +15,7 @@ class PlayerRowView extends React.Component {
 
     const hero = heroes.filter(h => h.id === heroID)[0]
     return (
-      <td key={segment.id} className="hero-select-cell">
+      <td key={segment.id} className={classes.join(' ')}>
         <img
           src={hero.image}
           alt={hero.name}
@@ -45,7 +48,7 @@ class PlayerRowView extends React.Component {
     return (
       <tr>
         {this.playerCell()}
-        {mapSegments.map(segment => this.mapSegment(segment))}
+        {mapSegments.map((segment, i) => this.mapSegment(segment, i))}
       </tr>
     )
   }

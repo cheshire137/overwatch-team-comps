@@ -17,8 +17,9 @@
 }
 
 .players-view-table.players-table {
-  tbody td {
-    padding: 0.25em 0.75em;
+  tbody td,
+  thead th {
+    padding: 0.5em 1.25em;
   }
 
   .player-cell,
@@ -34,11 +35,11 @@
 
   .hero-portrait {
     width: 40px;
-    @include border-radius(4px);
+    @include border-radius(3px);
   }
 
   .hero-name {
-    margin-left: 5px;
+    margin-left: 10px;
     white-space: nowrap;
   }
 }
