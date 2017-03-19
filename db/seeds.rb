@@ -25,7 +25,7 @@ maps_by_type = {
   escort: ['Dorado', 'Route 66', 'Watchpoint: Gibraltar'],
   hybrid: ['Eichenwalde', 'Hollywood', "King's Row", 'Numbani'],
   control: ['Ilios', 'Lijiang Tower', 'Nepal', 'Oasis'],
-  arcade: ['Ecopoint: Antarctica']
+  # arcade: ['Ecopoint: Antarctica']
 }
 
 maps_by_type.each do |type, map_names|

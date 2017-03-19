@@ -12,6 +12,7 @@ json.composition do
   json.map do
     json.id @composition.map.id
     json.name @composition.map.name
+    json.slug @composition.map.slug
     json.type @composition.map.map_type
     json.segments @composition.map.segments do |map_segment|
       json.id map_segment.id
