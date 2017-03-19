@@ -199,7 +199,8 @@ export default class CompositionForm extends React.Component {
                   <EditPlayerSelectionRow
                     key={key}
                     inputID={inputID}
-                    selectedPlayer={player}
+                    playerID={player.id}
+                    playerName={player.name}
                     players={selectablePlayers}
                     heroes={playerHeroes}
                     selections={playerSelections}
