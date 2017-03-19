@@ -133,8 +133,8 @@ class CompositionHeader extends React.Component {
 }
 
 CompositionHeader.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  slug: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string,
+  slug: React.PropTypes.string,
   mapID: React.PropTypes.number.isRequired,
   onMapChange: React.PropTypes.func.isRequired,
   onNameChange: React.PropTypes.func.isRequired
