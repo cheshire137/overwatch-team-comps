@@ -33,7 +33,7 @@ class CompositionHeader extends React.Component {
 
     const { composition } = this.props
     return (
-      <header className="composition-header">
+      <header className={`composition-header background-${composition.map.slug}`}>
         <div className="container">
           <div className="map-photo-container" />
           <div className="composition-meta">
