@@ -13,4 +13,9 @@ describe Map do
     expect(map2.valid?).to be_falsey
     expect(map2.errors[:name].any?).to be_truthy
   end
+
+  it 'generates a slug from the name' do
+    map = create(:map, name: "Big Earl's Party Palace")
+    expect(map.slug).to eq('big-earl-s-party-palace')
+  end
 end
