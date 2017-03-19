@@ -18,7 +18,17 @@ class CompositionView extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      notes: null,
+      battletag: null,
+      mapSegments: [],
+      updatedAt: null,
+      name: null,
+      mapName: null,
+      players: [],
+      selections: {},
+      heroes: {}
+    }
   }
 
   componentDidMount() {
@@ -30,11 +40,21 @@ class CompositionView extends React.Component {
   }
 
   onCompositionFetched(composition) {
-    this.setState({ composition })
+    this.setState({
+      notes: composition.notes,
+      battletag: composition.user.battletag,
+      mapSegments: composition.map.segments,
+      updatedAt: composition.updatedAt,
+      name: composition.name,
+      mapName: composition.map.name,
+      players: composition.players,
+      selections: composition.selections,
+      heroes: composition.heroes
+    })
   }
 
   compositionCreator() {
-    const battletag = this.state.composition.user.battletag
+    const { battletag } = this.state
     if (typeof battletag !== 'string' || battletag.length < 1) {
       return null
     }
@@ -46,7 +66,7 @@ class CompositionView extends React.Component {
   }
 
   compositionDate() {
-    const date = new Date(this.state.composition.updatedAt)
+    const date = new Date(this.state.updatedAt)
     const day = date.getDay()
     const dayOfMonth = date.getDate()
     const month = date.getMonth()
@@ -57,13 +77,13 @@ class CompositionView extends React.Component {
   }
 
   render() {
-    const { composition } = this.state
+    const { mapName, mapSegments, name, players, selections,
+            heroes, notes } = this.state
 
-    if (typeof composition === 'undefined') {
+    if (typeof mapName === 'undefined') {
       return <p className="container">Loading...</p>
     }
 
-    const mapSegments = composition.map.segments
     return (
       <div>
         <header className="composition-header">
@@ -71,10 +91,10 @@ class CompositionView extends React.Component {
             <div className="map-photo-container" />
             <div className="composition-meta">
               <div className="composition-map-name">
-                {composition.map.name}
+                {mapName}
               </div>
               <div className="composition-name">
-                {composition.name}
+                {name}
               </div>
               <div className="composition-creator-and-date">
                 {this.compositionCreator()}
@@ -98,17 +118,17 @@ class CompositionView extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {composition.players.map((player, index) => {
+              {players.map((player, index) => {
                 const key = `${player.name}${index}`
-                const selections = typeof player.id === 'number' ? composition.selections[player.id] : {}
-                const heroes = typeof player.id === 'number' ? composition.heroes[player.id] : []
+                const playerSelections = typeof player.id === 'number' ? selections[player.id] : {}
+                const playerHeroes = typeof player.id === 'number' ? heroes[player.id] : []
 
                 return (
                   <PlayerRowView
                     key={key}
-                    player={player}
-                    heroes={heroes}
-                    selections={selections}
+                    name={player.name}
+                    heroes={playerHeroes}
+                    selections={playerSelections}
                     mapSegments={mapSegments}
                   />
                 )
@@ -118,7 +138,7 @@ class CompositionView extends React.Component {
           <div className="composition-notes-wrapper">
             <p>Notes:</p>
             <div>
-              {composition.notes}
+              {notes}
             </div>
           </div>
         </div>
