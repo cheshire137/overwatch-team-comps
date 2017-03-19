@@ -83,13 +83,35 @@ class CompositionHeader extends React.Component {
     )
   }
 
+  shareLink() {
+    const { slug } = this.props
+    if (typeof slug !== 'string' || slug.length < 1) {
+      return null
+    }
+
+    return (
+      <div className="composition-link-container">
+        <a
+          href={`/comp/${slug}`}
+          className="composition-link"
+        >
+          <i
+            className="fa fa-link"
+            aria-hidden="true"
+          />
+          Share this composition
+        </a>
+      </div>
+    )
+  }
+
   render() {
     const { maps } = this.state
     if (typeof maps === 'undefined') {
       return null
     }
 
-    const { mapID, slug } = this.props
+    const { mapID } = this.props
     return (
       <header className="composition-header">
         <div className="container">
@@ -113,18 +135,7 @@ class CompositionHeader extends React.Component {
               </span>
             </div>
             {this.nameEditArea()}
-            <div className="composition-link-container">
-              <a
-                href={`/comp/${slug}`}
-                className="composition-link"
-              >
-                <i
-                  className="fa fa-link"
-                  aria-hidden="true"
-                />
-                Share this composition
-              </a>
-            </div>
+            {this.shareLink()}
           </div>
         </div>
       </header>
