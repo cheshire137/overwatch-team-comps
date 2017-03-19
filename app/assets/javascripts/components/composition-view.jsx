@@ -3,6 +3,14 @@ import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 import MapSegmentHeader from './map-segment-header.jsx'
 import PlayerRowView from './player-row-view.jsx'
 
+const days = [
+  'Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'
+]
+const months = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',
+  'Sep', 'Oct', 'Nov', 'Dec'
+]
+
 class CompositionView extends React.Component {
   static onCompositionFetchError(error) {
     console.error('failed to load composition data', error)
@@ -31,9 +39,20 @@ class CompositionView extends React.Component {
       return null
     }
     return (
-      <div className="composition-creator">
+      <span className="composition-creator">
         By <span>{battletag}</span>
-      </div>
+      </span>
+    )
+  }
+
+  compositionDate() {
+    const date = new Date(this.state.composition.updatedAt)
+    const day = date.getDay()
+    const dayOfMonth = date.getDate()
+    const month = date.getMonth()
+    const year = date.getFullYear()
+    return (
+      <span>Last updated: {days[day]}, {months[month]} {dayOfMonth}, {year}</span>
     )
   }
 
@@ -57,7 +76,10 @@ class CompositionView extends React.Component {
               <div className="composition-name">
                 {composition.name}
               </div>
-              {this.compositionCreator()}
+              <div className="composition-creator-and-date">
+                {this.compositionCreator()}
+                {this.compositionDate()}
+              </div>
             </div>
           </div>
         </header>
@@ -65,7 +87,7 @@ class CompositionView extends React.Component {
           <table className="players-view-table players-table">
             <thead>
               <tr>
-                <th className="players-header"></th>
+                <th className="players-header" />
                 {mapSegments.map((segment, i) => (
                   <MapSegmentHeader
                     key={segment.id}

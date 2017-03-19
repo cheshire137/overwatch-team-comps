@@ -1,5 +1,9 @@
-.composition-creator {
+.composition-creator-and-date {
   margin-top: 5px;
+
+  .composition-creator:after {
+    content: "\a0\b7\a0";
+  }
 }
 
 .composition-map-name {
