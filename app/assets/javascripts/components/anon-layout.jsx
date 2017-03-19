@@ -1,3 +1,5 @@
+import Footer from './footer.jsx'
+
 const AnonLayout = function(props) {
   return (
     <div className="layout-container">
@@ -14,11 +16,7 @@ const AnonLayout = function(props) {
       <div className="layout-children-container">
         {props.children}
       </div>
-      <footer className="footer">
-        <div className="container">
-          <a href="/about">About</a>
-        </div>
-      </footer>
+      <Footer basePath="" />
     </div>
   )
 }

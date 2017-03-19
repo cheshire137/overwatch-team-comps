@@ -1,3 +1,4 @@
+import Footer from './footer.jsx'
 import LocalStorage from '../models/local-storage'
 
 class AuthLayout extends React.Component {
@@ -32,11 +33,7 @@ class AuthLayout extends React.Component {
         <div className="layout-children-container">
           {this.props.children}
         </div>
-        <footer className="footer">
-          <div className="container">
-            <a href="/user/about">About</a>
-          </div>
-        </footer>
+        <Footer basePath="/user" />
       </div>
     )
   }
