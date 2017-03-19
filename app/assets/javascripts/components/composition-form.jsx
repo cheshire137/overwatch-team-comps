@@ -41,10 +41,13 @@ export default class CompositionForm extends React.Component {
   }
 
   onCompositionNameChange(name) {
-    const { id } = this.state
+    const { id, mapID } = this.state
     const api = new OverwatchTeamCompsApi()
 
-    const body = { name }
+    const body = {
+      name,
+      map_id: mapID
+    }
     if (id) {
       body.composition_id = id
     }

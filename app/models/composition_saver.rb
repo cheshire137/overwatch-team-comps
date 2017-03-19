@@ -16,7 +16,7 @@ class CompositionSaver
       Map.find(data[:map_id])
     end
 
-    if data[:composition_id] || map
+    if data[:composition_id] || data[:name] || data[:notes] || map
       @composition = init_composition(data, map: map)
       unless @composition.persisted? && !@composition.changed? || @composition.save
         @error_type = 'composition'
