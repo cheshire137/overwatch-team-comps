@@ -23,6 +23,12 @@
   background-color: $form;
   text-align: center;
   font-size: 0.9rem;
+
+  a {
+    display: inline-block;
+    margin: 0 1em;
+    text-decoration: none;
+  }
 }
 
 .flex-grid {
