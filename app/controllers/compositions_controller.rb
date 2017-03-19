@@ -1,4 +1,10 @@
 class CompositionsController < ApplicationController
+  def show
+    @composition = Composition.friendly.find(params[:slug])
+    @builder = CompositionFormBuilder.new(@composition)
+    @available_players = []
+  end
+
   def last_composition
     @composition = most_recent_composition || new_composition
     @builder = CompositionFormBuilder.new(@composition)

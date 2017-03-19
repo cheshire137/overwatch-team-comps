@@ -33,7 +33,7 @@ class CompositionHeader extends React.Component {
 
     const { composition } = this.props
     return (
-      <header className="composition-form-header">
+      <header className="composition-header">
         <div className="container">
           <div className="map-photo-container" />
           <div className="composition-meta">
@@ -68,6 +68,18 @@ class CompositionHeader extends React.Component {
                 onChange={e => this.onCompositionNameChange(e)}
                 aria-label="Name of this team composition"
               />
+            </div>
+            <div className="composition-link-container">
+              <a
+                href={`/comp/${composition.slug}`}
+                className="composition-link"
+              >
+                <i
+                  className="fa fa-link"
+                  aria-hidden="true"
+                />
+                Share this composition
+              </a>
             </div>
           </div>
         </div>

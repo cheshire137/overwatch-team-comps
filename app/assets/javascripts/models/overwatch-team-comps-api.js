@@ -13,6 +13,10 @@ export default class OverwatchTeamCompsApi extends Fetcher {
     }
   }
 
+  getUser() {
+    return this.get('/user', this.defaultHeaders)
+  }
+
   getMaps() {
     return this.get('/maps', this.defaultHeaders).then(json => json.maps)
   }
@@ -33,6 +37,11 @@ export default class OverwatchTeamCompsApi extends Fetcher {
       path = `${path}?map_id=${mapID}`
     }
     return this.get(path, this.defaultHeaders).
+      then(json => json.composition)
+  }
+
+  getComposition(slug) {
+    return this.get(`/composition/${slug}`, this.defaultHeaders).
       then(json => json.composition)
   }
 

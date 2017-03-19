@@ -7,6 +7,12 @@ describe Composition do
     expect(composition.errors[:map].any?).to be_truthy
   end
 
+  it 'generates a slug from the map and name' do
+    map = create(:map, name: "Big Earl's Party Palace")
+    composition = create(:composition, map: map, name: 'My Fave Dive Comp')
+    expect(composition.slug).to eq('big-earl-s-party-palace-my-fave-dive-comp')
+  end
+
   it 'requires a user' do
     composition = Composition.new
     expect(composition.valid?).to be_falsey

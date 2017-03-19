@@ -68,8 +68,4 @@ class HeroPoolForm extends React.Component {
   }
 }
 
-HeroPoolForm.propTypes = {
-  battletag: React.PropTypes.string.isRequired
-}
-
 export default HeroPoolForm

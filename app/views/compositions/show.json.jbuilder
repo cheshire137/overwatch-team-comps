@@ -1,7 +1,12 @@
 json.composition do
   if @composition.persisted?
     json.id @composition.id
+    json.updatedAt @composition.updated_at.iso8601
   end
+  json.user do
+    json.battletag @composition.user.try(:battletag)
+  end
+  json.slug @composition.slug
   json.name @composition.name
   json.notes @composition.notes
   json.map do
@@ -34,6 +39,7 @@ json.composition do
           json.id hero.id
           json.slug hero.slug
           json.name hero.name
+          json.image image_path(hero.image_name)
         end
       end
     end

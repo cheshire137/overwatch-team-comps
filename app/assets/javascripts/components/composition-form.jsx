@@ -1,6 +1,6 @@
 import update from 'immutability-helper'
 
-import CompositionHeader from './composition-header.jsx'
+import CompositionFormHeader from './composition-form-header.jsx'
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
 import MapSegmentHeader from './map-segment-header.jsx'
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
@@ -137,7 +137,7 @@ export default class CompositionForm extends React.Component {
     const mapSegments = composition.map.segments
     return (
       <form className="composition-form">
-        <CompositionHeader
+        <CompositionFormHeader
           composition={composition}
           onMapChange={mapID => this.onMapChange(mapID)}
         />
@@ -145,18 +145,22 @@ export default class CompositionForm extends React.Component {
           <table className="players-table">
             <thead>
               <tr>
-                <th className="players-header">Team 6/6</th>
-                {mapSegments.map(segment =>
-                  <MapSegmentHeader key={segment.id} mapSegment={segment.name} />
-                )}
+                <th className="players-header" />
+                {mapSegments.map((segment, i) => (
+                  <MapSegmentHeader
+                    key={segment.id}
+                    mapSegment={segment.name}
+                    index={i}
+                  />
+                ))}
               </tr>
             </thead>
             <tbody>
               {composition.players.map((player, index) => {
                 const inputID = `player_${index}_name`
                 const key = `${player.name}${index}`
-                const heroes = player.id ? composition.heroes[player.id] : []
-                const selections = player.id ? composition.selections[player.id] : {}
+                const heroes = typeof player.id === 'number' ? composition.heroes[player.id] : []
+                const selections = typeof player.id === 'number' ? composition.selections[player.id] : {}
                 const players = this.getPlayerOptionsForRow(player)
 
                 return (

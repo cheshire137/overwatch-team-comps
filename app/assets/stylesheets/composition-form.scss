@@ -1,16 +1,47 @@
-.composition-form {
-  margin-bottom: 60px;
+.composition-header {
+  padding: 40px 0;
+  margin-bottom: 35px;
+  background-color: #f3d6da;
+  @include filter-gradient(#f3d6da, #daf0f8, horizontal);
+  @include background-image(linear-gradient(left, #f3d6da 0%,#daf0f8 100%));
 
-  .players-table {
-    width: 100%;
+  .map-photo-container {
+    width: 175px;
+    height: 175px;
+    background-color: #644043;
   }
 
-  .composition-form-header {
-    padding: 40px 0;
-    margin-bottom: 35px;
-    background-color: #f3d6da;
-    @include filter-gradient(#f3d6da, #daf0f8, horizontal);
-    @include background-image(linear-gradient(left, #f3d6da 0%,#daf0f8 100%));
+  .composition-meta {
+    position: absolute;
+    left: 120px;
+    top: 55px;
+    background-color: #111319;
+    padding: 20px;
+    color: #a9acb4;
+  }
+}
+
+.players-table {
+  width: 100%;
+
+  .odd-column {
+    background-color: #fbfbfb;
+  }
+
+  .players-header {
+    text-transform: uppercase;
+    color: #727783;
+  }
+
+  .hero-select-cell {
+    color: #292b31;
+  }
+
+  .player-cell {
+    background-color: #f5f5f6;
+    color: #292b31;
+    white-space: nowrap;
+    padding-right: 0.5em;
   }
 
   tbody td {
@@ -20,22 +51,28 @@
   thead th {
     padding: 0 0 15px;
   }
+}
 
-  .hero-select-cell {
-    color: #292b31;
+.composition-notes-wrapper {
+  margin-top: 60px;
+}
+
+.composition-form {
+  margin-bottom: 60px;
+
+  .hero-portrait-placeholder,
+  .hero-portrait {
+    display: inline-block;
+    width: 40px;
+    @include border-radius(3px);
+    padding-left: 5px;
   }
 
-  .players-header {
-    text-transform: uppercase;
-    color: #727783;
+  .hero-portrait-placeholder {
+    background-color: #ddd;
   }
 
   .player-cell {
-    background-color: #f5f5f6;
-    color: #292b31;
-    white-space: nowrap;
-    padding-right: 0.5em;
-
     .label {
       line-height: 2.3;
       font-size: 1rem;
@@ -61,25 +98,6 @@
         border-bottom-color: #0e9ed2;
       }
     }
-  }
-
-  .map-photo-container {
-    width: 175px;
-    height: 175px;
-    background-color: #644043;
-  }
-
-  .composition-meta {
-    position: absolute;
-    left: 120px;
-    top: 55px;
-    background-color: #111319;
-    padding: 20px;
-    color: #a9acb4;
-  }
-
-  .composition-notes-wrapper {
-    margin-top: 60px;
   }
 }
 
@@ -128,4 +146,23 @@
 .player-new-name-container {
   display: inline-block;
   vertical-align: middle;
+}
+
+.composition-link-container {
+  margin-top: 10px;
+
+  .composition-link {
+    color: $soft-text;
+    text-decoration: none;
+    font-size: 0.9rem;
+
+    &:hover,
+    &:focus {
+      color: $form;
+    }
+
+    .fa {
+      margin-right: 5px;
+    }
+  }
 }
