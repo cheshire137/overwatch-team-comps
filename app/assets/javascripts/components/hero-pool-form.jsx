@@ -55,10 +55,16 @@ class HeroPoolForm extends React.Component {
           <div>
             {heroes.map(hero => (
               <HeroPoolChoice
-                hero={hero}
+                slug={hero.slug}
+                image={hero.image}
+                name={hero.name}
+                id={hero.id}
+                confidence={hero.confidence}
                 key={hero.id}
                 ranks={ranks}
-                onChange={confidence => this.onConfidenceChange(hero.id, confidence)}
+                onChange={newConfidence =>
+                  this.onConfidenceChange(hero.id, newConfidence)
+                }
               />
             ))}
           </div>
