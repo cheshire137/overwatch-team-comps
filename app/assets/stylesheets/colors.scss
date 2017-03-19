@@ -273,85 +273,57 @@ a:hover, a:focus {
 }
 
 .background-hanamura {
-  background-color: $hanamura1;
-  @include filter-gradient($hanamura1, $hanamura2, horizontal);
-  @include background-image(linear-gradient(left, $hanamura1 0%,$hanamura2 100%));
+  @include map-gradient($hanamura1, $hanamura2);
 }
 
 .background-temple-of-anubis {
-  background-color: $temple-of-anubis1;
-  @include filter-gradient($temple-of-anubis1, $temple-of-anubis2, horizontal);
-  @include background-image(linear-gradient(left, $temple-of-anubis1 0%,$temple-of-anubis2 100%));
+  @include map-gradient($temple-of-anubis1, $temple-of-anubis2);
 }
 
 .background-volskaya-industries {
-  background-color: $volskaya-industries1;
-  @include filter-gradient($volskaya-industries1, $volskaya-industries2, horizontal);
-  @include background-image(linear-gradient(left, $volskaya-industries1 0%,$volskaya-industries2 100%));
+  @include map-gradient($volskaya-industries1, $volskaya-industries2);
 }
 
 .background-dorado {
-  background-color: $dorado1;
-  @include filter-gradient($dorado1, $dorado2, horizontal);
-  @include background-image(linear-gradient(left, $dorado1 0%,$dorado2 100%));
+  @include map-gradient($dorado1, $dorado2);
 }
 
 .background-route-66 {
-  background-color: $route-661;
-  @include filter-gradient($route-661, $route-662, horizontal);
-  @include background-image(linear-gradient(left, $route-661 0%,$route-662 100%));
+  @include map-gradient($route-661, $route-662);
 }
 
 .background-watchpoint-gibraltar {
-  background-color: $watchpoint-gibraltar1;
-  @include filter-gradient($watchpoint-gibraltar1, $watchpoint-gibraltar2, horizontal);
-  @include background-image(linear-gradient(left, $watchpoint-gibraltar1 0%,$watchpoint-gibraltar2 100%));
+  @include map-gradient($watchpoint-gibraltar1, $watchpoint-gibraltar2);
 }
 
 .background-eichenwalde {
-  background-color: $eichenwalde1;
-  @include filter-gradient($eichenwalde1, $eichenwalde2, horizontal);
-  @include background-image(linear-gradient(left, $eichenwalde1 0%,$eichenwalde2 100%));
+  @include map-gradient($eichenwalde1, $eichenwalde2);
 }
 
 .background-hollywood {
-  background-color: $hollywood1;
-  @include filter-gradient($hollywood1, $hollywood2, horizontal);
-  @include background-image(linear-gradient(left, $hollywood1 0%,$hollywood2 100%));
+  @include map-gradient($hollywood1, $hollywood2);
 }
 
 .background-king-s-row {
-  background-color: $king-s-row1;
-  @include filter-gradient($king-s-row1, $king-s-row2, horizontal);
-  @include background-image(linear-gradient(left, $king-s-row1 0%,$king-s-row2 100%));
+  @include map-gradient($king-s-row1, $king-s-row2);
 }
 
 .background-numbani {
-  background-color: $numbani1;
-  @include filter-gradient($numbani1, $numbani2, horizontal);
-  @include background-image(linear-gradient(left, $numbani1 0%,$numbani2 100%));
+  @include map-gradient($numbani1, $numbani2);
 }
 
 .background-ilios {
-  background-color: $ilios1;
-  @include filter-gradient($ilios1, $ilios2, horizontal);
-  @include background-image(linear-gradient(left, $ilios1 0%,$ilios2 100%));
+  @include map-gradient($ilios1, $ilios2);
 }
 
 .background-lijiang-tower {
-  background-color: $lijiang-tower1;
-  @include filter-gradient($lijiang-tower1, $lijiang-tower2, horizontal);
-  @include background-image(linear-gradient(left, $lijiang-tower1 0%,$lijiang-tower2 100%));
+  @include map-gradient($lijiang-tower1, $lijiang-tower2);
 }
 
 .background-nepal {
-  background-color: $nepal1;
-  @include filter-gradient($nepal1, $nepal2, horizontal);
-  @include background-image(linear-gradient(left, $nepal1 0%,$nepal2 100%));
+  @include map-gradient($nepal1, $nepal2);
 }
 
 .background-oasis {
-  background-color: $oasis1;
-  @include filter-gradient($oasis1, $oasis2, horizontal);
-  @include background-image(linear-gradient(left, $oasis1 0%,$oasis2 100%));
+  @include map-gradient($oasis1, $oasis2);
 }
