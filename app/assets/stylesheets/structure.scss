@@ -2,6 +2,16 @@
   @include box-sizing(border-box);
 }
 
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.layout-children-container {
+  flex: 1 0 auto;
+}
+
 .container {
   position: relative;
   margin: 0 auto;
