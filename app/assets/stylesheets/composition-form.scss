@@ -60,6 +60,18 @@
 .composition-form {
   margin-bottom: 60px;
 
+  .hero-portrait-placeholder,
+  .hero-portrait {
+    display: inline-block;
+    width: 40px;
+    @include border-radius(3px);
+    padding-left: 5px;
+  }
+
+  .hero-portrait-placeholder {
+    background-color: #ddd;
+  }
+
   .player-cell {
     .label {
       line-height: 2.3;
