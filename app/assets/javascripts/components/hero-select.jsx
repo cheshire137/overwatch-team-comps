@@ -9,7 +9,7 @@ class HeroSelect extends React.Component {
     if (typeof selectedHeroID !== 'number') {
       return (
         <span className="hero-portrait-placeholder">
-          <i className="fa fa-user-o" aria-hidden="true"></i>
+          <i className="fa fa-user-o" aria-hidden="true" />
         </span>
       )
     }
