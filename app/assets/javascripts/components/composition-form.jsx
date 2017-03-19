@@ -145,7 +145,7 @@ export default class CompositionForm extends React.Component {
           <table className="players-table">
             <thead>
               <tr>
-                <th className="players-header"></th>
+                <th className="players-header" />
                 {mapSegments.map((segment, i) => (
                   <MapSegmentHeader
                     key={segment.id}
