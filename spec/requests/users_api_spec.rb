@@ -6,16 +6,11 @@ RSpec.describe 'users API', type: :request do
   end
 
   describe 'GET /api/user' do
-    it 'includes battletag when user is authenticated' do
-      sign_in @user
-      get '/api/user'
-      expect(response.body).to include(@user.battletag)
-    end
-
     it 'has auth: false for anonymous user' do
       get '/api/user'
       json = JSON.parse(response.body)
       expect(json['auth']).to eq(false)
+      expect(json['battletag']).to be_nil
     end
 
     it 'has auth: true for authenticated user' do
@@ -23,6 +18,7 @@ RSpec.describe 'users API', type: :request do
       get '/api/user'
       json = JSON.parse(response.body)
       expect(json['auth']).to eq(true)
+      expect(json['battletag']).to eq(@user.battletag)
     end
   end
 end
