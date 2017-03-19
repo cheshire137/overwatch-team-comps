@@ -4,6 +4,7 @@ import AnonLayout from './anon-layout.jsx'
 import AuthLayout from './auth-layout.jsx'
 import CompositionViewLayout from './composition-view-layout.jsx'
 
+import About from './about.jsx'
 import CompositionForm from './composition-form.jsx'
 import CompositionView from './composition-view.jsx'
 import HeroPoolForm from './hero-pool-form.jsx'
@@ -54,12 +55,14 @@ const App = function() {
     <Router history={browserHistory}>
       <Route path="/" component={AnonLayout}>
         <IndexRoute component={CompositionForm} onEnter={redirectIfSignedIn} />
+        <Route path="about" component={About} />
       </Route>
       <Route path="/comp" component={CompositionViewLayout}>
         <Route path=":slug" component={CompositionView} />
       </Route>
       <Route path="/user" component={AuthLayout} onEnter={requireAuth}>
         <IndexRoute component={CompositionForm} />
+        <Route path="about" component={About} />
         <Route path="hero-pool" component={HeroPoolForm} />
       </Route>
       <Route path="*" component={NotFound} />

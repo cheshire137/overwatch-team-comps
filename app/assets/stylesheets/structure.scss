@@ -8,6 +8,13 @@
   width: 90%;
 }
 
+.footer {
+  padding: 3rem 1.5rem 6rem;
+  background-color: $form;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
 .flex-grid {
   display: block;
   .col {

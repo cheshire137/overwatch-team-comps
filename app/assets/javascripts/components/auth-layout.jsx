@@ -32,6 +32,11 @@ class AuthLayout extends React.Component {
         <div>
           {this.props.children}
         </div>
+        <footer className="footer">
+          <div className="container">
+            <a href="/user/about">About</a>
+          </div>
+        </footer>
       </div>
     )
   }

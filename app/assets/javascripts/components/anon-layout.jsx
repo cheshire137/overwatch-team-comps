@@ -14,6 +14,11 @@ const AnonLayout = function(props) {
       <div>
         {props.children}
       </div>
+      <footer className="footer">
+        <div className="container">
+          <a href="/about">About</a>
+        </div>
+      </footer>
     </div>
   )
 }
