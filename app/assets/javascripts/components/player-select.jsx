@@ -8,6 +8,13 @@ class PlayerSelect extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      name: nextProps.selectedPlayer.name,
+      showNewNameField: false
+    })
+  }
+
   onChange(event) {
     const playerID = event.target.value
     if (playerID === 'new') {

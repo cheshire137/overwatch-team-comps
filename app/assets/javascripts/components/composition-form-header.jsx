@@ -7,7 +7,7 @@ class CompositionHeader extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = { name: props.name, editingName: false }
   }
 
   componentDidMount() {
@@ -15,6 +15,14 @@ class CompositionHeader extends React.Component {
 
     api.getMaps().then(maps => this.onMapsFetched(maps)).
       catch(err => CompositionHeader.onMapsError(err))
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ name: nextProps.name, editingName: false })
+  }
+
+  onNameChange(event) {
+    this.setState({ name: event.target.value })
   }
 
   onMapsFetched(maps) {
@@ -25,13 +33,63 @@ class CompositionHeader extends React.Component {
     this.props.onMapChange(event.target.value)
   }
 
+  saveNewName(event) {
+    event.preventDefault()
+    event.target.closest('button').blur() // defocus the button
+    const { name } = this.state
+    if (name.trim().length < 1) {
+      return
+    }
+    this.props.onNameChange(name)
+  }
+
+  nameEditArea() {
+    const { editingName, name } = this.state
+    let pencilIcon = null
+    let saveButton = null
+
+    if (editingName) {
+      saveButton = (
+        <button
+          type="button"
+          className="button save-composition-name-button"
+          onClick={e => this.saveNewName(e)}
+        ><i className="fa fa-check" aria-hidden="true" /></button>
+      )
+    } else {
+      pencilIcon = (
+        <i
+          className="fa fa-pencil-square-o"
+          aria-hidden="true"
+        />
+      )
+    }
+
+    return (
+      <div className={`composition-name-container ${editingName ? 'editing' : ''}`}>
+        {pencilIcon}
+        <input
+          type="text"
+          className="input composition-name-input"
+          placeholder="Composition name"
+          id="composition_name"
+          value={name || ''}
+          onChange={e => this.onNameChange(e)}
+          onFocus={() => this.setState({ editingName: true })}
+          aria-label="Name of this team composition"
+        />
+        {saveButton}
+      </div>
+    )
+  }
+
   render() {
     const { maps } = this.state
     if (typeof maps === 'undefined') {
       return null
     }
 
-    const { composition } = this.props
+    const { mapID, slug } = this.props
     return (
       <header className="composition-header">
         <div className="container">
@@ -42,7 +100,7 @@ class CompositionHeader extends React.Component {
                 <select
                   aria-label="Choose a map"
                   id="composition_map_id"
-                  value={composition.map.id}
+                  value={mapID}
                   onChange={e => this.onMapChange(e)}
                 >
                   {maps.map(map =>
@@ -54,24 +112,10 @@ class CompositionHeader extends React.Component {
                 </select>
               </span>
             </div>
-            <div className="composition-name-container">
-              <i
-                className="fa fa-pencil-square-o"
-                aria-hidden="true"
-              />
-              <input
-                type="text"
-                className="input composition-name-input"
-                placeholder="Composition name"
-                id="composition_name"
-                value={composition.name || ''}
-                onChange={e => this.onCompositionNameChange(e)}
-                aria-label="Name of this team composition"
-              />
-            </div>
+            {this.nameEditArea()}
             <div className="composition-link-container">
               <a
-                href={`/comp/${composition.slug}`}
+                href={`/comp/${slug}`}
                 className="composition-link"
               >
                 <i
@@ -89,8 +133,11 @@ class CompositionHeader extends React.Component {
 }
 
 CompositionHeader.propTypes = {
-  composition: React.PropTypes.object.isRequired,
-  onMapChange: React.PropTypes.func.isRequired
+  name: React.PropTypes.string.isRequired,
+  slug: React.PropTypes.string.isRequired,
+  mapID: React.PropTypes.number.isRequired,
+  onMapChange: React.PropTypes.func.isRequired,
+  onNameChange: React.PropTypes.func.isRequired
 }
 
 export default CompositionHeader

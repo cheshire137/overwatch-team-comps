@@ -1,5 +1,3 @@
-import update from 'immutability-helper'
-
 import CompositionFormHeader from './composition-form-header.jsx'
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
 import MapSegmentHeader from './map-segment-header.jsx'
@@ -20,33 +18,54 @@ export default class CompositionForm extends React.Component {
 
   constructor() {
     super()
-    this.state = {}
+    this.state = {
+      id: null,
+      name: '',
+      slug: '',
+      mapID: null,
+      mapSegments: [],
+      players: [],
+      availablePlayers: [],
+      heroes: {},
+      selections: {},
+      notes: ''
+    }
   }
 
   componentDidMount() {
     this.loadComposition()
   }
 
-  onCompositionFetched(composition) {
-    this.setState({ composition })
-  }
-
   onMapChange(mapID) {
     this.loadComposition(mapID)
   }
 
-  onCompositionNameChange(event) {
-    const name = event.target.value
-    const changes = { name: { $set: name } }
-    const composition = update(this.state.composition, changes)
-    this.setState({ composition })
+  onCompositionNameChange(name) {
+    const { id } = this.state
+    const api = new OverwatchTeamCompsApi()
+
+    const body = { name }
+    if (id) {
+      body.composition_id = id
+    }
+
+    api.saveComposition(body).
+      then(newComp => this.onCompositionLoaded(newComp)).
+      catch(err => CompositionForm.onCompositionSaveError(err))
   }
 
   onCompositionNotesChange(event) {
-    const notes = event.target.value
-    const changes = { notes: { $set: notes } }
-    const composition = update(this.state.composition, changes)
-    this.setState({ composition })
+    const { id } = this.state
+    const api = new OverwatchTeamCompsApi()
+
+    const body = { notes: event.target.value }
+    if (id) {
+      body.composition_id = id
+    }
+
+    api.saveComposition(body).
+      then(newComp => this.onCompositionLoaded(newComp)).
+      catch(err => CompositionForm.onCompositionSaveError(err))
   }
 
   onPlayerSelected(playerID, playerName, position) {
@@ -58,7 +77,7 @@ export default class CompositionForm extends React.Component {
   }
 
   onHeroSelectedForPlayer(heroID, mapSegmentID, playerID, position) {
-    const { composition } = this.state
+    const { id } = this.state
     const api = new OverwatchTeamCompsApi()
 
     const body = {
@@ -67,24 +86,34 @@ export default class CompositionForm extends React.Component {
       player_id: playerID,
       player_position: position
     }
-    if (composition.id) {
-      body.composition_id = composition.id
+    if (id) {
+      body.composition_id = id
     }
 
     api.saveComposition(body).
-      then(newComp => this.onCompositionSaved(newComp)).
+      then(newComp => this.onCompositionLoaded(newComp)).
       catch(err => CompositionForm.onCompositionSaveError(err))
   }
 
-  onCompositionSaved(composition) {
-    this.setState({ composition })
+  onCompositionLoaded(composition) {
+    this.setState({
+      id: composition.id,
+      name: composition.name,
+      slug: composition.slug,
+      mapID: composition.map.id,
+      mapSegments: composition.map.segments,
+      players: composition.players,
+      availablePlayers: composition.availablePlayers,
+      heroes: composition.heroes,
+      selections: composition.selections,
+      notes: composition.notes
+    })
   }
 
   // Returns a list of players. Includes only players not selected in
   // other rows. Always includes the given player.
   getPlayerOptionsForRow(playerForRow) {
-    const { composition } = this.state
-    const { availablePlayers, players } = composition
+    const { availablePlayers, players } = this.state
     const playerIDsInComp = players.map(player => player.id)
     return availablePlayers.filter(player =>
       playerIDsInComp.indexOf(player.id) < 0 || player.id === playerForRow.id
@@ -95,51 +124,54 @@ export default class CompositionForm extends React.Component {
     const api = new OverwatchTeamCompsApi()
 
     api.getLastComposition(mapID).
-      then(comp => this.onCompositionFetched(comp)).
+      then(comp => this.onCompositionLoaded(comp)).
       catch(err => CompositionForm.onCompositionFetchError(err))
   }
 
   createPlayer(playerName, position) {
-    const { composition } = this.state
+    const { id, mapID } = this.state
     const body = {
       name: playerName,
-      composition_id: composition.id,
-      map_id: composition.map.id,
+      composition_id: id,
+      map_id: mapID,
       position
     }
     const api = new OverwatchTeamCompsApi()
     api.createPlayer(body).
-      then(comp => this.onCompositionSaved(comp)).
+      then(comp => this.onCompositionLoaded(comp)).
       catch(err => CompositionForm.onPlayerCreationError(err))
   }
 
   updatePlayer(playerID, position) {
-    const { composition } = this.state
+    const { mapID, id } = this.state
     const body = {
-      map_id: composition.map.id,
+      map_id: mapID,
       player_position: position,
       player_id: playerID,
-      composition_id: composition.id
+      composition_id: id
     }
     const api = new OverwatchTeamCompsApi()
     api.saveComposition(body).
-      then(newComp => this.onCompositionSaved(newComp)).
+      then(newComp => this.onCompositionLoaded(newComp)).
       catch(err => CompositionForm.onCompositionSaveError(err))
   }
 
   render() {
-    const { composition } = this.state
+    const { name, slug, mapID, mapSegments, players, heroes,
+            selections, notes } = this.state
 
-    if (typeof composition === 'undefined') {
+    if (typeof mapID !== 'number') {
       return <p className="container">Loading...</p>
     }
 
-    const mapSegments = composition.map.segments
     return (
       <form className="composition-form">
         <CompositionFormHeader
-          composition={composition}
-          onMapChange={mapID => this.onMapChange(mapID)}
+          name={name}
+          slug={slug}
+          mapID={mapID}
+          onNameChange={newName => this.onCompositionNameChange(newName)}
+          onMapChange={newMapID => this.onMapChange(newMapID)}
         />
         <div className="container">
           <table className="players-table">
@@ -156,28 +188,28 @@ export default class CompositionForm extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {composition.players.map((player, index) => {
+              {players.map((player, index) => {
                 const inputID = `player_${index}_name`
                 const key = `${player.name}${index}`
-                const heroes = typeof player.id === 'number' ? composition.heroes[player.id] : []
-                const selections = typeof player.id === 'number' ? composition.selections[player.id] : {}
-                const players = this.getPlayerOptionsForRow(player)
+                const playerHeroes = typeof player.id === 'number' ? heroes[player.id] : []
+                const playerSelections = typeof player.id === 'number' ? selections[player.id] : {}
+                const selectablePlayers = this.getPlayerOptionsForRow(player)
 
                 return (
                   <EditPlayerSelectionRow
                     key={key}
                     inputID={inputID}
                     selectedPlayer={player}
-                    players={players}
-                    heroes={heroes}
-                    selections={selections}
+                    players={selectablePlayers}
+                    heroes={playerHeroes}
+                    selections={playerSelections}
                     mapSegments={mapSegments}
                     nameLabel={String(index + 1)}
                     onHeroSelection={(heroID, mapSegmentID) =>
                       this.onHeroSelectedForPlayer(heroID, mapSegmentID, player.id, index)
                     }
-                    onPlayerSelection={(playerID, name) =>
-                      this.onPlayerSelected(playerID, name, index)
+                    onPlayerSelection={(playerID, newName) =>
+                      this.onPlayerSelected(playerID, newName, index)
                     }
                   />
                 )
@@ -192,7 +224,7 @@ export default class CompositionForm extends React.Component {
               id="composition_notes"
               className="textarea"
               placeholder="Notes for this team composition"
-              value={composition.notes || ''}
+              value={notes || ''}
               onChange={e => this.onCompositionNotesChange(e)}
             />
             <p>

@@ -120,17 +120,6 @@
   }
 }
 
-.input.composition-name-input {
-  background-color: transparent;
-  color: $soft-header;
-  border: none;
-  padding-left: 0;
-  padding-right: 20px;
-  font-size: 1.3rem;
-  line-height: 1;
-  height: auto;
-}
-
 .composition-name-container {
   position: relative;
 
@@ -140,6 +129,36 @@
     top: 50%;
     margin-top: -6px;
     color: $text;
+  }
+
+  .button.save-composition-name-button {
+    background-color: inherit;
+
+    .fa {
+      color: $white;
+    }
+  }
+
+  .input.composition-name-input {
+    background-color: transparent;
+    color: $soft-header;
+    border: none;
+    padding-left: 0;
+    padding-right: 20px;
+    font-size: 1.3rem;
+    line-height: 1;
+    height: auto;
+    @include border-radius(0);
+  }
+
+  &.editing {
+    @include display-flex;
+    @include justify-content(flex-start);
+
+    .input.composition-name-input {
+      border-bottom: 1px solid $defend;
+      color: $white;
+    }
   }
 }
 
