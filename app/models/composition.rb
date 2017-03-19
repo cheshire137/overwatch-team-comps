@@ -59,7 +59,7 @@ class Composition < ApplicationRecord
   end
 
   def map_name
-    map.name
+    map.try(:name)
   end
 
   # Try building a slug based on the following fields in
