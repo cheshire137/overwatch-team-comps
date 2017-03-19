@@ -55,17 +55,10 @@ export default class CompositionForm extends React.Component {
   }
 
   onCompositionNotesChange(event) {
-    const { id } = this.state
-    const api = new OverwatchTeamCompsApi()
-
-    const body = { notes: event.target.value }
-    if (id) {
-      body.composition_id = id
-    }
-
-    api.saveComposition(body).
-      then(newComp => this.onCompositionLoaded(newComp)).
-      catch(err => CompositionForm.onCompositionSaveError(err))
+    // TODO: actually POST this to the server to save the value,
+    // but not as the user types because we don't want a request
+    // going for every keystroke
+    this.setState({ notes: event.target.value })
   }
 
   onPlayerSelected(playerID, playerName, position) {
