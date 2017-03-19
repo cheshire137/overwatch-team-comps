@@ -149,7 +149,11 @@ export default class CompositionForm extends React.Component {
                 {mapSegments.map((segment, i) => (
                   <MapSegmentHeader
                     key={segment.id}
-                    mapSegment={segment.name}
+                    name={segment.name}
+                    filled={segment.filled}
+                    isAttack={segment.isAttack}
+                    isFirstOfKind={segment.isFirstOfKind}
+                    isLastOfKind={segment.isLastOfKind}
                     index={i}
                   />
                 ))}

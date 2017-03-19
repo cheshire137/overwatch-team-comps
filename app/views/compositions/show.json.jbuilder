@@ -17,6 +17,10 @@ json.composition do
     json.segments @composition.map.segments do |map_segment|
       json.id map_segment.id
       json.name map_segment.name
+      json.filled @builder.map_segment_filled?(map_segment)
+      json.isAttack map_segment.is_attack?
+      json.isFirstOfKind @builder.map_segment_is_first_of_kind?(map_segment)
+      json.isLastOfKind @builder.map_segment_is_last_of_kind?(map_segment)
     end
   end
   json.availablePlayers @available_players do |player|

@@ -1,3 +1,40 @@
+.map-segment-filled-status {
+  display: block;
+  width: 100%;
+  height: 6px;
+  margin-top: 10px;
+
+  &.is-first {
+    @include border-top-left-radius(6px);
+    @include border-bottom-left-radius(6px);
+  }
+
+  &.is-last {
+    @include border-top-right-radius(6px);
+    @include border-bottom-right-radius(6px);
+  }
+
+  &.attacking {
+    &.is-filled {
+      background-color: $attack;
+    }
+
+    &.is-not-filled {
+      background-color: $light-attack;
+    }
+  }
+
+  &.defending {
+    &.is-filled {
+      background-color: $defend;
+    }
+
+    &.is-not-filled {
+      background-color: $light-defend;
+    }
+  }
+}
+
 .composition-header {
   padding: 40px 0;
   margin-bottom: 35px;
@@ -45,8 +82,9 @@
   }
 
   thead th {
-    padding: 0 0 15px;
-    font-size: 14px;
+    padding: 0 3px 15px 3px;
+    text-align: left;
+    font-size: 13px;
     text-transform: uppercase;
     font-weight: 700;
   }
