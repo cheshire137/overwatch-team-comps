@@ -36,13 +36,13 @@
   .hero-select-cell {
     color: #292b31;
     white-space: nowrap;
+    padding-top: 1px;
   }
 
   .player-cell {
     background-color: #f5f5f6;
     color: #292b31;
     white-space: nowrap;
-    padding-right: 0.5em;
   }
 
   tbody td {
@@ -50,7 +50,7 @@
   }
 
   thead th {
-    padding: 0 0 15px;
+    padding: 0.5em 20px;
   }
 }
 
@@ -66,11 +66,18 @@
     display: inline-block;
     width: 40px;
     @include border-radius(3px);
-    padding-left: 5px;
+    margin-left: 0.75em;
   }
 
   .hero-portrait-placeholder {
-    background-color: #ddd;
+    height: 40px;
+    text-align: center;
+
+    .fa {
+      line-height: 40px;
+      font-size: 1.5rem;
+      color: $soft-text;
+    }
   }
 
   .player-cell {
@@ -83,6 +90,7 @@
 
     .select select {
       padding-left: 0.25em;
+      padding-right: 0;
     }
 
     .input {
