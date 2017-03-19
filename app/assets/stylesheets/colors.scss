@@ -272,58 +272,114 @@ a:hover, a:focus {
   border-color: $zenyatta;
 }
 
-.background-hanamura {
+.gradient-hanamura {
   @include map-gradient($hanamura1, $hanamura2);
 }
 
-.background-temple-of-anubis {
+.gradient-temple-of-anubis {
   @include map-gradient($temple-of-anubis1, $temple-of-anubis2);
 }
 
-.background-volskaya-industries {
+.gradient-volskaya-industries {
   @include map-gradient($volskaya-industries1, $volskaya-industries2);
 }
 
-.background-dorado {
+.gradient-dorado {
   @include map-gradient($dorado1, $dorado2);
 }
 
-.background-route-66 {
+.gradient-route-66 {
   @include map-gradient($route-661, $route-662);
 }
 
-.background-watchpoint-gibraltar {
+.gradient-watchpoint-gibraltar {
   @include map-gradient($watchpoint-gibraltar1, $watchpoint-gibraltar2);
 }
 
-.background-eichenwalde {
+.gradient-eichenwalde {
   @include map-gradient($eichenwalde1, $eichenwalde2);
 }
 
-.background-hollywood {
+.gradient-hollywood {
   @include map-gradient($hollywood1, $hollywood2);
 }
 
-.background-king-s-row {
+.gradient-king-s-row {
   @include map-gradient($king-s-row1, $king-s-row2);
 }
 
-.background-numbani {
+.gradient-numbani {
   @include map-gradient($numbani1, $numbani2);
 }
 
-.background-ilios {
+.gradient-ilios {
   @include map-gradient($ilios1, $ilios2);
 }
 
-.background-lijiang-tower {
+.gradient-lijiang-tower {
   @include map-gradient($lijiang-tower1, $lijiang-tower2);
 }
 
-.background-nepal {
+.gradient-nepal {
   @include map-gradient($nepal1, $nepal2);
 }
 
-.background-oasis {
+.gradient-oasis {
   @include map-gradient($oasis1, $oasis2);
+}
+
+.background-hanamura {
+  background-color: darken($hanamura1, 10%);
+}
+
+.background-temple-of-anubis {
+  background-color: darken($temple-of-anubis1, 10%);
+}
+
+.background-volskaya-industries {
+  background-color: darken($volskaya-industries1, 10%);
+}
+
+.background-dorado {
+  background-color: darken($dorado1, 10%);
+}
+
+.background-route-66 {
+  background-color: darken($route-661, 10%);
+}
+
+.background-watchpoint-gibraltar {
+  background-color: darken($watchpoint-gibraltar1, 10%);
+}
+
+.background-eichenwalde {
+  background-color: darken($eichenwalde1, 10%);
+}
+
+.background-hollywood {
+  background-color: darken($hollywood1, 10%);
+}
+
+.background-king-s-row {
+  background-color: darken($king-s-row1, 10%);
+}
+
+.background-numbani {
+  background-color: darken($numbani1, 10%);
+}
+
+.background-ilios {
+  background-color: darken($ilios1, 10%);
+}
+
+.background-lijiang-tower {
+  background-color: darken($lijiang-tower1, 10%);
+}
+
+.background-nepal {
+  background-color: darken($nepal1, 10%);
+}
+
+.background-oasis {
+  background-color: darken($oasis1, 10%);
 }

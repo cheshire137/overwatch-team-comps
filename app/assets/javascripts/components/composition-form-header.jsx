@@ -32,10 +32,11 @@ class CompositionHeader extends React.Component {
     }
 
     const { composition } = this.props
+    const mapSlug = composition.map.slug
     return (
-      <header className={`composition-header background-${composition.map.slug}`}>
+      <header className={`composition-header gradient-${mapSlug}`}>
         <div className="container">
-          <div className="map-photo-container" />
+          <div className={`map-photo-container background-${mapSlug}`} />
           <div className="composition-meta">
             <div>
               <span className="select map-select">
