@@ -21,8 +21,9 @@ class HeroSelect extends React.Component {
 
   render() {
     const { heroes, selectedHeroID, disabled } = this.props
+    const isFilled = typeof selectedHeroID === 'number'
     return (
-      <div className="hero-select-container">
+      <div className={`hero-select-container ${isFilled ? '' : 'not-filled'}`}>
         {this.heroPortrait()}
         <span className="select">
           <select
