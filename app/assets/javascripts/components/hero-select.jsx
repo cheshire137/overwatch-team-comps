@@ -22,7 +22,7 @@ class HeroSelect extends React.Component {
   render() {
     const { heroes, selectedHeroID, disabled } = this.props
     return (
-      <div>
+      <div className="hero-select-container">
         {this.heroPortrait()}
         <span className="select">
           <select

@@ -57,24 +57,49 @@
 .players-table {
   width: 100%;
 
-  .odd-column {
+  .odd-column .hero-select-container {
     background-color: #fbfbfb;
+  }
+
+  .players-header,
+  .player-cell {
+    padding-right: 2em;
   }
 
   .players-header {
     text-transform: uppercase;
     color: #727783;
+
+    .player-count {
+      float: right;
+    }
   }
 
   .hero-select-cell {
     color: #292b31;
+    white-space: nowrap;
+  }
+
+  .hero-select-container {
+    border: 2px solid #f2f3f4;
+    margin-right: 4px;
+    margin-bottom: 9px;
+    @include border-radius(4px);
+    @include display-flex;
+    @include align-items(center);
   }
 
   .player-cell {
-    background-color: #f5f5f6;
     color: #292b31;
     white-space: nowrap;
-    padding-right: 0.5em;
+  }
+
+  .player-select-container {
+    background-color: #f5f5f6;
+
+    .label {
+      color: #c8cace;
+    }
   }
 
   tbody td {
@@ -100,9 +125,9 @@
   .hero-portrait-placeholder,
   .hero-portrait {
     display: inline-block;
-    width: 40px;
-    @include border-radius(3px);
-    padding-left: 5px;
+    width: 35px;
+    @include border-radius(35px);
+    padding-left: 10px;
   }
 
   .hero-portrait-placeholder {

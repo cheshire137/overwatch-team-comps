@@ -114,7 +114,6 @@
     display: block;
     font-size: 1em;
     outline: none;
-    padding-right: 2.5em;
 
     &:focus, &:active {
       border-bottom-color: #0e9ed2;
@@ -128,7 +127,7 @@
   }
 
   &:after {
-    border: 1px solid #d8d8d8;
+    border: 2px solid #dbdbdb;
     border-right: 0;
     border-top: 0;
     content: " ";

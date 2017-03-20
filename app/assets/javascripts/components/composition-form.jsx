@@ -134,6 +134,8 @@ export default class CompositionForm extends React.Component {
       return <p className="container">Loading...</p>
     }
 
+    const selectedPlayerCount = composition.players.
+      filter(p => typeof p.id === 'number').length
     const mapSegments = composition.map.segments
     return (
       <form className="composition-form">
@@ -145,7 +147,10 @@ export default class CompositionForm extends React.Component {
           <table className="players-table">
             <thead>
               <tr>
-                <th className="players-header" />
+                <th className="players-header">
+                  <span className="player-count">{selectedPlayerCount} / 6</span>
+                  Team
+                </th>
                 {mapSegments.map((segment, i) => (
                   <MapSegmentHeader
                     key={segment.id}
