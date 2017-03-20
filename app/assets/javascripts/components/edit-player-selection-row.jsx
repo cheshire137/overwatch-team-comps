@@ -26,6 +26,7 @@ const EditPlayerSelectionRow = function(props) {
             disabled={typeof selectedPlayer.id !== 'number'}
             selectedHeroID={selections[segment.id]}
             onChange={heroID => onHeroSelection(heroID, segment.id)}
+            selectID={`${inputID}_segment_${segment.id}`}
           />
         </td>
       ))}
