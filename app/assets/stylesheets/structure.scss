@@ -21,6 +21,10 @@ section { margin-bottom: 4em; }
 
 
 @media screen and (min-width: 800px) {
+  .container {
+    max-width: 1700px;
+  }
+
   .flex-grid {
     @include display-flex;
     .col { @include flex(1); }
