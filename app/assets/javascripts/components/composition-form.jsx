@@ -23,6 +23,7 @@ export default class CompositionForm extends React.Component {
       name: '',
       slug: '',
       mapID: null,
+      mapSlug: '',
       mapSegments: [],
       players: [],
       availablePlayers: [],
@@ -97,6 +98,7 @@ export default class CompositionForm extends React.Component {
       name: composition.name,
       slug: composition.slug,
       mapID: composition.map.id,
+      mapSlug: composition.map.slug,
       mapSegments: composition.map.segments,
       players: composition.players,
       availablePlayers: composition.availablePlayers,
@@ -154,7 +156,7 @@ export default class CompositionForm extends React.Component {
 
   render() {
     const { name, slug, mapID, mapSegments, players, heroes,
-            selections, notes } = this.state
+            selections, notes, mapSlug } = this.state
 
     if (typeof mapID !== 'number') {
       return <p className="container">Loading...</p>
@@ -166,6 +168,7 @@ export default class CompositionForm extends React.Component {
           name={name}
           slug={slug}
           mapID={mapID}
+          mapSlug={mapSlug}
           onNameChange={newName => this.onCompositionNameChange(newName)}
           onMapChange={newMapID => this.onMapChange(newMapID)}
         />
