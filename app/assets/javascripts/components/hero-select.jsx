@@ -8,9 +8,7 @@ class HeroSelect extends React.Component {
     const { heroes, selectedHeroID } = this.props
     if (typeof selectedHeroID !== 'number') {
       return (
-        <span className="hero-portrait-placeholder">
-          <i className="fa fa-user-o" aria-hidden="true" />
-        </span>
+        <span className="hero-portrait-placeholder" />
       )
     }
     const hero = heroes.filter(h => h.id === selectedHeroID)[0]
