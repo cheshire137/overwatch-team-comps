@@ -1,6 +1,8 @@
+import Footer from './footer.jsx'
+
 const AnonLayout = function(props) {
   return (
-    <div>
+    <div className="layout-container">
       <div className="container">
         <nav className="nav">
           <div className="nav-right">
@@ -11,9 +13,10 @@ const AnonLayout = function(props) {
           </div>
         </nav>
       </div>
-      <div>
+      <div className="layout-children-container">
         {props.children}
       </div>
+      <Footer basePath="" />
     </div>
   )
 }
