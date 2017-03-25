@@ -7,6 +7,36 @@ RSpec.describe PlayersController, type: :controller do
     @map = create(:map)
   end
 
+  context 'DELETE destroy' do
+    it 'deletes player owned by the user' do
+      player = create(:player, creator: @user)
+      composition = create(:composition, user: @user)
+
+      sign_in @user
+      expect do
+        delete :destroy, params: {
+          format: :json, id: player.id, composition_id: composition.id
+        }
+      end.to change { Player.count }.by(-1)
+
+      expect(response).to be_success
+    end
+
+    it 'will not delete player owned by another user' do
+      player = create(:player)
+      composition = create(:composition, user: @user)
+
+      sign_in @user
+      expect do
+        delete :destroy, params: {
+          format: :json, id: player.id, composition_id: composition.id
+        }
+      end.not_to change { Player.count }
+
+      expect(response).to have_http_status(404)
+    end
+  end
+
   context 'PUT update' do
     it 'updates existing player owned by the user' do
       player = create(:player, creator: @user)
