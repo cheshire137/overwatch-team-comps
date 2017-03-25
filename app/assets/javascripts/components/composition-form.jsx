@@ -171,6 +171,9 @@ export default class CompositionForm extends React.Component {
 
     const selectedPlayerCount = players.
       filter(p => typeof p.id === 'number').length
+    const editingPlayer = typeof editingPlayerID === 'number'
+      ? players.filter(p => p.id === editingPlayerID)[0]
+      : null
 
     return (
       <form className="composition-form">
@@ -256,6 +259,7 @@ export default class CompositionForm extends React.Component {
         </div>
         <PlayerEditModal
           playerID={editingPlayerID}
+          playerName={editingPlayer ? editingPlayer.name : ''}
           close={() => this.editPlayer(null)}
           isOpen={typeof editingPlayerID === 'number'}
         />

@@ -29,6 +29,16 @@
     box-shadow: 0 0 0.5em rgba(255, 255, 255, 0.25);
     color: $mix;
   }
+
+  &.is-primary {
+    background-color: $defend;
+    border-color: transparent;
+    color: #fff;
+
+    &:hover {
+      background-color: darken($defend, 10%);
+    }
+  }
 }
 
 .button-link {
@@ -164,3 +174,18 @@
   outline: none;
   border-color: $defend;
 }
+
+.field {
+  .label {
+    font-weight: 700;
+
+    &:not(:last-child) {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 0.75rem;
+  }
+}
+
