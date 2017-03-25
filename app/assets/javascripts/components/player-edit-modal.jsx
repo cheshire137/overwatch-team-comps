@@ -1,6 +1,10 @@
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 class PlayerEditModal extends React.Component {
+  static onPlayerDeleteError(error) {
+    console.error('failed to delete player', error)
+  }
+
   static onPlayerUpdateError(error) {
     console.error('failed to update player', error)
   }
@@ -41,7 +45,7 @@ class PlayerEditModal extends React.Component {
     this.setState({ playerName: event.target.value })
   }
 
-  onSaved(composition) {
+  onCompositionLoaded(composition) {
     this.props.close(composition)
   }
 
@@ -75,6 +79,15 @@ class PlayerEditModal extends React.Component {
 
   delete(event) {
     event.currentTarget.blur()
+
+    const { playerID, compositionID } = this.props
+    const api = new OverwatchTeamCompsApi()
+
+    const body = { composition_id: compositionID }
+
+    api.deletePlayer(playerID, body).
+      then(newComp => this.onCompositionLoaded(newComp)).
+      catch(err => PlayerEditModal.onPlayerDeleteError(err))
   }
 
   deleteConfirmation() {
@@ -168,7 +181,7 @@ class PlayerEditModal extends React.Component {
     }
 
     api.updatePlayer(playerID, body).
-      then(newComp => this.onSaved(newComp)).
+      then(newComp => this.onCompositionLoaded(newComp)).
       catch(err => PlayerEditModal.onPlayerUpdateError(err))
   }
 

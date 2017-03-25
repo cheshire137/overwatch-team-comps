@@ -59,4 +59,9 @@ export default class OverwatchTeamCompsApi extends Fetcher {
     return this.put(`/players/${id}`, this.defaultHeaders, body).
       then(json => json.composition)
   }
+
+  deletePlayer(id, body) {
+    return this.delete(`/players/${id}`, this.defaultHeaders, body).
+      then(json => json.composition)
+  }
 }

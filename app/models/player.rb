@@ -3,6 +3,7 @@ class Player < ApplicationRecord
   belongs_to :creator, class_name: 'User'
 
   has_many :player_heroes, dependent: :destroy
+  has_many :composition_players, dependent: :destroy
 
   validates :name, :creator, presence: true
   validate :creator_session_id_set_if_anonymous
