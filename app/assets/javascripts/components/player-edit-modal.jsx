@@ -87,11 +87,18 @@ class PlayerEditModal extends React.Component {
               placeholder="Battle.net username"
             />
           </div>
-          <button
-            type="button"
-            className="button is-primary"
-            onClick={e => this.save(e)}
-          >Save</button>
+          <div className="clearfix">
+            <button
+              type="button"
+              className="delete-player-button button-link"
+              onClick={e => this.delete(e)}
+            ><i className="fa fa-trash" aria-hidden="true"></i> Delete player</button>
+            <button
+              type="button"
+              className="button is-primary"
+              onClick={e => this.save(e)}
+            >Save</button>
+          </div>
         </div>
         <button
           type="button"

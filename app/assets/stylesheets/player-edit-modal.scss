@@ -62,3 +62,10 @@
   color: $text;
   @include appearance(none);
 }
+
+.delete-player-button.button-link {
+  float: right;
+  color: $attack;
+  line-height: 36px;
+  font-size: 13px;
+}
