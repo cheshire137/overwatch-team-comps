@@ -2,11 +2,7 @@ class PlayerSelect extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { name: props.name, showNewNameField: false }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ name: nextProps.name, showNewNameField: false })
+    this.state = { name: '', showNewNameField: false }
   }
 
   onChange(event) {
@@ -15,6 +11,12 @@ class PlayerSelect extends React.Component {
       this.setState({ showNewNameField: true })
     } else {
       this.props.onChange(newPlayerID, null)
+    }
+  }
+
+  onNewNameKeyDown(event) {
+    if (event.keyCode === 27) { // Esc
+      this.setState({ showNewNameField: false })
     }
   }
 
@@ -47,6 +49,7 @@ class PlayerSelect extends React.Component {
             placeholder="Player name"
             value={this.state.name}
             onChange={e => this.onNewNameSet(e)}
+            onKeyDown={e => this.onNewNameKeyDown(e)}
             className="input player-name-input"
             autoFocus
           />
