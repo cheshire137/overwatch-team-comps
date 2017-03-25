@@ -13,6 +13,25 @@ RSpec.describe CompositionPlayer, type: :model do
     expect(comp_player.errors[:player].any?).to be_truthy
   end
 
+  it 'decrements later comp player positions on destroy' do
+    comp = create(:composition)
+    comp_player1 = create(:composition_player, composition: comp,
+                          position: 0)
+    comp_player2 = create(:composition_player, composition: comp,
+                          position: 1)
+    comp_player3 = create(:composition_player, composition: comp,
+                          position: 2)
+    comp_player4 = create(:composition_player, composition: comp,
+                          position: 3)
+
+    expect { comp_player2.destroy }.
+      to change { CompositionPlayer.count }.by(-1)
+
+    expect(comp_player1.reload.position).to eq(0)
+    expect(comp_player3.reload.position).to eq(1)
+    expect(comp_player4.reload.position).to eq(2)
+  end
+
   it 'sets position' do
     comp_player = create(:composition_player, position: nil)
     expect(comp_player.position).to eq(0)

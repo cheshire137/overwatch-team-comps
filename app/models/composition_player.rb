@@ -5,6 +5,7 @@ class CompositionPlayer < ApplicationRecord
   has_many :player_selections, dependent: :destroy
 
   before_validation :set_position
+  after_destroy :decrement_positions
 
   validates :player, :composition, :position, presence: true
   validates :position, numericality: { only_integer: true },
@@ -47,5 +48,10 @@ class CompositionPlayer < ApplicationRecord
         errors.add(:player, 'is not valid.')
       end
     end
+  end
+
+  def decrement_positions
+    composition.composition_players.where('position >= ?', position).
+      update_all('position = position - 1')
   end
 end
