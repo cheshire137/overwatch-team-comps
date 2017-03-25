@@ -37,6 +37,28 @@ class PlayersController < ApplicationController
     render template: 'compositions/show'
   end
 
+  def update
+    @composition = Composition.
+      created_by(user: current_user, session_id: session.id).
+      where(id: params[:composition_id]).first
+    return head :bad_request unless @composition
+
+    player = Player.find_if_allowed(params[:id], user: current_user, session_id: session.id)
+    return head :not_found unless player
+
+    if player.update_attributes(player_params)
+      @builder = CompositionFormBuilder.new(@composition)
+      @available_players = @composition.
+        available_players(user: current_user, session_id: session.id)
+
+      render template: 'compositions/show'
+    else
+      render json: { error: {
+        player: player.errors.full_messages
+      } }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def player_params
