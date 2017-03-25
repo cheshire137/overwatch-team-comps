@@ -29,11 +29,13 @@ function requireAuth(nextState, replace, callback) {
 }
 
 function redirectIfSignedIn(nextState, replace, callback) {
+  const newPath = `/user${nextState.location.pathname}`
+
   if (LocalStorage.has('battletag')) {
     const battletag = LocalStorage.get('battletag')
     if (battletag && battletag.length > 0) {
       replace({
-        pathname: `/user${nextState.location.pathname}`,
+        pathname: newPath,
         state: { nextPathname: nextState.location.pathname }
       })
       callback()
@@ -46,7 +48,7 @@ function redirectIfSignedIn(nextState, replace, callback) {
     if (json.auth) {
       LocalStorage.set('battletag', json.battletag)
       replace({
-        pathname: '/user',
+        pathname: newPath,
         state: { nextPathname: nextState.location.pathname }
       })
     } else {
