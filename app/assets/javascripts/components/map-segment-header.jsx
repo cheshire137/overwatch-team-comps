@@ -2,7 +2,7 @@ class MapSegmentHeader extends React.Component {
   className() {
     const { index, isAttack } = this.props
     const columnClass = index % 2 === 0 ? 'even-column' : 'odd-column'
-    const classes = [columnClass]
+    const classes = [columnClass, 'small-fat-header']
 
     if (isAttack) {
       classes.push('text-attack')

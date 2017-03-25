@@ -2,7 +2,7 @@
   display: block;
   width: 100%;
   height: 6px;
-  margin-top: 10px;
+  margin-top: 9px;
 
   &.is-first {
     @include border-top-left-radius(6px);
@@ -67,11 +67,11 @@
   }
 
   .players-header {
-    text-transform: uppercase;
     color: #727783;
 
     .player-count {
       float: right;
+      margin-right: 6px;
     }
   }
 
@@ -152,15 +152,16 @@
 
   thead th {
     text-align: left;
-    font-size: 13px;
-    text-transform: uppercase;
-    font-weight: 700;
-    padding: 0.5em 20px;
+    padding: 0 4px 9px 0;
   }
 }
 
 .composition-notes-wrapper {
   margin-top: 60px;
+
+  .notes-label {
+    margin-bottom: 9px;
+  }
 }
 
 .composition-form {
