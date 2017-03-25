@@ -105,6 +105,12 @@ because the snapshot is now different from what is rendered. Manually
 compare the two and if the change is expected, update the now out-of-date
 snapshot with `npm run unit-test -- -u`.
 
+See also these links about the JavaScript tests:
+
+- [Shallow rendering with Enzyme](http://airbnb.io/enzyme/docs/api/shallow.html)
+- [Jest matchers](https://facebook.github.io/jest/docs/expect.html#content)
+- [ESLint rules](http://eslint.org/docs/rules/)
+
 ## How to Deploy to Heroku
 
 Create an [app on Heroku](https://dashboard.heroku.com/apps).
