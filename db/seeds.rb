@@ -49,12 +49,11 @@ map_segments_by_map = {
   'Numbani' => ['Point 1', 'Payload 1', 'Payload 2'],
   'Route 66' => ['Payload 1', 'Payload 2', 'Payload 3'],
   'Watchpoint: Gibraltar' => ['Payload 1', 'Payload 2', 'Payload 3'],
-  'Eichenwalde' => ['Point 1', 'Payload 1', 'Payload 2'],
-  'Ecopoint: Antarctica' => ['Attack']
+  'Eichenwalde' => ['Point 1', 'Payload 1', 'Payload 2']
 }
 
 maps_without_defense = [
-  'Ilios', 'Ecopoint: Antarctica', 'Oasis', 'Lijiang Tower', 'Nepal'
+  'Ilios', 'Oasis', 'Lijiang Tower', 'Nepal'
 ]
 team_roles = ['Attack', 'Defend']
 
