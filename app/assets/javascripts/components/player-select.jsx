@@ -24,6 +24,11 @@ class PlayerSelect extends React.Component {
     this.setState({ name: event.target.value })
   }
 
+  editPlayer(event) {
+    event.currentTarget.blur()
+    this.props.editPlayer()
+  }
+
   saveNewName(event) {
     event.preventDefault()
     const name = this.state.name
@@ -64,12 +69,14 @@ class PlayerSelect extends React.Component {
       )
     }
 
+    const isPlayerSelected = typeof playerID === 'number'
+
     return (
       <div className="existing-player-container">
         <span className="select player-select">
           <select
             onChange={e => this.onChange(e)}
-            value={typeof playerID === 'number' ? playerID : ''}
+            value={isPlayerSelected ? playerID : ''}
           >
             <option value="">Player</option>
             {players.map(player => (
@@ -81,10 +88,13 @@ class PlayerSelect extends React.Component {
             <option value="new">Add new player</option>
           </select>
         </span>
-        <button
-          type="button"
-          className="button-link edit-player-button"
-        ><i className="fa fa-cog" aria-hidden="true" /></button>
+        {isPlayerSelected ? (
+          <button
+            type="button"
+            className="button-link edit-player-button"
+            onClick={e => this.editPlayer(e)}
+          ><i className="fa fa-cog" aria-hidden="true" /></button>
+        ) : ''}
       </div>
     )
   }
@@ -108,7 +118,8 @@ PlayerSelect.propTypes = {
   playerID: React.PropTypes.number,
   players: React.PropTypes.array.isRequired,
   onChange: React.PropTypes.func.isRequired,
-  label: React.PropTypes.string.isRequired
+  label: React.PropTypes.string.isRequired,
+  editPlayer: React.PropTypes.func.isRequired
 }
 
 export default PlayerSelect

@@ -154,6 +154,10 @@ export default class CompositionForm extends React.Component {
       catch(err => CompositionForm.onCompositionSaveError(err))
   }
 
+  editPlayer(playerID) {
+    console.log('edit', playerID)
+  }
+
   render() {
     const { name, slug, mapID, mapSegments, players, heroes,
             selections, notes, mapSlug } = this.state
@@ -220,6 +224,7 @@ export default class CompositionForm extends React.Component {
                     onPlayerSelection={(playerID, newName) =>
                       this.onPlayerSelected(playerID, newName, index)
                     }
+                    editPlayer={playerID => this.editPlayer(playerID)}
                   />
                 )
               })}
