@@ -17,7 +17,9 @@
     "url": "https://github.com/cheshire137/overwatch-team-comps/issues"
   },
   "scripts": {
-    "style": "node_modules/.bin/eslint --ext .js --ext .jsx app/assets/javascripts/application.js app/assets/javascripts/components app/assets/javascripts/models spec/javascript spec/setup-jest.js"
+    "style": "node_modules/.bin/eslint --ext .js --ext .jsx app/assets/javascripts/application.js app/assets/javascripts/components app/assets/javascripts/models spec/javascript spec/setup-jest.js",
+    "unit-test": "node_modules/.bin/jest",
+    "test": "npm run style && npm test"
   },
   "homepage": "https://github.com/cheshire137/overwatch-team-comps",
   "dependencies": {
@@ -53,7 +55,9 @@
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "app/assets/javascripts/**/*.{js,jsx}"
+      "app/assets/javascripts/**/*.{js,jsx}",
+      "!app/assets/javascripts/application.js",
+      "!app/assets/javascripts/cable.js"
     ],
     "setupFiles": [
       "<rootDir>/spec/setup-jest.js"

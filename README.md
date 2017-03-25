@@ -90,7 +90,7 @@ brew services stop postgresql
 After running through the development setup above, then:
 
 ```bash
-npm run style # to run the JavaScript style checker
+npm test # to run the JavaScript style checker and JavaScript tests
 bundle exec rspec # to run Rails tests
 ```
 
