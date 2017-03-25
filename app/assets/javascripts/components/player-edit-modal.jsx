@@ -5,10 +5,11 @@ class PlayerEditModal extends React.Component {
   }
 
   render() {
+    const { isOpen } = this.props
     return (
       <div>
-        <div className="modal-overlay modal-overlay-active" />
-        <div className="modal">
+        <div className={`modal-overlay modal-overlay-${isOpen ? 'active' : 'hide'}`} />
+        <div className="modal" style={{ display: isOpen ? 'block' : 'none' }}>
           <div className="modal-popup">
             <div className="modal-content">
               <h2 className="modal-header">
@@ -30,7 +31,8 @@ class PlayerEditModal extends React.Component {
 
 PlayerEditModal.propTypes = {
   playerID: React.PropTypes.number.isRequired,
-  close: React.PropTypes.func.isRequired
+  close: React.PropTypes.func.isRequired,
+  isOpen: React.PropTypes.bool.isRequired
 }
 
 export default PlayerEditModal

@@ -161,24 +161,9 @@ export default class CompositionForm extends React.Component {
     this.setState({ editingPlayerID: playerID })
   }
 
-  playerEditModal() {
-    const { editingPlayerID } = this.state
-
-    if (typeof editingPlayerID !== 'number') {
-      return null
-    }
-
-    return (
-      <PlayerEditModal
-        playerID={editingPlayerID}
-        close={() => this.editPlayer(null)}
-      />
-    )
-  }
-
   render() {
     const { name, slug, mapID, mapSegments, players, heroes,
-            selections, notes, mapSlug } = this.state
+            selections, notes, mapSlug, editingPlayerID } = this.state
 
     if (typeof mapID !== 'number') {
       return <p className="container">Loading...</p>
@@ -269,7 +254,11 @@ export default class CompositionForm extends React.Component {
             </p>
           </div>
         </div>
-        {this.playerEditModal()}
+        <PlayerEditModal
+          playerID={editingPlayerID}
+          close={() => this.editPlayer(null)}
+          isOpen={typeof editingPlayerID === 'number'}
+        />
       </form>
     )
   }
