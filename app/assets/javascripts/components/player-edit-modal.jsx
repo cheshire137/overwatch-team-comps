@@ -29,6 +29,12 @@ class PlayerEditModal extends React.Component {
     this.props.close()
   }
 
+  onKeyDown(event) {
+    if (event.keyCode === 27) { // Esc
+      this.props.close()
+    }
+  }
+
   onPlayerNameChange(event) {
     this.setState({ playerName: event.target.value })
   }
@@ -61,6 +67,7 @@ class PlayerEditModal extends React.Component {
               value={playerName || ''}
               onChange={e => this.onPlayerNameChange(e)}
               className="input"
+              onKeyDown={e => this.onKeyDown(e)}
               placeholder="Player name"
               autoFocus
             />
@@ -76,6 +83,7 @@ class PlayerEditModal extends React.Component {
               value={battletag || ''}
               onChange={e => this.onBattletagChange(e)}
               className="input"
+              onKeyDown={e => this.onKeyDown(e)}
               placeholder="Battle.net username"
             />
           </div>
