@@ -19,7 +19,7 @@
   "scripts": {
     "style": "node_modules/.bin/eslint --ext .js --ext .jsx app/assets/javascripts/application.js app/assets/javascripts/components app/assets/javascripts/models spec/javascript spec/setup-jest.js",
     "unit-test": "node_modules/.bin/jest",
-    "test": "npm run style && npm test"
+    "test": "npm run style && npm run unit-test"
   },
   "homepage": "https://github.com/cheshire137/overwatch-team-comps",
   "dependencies": {
