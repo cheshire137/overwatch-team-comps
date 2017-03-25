@@ -1,6 +1,8 @@
 import CompositionFormHeader from './composition-form-header.jsx'
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
 import MapSegmentHeader from './map-segment-header.jsx'
+import PlayerEditModal from './player-edit-modal.jsx'
+
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 export default class CompositionForm extends React.Component {
@@ -29,7 +31,8 @@ export default class CompositionForm extends React.Component {
       availablePlayers: [],
       heroes: {},
       selections: {},
-      notes: ''
+      notes: '',
+      editingPlayerID: null
     }
   }
 
@@ -155,7 +158,22 @@ export default class CompositionForm extends React.Component {
   }
 
   editPlayer(playerID) {
-    console.log('edit', playerID)
+    this.setState({ editingPlayerID: playerID })
+  }
+
+  playerEditModal() {
+    const { editingPlayerID } = this.state
+
+    if (typeof editingPlayerID !== 'number') {
+      return null
+    }
+
+    return (
+      <PlayerEditModal
+        playerID={editingPlayerID}
+        close={() => this.editPlayer(null)}
+      />
+    )
   }
 
   render() {
@@ -251,6 +269,7 @@ export default class CompositionForm extends React.Component {
             </p>
           </div>
         </div>
+        {this.playerEditModal()}
       </form>
     )
   }
