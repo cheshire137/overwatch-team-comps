@@ -2,7 +2,7 @@ import HeroSelect from './hero-select.jsx'
 import PlayerSelect from './player-select.jsx'
 
 const EditPlayerSelectionRow = function(props) {
-  const { inputID, selectedPlayer, nameLabel, onHeroSelection,
+  const { inputID, playerID, playerName, nameLabel, onHeroSelection,
           mapSegments, onPlayerSelection, players, heroes,
           selections } = props
   return (
@@ -11,9 +11,12 @@ const EditPlayerSelectionRow = function(props) {
         <PlayerSelect
           inputID={inputID}
           label={nameLabel}
-          selectedPlayer={selectedPlayer}
+          playerID={playerID}
+          name={playerName}
           players={players}
-          onChange={(playerID, name) => onPlayerSelection(playerID, name)}
+          onChange={(newPlayerID, newName) =>
+            onPlayerSelection(newPlayerID, newName)
+          }
         />
       </td>
       {mapSegments.map((segment, i) => (
@@ -23,7 +26,7 @@ const EditPlayerSelectionRow = function(props) {
         >
           <HeroSelect
             heroes={heroes}
-            disabled={typeof selectedPlayer.id !== 'number'}
+            disabled={typeof playerID !== 'number'}
             selectedHeroID={selections[segment.id]}
             onChange={heroID => onHeroSelection(heroID, segment.id)}
           />
@@ -35,7 +38,8 @@ const EditPlayerSelectionRow = function(props) {
 
 EditPlayerSelectionRow.propTypes = {
   inputID: React.PropTypes.string.isRequired,
-  selectedPlayer: React.PropTypes.object.isRequired,
+  playerID: React.PropTypes.number,
+  playerName: React.PropTypes.string.isRequired,
   players: React.PropTypes.array.isRequired,
   onPlayerSelection: React.PropTypes.func.isRequired,
   nameLabel: React.PropTypes.string.isRequired,

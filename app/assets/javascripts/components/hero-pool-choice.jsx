@@ -4,26 +4,26 @@ class HeroPoolChoice extends React.Component {
   }
 
   render() {
-    const { hero, ranks } = this.props
+    const { slug, image, name, id, ranks, confidence } = this.props
     const rankNames = Object.keys(ranks)
 
     return (
       <div className="hero-pool-choice">
-        <div className={`hero-pool-hero border-${hero.slug}`}>
+        <div className={`hero-pool-hero border-${slug}`}>
           <img
-            src={hero.image}
-            alt={hero.name}
+            src={image}
+            alt={name}
             className="hero-pool-portrait"
           />
         </div>
         <div className="hero-pool-inputs-container">
           <h3
-            className={`hero-pool-hero-name text-${hero.slug}`}
-          >{hero.name}</h3>
+            className={`hero-pool-hero-name text-${slug}`}
+          >{name}</h3>
           <div className="competitive-ranks-container">
             {rankNames.map(rankName => {
-              const confidence = ranks[rankName].confidence
-              const inputID = `${hero.id}${confidence}`
+              const rankConfidence = ranks[rankName].confidence
+              const inputID = `${id}${rankConfidence}`
               return (
                 <div
                   key={rankName}
@@ -31,11 +31,11 @@ class HeroPoolChoice extends React.Component {
                 >
                   <input
                     id={inputID}
-                    name={hero.name}
+                    name={name}
                     className="hero-pool-radio"
                     type="radio"
-                    checked={hero.confidence === confidence}
-                    value={confidence}
+                    checked={confidence === rankConfidence}
+                    value={rankConfidence}
                     onChange={e => this.onChange(e)}
                   />
                   <label
@@ -65,7 +65,11 @@ class HeroPoolChoice extends React.Component {
 }
 
 HeroPoolChoice.propTypes = {
-  hero: React.PropTypes.object.isRequired,
+  slug: React.PropTypes.string.isRequired,
+  image: React.PropTypes.string.isRequired,
+  id: React.PropTypes.number.isRequired,
+  confidence: React.PropTypes.number.isRequired,
+  name: React.PropTypes.string.isRequired,
   onChange: React.PropTypes.func.isRequired,
   ranks: React.PropTypes.object.isRequired
 }

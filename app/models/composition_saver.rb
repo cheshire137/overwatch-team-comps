@@ -16,9 +16,9 @@ class CompositionSaver
       Map.find(data[:map_id])
     end
 
-    if data[:composition_id] || map
+    if data[:composition_id] || data[:name] || data[:notes] || map
       @composition = init_composition(data, map: map)
-      unless @composition.persisted? || @composition.save
+      unless @composition.persisted? && !@composition.changed? || @composition.save
         @error_type = 'composition'
         @error_value = @composition.errors
         return
@@ -77,7 +77,20 @@ class CompositionSaver
       raise CompositionSaver::Error, 'No such composition for creator'
     end
 
-    composition.map = map if map
+    if map
+      composition.map = map
+      composition.slug = nil # will get regenerated based on map
+    end
+
+    if (name = data[:name]).present?
+      composition.name = name
+      composition.slug = nil # will get regenerated based on name
+    end
+
+    if (notes = data[:notes]).present?
+      composition.notes = notes
+    end
+
     composition
   end
 

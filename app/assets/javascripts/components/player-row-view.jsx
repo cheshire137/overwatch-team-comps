@@ -27,8 +27,8 @@ class PlayerRowView extends React.Component {
   }
 
   playerCell() {
-    const { player } = this.props
-    if (player.name.length < 1) {
+    const { name } = this.props
+    if (name.length < 1) {
       return (
         <td className="empty-selection player-cell">
           &mdash;
@@ -38,7 +38,7 @@ class PlayerRowView extends React.Component {
 
     return (
       <td className="player-cell">
-        {player.name}
+        {name}
       </td>
     )
   }
@@ -56,7 +56,7 @@ class PlayerRowView extends React.Component {
 
 PlayerRowView.propTypes = {
   heroes: React.PropTypes.array.isRequired,
-  player: React.PropTypes.object.isRequired,
+  name: React.PropTypes.string.isRequired,
   selections: React.PropTypes.object.isRequired,
   mapSegments: React.PropTypes.array.isRequired
 }
