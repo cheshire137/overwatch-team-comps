@@ -30,6 +30,10 @@
     color: $mix;
   }
 
+  &.is-normal {
+    border: 1px solid $form;
+  }
+
   &.is-primary {
     background-color: $defend;
     border-color: transparent;
@@ -37,6 +41,16 @@
 
     &:hover {
       background-color: darken($defend, 10%);
+    }
+  }
+
+  &.is-danger {
+    color: $attack;
+    border: 1px solid $light-attack;
+
+    &:hover {
+      background-color: $light-attack;
+      border-color: lighten($attack, 10%);
     }
   }
 }

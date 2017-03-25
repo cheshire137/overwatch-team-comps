@@ -9,14 +9,16 @@ class PlayerEditModal extends React.Component {
     super(props)
     this.state = {
       playerName: props.playerName,
-      battletag: props.battletag
+      battletag: props.battletag,
+      showDeleteConfirmation: false
     }
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       playerName: nextProps.playerName,
-      battletag: nextProps.battletag
+      battletag: nextProps.battletag,
+      showDeleteConfirmation: false
     })
   }
 
@@ -43,69 +45,112 @@ class PlayerEditModal extends React.Component {
     this.props.close(composition)
   }
 
+  cancelDelete(event) {
+    event.currentTarget.blur()
+    this.setState({ showDeleteConfirmation: false })
+  }
+
+  confirmDelete(event) {
+    event.currentTarget.blur()
+    this.setState({ showDeleteConfirmation: true })
+  }
+
   contents() {
-    const { isOpen } = this.props
-    if (!isOpen) {
+    if (!this.props.isOpen) {
       return null
     }
 
-    const { playerName, battletag } = this.state
     return (
       <div className="modal-popup">
-        <div className="modal-content">
-          <h2 className="modal-header">
-            Edit Player
-          </h2>
-          <div className="field">
-            <label
-              className="label"
-              htmlFor="edit_player_name"
-            >Name:</label>
-            <input
-              type="text"
-              id="edit_player_name"
-              value={playerName || ''}
-              onChange={e => this.onPlayerNameChange(e)}
-              className="input"
-              onKeyDown={e => this.onKeyDown(e)}
-              placeholder="Player name"
-              autoFocus
-            />
-          </div>
-          <div className="field">
-            <label
-              className="label"
-              htmlFor="edit_player_battletag"
-            >Battletag:</label>
-            <input
-              type="text"
-              id="edit_player_battletag"
-              value={battletag || ''}
-              onChange={e => this.onBattletagChange(e)}
-              className="input"
-              onKeyDown={e => this.onKeyDown(e)}
-              placeholder="Battle.net username"
-            />
-          </div>
-          <div className="clearfix">
-            <button
-              type="button"
-              className="delete-player-button button-link"
-              onClick={e => this.delete(e)}
-            ><i className="fa fa-trash" aria-hidden="true"></i> Delete player</button>
-            <button
-              type="button"
-              className="button is-primary"
-              onClick={e => this.save(e)}
-            >Save</button>
-          </div>
-        </div>
+        {this.state.showDeleteConfirmation ? this.deleteConfirmation() : this.editFields()}
         <button
           type="button"
           className="modal-close"
           aria-label="Close modal"
           onClick={e => this.onClose(e)}
         ><i className="fa fa-times" aria-hidden="true" /></button>
+      </div>
+    )
+  }
+
+  delete(event) {
+    event.currentTarget.blur()
+  }
+
+  deleteConfirmation() {
+    const { playerName } = this.props
+    return (
+      <div className="modal-content">
+        <h2 className="modal-header">
+          Confirm Delete Player
+        </h2>
+        <p>
+          Are you sure you want to delete <strong>{playerName}</strong>?
+        </p>
+        <button
+          type="button"
+          className="button is-danger"
+          onClick={e => this.delete(e)}
+        >Yes, delete</button>
+        <button
+          type="button"
+          className="button is-normal"
+          onClick={e => this.cancelDelete(e)}
+        >No, do not delete</button>
+      </div>
+    )
+  }
+
+  editFields() {
+    const { playerName, battletag } = this.state
+    return (
+      <div className="modal-content">
+        <h2 className="modal-header">
+          Edit Player
+        </h2>
+        <div className="field">
+          <label
+            className="label"
+            htmlFor="edit_player_name"
+          >Name:</label>
+          <input
+            type="text"
+            id="edit_player_name"
+            value={playerName || ''}
+            onChange={e => this.onPlayerNameChange(e)}
+            className="input"
+            onKeyDown={e => this.onKeyDown(e)}
+            placeholder="Player name"
+            autoFocus
+          />
+        </div>
+        <div className="field">
+          <label
+            className="label"
+            htmlFor="edit_player_battletag"
+          >Battletag:</label>
+          <input
+            type="text"
+            id="edit_player_battletag"
+            value={battletag || ''}
+            onChange={e => this.onBattletagChange(e)}
+            className="input"
+            onKeyDown={e => this.onKeyDown(e)}
+            placeholder="Battle.net username"
+          />
+        </div>
+        <div className="clearfix">
+          <button
+            type="button"
+            className="delete-player-button button-link"
+            onClick={e => this.confirmDelete(e)}
+          ><i className="fa fa-trash" aria-hidden="true" /> Delete player</button>
+          <button
+            type="button"
+            className="button is-primary"
+            onClick={e => this.save(e)}
+          >Save</button>
+        </div>
       </div>
     )
   }

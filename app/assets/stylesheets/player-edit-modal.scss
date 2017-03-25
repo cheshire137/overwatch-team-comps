@@ -19,6 +19,14 @@
 .modal-content {
   width: 456px;
   padding: 15px;
+
+  p {
+    color: $text;
+  }
+
+  .button + .button {
+    margin-left: 1em;
+  }
 }
 
 .modal-header {
