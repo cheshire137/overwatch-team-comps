@@ -94,6 +94,17 @@ npm test # to run the JavaScript style checker and JavaScript tests
 bundle exec rspec # to run Rails tests
 ```
 
+You can run just the style checker via `npm run style`. You can run just
+the JavaScript tests via `npm run unit-test`.
+
+Snapshots are used in JavaScript tests --
+see [`spec/javascript/components/__snapshots__/`](spec/javascript/components/__snapshots__/) --
+to test that a React component is rendered the same way consistently based
+on the props it's given. If you update a component, a test may fail
+because the snapshot is now different from what is rendered. Manually
+compare the two and if the change is expected, update the now out-of-date
+snapshot with `npm run unit-test -- -u`.
+
 ## How to Deploy to Heroku
 
 Create an [app on Heroku](https://dashboard.heroku.com/apps).
