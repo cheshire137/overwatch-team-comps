@@ -13,7 +13,12 @@
         "sourceType": "module"
     },
     "globals": {
-        "React": true
+        "React": true,
+        "afterEach": true,
+        "beforeEach": true,
+        "describe": true,
+        "expect": true,
+        "test": true
     },
     "plugins": [
         "react",
@@ -33,6 +38,7 @@
         "react/require-default-props": 0,
         "react/jsx-no-bind": 0,
         "no-plusplus": 0,
-        "arrow-parens": 0
+        "arrow-parens": 0,
+        "no-param-reassign": [2, { "props": false }]
     }
 }
