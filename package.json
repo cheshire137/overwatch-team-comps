@@ -35,10 +35,18 @@
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
+    "babel-jest": "^18.0.0",
+    "enzyme": "^2.7.1",
     "eslint": "^3.17.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.0"
+    "eslint-plugin-react": "^6.10.0",
+    "jest": "^18.1.0",
+    "jest-cli": "^18.1.0",
+    "jest-enzyme": "^2.1.2",
+    "react-addons-test-utils": "^15.4.2",
+    "react-shallow-render": "^1.0.1",
+    "react-test-renderer": "^15.4.2"
   }
 }
