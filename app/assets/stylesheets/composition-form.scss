@@ -2,7 +2,7 @@
   display: block;
   width: 100%;
   height: 6px;
-  margin-top: 10px;
+  margin-top: 9px;
 
   &.is-first {
     @include border-top-left-radius(6px);
@@ -67,31 +67,53 @@
   }
 
   .players-header {
-    text-transform: uppercase;
     color: #727783;
 
     .player-count {
       float: right;
+      margin-right: 6px;
     }
+  }
+
+  .player-cell,
+  .hero-select-cell {
+    padding-top: 1px;
   }
 
   .hero-select-cell {
     color: #292b31;
     white-space: nowrap;
-    padding-top: 1px;
+  }
+
+  .hero-select-container,
+  .player-select-container {
+    border: 2px solid #f5f5f6;
+    margin-bottom: 9px;
+    @include border-radius(4px);
   }
 
   .hero-select-container {
-    border: 2px solid #f5f5f6;
     margin-right: 4px;
-    margin-bottom: 9px;
     padding-left: 10px;
-    @include border-radius(4px);
     @include display-flex;
     @include align-items(center);
 
     &.not-filled {
       background-color: #f5f5f6;
+    }
+
+    label,
+    .select {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .select {
+      width: 100%;
+
+      select {
+        width: 100%;
+      }
     }
   }
 
@@ -103,8 +125,24 @@
   .player-select-container {
     background-color: #f5f5f6;
 
+    .label,
+    .player-select.select {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
     .label {
       color: #c8cace;
+    }
+
+    .player-select.select {
+      width: 100%;
+
+      select {
+        padding-left: 0.25em;
+        padding-right: 0;
+        width: 100%;
+      }
     }
   }
 
@@ -114,15 +152,16 @@
 
   thead th {
     text-align: left;
-    font-size: 13px;
-    text-transform: uppercase;
-    font-weight: 700;
-    padding: 0.5em 20px;
+    padding: 0 4px 9px 0;
   }
 }
 
 .composition-notes-wrapper {
   margin-top: 60px;
+
+  .notes-label {
+    margin-bottom: 9px;
+  }
 }
 
 .composition-form {
@@ -146,11 +185,6 @@
       font-size: 1rem;
       padding-left: 15px;
       margin-right: 0.5em;
-    }
-
-    .select select {
-      padding-left: 0.25em;
-      padding-right: 0;
     }
 
     .input {

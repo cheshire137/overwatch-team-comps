@@ -179,7 +179,7 @@ export default class CompositionForm extends React.Component {
           <table className="players-table">
             <thead>
               <tr>
-                <th className="players-header">
+                <th className="players-header small-fat-header">
                   <span className="player-count">{selectedPlayerCount} / 6</span>
                   Team
                 </th>
@@ -227,9 +227,10 @@ export default class CompositionForm extends React.Component {
             </tbody>
           </table>
           <div className="composition-notes-wrapper">
-            <label htmlFor="composition_notes">
-              Notes:
-            </label>
+            <label
+              htmlFor="composition_notes"
+              className="label notes-label small-fat-header"
+            >Notes</label>
             <textarea
               id="composition_notes"
               className="textarea"
