@@ -109,6 +109,22 @@ RSpec.describe CompositionsController do
       expect(response).to be_success
     end
 
+    it 'creates composition with name and notes' do
+      expect do
+        post :save, params: {
+          name: 'My Sweet Dive Comp', notes: 'o boy', map_id: @map.id,
+          format: :json
+        }
+      end.to change { @anon_user.compositions.count }.by(1)
+      expect(response).to be_success
+
+      composition = @anon_user.compositions.last
+      expect(composition.name).to eq('My Sweet Dive Comp')
+      expect(composition.notes).to eq('o boy')
+      expect(composition.map).to eq(@map)
+      expect(composition.session_id).to eq('8675309')
+    end
+
     it 'updates existing player selection for authenticated user' do
       sign_in @user
 

@@ -2,18 +2,19 @@ class PlayerSelect extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      name: props.selectedPlayer.name,
-      showNewNameField: false
-    }
+    this.state = { name: props.name, showNewNameField: false }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ name: nextProps.name, showNewNameField: false })
   }
 
   onChange(event) {
-    const playerID = event.target.value
-    if (playerID === 'new') {
+    const newPlayerID = event.target.value
+    if (newPlayerID === 'new') {
       this.setState({ showNewNameField: true })
     } else {
-      this.props.onChange(playerID, null)
+      this.props.onChange(newPlayerID, null)
     }
   }
 
@@ -35,7 +36,7 @@ class PlayerSelect extends React.Component {
   }
 
   selectOrTextField() {
-    const { selectedPlayer, inputID, players } = this.props
+    const { playerID, inputID, players } = this.props
 
     if (this.state.showNewNameField) {
       return (
@@ -62,9 +63,9 @@ class PlayerSelect extends React.Component {
       <span className="select player-select">
         <select
           onChange={e => this.onChange(e)}
-          value={typeof selectedPlayer.id === 'number' ? selectedPlayer.id : ''}
+          value={typeof playerID === 'number' ? playerID : ''}
         >
-          <option value="">Choose a player</option>
+          <option value="">Player</option>
           {players.map(player => (
             <option
               key={player.id}
@@ -93,7 +94,8 @@ class PlayerSelect extends React.Component {
 
 PlayerSelect.propTypes = {
   inputID: React.PropTypes.string.isRequired,
-  selectedPlayer: React.PropTypes.object.isRequired,
+  playerID: React.PropTypes.number,
+  name: React.PropTypes.string.isRequired,
   players: React.PropTypes.array.isRequired,
   onChange: React.PropTypes.func.isRequired,
   label: React.PropTypes.string.isRequired

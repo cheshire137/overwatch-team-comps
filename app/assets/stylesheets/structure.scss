@@ -2,11 +2,34 @@
   @include box-sizing(border-box);
 }
 
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.layout-children-container {
+  flex: 1 0 auto;
+}
+
 .container {
   position: relative;
   margin: 0 auto;
   padding-right: 30px;
   padding-left: 30px;
+}
+
+.footer {
+  padding: 3rem 1.5rem 6rem;
+  background-color: $form;
+  text-align: center;
+  font-size: 0.9rem;
+
+  a {
+    display: inline-block;
+    margin: 0 1em;
+    text-decoration: none;
+  }
 }
 
 .flex-grid {

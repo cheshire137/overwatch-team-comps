@@ -1,3 +1,4 @@
+import Footer from './footer.jsx'
 import LocalStorage from '../models/local-storage'
 
 class AuthLayout extends React.Component {
@@ -11,7 +12,7 @@ class AuthLayout extends React.Component {
   render() {
     const path = this.props.location.pathname
     return (
-      <div>
+      <div className="layout-container">
         <div className="container">
           <nav className="nav">
             <div className="nav-right">
@@ -29,9 +30,10 @@ class AuthLayout extends React.Component {
             </div>
           </nav>
         </div>
-        <div>
+        <div className="layout-children-container">
           {this.props.children}
         </div>
+        <Footer basePath="/user" />
       </div>
     )
   }

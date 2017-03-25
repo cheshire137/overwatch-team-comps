@@ -7,7 +7,9 @@ class HeroSelect extends React.Component {
   heroPortrait() {
     const { heroes, selectedHeroID } = this.props
     if (typeof selectedHeroID !== 'number') {
-      return <span className="hero-portrait-placeholder" />
+      return (
+        <span className="hero-portrait-placeholder" />
+      )
     }
     const hero = heroes.filter(h => h.id === selectedHeroID)[0]
     return (
@@ -34,7 +36,7 @@ class HeroSelect extends React.Component {
             disabled={disabled}
             id={selectID}
           >
-            <option>Choose a hero</option>
+            <option>Hero</option>
             {heroes.map(hero => (
               <option
                 key={hero.id}

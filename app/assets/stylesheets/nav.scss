@@ -1,3 +1,9 @@
+a {
+  @include transition-property(color);
+  @include transition-duration(0.2s);
+  @include transition-timing-function(ease-in-out);
+}
+
 .nav {
   @include align-items(stretch);
   @include display-flex(flex);
@@ -23,6 +29,11 @@
 a.nav-item {
   color: $defend;
   text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $attack;
+  }
 }
 
 .nav-right {

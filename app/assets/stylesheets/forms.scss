@@ -8,10 +8,7 @@
   font-size: 1rem;
   height: 2.25em;
   line-height: 1.5;
-  padding-bottom: 0.375em;
-  padding-left: 0.625em;
-  padding-right: 0.625em;
-  padding-top: 0.375em;
+  padding: 0.375em 0.75em;
   position: relative;
   vertical-align: top;
   -webkit-touch-callout: none;
@@ -19,8 +16,6 @@
   background-color: $white;
   color: $text;
   cursor: pointer;
-  padding-left: 0.75em;
-  padding-right: 0.75em;
   text-align: center;
   white-space: nowrap;
 
