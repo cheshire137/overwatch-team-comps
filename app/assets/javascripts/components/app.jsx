@@ -16,8 +16,10 @@ import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 function requireAuth(nextState, replace, callback) {
   const api = new OverwatchTeamCompsApi()
   api.getUser().then(json => {
-    LocalStorage.set('battletag', json.battletag)
-    if (!json.auth) {
+    if (json.auth) {
+      LocalStorage.set('battletag', json.battletag)
+    } else {
+      LocalStorage.delete('battletag')
       replace({
         pathname: '/',
         state: { nextPathname: nextState.location.pathname }
@@ -31,30 +33,33 @@ function redirectIfSignedIn(nextState, replace, callback) {
     const battletag = LocalStorage.get('battletag')
     if (battletag && battletag.length > 0) {
       replace({
+        pathname: `/user${nextState.location.pathname}`,
+        state: { nextPathname: nextState.location.pathname }
+      })
+      callback()
+      return
+    }
+  }
+
+  const api = new OverwatchTeamCompsApi()
+  api.getUser().then(json => {
+    if (json.auth) {
+      LocalStorage.set('battletag', json.battletag)
+      replace({
         pathname: '/user',
         state: { nextPathname: nextState.location.pathname }
       })
+    } else {
+      LocalStorage.delete('battletag')
     }
-    callback()
-  } else {
-    const api = new OverwatchTeamCompsApi()
-    api.getUser().then(json => {
-      LocalStorage.set('battletag', json.battletag)
-      if (json.auth) {
-        replace({
-          pathname: '/user',
-          state: { nextPathname: nextState.location.pathname }
-        })
-      }
-    }).then(callback)
-  }
+  }).then(callback)
 }
 
 const App = function() {
   return (
     <Router history={browserHistory}>
-      <Route path="/" component={AnonLayout}>
-        <IndexRoute component={CompositionForm} onEnter={redirectIfSignedIn} />
+      <Route path="/" component={AnonLayout} onEnter={redirectIfSignedIn}>
+        <IndexRoute component={CompositionForm} />
         <Route path="about" component={About} />
       </Route>
       <Route path="/comp" component={CompositionViewLayout}>
