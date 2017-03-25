@@ -26,11 +26,13 @@ json.composition do
   json.availablePlayers @available_players do |player|
     json.id player.id
     json.name player.name
+    json.battletag player.battletag
   end
   json.players @builder.rows do |row|
     if row.player
       json.id row.player.id
       json.name row.player.name
+      json.battletag row.player.battletag
     else
       json.name ''
     end

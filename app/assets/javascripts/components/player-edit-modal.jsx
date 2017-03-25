@@ -1,11 +1,27 @@
+import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
+
 class PlayerEditModal extends React.Component {
+  static onPlayerUpdateError(error) {
+    console.error('failed to update player', error)
+  }
+
   constructor(props) {
     super(props)
-    this.state = { playerName: props.playerName }
+    this.state = {
+      playerName: props.playerName,
+      battletag: props.battletag
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ playerName: nextProps.playerName })
+    this.setState({
+      playerName: nextProps.playerName,
+      battletag: nextProps.battletag
+    })
+  }
+
+  onBattletagChange(event) {
+    this.setState({ battletag: event.target.value })
   }
 
   onClose(event) {
@@ -17,13 +33,17 @@ class PlayerEditModal extends React.Component {
     this.setState({ playerName: event.target.value })
   }
 
+  onSaved(composition) {
+    this.props.close(composition)
+  }
+
   contents() {
     const { isOpen } = this.props
     if (!isOpen) {
       return null
     }
 
-    const { playerName } = this.state
+    const { playerName, battletag } = this.state
     return (
       <div className="modal-popup">
         <div className="modal-content">
@@ -38,10 +58,25 @@ class PlayerEditModal extends React.Component {
             <input
               type="text"
               id="edit_player_name"
-              value={playerName}
+              value={playerName || ''}
               onChange={e => this.onPlayerNameChange(e)}
               className="input"
+              placeholder="Player name"
               autoFocus
+            />
+          </div>
+          <div className="field">
+            <label
+              className="label"
+              htmlFor="edit_player_battletag"
+            >Battletag:</label>
+            <input
+              type="text"
+              id="edit_player_battletag"
+              value={battletag || ''}
+              onChange={e => this.onBattletagChange(e)}
+              className="input"
+              placeholder="Battle.net username"
             />
           </div>
           <button
@@ -62,6 +97,19 @@ class PlayerEditModal extends React.Component {
 
   save(event) {
     event.currentTarget.blur()
+
+    const { playerID, compositionID } = this.props
+    const api = new OverwatchTeamCompsApi()
+
+    const body = {
+      name: this.state.playerName,
+      battletag: this.state.battletag,
+      composition_id: compositionID
+    }
+
+    api.updatePlayer(playerID, body).
+      then(newComp => this.onSaved(newComp)).
+      catch(err => PlayerEditModal.onPlayerUpdateError(err))
   }
 
   render() {
@@ -79,7 +127,9 @@ class PlayerEditModal extends React.Component {
 
 PlayerEditModal.propTypes = {
   playerID: React.PropTypes.number,
+  compositionID: React.PropTypes.number,
   playerName: React.PropTypes.string,
+  battletag: React.PropTypes.string,
   close: React.PropTypes.func.isRequired,
   isOpen: React.PropTypes.bool.isRequired
 }

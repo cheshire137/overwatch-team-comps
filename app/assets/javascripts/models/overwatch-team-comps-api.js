@@ -54,4 +54,9 @@ export default class OverwatchTeamCompsApi extends Fetcher {
     return this.post('/players', this.defaultHeaders, body).
       then(json => json.composition)
   }
+
+  updatePlayer(id, body) {
+    return this.put(`/players/${id}`, this.defaultHeaders, body).
+      then(json => json.composition)
+  }
 }

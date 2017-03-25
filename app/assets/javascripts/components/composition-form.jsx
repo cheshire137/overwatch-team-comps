@@ -161,9 +161,16 @@ export default class CompositionForm extends React.Component {
     this.setState({ editingPlayerID: playerID })
   }
 
+  closePlayerEditModal(newComposition) {
+    this.editPlayer(null)
+    if (newComposition) {
+      this.onCompositionLoaded(newComposition)
+    }
+  }
+
   render() {
     const { name, slug, mapID, mapSegments, players, heroes,
-            selections, notes, mapSlug, editingPlayerID } = this.state
+            selections, notes, mapSlug, editingPlayerID, id } = this.state
 
     if (typeof mapID !== 'number') {
       return <p className="container">Loading...</p>
@@ -260,7 +267,9 @@ export default class CompositionForm extends React.Component {
         <PlayerEditModal
           playerID={editingPlayerID}
           playerName={editingPlayer ? editingPlayer.name : ''}
-          close={() => this.editPlayer(null)}
+          battletag={editingPlayer ? editingPlayer.battletag : ''}
+          close={newComp => this.closePlayerEditModal(newComp)}
+          compositionID={id}
           isOpen={typeof editingPlayerID === 'number'}
         />
       </form>
