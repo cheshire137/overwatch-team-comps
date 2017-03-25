@@ -15,7 +15,9 @@
 .container {
   position: relative;
   margin: 0 auto;
-  width: 90%;
+  padding-right: 30px;
+  padding-left: 30px;
+  width: 100%;
 }
 
 .footer {
@@ -44,7 +46,7 @@ section { margin-bottom: 4em; }
 
 @media screen and (min-width: 800px) {
   .container {
-    max-width: 1020px;
+    max-width: 1700px;
   }
 
   .flex-grid {

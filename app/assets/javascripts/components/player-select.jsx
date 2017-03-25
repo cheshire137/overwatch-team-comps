@@ -81,7 +81,7 @@ class PlayerSelect extends React.Component {
   render() {
     const { inputID, label } = this.props
     return (
-      <div>
+      <div className="player-select-container">
         <label
           htmlFor={inputID}
           className="label"

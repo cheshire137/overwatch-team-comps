@@ -34,8 +34,8 @@ function redirectIfSignedIn(nextState, replace, callback) {
         pathname: '/user',
         state: { nextPathname: nextState.location.pathname }
       })
-      callback()
     }
+    callback()
   } else {
     const api = new OverwatchTeamCompsApi()
     api.getUser().then(json => {
