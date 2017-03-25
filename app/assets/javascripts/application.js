@@ -15,13 +15,22 @@
 //= require react
 //= require react_ujs
 
-window.React = global.React = require('react')
+/* eslint-disable global-require */
 
-const Promise = require('promise-polyfill')
+const isProduction = window.location.host.indexOf('herokuapp.com') > -1
+const isHttps = window.location.protocol === 'https:'
+if (isProduction && !isHttps) {
+  window.location.href = `https:${window.location.href.substring(window.location.protocol.length)}`
+} else {
+  window.React = global.React = require('react')
 
-if (!window.Promise) {
-  window.Promise = Promise
+  const Promise = require('promise-polyfill')
+
+  if (!window.Promise) {
+    window.Promise = Promise
+  }
+
+  require('whatwg-fetch')
+  require('./components')
 }
 
-require('whatwg-fetch')
-require('./components')
