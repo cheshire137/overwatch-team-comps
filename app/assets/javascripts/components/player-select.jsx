@@ -106,7 +106,6 @@ class PlayerSelect extends React.Component {
 PlayerSelect.propTypes = {
   inputID: React.PropTypes.string.isRequired,
   playerID: React.PropTypes.number,
-  name: React.PropTypes.string.isRequired,
   players: React.PropTypes.array.isRequired,
   onChange: React.PropTypes.func.isRequired,
   label: React.PropTypes.string.isRequired
