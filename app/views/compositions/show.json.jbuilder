@@ -13,6 +13,9 @@ json.composition do
     json.id @composition.map.id
     json.name @composition.map.name
     json.slug @composition.map.slug
+    if image_exists?(@composition.map.image_name)
+      json.image image_path(@composition.map.image_name)
+    end
     json.type @composition.map.map_type
     json.segments @composition.map.segments do |map_segment|
       json.id map_segment.id
