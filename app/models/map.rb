@@ -6,4 +6,8 @@ class Map < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   friendly_id :name, use: :slugged
+
+  def image_name
+    @image_name ||= "#{slug}.png"
+  end
 end
