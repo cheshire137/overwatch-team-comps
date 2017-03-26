@@ -168,6 +168,11 @@ export default class CompositionForm extends React.Component {
     }
   }
 
+  selectedPlayerCount() {
+    return this.state.players.
+      filter(p => typeof p.id === 'number').length
+  }
+
   render() {
     const { name, slug, mapID, mapSegments, players, heroes,
             selections, notes, mapSlug, editingPlayerID, id } = this.state
@@ -176,8 +181,6 @@ export default class CompositionForm extends React.Component {
       return <p className="container">Loading...</p>
     }
 
-    const selectedPlayerCount = players.
-      filter(p => typeof p.id === 'number').length
     const editingPlayer = typeof editingPlayerID === 'number'
       ? players.filter(p => p.id === editingPlayerID)[0]
       : null
@@ -197,7 +200,9 @@ export default class CompositionForm extends React.Component {
             <thead>
               <tr>
                 <th className="players-header small-fat-header">
-                  <span className="player-count">{selectedPlayerCount} / 6</span>
+                  <span className="player-count">
+                    {this.selectedPlayerCount()} / 6
+                  </span>
                   Team
                 </th>
                 {mapSegments.map((segment, i) => (
