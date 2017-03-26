@@ -4,7 +4,7 @@ import PlayerSelect from './player-select.jsx'
 const EditPlayerSelectionRow = function(props) {
   const { inputID, playerID, nameLabel, onHeroSelection,
           mapSegments, onPlayerSelection, players, heroes,
-          selections, editPlayer } = props
+          selections, editPlayer, disabled } = props
   return (
     <tr>
       <td className="player-cell">
@@ -13,6 +13,7 @@ const EditPlayerSelectionRow = function(props) {
           label={nameLabel}
           playerID={playerID}
           players={players}
+          disabled={disabled}
           onChange={(newPlayerID, newName) =>
             onPlayerSelection(newPlayerID, newName)
           }
@@ -47,7 +48,8 @@ EditPlayerSelectionRow.propTypes = {
   mapSegments: React.PropTypes.array.isRequired,
   heroes: React.PropTypes.array.isRequired,
   selections: React.PropTypes.object.isRequired,
-  editPlayer: React.PropTypes.func.isRequired
+  editPlayer: React.PropTypes.func.isRequired,
+  disabled: React.PropTypes.bool.isRequired
 }
 
 export default EditPlayerSelectionRow

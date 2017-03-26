@@ -1,7 +1,6 @@
 class PlayerSelect extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = { name: '', showNewNameField: false }
   }
 
@@ -43,7 +42,7 @@ class PlayerSelect extends React.Component {
   }
 
   selectOrTextField() {
-    const { playerID, inputID, players } = this.props
+    const { playerID, inputID, players, disabled } = this.props
 
     if (this.state.showNewNameField) {
       return (
@@ -52,6 +51,7 @@ class PlayerSelect extends React.Component {
             type="text"
             id={inputID}
             placeholder="Player name"
+            disabled={disabled}
             value={this.state.name}
             onChange={e => this.onNewNameSet(e)}
             onKeyDown={e => this.onNewNameKeyDown(e)}
@@ -62,6 +62,7 @@ class PlayerSelect extends React.Component {
             <button
               type="button"
               className="button"
+              disabled={disabled}
               onClick={e => this.saveNewName(e)}
             ><i className="fa fa-check" aria-hidden="true" /></button>
           </div>
@@ -73,9 +74,12 @@ class PlayerSelect extends React.Component {
 
     return (
       <div className="existing-player-container">
-        <span className="select player-select">
+        <span
+          className={`select player-select ${disabled ? 'is-disabled' : ''}`}
+        >
           <select
             onChange={e => this.onChange(e)}
+            disabled={disabled}
             value={isPlayerSelected ? playerID : ''}
           >
             <option value="">Player</option>
@@ -91,6 +95,7 @@ class PlayerSelect extends React.Component {
         {isPlayerSelected ? (
           <button
             type="button"
+            disabled={disabled}
             className="button-link edit-player-button"
             onClick={e => this.editPlayer(e)}
           ><i className="fa fa-cog" aria-hidden="true" /></button>
@@ -119,7 +124,8 @@ PlayerSelect.propTypes = {
   players: React.PropTypes.array.isRequired,
   onChange: React.PropTypes.func.isRequired,
   label: React.PropTypes.string.isRequired,
-  editPlayer: React.PropTypes.func.isRequired
+  editPlayer: React.PropTypes.func.isRequired,
+  disabled: React.PropTypes.bool.isRequired
 }
 
 export default PlayerSelect

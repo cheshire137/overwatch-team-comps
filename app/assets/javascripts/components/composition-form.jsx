@@ -258,6 +258,7 @@ export default class CompositionForm extends React.Component {
                     key={key}
                     inputID={inputID}
                     playerID={player.id}
+                    disabled={isRequestOut}
                     players={selectablePlayers}
                     heroes={playerHeroes}
                     selections={playerSelections}
