@@ -1,0 +1,53 @@
+exports[`AuthLayout matches snapshot 1`] = `
+<div
+  className="layout-container">
+  <div
+    className="container">
+    <nav
+      className="nav">
+      <div
+        className="nav-right">
+        <a
+          className="nav-item is-active"
+          href="/user">
+          Team composition
+        </a>
+        <a
+          className="nav-item "
+          href="/user/hero-pool">
+          Your hero pool
+        </a>
+        <span
+          className="nav-item">
+          Signed in as 
+          <strong>
+            cheetos#1234
+          </strong>
+        </span>
+      </div>
+    </nav>
+  </div>
+  <div
+    className="layout-children-container">
+    <p>
+      Hey there
+    </p>
+  </div>
+  <footer
+    className="footer">
+    <div
+      className="container">
+      <a
+        href="/user/about">
+        About
+      </a>
+      <a
+        href="https://github.com/cheshire137/overwatch-team-comps"
+        rel="noopener noreferrer"
+        target="_blank">
+        View source
+      </a>
+    </div>
+  </footer>
+</div>
+`;

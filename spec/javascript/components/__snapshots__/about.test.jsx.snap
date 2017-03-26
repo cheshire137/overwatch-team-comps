@@ -1,0 +1,29 @@
+exports[`About matches snapshot 1`] = `
+<div
+  className="container about-page">
+  <h1>
+    About
+  </h1>
+  <p>
+    Thanks to Blizzard for Overwatch. 
+    <i
+      aria-hidden="true"
+      className="fa fa-heart" />
+     This app was built with 
+    <a
+      href="https://facebook.github.io/react/"
+      rel="noopener noreferrer"
+      target="_blank">
+      React
+    </a>
+     and 
+    <a
+      href="http://rubyonrails.org/"
+      rel="noopener noreferrer"
+      target="_blank">
+      Ruby on Rails
+    </a>
+    .
+  </p>
+</div>
+`;
