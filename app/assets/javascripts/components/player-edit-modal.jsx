@@ -1,20 +1,13 @@
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 class PlayerEditModal extends React.Component {
-  static onPlayerDeleteError(error) {
-    console.error('failed to delete player', error)
-  }
-
-  static onPlayerUpdateError(error) {
-    console.error('failed to update player', error)
-  }
-
   constructor(props) {
     super(props)
     this.state = {
       playerName: props.playerName,
       battletag: props.battletag,
-      showDeleteConfirmation: false
+      showDeleteConfirmation: false,
+      isRequestOut: false
     }
   }
 
@@ -22,7 +15,8 @@ class PlayerEditModal extends React.Component {
     this.setState({
       playerName: nextProps.playerName,
       battletag: nextProps.battletag,
-      showDeleteConfirmation: false
+      showDeleteConfirmation: false,
+      isRequestOut: false
     })
   }
 
@@ -41,8 +35,18 @@ class PlayerEditModal extends React.Component {
     }
   }
 
+  onPlayerDeleteError(error) {
+    console.error('failed to delete player', error)
+    this.setState({ isRequestOut: false })
+  }
+
   onPlayerNameChange(event) {
     this.setState({ playerName: event.target.value })
+  }
+
+  onPlayerUpdateError(error) {
+    console.error('failed to update player', error)
+    this.setState({ isRequestOut: false })
   }
 
   onCompositionLoaded(composition) {
@@ -64,15 +68,19 @@ class PlayerEditModal extends React.Component {
       return null
     }
 
+    const { showDeleteConfirmation, isRequestOut } = this.state
+
     return (
       <div className="modal-popup">
-        {this.state.showDeleteConfirmation ? this.deleteConfirmation() : this.editFields()}
-        <button
-          type="button"
-          className="modal-close"
-          aria-label="Close modal"
-          onClick={e => this.onClose(e)}
-        ><i className="fa fa-times" aria-hidden="true" /></button>
+        {showDeleteConfirmation ? this.deleteConfirmation() : this.editFields()}
+        {isRequestOut ? '' : (
+          <button
+            type="button"
+            className="modal-close"
+            aria-label="Close modal"
+            onClick={e => this.onClose(e)}
+          ><i className="fa fa-times" aria-hidden="true" /></button>
+        )}
       </div>
     )
   }
@@ -85,9 +93,11 @@ class PlayerEditModal extends React.Component {
 
     const body = { composition_id: compositionID }
 
-    api.deletePlayer(playerID, body).
-      then(newComp => this.onCompositionLoaded(newComp)).
-      catch(err => PlayerEditModal.onPlayerDeleteError(err))
+    this.setState({ isRequestOut: true }, () => {
+      api.deletePlayer(playerID, body).
+        then(newComp => this.onCompositionLoaded(newComp)).
+        catch(err => this.onPlayerDeleteError(err))
+    })
   }
 
   deleteConfirmation() {
@@ -115,7 +125,8 @@ class PlayerEditModal extends React.Component {
   }
 
   editFields() {
-    const { playerName, battletag } = this.state
+    const { playerName, battletag, isRequestOut } = this.state
+
     return (
       <div className="modal-content">
         <h2 className="modal-header">
@@ -134,6 +145,7 @@ class PlayerEditModal extends React.Component {
             className="input"
             onKeyDown={e => this.onKeyDown(e)}
             placeholder="Player name"
+            disabled={isRequestOut}
             autoFocus
           />
         </div>
@@ -146,6 +158,7 @@ class PlayerEditModal extends React.Component {
             type="text"
             id="edit_player_battletag"
             value={battletag || ''}
+            disabled={isRequestOut}
             onChange={e => this.onBattletagChange(e)}
             className="input"
             onKeyDown={e => this.onKeyDown(e)}
@@ -153,14 +166,17 @@ class PlayerEditModal extends React.Component {
           />
         </div>
         <div className="clearfix">
-          <button
-            type="button"
-            className="delete-player-button button-link"
-            onClick={e => this.confirmDelete(e)}
-          ><i className="fa fa-trash" aria-hidden="true" /> Delete player</button>
+          {isRequestOut ? '' : (
+            <button
+              type="button"
+              className="delete-player-button button-link"
+              onClick={e => this.confirmDelete(e)}
+            ><i className="fa fa-trash" aria-hidden="true" /> Delete player</button>
+          )}
           <button
             type="button"
             className="button is-primary"
+            disabled={isRequestOut}
             onClick={e => this.save(e)}
           >Save</button>
         </div>
@@ -180,9 +196,11 @@ class PlayerEditModal extends React.Component {
       composition_id: compositionID
     }
 
-    api.updatePlayer(playerID, body).
-      then(newComp => this.onCompositionLoaded(newComp)).
-      catch(err => PlayerEditModal.onPlayerUpdateError(err))
+    this.setState({ isRequestOut: true }, () => {
+      api.updatePlayer(playerID, body).
+        then(newComp => this.onCompositionLoaded(newComp)).
+        catch(err => this.onPlayerUpdateError(err))
+    })
   }
 
   render() {
