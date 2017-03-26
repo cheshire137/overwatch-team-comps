@@ -173,6 +173,16 @@ export default class CompositionForm extends React.Component {
       filter(p => typeof p.id === 'number').length
   }
 
+  getPlayerToEdit() {
+    const { players, editingPlayerID } = this.state
+
+    if (typeof editingPlayerID === 'number') {
+      return players.filter(player => player.id === editingPlayerID)[0]
+    }
+
+    return null
+  }
+
   render() {
     const { name, slug, mapID, mapSegments, players, heroes,
             selections, notes, mapSlug, editingPlayerID, id } = this.state
@@ -181,9 +191,7 @@ export default class CompositionForm extends React.Component {
       return <p className="container">Loading...</p>
     }
 
-    const editingPlayer = typeof editingPlayerID === 'number'
-      ? players.filter(p => p.id === editingPlayerID)[0]
-      : null
+    const editingPlayer = this.getPlayerToEdit()
 
     return (
       <form className="composition-form">
