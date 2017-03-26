@@ -284,6 +284,7 @@ export default class CompositionForm extends React.Component {
             <textarea
               id="composition_notes"
               className="textarea"
+              disabled={isRequestOut}
               placeholder="Notes for this team composition"
               value={notes || ''}
               onChange={e => this.onCompositionNotesChange(e)}
