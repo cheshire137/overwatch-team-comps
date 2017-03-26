@@ -71,4 +71,26 @@ describe Player do
       expect(result).to eq(player)
     end
   end
+
+  it 'decrements positions of subsequent players in comp on destroy' do
+    user = create(:user)
+    comp = create(:composition, user: user)
+
+    player1 = create(:player, creator: user)
+    player2 = create(:player, creator: user)
+    player3 = create(:player, creator: user)
+
+    comp_player1 = create(:composition_player, composition: comp,
+                          position: 0, player: player1)
+    comp_player2 = create(:composition_player, composition: comp,
+                          position: 1, player: player2)
+    comp_player3 = create(:composition_player, composition: comp,
+                          position: 2, player: player3)
+
+    expect { player2.destroy }.
+      to change { CompositionPlayer.count }.by(-1)
+
+    expect(comp_player1.reload.position).to eq(0)
+    expect(comp_player3.reload.position).to eq(1)
+  end
 end

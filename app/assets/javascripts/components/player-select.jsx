@@ -2,11 +2,7 @@ class PlayerSelect extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { name: props.name, showNewNameField: false }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ name: nextProps.name, showNewNameField: false })
+    this.state = { name: '', showNewNameField: false }
   }
 
   onChange(event) {
@@ -18,8 +14,19 @@ class PlayerSelect extends React.Component {
     }
   }
 
+  onNewNameKeyDown(event) {
+    if (event.keyCode === 27) { // Esc
+      this.setState({ showNewNameField: false })
+    }
+  }
+
   onNewNameSet(event) {
     this.setState({ name: event.target.value })
+  }
+
+  editPlayer(event) {
+    event.currentTarget.blur()
+    this.props.editPlayer()
   }
 
   saveNewName(event) {
@@ -47,34 +54,48 @@ class PlayerSelect extends React.Component {
             placeholder="Player name"
             value={this.state.name}
             onChange={e => this.onNewNameSet(e)}
-            className="input"
+            onKeyDown={e => this.onNewNameKeyDown(e)}
+            className="input player-name-input"
             autoFocus
           />
-          <button
-            type="button"
-            className="button"
-            onClick={e => this.saveNewName(e)}
-          ><i className="fa fa-check" aria-hidden="true" /></button>
+          <div className="button-wrapper">
+            <button
+              type="button"
+              className="button"
+              onClick={e => this.saveNewName(e)}
+            ><i className="fa fa-check" aria-hidden="true" /></button>
+          </div>
         </div>
       )
     }
 
+    const isPlayerSelected = typeof playerID === 'number'
+
     return (
-      <span className="select player-select">
-        <select
-          onChange={e => this.onChange(e)}
-          value={typeof playerID === 'number' ? playerID : ''}
-        >
-          <option value="">Player</option>
-          {players.map(player => (
-            <option
-              key={player.id}
-              value={player.id}
-            >{player.name}</option>
-          ))}
-          <option value="new">Add new player</option>
-        </select>
-      </span>
+      <div className="existing-player-container">
+        <span className="select player-select">
+          <select
+            onChange={e => this.onChange(e)}
+            value={isPlayerSelected ? playerID : ''}
+          >
+            <option value="">Player</option>
+            {players.map(player => (
+              <option
+                key={player.id}
+                value={player.id}
+              >{player.name}</option>
+            ))}
+            <option value="new">Add new player</option>
+          </select>
+        </span>
+        {isPlayerSelected ? (
+          <button
+            type="button"
+            className="button-link edit-player-button"
+            onClick={e => this.editPlayer(e)}
+          ><i className="fa fa-cog" aria-hidden="true" /></button>
+        ) : ''}
+      </div>
     )
   }
 
@@ -95,10 +116,10 @@ class PlayerSelect extends React.Component {
 PlayerSelect.propTypes = {
   inputID: React.PropTypes.string.isRequired,
   playerID: React.PropTypes.number,
-  name: React.PropTypes.string.isRequired,
   players: React.PropTypes.array.isRequired,
   onChange: React.PropTypes.func.isRequired,
-  label: React.PropTypes.string.isRequired
+  label: React.PropTypes.string.isRequired,
+  editPlayer: React.PropTypes.func.isRequired
 }
 
 export default PlayerSelect

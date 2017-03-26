@@ -1,1 +1,2 @@
+<% content_for(:title_tag) do %><%= page_title(request.path) %><% end %>
 <%= react_component 'App', path: request.path %>

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     get "/composition/:slug" => "compositions#show", as: :composition
     post "/compositions" => "compositions#save", as: :compositions
 
-    resources :players, only: [:create]
+    resources :players, only: [:create, :update, :destroy]
 
     resources :maps, only: [:index]
 

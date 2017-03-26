@@ -1,6 +1,8 @@
 import CompositionFormHeader from './composition-form-header.jsx'
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
 import MapSegmentHeader from './map-segment-header.jsx'
+import PlayerEditModal from './player-edit-modal.jsx'
+
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 export default class CompositionForm extends React.Component {
@@ -29,7 +31,8 @@ export default class CompositionForm extends React.Component {
       availablePlayers: [],
       heroes: {},
       selections: {},
-      notes: ''
+      notes: '',
+      editingPlayerID: null
     }
   }
 
@@ -154,9 +157,20 @@ export default class CompositionForm extends React.Component {
       catch(err => CompositionForm.onCompositionSaveError(err))
   }
 
+  editPlayer(playerID) {
+    this.setState({ editingPlayerID: playerID })
+  }
+
+  closePlayerEditModal(newComposition) {
+    this.editPlayer(null)
+    if (newComposition) {
+      this.onCompositionLoaded(newComposition)
+    }
+  }
+
   render() {
     const { name, slug, mapID, mapSegments, players, heroes,
-            selections, notes, mapSlug } = this.state
+            selections, notes, mapSlug, editingPlayerID, id } = this.state
 
     if (typeof mapID !== 'number') {
       return <p className="container">Loading...</p>
@@ -164,6 +178,9 @@ export default class CompositionForm extends React.Component {
 
     const selectedPlayerCount = players.
       filter(p => typeof p.id === 'number').length
+    const editingPlayer = typeof editingPlayerID === 'number'
+      ? players.filter(p => p.id === editingPlayerID)[0]
+      : null
 
     return (
       <form className="composition-form">
@@ -209,7 +226,6 @@ export default class CompositionForm extends React.Component {
                     key={key}
                     inputID={inputID}
                     playerID={player.id}
-                    playerName={player.name}
                     players={selectablePlayers}
                     heroes={playerHeroes}
                     selections={playerSelections}
@@ -221,6 +237,7 @@ export default class CompositionForm extends React.Component {
                     onPlayerSelection={(playerID, newName) =>
                       this.onPlayerSelected(playerID, newName, index)
                     }
+                    editPlayer={playerID => this.editPlayer(playerID)}
                   />
                 )
               })}
@@ -247,6 +264,14 @@ export default class CompositionForm extends React.Component {
             </p>
           </div>
         </div>
+        <PlayerEditModal
+          playerID={editingPlayerID}
+          playerName={editingPlayer ? editingPlayer.name : ''}
+          battletag={editingPlayer ? editingPlayer.battletag : ''}
+          close={newComp => this.closePlayerEditModal(newComp)}
+          compositionID={id}
+          isOpen={typeof editingPlayerID === 'number'}
+        />
       </form>
     )
   }

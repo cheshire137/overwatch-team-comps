@@ -1,3 +1,15 @@
+.edit-player-button.button-link {
+  color: $soft-header;
+  height: 2.25em;
+  padding-right: 9px;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    color: $attack;
+  }
+}
+
 .map-segment-filled-status {
   display: block;
   width: 100%;
@@ -125,14 +137,28 @@
   .player-select-container {
     background-color: #f5f5f6;
 
+    &,
+    .existing-player-container,
+    .player-new-name-container {
+      display: table;
+      width: 100%;
+    }
+
     .label,
-    .player-select.select {
+    .player-select.select,
+    .edit-player-button {
       display: table-cell;
       vertical-align: middle;
     }
 
+    .existing-player-container,
+    .player-new-name-container {
+      width: 100%;
+    }
+
     .label {
       color: #c8cace;
+      width: 34px;
     }
 
     .player-select.select {
@@ -185,21 +211,6 @@
       font-size: 1rem;
       padding-left: 15px;
       margin-right: 0.5em;
-    }
-
-    .input {
-      padding-left: 0.25em;
-      padding-right: 0.25em;
-      box-shadow: none;
-      border: none;
-      border-bottom: 1px solid transparent;
-      width: auto;
-      margin-right: 2px;
-
-      &:focus,
-      &:active {
-        border-bottom-color: #0e9ed2;
-      }
     }
   }
 }
@@ -266,8 +277,38 @@
 }
 
 .player-new-name-container {
-  display: inline-block;
-  vertical-align: middle;
+  .player-name-input,
+  .button-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .player-name-input {
+    padding-left: 0.25em;
+    padding-right: 0.25em;
+    box-shadow: none;
+    border: none;
+    border-bottom: 1px solid transparent;
+    width: 100%;
+    @include border-top-right-radius(0);
+    @include border-bottom-right-radius(0);
+
+    &:focus,
+    &:active {
+      border-bottom-color: $defend;
+    }
+  }
+
+  .button-wrapper {
+    width: 30px;
+    padding-left: 2px;
+
+    .button {
+      height: 2.285em;
+      @include border-top-left-radius(0);
+      @include border-bottom-left-radius(0);
+    }
+  }
 }
 
 .composition-link-container {

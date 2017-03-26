@@ -24,6 +24,14 @@ export default class Fetcher {
     return this.makeRequest('POST', path, headers, body)
   }
 
+  put(path, headers, body) {
+    return this.makeRequest('PUT', path, headers, body)
+  }
+
+  delete(path, headers, body) {
+    return this.makeRequest('DELETE', path, headers, body)
+  }
+
   makeRequest(method, path, headers, body) {
     const url = `${this.basePath}${path}`
     const data = { method, headers, credentials: 'same-origin' }

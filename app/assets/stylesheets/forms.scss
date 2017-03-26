@@ -29,6 +29,49 @@
     box-shadow: 0 0 0.5em rgba(255, 255, 255, 0.25);
     color: $mix;
   }
+
+  &.is-normal {
+    border: 1px solid $form;
+  }
+
+  &.is-primary {
+    background-color: $defend;
+    border-color: transparent;
+    color: #fff;
+
+    &:hover {
+      background-color: darken($defend, 10%);
+    }
+  }
+
+  &.is-danger {
+    color: $attack;
+    border: 1px solid $light-attack;
+
+    &:hover {
+      background-color: $light-attack;
+      border-color: lighten($attack, 10%);
+    }
+  }
+}
+
+.button-link {
+  display: inline-block;
+  padding: 0;
+  font-size: inherit;
+  color: $defend;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  @include user-select(none);
+  background-color: transparent;
+  border: 0;
+  @include appearance(none);
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
 }
 
 .input {
@@ -145,3 +188,18 @@
   outline: none;
   border-color: $defend;
 }
+
+.field {
+  .label {
+    font-weight: 700;
+
+    &:not(:last-child) {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 0.75rem;
+  }
+}
+

@@ -1,4 +1,4 @@
-a {
+a, .button-link {
   @include transition-property(color);
   @include transition-duration(0.2s);
   @include transition-timing-function(ease-in-out);

@@ -66,3 +66,9 @@ section { margin-bottom: 4em; }
     .col { width: 49%; }
   }
 }
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
