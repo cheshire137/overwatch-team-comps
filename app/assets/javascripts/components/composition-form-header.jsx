@@ -45,18 +45,20 @@ class CompositionHeader extends React.Component {
 
   nameEditArea() {
     const { editingName, name } = this.state
+    const { disabled } = this.props
     let pencilIcon = null
     let saveButton = null
 
     if (editingName) {
       saveButton = (
         <button
+          disabled={disabled}
           type="button"
           className="button save-composition-name-button"
           onClick={e => this.saveNewName(e)}
         ><i className="fa fa-check" aria-hidden="true" /></button>
       )
-    } else {
+    } else if (!disabled) {
       pencilIcon = (
         <i
           className="fa fa-pencil-square-o"
@@ -74,6 +76,7 @@ class CompositionHeader extends React.Component {
           placeholder="Composition name"
           id="composition_name"
           value={name || ''}
+          disabled={disabled}
           onChange={e => this.onNameChange(e)}
           onFocus={() => this.setState({ editingName: true })}
           aria-label="Name of this team composition"
@@ -111,19 +114,22 @@ class CompositionHeader extends React.Component {
       return null
     }
 
-    const { mapID, mapSlug } = this.props
+    const { mapID, mapSlug, disabled } = this.props
     return (
       <header className={`composition-header gradient-${mapSlug}`}>
         <div className="container">
           <div className={`map-photo-container background-${mapSlug}`} />
           <div className="composition-meta">
             <div>
-              <span className="select map-select">
+              <span
+                className={`select map-select ${disabled ? 'is-disabled' : ''}`}
+              >
                 <select
                   aria-label="Choose a map"
                   id="composition_map_id"
                   value={mapID}
                   onChange={e => this.onMapChange(e)}
+                  disabled={disabled}
                 >
                   {maps.map(map =>
                     <option
@@ -149,7 +155,8 @@ CompositionHeader.propTypes = {
   mapID: React.PropTypes.number.isRequired,
   mapSlug: React.PropTypes.string.isRequired,
   onMapChange: React.PropTypes.func.isRequired,
-  onNameChange: React.PropTypes.func.isRequired
+  onNameChange: React.PropTypes.func.isRequired,
+  disabled: React.PropTypes.bool.isRequired
 }
 
 export default CompositionHeader
