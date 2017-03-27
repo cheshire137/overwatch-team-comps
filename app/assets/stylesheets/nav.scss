@@ -101,7 +101,7 @@ a.nav-item {
 .dropdown-header {
   padding: 4px 15px;
   font-size: 14px;
-  color: $text;
+  color: $soft-text;
   font-weight: 700;
 }
 
@@ -113,6 +113,21 @@ a.nav-item {
   width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: left;
+}
+
+.dropdown-item,
+a.dropdown-item,
+button.dropdown-item {
+  &:hover,
+  &:focus {
+    color: $attack;
+  }
+}
+
+a.dropdown-item {
+  color: $text;
+  text-decoration: none;
 }
 
 button.dropdown-item {
@@ -122,7 +137,6 @@ button.dropdown-item {
   @include appearance(none);
   cursor: pointer;
   font-size: inherit;
-  text-align: left;
 }
 
 .nav-right {

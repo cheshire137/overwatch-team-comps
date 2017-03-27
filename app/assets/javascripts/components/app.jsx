@@ -9,6 +9,7 @@ import CompositionForm from './composition-form.jsx'
 import CompositionView from './composition-view.jsx'
 import HeroPoolForm from './hero-pool-form.jsx'
 import NotFound from './not-found.jsx'
+import Settings from './settings.jsx'
 
 import LocalStorage from '../models/local-storage'
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
@@ -88,6 +89,7 @@ const App = function() {
         <IndexRoute component={CompositionForm} />
         <Route path="about" component={About} />
         <Route path="hero-pool" component={HeroPoolForm} />
+        <Route path="settings" component={Settings} />
       </Route>
       <Route path="*" component={NotFound} />
     </Router>

@@ -91,6 +91,10 @@ class AuthLayout extends React.Component {
           <input name="authenticity_token" type="hidden" value={authenticityToken} />
           <div className="dropdown-header">{battletag}</div>
           <div className="dropdown-divider" />
+          <a
+            className="dropdown-item"
+            href="/user/settings"
+          >Settings</a>
           <button
             className="dropdown-item"
             type="submit"
