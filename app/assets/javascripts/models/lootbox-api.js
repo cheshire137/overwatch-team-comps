@@ -3,7 +3,7 @@ import Fetcher from './fetcher'
 // See https://api.lootbox.eu/documentation
 export default class LootboxApi extends Fetcher {
   constructor(platform, region) {
-    super('https://api.lootbox.eu/')
+    super('https://api.lootbox.eu')
     this.platform = platform
     this.region = region
   }
