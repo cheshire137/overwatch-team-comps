@@ -9,6 +9,7 @@ class AuthLayout extends React.Component {
     LocalStorage.delete('authenticity-token')
     LocalStorage.delete('avatar')
     LocalStorage.delete('battletag')
+    LocalStorage.delete('email')
     LocalStorage.delete('region')
     LocalStorage.delete('platform')
   }

@@ -16,6 +16,7 @@ import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 function storeUserData(json) {
   LocalStorage.set('authenticity-token', json.authenticityToken)
   LocalStorage.set('battletag', json.battletag)
+  LocalStorage.set('email', json.email)
   LocalStorage.set('region', json.region)
   LocalStorage.set('platform', json.platform)
 }
@@ -24,6 +25,7 @@ function clearUserData() {
   LocalStorage.delete('authenticity-token')
   LocalStorage.delete('avatar')
   LocalStorage.delete('battletag')
+  LocalStorage.delete('email')
   LocalStorage.delete('region')
   LocalStorage.delete('platform')
 }
