@@ -7,6 +7,7 @@ class AuthLayout extends React.Component {
   static clearLocalStorage(event) {
     event.currentTarget.blur()
     LocalStorage.delete('authenticity-token')
+    LocalStorage.delete('avatar')
     LocalStorage.delete('battletag')
     LocalStorage.delete('region')
     LocalStorage.delete('platform')
@@ -18,18 +19,22 @@ class AuthLayout extends React.Component {
       authenticityToken: LocalStorage.get('authenticity-token'),
       battletag: LocalStorage.get('battletag'),
       menuShown: false,
-      avatar: null,
+      avatar: LocalStorage.get('avatar'),
       region: LocalStorage.get('region') || 'us',
       platform: LocalStorage.get('platform') || 'pc'
     }
   }
 
   componentDidMount() {
-    const { region, platform, battletag } = this.state
-    const api = new LootboxApi(platform, region)
-    api.getProfile(battletag).then(json => {
-      this.setState({ avatar: json.avatar })
-    })
+    const { region, platform, battletag, avatar } = this.state
+
+    if (typeof avatar !== 'string') {
+      const api = new LootboxApi(platform, region)
+      api.getProfile(battletag).then(json => {
+        LocalStorage.set('avatar', json.avatar)
+        this.setState({ avatar: json.avatar })
+      })
+    }
   }
 
   toggleMenu(event) {

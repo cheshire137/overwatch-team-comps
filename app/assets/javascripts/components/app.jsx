@@ -22,6 +22,7 @@ function storeUserData(json) {
 
 function clearUserData() {
   LocalStorage.delete('authenticity-token')
+  LocalStorage.delete('avatar')
   LocalStorage.delete('battletag')
   LocalStorage.delete('region')
   LocalStorage.delete('platform')
