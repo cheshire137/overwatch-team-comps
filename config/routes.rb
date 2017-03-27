@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     post "/heroes/pool" => "heroes#save"
 
     get "/user" => "users#current", as: :current_user
+    put "/user" => "users#update"
   end
 
   # For details on the DSL available within this file, see
