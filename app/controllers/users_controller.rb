@@ -12,8 +12,8 @@ class UsersController < ApplicationController
 
   def update
     attrs = {
-      email: params[:email], region: params[:region],
-      platform: params[:platform]
+      email: params[:email], region: params[:region].presence,
+      platform: params[:platform].presence
     }
 
     if current_user.update_attributes(attrs)
