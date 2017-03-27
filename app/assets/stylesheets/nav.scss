@@ -24,6 +24,15 @@ a, .button-link {
     color: $text;
     border-bottom-color: $defend;
   }
+
+  .user-avatar {
+    height: 23px;
+    @include border-radius(4px);
+  }
+
+  .fa.fa-user {
+    font-size: 23px;
+  }
 }
 
 button.nav-item {
@@ -55,9 +64,9 @@ a.nav-item {
   position: absolute;
   top: 100%;
   left: auto;
-  right: 11px;
+  right: 6px;
   z-index: 100;
-  width: 236px;
+  width: 180px;
   margin-top: 0;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -81,6 +90,19 @@ a.nav-item {
     display: inline-block;
     content: "";
   }
+}
+
+.dropdown-divider {
+  height: 1px;
+  margin: 8px 1px;
+  background-color: $form;
+}
+
+.dropdown-header {
+  padding: 4px 15px;
+  font-size: 14px;
+  color: $text;
+  font-weight: 700;
 }
 
 .dropdown-item {

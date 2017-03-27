@@ -1,6 +1,7 @@
 import Footer from './footer.jsx'
 
 import LocalStorage from '../models/local-storage'
+import LootboxApi from '../models/lootbox-api'
 
 class AuthLayout extends React.Component {
   static clearLocalStorage(event) {
@@ -16,8 +17,19 @@ class AuthLayout extends React.Component {
     this.state = {
       authenticityToken: LocalStorage.get('authenticity-token'),
       battletag: LocalStorage.get('battletag'),
-      menuShown: false
+      menuShown: false,
+      avatar: null,
+      region: LocalStorage.get('region') || 'us',
+      platform: LocalStorage.get('platform') || 'pc'
     }
+  }
+
+  componentDidMount() {
+    const { region, platform, battletag } = this.state
+    const api = new LootboxApi(platform, region)
+    api.getProfile(battletag).then(json => {
+      this.setState({ avatar: json.avatar })
+    })
   }
 
   toggleMenu(event) {
@@ -25,8 +37,29 @@ class AuthLayout extends React.Component {
     this.setState({ menuShown: !this.state.menuShown })
   }
 
+  userImage() {
+    const { avatar, battletag } = this.state
+
+    if (typeof avatar === 'string') {
+      return (
+        <img
+          src={avatar}
+          className="user-avatar"
+          alt={battletag}
+        />
+      )
+    }
+
+    return (
+      <i
+        className="fa fa-user"
+        aria-hidden="true"
+      />
+    )
+  }
+
   userMenu() {
-    const { menuShown, authenticityToken } = this.state
+    const { menuShown, authenticityToken, battletag } = this.state
 
     if (!menuShown) {
       return null
@@ -41,6 +74,8 @@ class AuthLayout extends React.Component {
         >
           <input name="_method" type="hidden" value="delete" />
           <input name="authenticity_token" type="hidden" value={authenticityToken} />
+          <div className="dropdown-header">{battletag}</div>
+          <div className="dropdown-divider" />
           <button
             className="dropdown-item"
             type="submit"
@@ -69,8 +104,9 @@ class AuthLayout extends React.Component {
               <button
                 className="nav-item"
                 type="button"
+                title={this.state.battletag}
                 onClick={e => this.toggleMenu(e)}
-              >Signed in as <strong>{this.state.battletag}</strong></button>
+              >{this.userImage()}</button>
               {this.userMenu()}
             </div>
           </nav>
