@@ -98,7 +98,7 @@ class Settings extends React.Component {
                   disabled={isRequestOut}
                   onChange={e => this.onPlatformChange(e)}
                 >
-                  <option value=""></option>
+                  <option value="" />
                   <option value="pc">PC</option>
                   <option value="psn">PlayStation</option>
                   <option value="xbl">Xbox</option>
@@ -122,7 +122,7 @@ class Settings extends React.Component {
                   disabled={isRequestOut}
                   onChange={e => this.onRegionChange(e)}
                 >
-                  <option value=""></option>
+                  <option value="" />
                   <option value="us">United States</option>
                   <option value="eu">Europe</option>
                   <option value="kr">South Korea</option>
