@@ -17,13 +17,15 @@ exports[`AuthLayout matches snapshot 1`] = `
           href="/user/hero-pool">
           Your hero pool
         </a>
-        <span
-          className="nav-item">
-          Signed in as 
-          <strong>
-            cheetos#1234
-          </strong>
-        </span>
+        <button
+          className="nav-item"
+          onClick={[Function]}
+          title="cheetos#1234"
+          type="button">
+          <i
+            aria-hidden="true"
+            className="fa fa-user" />
+        </button>
       </div>
     </nav>
   </div>
