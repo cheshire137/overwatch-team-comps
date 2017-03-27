@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
   def current
     if user_signed_in?
-      render json: { auth: true, battletag: current_user.battletag }
+      render json: {
+        auth: true,
+        battletag: current_user.battletag,
+        authenticityToken: form_authenticity_token
+      }
     else
       render json: { auth: false, battletag: nil }
     end
