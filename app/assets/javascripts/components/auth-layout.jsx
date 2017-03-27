@@ -14,6 +14,11 @@ class AuthLayout extends React.Component {
     LocalStorage.delete('platform')
   }
 
+  static onProfileLoadError(error) {
+    console.error('failed to load Overwatch profile from Lootbox API', error)
+    LocalStorage.delete('avatar')
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -31,11 +36,15 @@ class AuthLayout extends React.Component {
 
     if (typeof avatar !== 'string') {
       const api = new LootboxApi(platform, region)
-      api.getProfile(battletag).then(json => {
-        LocalStorage.set('avatar', json.avatar)
-        this.setState({ avatar: json.avatar })
-      })
+      api.getProfile(battletag).
+        then(json => this.onProfileLoaded(json)).
+        catch(err => AuthLayout.onProfileLoadError(err))
     }
+  }
+
+  onProfileLoaded(json) {
+    LocalStorage.set('avatar', json.avatar)
+    this.setState({ avatar: json.avatar })
   }
 
   toggleMenu(event) {
