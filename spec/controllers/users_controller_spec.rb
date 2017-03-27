@@ -14,4 +14,24 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to be_success
     end
   end
+
+  describe 'PUT update' do
+    it 'does not work for anonymous user' do
+      put :update, params: { format: :json, email: 'hey@example.com' }
+      expect(response).to have_http_status(401)
+    end
+
+    it 'updates current user' do
+      user = create(:user)
+      sign_in user
+      put :update, params: {
+        format: :json, email: 'hey@example.com', region: 'eu',
+        platform: 'xbl'
+      }
+      expect(response).to be_success
+      expect(user.reload.email).to eq('hey@example.com')
+      expect(user.region).to eq('eu')
+      expect(user.platform).to eq('xbl')
+    end
+  end
 end
