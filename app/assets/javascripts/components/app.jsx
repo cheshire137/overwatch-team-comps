@@ -17,8 +17,10 @@ function requireAuth(nextState, replace, callback) {
   const api = new OverwatchTeamCompsApi()
   api.getUser().then(json => {
     if (json.auth) {
+      LocalStorage.set('authenticity-token', json.authenticityToken)
       LocalStorage.set('battletag', json.battletag)
     } else {
+      LocalStorage.delete('authenticity-token')
       LocalStorage.delete('battletag')
       replace({
         pathname: '/',
@@ -46,12 +48,14 @@ function redirectIfSignedIn(nextState, replace, callback) {
   const api = new OverwatchTeamCompsApi()
   api.getUser().then(json => {
     if (json.auth) {
+      LocalStorage.set('authenticity-token', json.authenticityToken)
       LocalStorage.set('battletag', json.battletag)
       replace({
         pathname: newPath,
         state: { nextPathname: nextState.location.pathname }
       })
     } else {
+      LocalStorage.delete('authenticity-token')
       LocalStorage.delete('battletag')
     }
   }).then(callback)
