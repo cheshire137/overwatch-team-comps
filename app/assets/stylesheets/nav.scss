@@ -26,6 +26,17 @@ a, .button-link {
   }
 }
 
+button.nav-item {
+  background-color: transparent;
+  cursor: pointer;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  font-size: inherit;
+  @include user-select(none);
+  @include appearance(none);
+}
+
 a.nav-item {
   color: $defend;
   text-decoration: none;
@@ -34,6 +45,62 @@ a.nav-item {
   &:focus {
     color: $attack;
   }
+}
+
+.dropdown-menu-content {
+  pointer-events: all;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: auto;
+  right: 11px;
+  z-index: 100;
+  width: 236px;
+  margin-top: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: $white;
+  background-clip: padding-box;
+  border: 1px solid rgba(27,31,35,0.15);
+  box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+  @include border-radius(4px);
+
+  &::before {
+    border: 8px solid transparent;
+    border-bottom-color: rgba(27,31,35,0.15);
+    top: -16px;
+    right: 9px;
+    left: auto;
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    display: inline-block;
+    content: "";
+  }
+}
+
+.dropdown-item {
+  display: block;
+  padding: 4px 10px 4px 15px;
+  overflow: hidden;
+  color: $text;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+button.dropdown-item {
+  @include user-select(none);
+  background-color: transparent;
+  border: 0;
+  @include appearance(none);
+  cursor: pointer;
+  font-size: inherit;
+  text-align: left;
 }
 
 .nav-right {
