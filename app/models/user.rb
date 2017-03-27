@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  VALID_PLATFORMS = ['pc', 'psn', 'xbl'].freeze
+  VALID_REGIONS = ['eu', 'us', 'kr', 'cn', 'global'].freeze
+
   # Include default devise modules. Others available are:
   # :recoverable, :confirmable, :lockable, :registerable, :timeoutable
   devise :database_authenticatable, :rememberable, :trackable, :validatable
@@ -11,6 +14,9 @@ class User < ApplicationRecord
   ANONYMOUS_EMAIL = 'anonymous@overwatch-team-comps.com'.freeze
 
   alias_attribute :to_s, :email
+
+  validates :platform, inclusion: { in: VALID_PLATFORMS }, allow_nil: true
+  validates :region, inclusion: { in: VALID_REGIONS }, allow_nil: true
 
   # Returns the special User for representing anonymous site visitors.
   def self.anonymous
