@@ -4,7 +4,9 @@ class UsersController < ApplicationController
       render json: {
         auth: true,
         battletag: current_user.battletag,
-        authenticityToken: form_authenticity_token
+        authenticityToken: form_authenticity_token,
+        platform: current_user.platform,
+        region: current_user.region
       }
     else
       render json: { auth: false, battletag: nil }

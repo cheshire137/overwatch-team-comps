@@ -7,6 +7,8 @@ class AuthLayout extends React.Component {
     event.currentTarget.blur()
     LocalStorage.delete('authenticity-token')
     LocalStorage.delete('battletag')
+    LocalStorage.delete('region')
+    LocalStorage.delete('platform')
   }
 
   constructor(props) {
