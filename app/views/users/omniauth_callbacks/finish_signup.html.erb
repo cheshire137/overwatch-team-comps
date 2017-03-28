@@ -1,9 +1,49 @@
-<p>Hello <strong><%= @auth['info']['battletag'] %></strong>!</p>
+<div class="container">
+  <div class="flex-grid-thirds">
+    <div class="col"></div>
+    <div class="col">
+      <h3>
+        Hello <strong><%= @auth['info']['battletag'] %></strong>!
+      </h3>
 
-<%= form_tag users_finished_signup_path do %>
-  <div>
-    <label for="email">Email address:</label>
-    <input id="email" type="text" class="input" name="email" placeholder="Your email address">
+      <%= form_tag users_finished_signup_path do %>
+        <div class="field">
+          <label for="email" class="label">Email address:</label>
+          <input id="email" type="text" class="input" name="email" placeholder="Your email address">
+        </div>
+        <div class="field">
+          <label for="platform" class="label">
+            Which platform do you primarily play on?
+          </label>
+          <div>
+            <span class="select">
+              <select name="platform" id="platform">
+                <option value="pc">PC</option>
+                <option value="psn">PlayStation</option>
+                <option value="xbl">Xbox</option>
+              </select>
+            </span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="region" class="label">
+            Which region do you primarily play in?
+          </label>
+          <div>
+            <span class="select">
+              <select name="region" id="region">
+                <option value="us">United States</option>
+                <option value="eu">Europe</option>
+                <option value="kr">South Korea</option>
+                <option value="cn">China</option>
+                <option value="global">Global</option>
+              </select>
+            </span>
+          </div>
+        </div>
+        <button type="submit" class="button is-primary">Sign Up</button>
+      <% end %>
+    </div>
+    <div class="col"></div>
   </div>
-  <button type="submit">Sign Up</button>
-<% end %>
+</div>

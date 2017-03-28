@@ -9,17 +9,35 @@ import CompositionForm from './composition-form.jsx'
 import CompositionView from './composition-view.jsx'
 import HeroPoolForm from './hero-pool-form.jsx'
 import NotFound from './not-found.jsx'
+import Settings from './settings.jsx'
 
 import LocalStorage from '../models/local-storage'
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
+
+function storeUserData(json) {
+  LocalStorage.set('authenticity-token', json.authenticityToken)
+  LocalStorage.set('battletag', json.battletag)
+  LocalStorage.set('email', json.email)
+  LocalStorage.set('region', json.region)
+  LocalStorage.set('platform', json.platform)
+}
+
+function clearUserData() {
+  LocalStorage.delete('authenticity-token')
+  LocalStorage.delete('avatar')
+  LocalStorage.delete('battletag')
+  LocalStorage.delete('email')
+  LocalStorage.delete('region')
+  LocalStorage.delete('platform')
+}
 
 function requireAuth(nextState, replace, callback) {
   const api = new OverwatchTeamCompsApi()
   api.getUser().then(json => {
     if (json.auth) {
-      LocalStorage.set('battletag', json.battletag)
+      storeUserData(json)
     } else {
-      LocalStorage.delete('battletag')
+      clearUserData()
       replace({
         pathname: '/',
         state: { nextPathname: nextState.location.pathname }
@@ -46,13 +64,13 @@ function redirectIfSignedIn(nextState, replace, callback) {
   const api = new OverwatchTeamCompsApi()
   api.getUser().then(json => {
     if (json.auth) {
-      LocalStorage.set('battletag', json.battletag)
+      storeUserData(json)
       replace({
         pathname: newPath,
         state: { nextPathname: nextState.location.pathname }
       })
     } else {
-      LocalStorage.delete('battletag')
+      clearUserData()
     }
   }).then(callback)
 }
@@ -71,6 +89,7 @@ const App = function() {
         <IndexRoute component={CompositionForm} />
         <Route path="about" component={About} />
         <Route path="hero-pool" component={HeroPoolForm} />
+        <Route path="settings" component={Settings} />
       </Route>
       <Route path="*" component={NotFound} />
     </Router>

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' },
-    skip: [:sessions]
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: 'users/sessions'
+  }
 
   devise_scope :user do
     get "/users/finish_signup" => "users/omniauth_callbacks#finish_signup"
@@ -20,6 +22,7 @@ Rails.application.routes.draw do
     post "/heroes/pool" => "heroes#save"
 
     get "/user" => "users#current", as: :current_user
+    put "/user" => "users#update"
   end
 
   # For details on the DSL available within this file, see
