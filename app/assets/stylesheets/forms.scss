@@ -189,6 +189,14 @@
   border-color: $defend;
 }
 
+.input[disabled],
+.textarea[disabled] {
+  background-color: whitesmoke;
+  border-color: whitesmoke;
+  box-shadow: none;
+  color: #7a7a7a;
+}
+
 .field {
   .label {
     font-weight: 700;
