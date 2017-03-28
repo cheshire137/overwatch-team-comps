@@ -114,11 +114,19 @@ class CompositionHeader extends React.Component {
       return null
     }
 
-    const { mapID, mapSlug, disabled } = this.props
+    const { mapID, mapSlug, mapImage, disabled } = this.props
     return (
       <header className={`composition-header gradient-${mapSlug}`}>
         <div className="container">
-          <div className={`map-photo-container background-${mapSlug}`} />
+          <div className={`map-photo-container background-${mapSlug}`}>
+            {mapImage ? (
+              <img
+                src={mapImage}
+                alt={mapSlug}
+                className="map-photo"
+              />
+            ) : ''}
+          </div>
           <div className="composition-meta">
             <div>
               <span
@@ -154,6 +162,7 @@ CompositionHeader.propTypes = {
   slug: React.PropTypes.string,
   mapID: React.PropTypes.number.isRequired,
   mapSlug: React.PropTypes.string.isRequired,
+  mapImage: React.PropTypes.string,
   onMapChange: React.PropTypes.func.isRequired,
   onNameChange: React.PropTypes.func.isRequired,
   disabled: React.PropTypes.bool.isRequired
