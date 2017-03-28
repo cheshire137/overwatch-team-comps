@@ -6,18 +6,6 @@ import PlayerEditModal from './player-edit-modal.jsx'
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 export default class CompositionForm extends React.Component {
-  static onCompositionFetchError(error) {
-    console.error('failed to load composition data', error)
-  }
-
-  static onCompositionSaveError(error) {
-    console.error('failed to save composition', error)
-  }
-
-  static onPlayerCreationError(error) {
-    console.error('failed to create player', error)
-  }
-
   constructor() {
     super()
     this.state = {
@@ -33,7 +21,8 @@ export default class CompositionForm extends React.Component {
       heroes: {},
       selections: {},
       notes: '',
-      editingPlayerID: null
+      editingPlayerID: null,
+      isRequestOut: false
     }
   }
 
@@ -41,8 +30,23 @@ export default class CompositionForm extends React.Component {
     this.loadComposition()
   }
 
+  onCompositionFetchError(error) {
+    console.error('failed to load composition data', error)
+    this.setState({ isRequestOut: false })
+  }
+
+  onCompositionSaveError(error) {
+    console.error('failed to save composition', error)
+    this.setState({ isRequestOut: false })
+  }
+
   onMapChange(mapID) {
     this.loadComposition(mapID)
+  }
+
+  onPlayerCreationError(error) {
+    console.error('failed to create player', error)
+    this.setState({ isRequestOut: false })
   }
 
   onCompositionNameChange(name) {
@@ -57,9 +61,11 @@ export default class CompositionForm extends React.Component {
       body.composition_id = id
     }
 
-    api.saveComposition(body).
-      then(newComp => this.onCompositionLoaded(newComp)).
-      catch(err => CompositionForm.onCompositionSaveError(err))
+    this.setState({ isRequestOut: true }, () => {
+      api.saveComposition(body).
+        then(newComp => this.onCompositionLoaded(newComp)).
+        catch(err => this.onCompositionSaveError(err))
+    })
   }
 
   onCompositionNotesChange(event) {
@@ -91,13 +97,16 @@ export default class CompositionForm extends React.Component {
       body.composition_id = id
     }
 
-    api.saveComposition(body).
-      then(newComp => this.onCompositionLoaded(newComp)).
-      catch(err => CompositionForm.onCompositionSaveError(err))
+    this.setState({ isRequestOut: true }, () => {
+      api.saveComposition(body).
+        then(newComp => this.onCompositionLoaded(newComp)).
+        catch(err => this.onCompositionSaveError(err))
+    })
   }
 
   onCompositionLoaded(composition) {
     this.setState({
+      isRequestOut: false,
       id: composition.id,
       name: composition.name,
       slug: composition.slug,
@@ -123,12 +132,24 @@ export default class CompositionForm extends React.Component {
     )
   }
 
+  getPlayerToEdit() {
+    const { players, editingPlayerID } = this.state
+
+    if (typeof editingPlayerID === 'number') {
+      return players.filter(player => player.id === editingPlayerID)[0]
+    }
+
+    return null
+  }
+
   loadComposition(mapID) {
     const api = new OverwatchTeamCompsApi()
 
-    api.getLastComposition(mapID).
-      then(comp => this.onCompositionLoaded(comp)).
-      catch(err => CompositionForm.onCompositionFetchError(err))
+    this.setState({ isRequestOut: true }, () => {
+      api.getLastComposition(mapID).
+        then(comp => this.onCompositionLoaded(comp)).
+        catch(err => this.onCompositionFetchError(err))
+    })
   }
 
   createPlayer(playerName, position) {
@@ -140,9 +161,12 @@ export default class CompositionForm extends React.Component {
       position
     }
     const api = new OverwatchTeamCompsApi()
-    api.createPlayer(body).
-      then(comp => this.onCompositionLoaded(comp)).
-      catch(err => CompositionForm.onPlayerCreationError(err))
+
+    this.setState({ isRequestOut: true }, () => {
+      api.createPlayer(body).
+        then(comp => this.onCompositionLoaded(comp)).
+        catch(err => this.onPlayerCreationError(err))
+    })
   }
 
   updatePlayer(playerID, position) {
@@ -154,9 +178,12 @@ export default class CompositionForm extends React.Component {
       composition_id: id
     }
     const api = new OverwatchTeamCompsApi()
-    api.saveComposition(body).
-      then(newComp => this.onCompositionLoaded(newComp)).
-      catch(err => CompositionForm.onCompositionSaveError(err))
+
+    this.setState({ isRequestOut: true }, () => {
+      api.saveComposition(body).
+        then(newComp => this.onCompositionLoaded(newComp)).
+        catch(err => this.onCompositionSaveError(err))
+    })
   }
 
   editPlayer(playerID) {
@@ -170,20 +197,21 @@ export default class CompositionForm extends React.Component {
     }
   }
 
+  selectedPlayerCount() {
+    return this.state.players.
+      filter(p => typeof p.id === 'number').length
+  }
+
   render() {
     const { name, slug, mapID, mapSegments, players, heroes,
             selections, notes, mapSlug, editingPlayerID, id,
-            mapImage } = this.state
+            isRequestOut, mapImage } = this.state
 
     if (typeof mapID !== 'number') {
       return <p className="container">Loading...</p>
     }
 
-    const selectedPlayerCount = players.
-      filter(p => typeof p.id === 'number').length
-    const editingPlayer = typeof editingPlayerID === 'number'
-      ? players.filter(p => p.id === editingPlayerID)[0]
-      : null
+    const editingPlayer = this.getPlayerToEdit()
 
     return (
       <form className="composition-form">
@@ -193,6 +221,7 @@ export default class CompositionForm extends React.Component {
           mapID={mapID}
           mapSlug={mapSlug}
           mapImage={mapImage}
+          disabled={isRequestOut}
           onNameChange={newName => this.onCompositionNameChange(newName)}
           onMapChange={newMapID => this.onMapChange(newMapID)}
         />
@@ -201,7 +230,9 @@ export default class CompositionForm extends React.Component {
             <thead>
               <tr>
                 <th className="players-header small-fat-header">
-                  <span className="player-count">{selectedPlayerCount} / 6</span>
+                  <span className="player-count">
+                    {this.selectedPlayerCount()} / 6
+                  </span>
                   Team
                 </th>
                 {mapSegments.map((segment, i) => (
@@ -230,6 +261,7 @@ export default class CompositionForm extends React.Component {
                     key={key}
                     inputID={inputID}
                     playerID={player.id}
+                    disabled={isRequestOut}
                     players={selectablePlayers}
                     heroes={playerHeroes}
                     selections={playerSelections}
@@ -255,6 +287,7 @@ export default class CompositionForm extends React.Component {
             <textarea
               id="composition_notes"
               className="textarea"
+              disabled={isRequestOut}
               placeholder="Notes for this team composition"
               value={notes || ''}
               onChange={e => this.onCompositionNotesChange(e)}

@@ -29,7 +29,9 @@ class HeroSelect extends React.Component {
         <label
           htmlFor={selectID}
         >{this.heroPortrait()}</label>
-        <span className="select">
+        <span
+          className={`select ${disabled ? 'is-disabled' : ''}`}
+        >
           <select
             onChange={e => this.onChange(e)}
             value={selectedHeroID || ''}
