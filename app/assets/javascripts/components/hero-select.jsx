@@ -34,11 +34,13 @@ class HeroSelect extends React.Component {
         >
           <select
             onChange={e => this.onChange(e)}
-            value={selectedHeroID || ''}
+            value={isFilled ? selectedHeroID : ''}
             disabled={disabled}
             id={selectID}
           >
-            <option>Hero</option>
+            {isFilled ? '' : (
+              <option value="">Hero</option>
+            )}
             {heroes.map(hero => (
               <option
                 key={hero.id}
