@@ -1,6 +1,7 @@
 class CompositionsController < ApplicationController
   def show
     @composition = Composition.friendly.find(params[:slug])
+    @composition.touch_if_mine(user: current_user, session_id: session.id)
     @builder = CompositionFormBuilder.new(@composition)
     @available_players = []
   end
