@@ -224,12 +224,17 @@
   display: block;
 
   select {
+    color: $white;
     padding-left: 0;
     padding-right: 0;
 
     &[disabled] {
       color: $soft-text;
     }
+  }
+
+  &:after {
+    border-color: $white;
   }
 }
 
@@ -257,17 +262,11 @@
 .select.composition-select {
   select {
     width: 100%;
-    color: $soft-header;
-  }
-
-  &:after {
-    border-color: $soft-header;
   }
 }
 
 .select.map-select {
   select {
-    color: $white;
     font-size: 1.7rem;
     line-height: 1;
     height: 2.3rem;
@@ -278,7 +277,6 @@
   }
 
   &:after {
-    border-color: $white;
     border-width: 3px;
     width: 0.6em;
     height: 0.6em;
@@ -307,7 +305,7 @@
 
   .input.composition-name-input {
     background-color: transparent;
-    color: $soft-header;
+    color: $white;
     border: none;
     padding-left: 0;
     padding-right: 20px;
@@ -365,7 +363,7 @@
   margin-top: 10px;
 
   .composition-link {
-    color: $soft-text;
+    color: $soft-header;
     text-decoration: none;
     font-size: 0.9rem;
 
