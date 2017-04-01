@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe Composition do
+  before(:all) do
+    @anon_user = User.anonymous || create(:anonymous_user)
+  end
+
   it "requires a map" do
     composition = Composition.new
     expect(composition.valid?).to be_falsey
@@ -20,8 +24,7 @@ describe Composition do
   end
 
   it 'requires a session ID if the user is anonymous' do
-    anon_user = create(:anonymous_user)
-    composition = Composition.new(user: anon_user)
+    composition = Composition.new(user: @anon_user)
     expect(composition.valid?).to be_falsey
     expect(composition.errors[:session_id].any?).to be_truthy
   end
@@ -35,18 +38,16 @@ describe Composition do
   end
 
   it 'sets composition name for anonymous user scoped by session' do
-    anon_user = create(:anonymous_user)
-
     session1 = '123abc'
     session2 = '987zyx'
 
-    session1_comp = create(:composition, user: anon_user, session_id: session1)
+    session1_comp = create(:composition, user: @anon_user, session_id: session1)
     expect(session1_comp.name).to eq('Composition 1')
 
-    session2_comp = create(:composition, user: anon_user, session_id: session2)
+    session2_comp = create(:composition, user: @anon_user, session_id: session2)
     expect(session2_comp.name).to eq('Composition 1')
 
-    session1_comp2 = build(:composition, user: anon_user, session_id: session1)
+    session1_comp2 = build(:composition, user: @anon_user, session_id: session1)
     session1_comp2.valid?
     expect(session1_comp2.name).to eq('Composition 2')
   end
@@ -59,8 +60,7 @@ describe Composition do
   end
 
   it 'requires a unique name per user for anonymous user' do
-    anon_user = create(:anonymous_user)
-    existing = create(:composition, user: anon_user, session_id: '123abc')
+    existing = create(:composition, user: @anon_user, session_id: '123abc')
     composition = Composition.new(name: existing.name, user: existing.user,
                                   session_id: existing.session_id)
     expect(composition.valid?).to be_falsey

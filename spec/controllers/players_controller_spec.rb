@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe PlayersController, type: :controller do
+  before(:all) do
+    @anon_user = User.anonymous || create(:anonymous_user)
+  end
+
   before(:each) do
-    @anon_user = create(:anonymous_user)
     @user = create(:user)
     @map = create(:map)
   end

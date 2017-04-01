@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Users::OmniauthCallbacksController do
+  before(:all) do
+    @anon_user = User.anonymous || create(:anonymous_user)
+  end
+
   before(:each) do
     OmniAuth.config.test_mode = true
 
@@ -13,8 +17,6 @@ RSpec.describe Users::OmniauthCallbacksController do
     @request.session.id = '8675309'
     @request.env['devise.mapping'] = Devise.mappings[:user]
     @request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:bnet]
-
-    @anon_user = create(:anonymous_user)
   end
 
   describe 'POST bnet' do

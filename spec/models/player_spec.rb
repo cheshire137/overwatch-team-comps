@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe Player do
+  before(:all) do
+    @anon_user = User.anonymous || create(:anonymous_user)
+  end
+
   it "requires a name" do
     player = Player.new
     expect(player.valid?).to be_falsey
@@ -16,9 +20,8 @@ describe Player do
   end
 
   it 'requires a unique name per anonymous creator' do
-    anon_user = create(:anonymous_user)
-    player1 = create(:player, creator: anon_user, creator_session_id: '123')
-    player2 = build(:player, creator: anon_user, name: player1.name,
+    player1 = create(:player, creator: @anon_user, creator_session_id: '123')
+    player2 = build(:player, creator: @anon_user, name: player1.name,
                     creator_session_id: player1.creator_session_id)
     expect(player2.valid?).to be_falsey
     expect(player2.errors[:name].any?).to be_truthy
@@ -31,8 +34,7 @@ describe Player do
   end
 
   it 'requires a creator session ID if the creator is anonymous' do
-    anon_user = create(:anonymous_user)
-    player = Player.new(creator: anon_user)
+    player = Player.new(creator: @anon_user)
     expect(player.valid?).to be_falsey
     expect(player.errors[:creator_session_id].any?).to be_truthy
   end
@@ -58,8 +60,7 @@ describe Player do
     end
 
     it 'returns owned player for anonymous user' do
-      anon_user = create(:anonymous_user)
-      player = create(:player, creator: anon_user, creator_session_id: '123')
+      player = create(:player, creator: @anon_user, creator_session_id: '123')
       result = Player.find_if_allowed(player.id, user: nil, session_id: '123')
       expect(result).to eq(player)
     end
