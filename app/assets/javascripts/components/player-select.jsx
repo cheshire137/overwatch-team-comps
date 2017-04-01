@@ -16,6 +16,8 @@ class PlayerSelect extends React.Component {
   onNewNameKeyDown(event) {
     if (event.keyCode === 27) { // Esc
       this.setState({ showNewNameField: false })
+    } else if (event.keyCode === 13) { // Enter
+      this.saveNewName(event)
     }
   }
 
