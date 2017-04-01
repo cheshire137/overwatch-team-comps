@@ -66,4 +66,73 @@ describe Composition do
     expect(composition.valid?).to be_falsey
     expect(composition.errors[:name].any?).to be_truthy
   end
+
+  context '#mine?' do
+    it 'returns true when owned by given registered user' do
+      user = create(:user)
+      composition = build(:composition, user: user)
+
+      expect(composition.mine?(user: user, session_id: nil)).to eq(true)
+    end
+
+    it 'returns true when owned by given anonymous user' do
+      composition = build(:composition, user: @anon_user, session_id: '123')
+
+      expect(composition.mine?(user: nil, session_id: '123')).to eq(true)
+    end
+
+    it 'returns false when not owned by given registered user' do
+      user = create(:user)
+      composition = build(:composition)
+
+      expect(composition.mine?(user: user, session_id: nil)).to eq(false)
+    end
+
+    it 'returns false when not owned by given anonymous user' do
+      composition = build(:composition)
+
+      expect(composition.mine?(user: nil, session_id: '123')).to eq(false)
+    end
+  end
+
+  context '#touch_if_mine' do
+    it 'changes updated_at when given user owns the composition' do
+      user = create(:user)
+      before_value = 1.week.ago
+      composition = create(:composition, user: user, updated_at: before_value)
+      expect(composition.updated_at).to eq(before_value)
+
+      composition.touch_if_mine(user: user, session_id: nil)
+      expect(composition.reload.updated_at).not_to eq(before_value)
+    end
+
+    it 'changes updated_at when given anon user owns the composition' do
+      before_value = 1.week.ago
+      composition = create(:composition, user: @anon_user, session_id: '123',
+                           updated_at: before_value)
+      expect(composition.updated_at).to eq(before_value)
+
+      composition.touch_if_mine(user: nil, session_id: '123')
+      expect(composition.reload.updated_at).not_to eq(before_value)
+    end
+
+    it 'does not change updated_at when user does not own comp' do
+      user = create(:user)
+      before_value = 1.week.ago
+      composition = create(:composition, updated_at: before_value)
+      expect(composition.updated_at).to eq(before_value)
+
+      composition.touch_if_mine(user: user, session_id: nil)
+      expect(composition.reload.updated_at).to eq(before_value)
+    end
+
+    it 'does not change updated_at when anon user does not own comp' do
+      before_value = 1.week.ago
+      composition = create(:composition, updated_at: before_value)
+      expect(composition.updated_at).to eq(before_value)
+
+      composition.touch_if_mine(user: nil, session_id: '123')
+      expect(composition.reload.updated_at).to eq(before_value)
+    end
+  end
 end
