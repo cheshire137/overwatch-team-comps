@@ -21,16 +21,16 @@ class CompositionHeader extends React.Component {
     this.setState({ name: nextProps.name, editingName: false })
   }
 
-  onNameChange(event) {
+  onCompositionNameChange(event) {
     this.setState({ name: event.target.value })
   }
 
-  onNameKeyDown(event) {
+  onCompositionNameKeyDown(event) {
     if (event.keyCode === 27) { // Esc
       event.target.blur() // defocus input field
       this.setState({ editingName: false })
     } else if (event.keyCode === 13) { // Enter
-      this.saveNewName(event)
+      this.saveCompositionName(event)
     }
   }
 
@@ -42,7 +42,7 @@ class CompositionHeader extends React.Component {
     this.props.onMapChange(event.target.value)
   }
 
-  saveNewName(event) {
+  saveCompositionName(event) {
     event.preventDefault()
 
     const button = event.target.closest('button')
@@ -58,47 +58,43 @@ class CompositionHeader extends React.Component {
     this.props.onNameChange(name)
   }
 
-  nameEditArea() {
+  compositionNameEditor() {
     const { editingName, name } = this.state
     const { disabled } = this.props
-    let pencilIcon = null
-    let saveButton = null
 
     if (editingName) {
-      saveButton = (
-        <button
-          disabled={disabled}
-          type="button"
-          className="button save-composition-name-button"
-          onClick={e => this.saveNewName(e)}
-        ><i className="fa fa-check" aria-hidden="true" /></button>
-      )
-    } else if (!disabled) {
-      pencilIcon = (
-        <i
-          className="fa fa-pencil-square-o"
-          aria-hidden="true"
-        />
+      return (
+        <div className={`composition-name-container ${editingName ? 'editing' : ''}`}>
+          <input
+            type="text"
+            className="input composition-name-input"
+            placeholder="Composition name"
+            id="composition_name"
+            value={name || ''}
+            disabled={disabled}
+            onKeyDown={e => this.onCompositionNameKeyDown(e)}
+            onChange={e => this.onCompositionNameChange(e)}
+            onFocus={() => this.setState({ editingName: true })}
+            aria-label="Name of this team composition"
+          />
+          <button
+            disabled={disabled}
+            type="button"
+            className="button save-composition-name-button"
+            onClick={e => this.saveCompositionName(e)}
+          ><i className="fa fa-check" aria-hidden="true" /></button>
+        </div>
       )
     }
 
     return (
-      <div className={`composition-name-container ${editingName ? 'editing' : ''}`}>
-        {pencilIcon}
-        <input
-          type="text"
-          className="input composition-name-input"
-          placeholder="Composition name"
-          id="composition_name"
-          value={name || ''}
+      <span className="select composition-select">
+        <select
           disabled={disabled}
-          onKeyDown={e => this.onNameKeyDown(e)}
-          onChange={e => this.onNameChange(e)}
-          onFocus={() => this.setState({ editingName: true })}
-          aria-label="Name of this team composition"
-        />
-        {saveButton}
-      </div>
+        >
+          <option>{name}</option>
+        </select>
+      </span>
     )
   }
 
@@ -165,15 +161,25 @@ class CompositionHeader extends React.Component {
     )
   }
 
-  compositionSelect() {
-    const { name } = this.state
+  toggleCompositionNameEditor(event) {
+    event.currentTarget.blur() // defocus the button
+    this.setState({ editingName: !this.state.editingName })
+  }
 
+  compositionSelectAndEdit() {
+    const { editingName } = this.state
     return (
-      <span className="select composition-select">
-        <select>
-          <option>{name}</option>
-        </select>
-      </span>
+      <div className="composition-select-container">
+        {this.compositionNameEditor()}
+        {editingName ? '' : (
+          <button
+            type="button"
+            title="Edit team composition name"
+            className="button-link edit-composition-name-button"
+            onClick={e => this.toggleCompositionNameEditor(e)}
+          ><i className="fa fa-pencil" aria-hidden="true" /></button>
+        )}
+      </div>
     )
   }
 
@@ -190,7 +196,7 @@ class CompositionHeader extends React.Component {
           {this.mapPhotoContainer()}
           <div className="composition-meta">
             {this.mapSelect()}
-            {this.compositionSelect()}
+            {this.compositionSelectAndEdit()}
             {this.shareLink()}
           </div>
         </div>

@@ -231,9 +231,26 @@
       color: $soft-text;
     }
   }
+}
 
-  &:after {
-    right: 0.6em;
+.composition-select-container {
+  display: table;
+}
+
+.select.composition-select,
+.edit-composition-name-button,
+.composition-name-container {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.edit-composition-name-button {
+  height: 2.4em;
+  color: $soft-header;
+
+  &:hover,
+  &:focus {
+    color: $white;
   }
 }
 
@@ -265,6 +282,7 @@
     border-width: 3px;
     width: 0.6em;
     height: 0.6em;
+    right: 0.6em;
   }
 }
 
@@ -293,7 +311,6 @@
     border: none;
     padding-left: 0;
     padding-right: 20px;
-    font-size: 1.3rem;
     line-height: 1;
     height: auto;
     @include border-radius(0);
@@ -305,7 +322,6 @@
 
     .input.composition-name-input {
       border-bottom: 1px solid $defend;
-      color: $white;
     }
   }
 }
