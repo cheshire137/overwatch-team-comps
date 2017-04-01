@@ -101,7 +101,7 @@ class CompositionHeader extends React.Component {
       <span className="select composition-select">
         <select
           disabled={disabled}
-          value={compositionSlug}
+          value={compositionSlug || ''}
           onChange={e => this.onCompositionSelected(e)}
         >
           {compositions.map(composition => (
