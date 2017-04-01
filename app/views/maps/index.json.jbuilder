@@ -9,5 +9,6 @@ json.maps @maps do |map|
   json.compositions @compositions_by_map[map.id] do |composition|
     json.id composition.id
     json.name composition.name
+    json.slug composition.slug
   end
 end

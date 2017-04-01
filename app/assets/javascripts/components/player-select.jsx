@@ -30,14 +30,17 @@ class PlayerSelect extends React.Component {
 
   saveNewName(event) {
     event.preventDefault()
+
     const name = this.state.name
     if (name.trim().length < 1) {
       return
     }
+
     const existingNames = this.props.players.map(p => p.name)
     if (existingNames.indexOf(name) > -1) {
       return
     }
+
     this.props.onChange(null, name)
   }
 

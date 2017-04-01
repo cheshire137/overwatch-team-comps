@@ -7,22 +7,31 @@ class CompositionHeader extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = { name: props.name, editingName: false }
+    this.state = {
+      compositionName: props.compositionName,
+      editingName: false,
+      creatingNewComposition: false
+    }
   }
 
   componentDidMount() {
     const api = new OverwatchTeamCompsApi()
 
-    api.getMaps().then(maps => this.onMapsFetched(maps)).
+    api.getMaps().
+      then(maps => this.onMapsFetched(maps)).
       catch(err => CompositionHeader.onMapsError(err))
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ name: nextProps.name, editingName: false })
+    this.setState({
+      compositionName: nextProps.compositionName,
+      editingName: false,
+      creatingNewComposition: false
+    })
   }
 
   onCompositionNameChange(event) {
-    this.setState({ name: event.target.value })
+    this.setState({ compositionName: event.target.value })
   }
 
   onCompositionNameKeyDown(event) {
@@ -34,7 +43,23 @@ class CompositionHeader extends React.Component {
     }
   }
 
+  onCompositionSelected(event) {
+    const value = event.target.value
+
+    if (value === 'new') {
+      this.setState({
+        compositionName: '',
+        editingName: true,
+        creatingNewComposition: true
+      })
+    } else {
+      this.setState({ creatingNewComposition: false })
+      this.props.onCompositionLoad(value)
+    }
+  }
+
   onMapsFetched(maps) {
+    console.log('loaded maps')
     this.setState({ maps })
   }
 
@@ -42,72 +67,100 @@ class CompositionHeader extends React.Component {
     this.props.onMapChange(event.target.value)
   }
 
-  saveCompositionName(event) {
-    event.preventDefault()
+  getCompositionsForSelectedMap() {
+    const { mapID } = this.props
+    const { maps } = this.state
 
-    const button = event.target.closest('button')
-    if (button) { // maybe user hit Enter to save, not clicked button
-      button.blur() // defocus the button
+    for (let i = 0; i < maps.length; i++) {
+      const map = maps[i]
+
+      if (map.id === mapID) {
+        return map.compositions
+      }
     }
 
-    const { name } = this.state
-    if (name.trim().length < 1) {
-      return
-    }
-
-    this.props.onNameChange(name)
+    return []
   }
 
-  compositionNameEditor() {
-    const { editingName, name } = this.state
-    const { disabled } = this.props
-
-    if (editingName) {
-      return (
-        <div className={`composition-name-container ${editingName ? 'editing' : ''}`}>
-          <input
-            type="text"
-            className="input composition-name-input"
-            placeholder="Composition name"
-            id="composition_name"
-            value={name || ''}
-            disabled={disabled}
-            onKeyDown={e => this.onCompositionNameKeyDown(e)}
-            onChange={e => this.onCompositionNameChange(e)}
-            onFocus={() => this.setState({ editingName: true })}
-            aria-label="Name of this team composition"
-          />
-          <button
-            disabled={disabled}
-            type="button"
-            className="button save-composition-name-button"
-            onClick={e => this.saveCompositionName(e)}
-          ><i className="fa fa-check" aria-hidden="true" /></button>
-        </div>
-      )
-    }
+  compositionSelect() {
+    const { disabled, compositionSlug } = this.props
+    console.log('selected comp', compositionSlug)
+    const compositions = this.getCompositionsForSelectedMap()
 
     return (
       <span className="select composition-select">
         <select
           disabled={disabled}
+          value={compositionSlug}
+          onChange={e => this.onCompositionSelected(e)}
         >
-          <option>{name}</option>
+          {compositions.map(composition => (
+            <option
+              key={composition.id}
+              value={composition.slug}
+            >{composition.name}</option>
+          ))}
+          <option value="new">New composition</option>
         </select>
       </span>
     )
   }
 
+  compositionNameEditor() {
+    const { compositionName } = this.state
+    const { disabled } = this.props
+
+    return (
+      <div className="composition-name-container editing">
+        <input
+          type="text"
+          className="input composition-name-input"
+          placeholder="Composition name"
+          id="composition_name"
+          value={compositionName || ''}
+          disabled={disabled}
+          autoFocus
+          onKeyDown={e => this.onCompositionNameKeyDown(e)}
+          onChange={e => this.onCompositionNameChange(e)}
+          onFocus={() => this.setState({ editingName: true })}
+          aria-label="Name of this team composition"
+        />
+        <button
+          disabled={disabled}
+          type="button"
+          className="button save-composition-name-button"
+          onClick={e => this.saveCompositionName(e)}
+        ><i className="fa fa-check" aria-hidden="true" /></button>
+      </div>
+    )
+  }
+
+  saveCompositionName(event) {
+    event.preventDefault()
+
+    const button = event.target.closest('button')
+    if (button) { // maybe user hit Enter to save, didn't click button
+      button.blur() // defocus the button
+    }
+
+    const { compositionName, creatingNewComposition } = this.state
+    if (compositionName.trim().length < 1) {
+      return
+    }
+
+    this.props.onCompositionNameChange(compositionName, creatingNewComposition)
+  }
+
   shareLink() {
-    const { slug } = this.props
-    if (typeof slug !== 'string' || slug.length < 1) {
+    const { compositionSlug } = this.props
+    if (typeof compositionSlug !== 'string' || compositionSlug.length < 1) {
       return null
     }
 
     return (
       <div className="composition-link-container">
         <a
-          href={`/comp/${slug}`}
+          href={`/comp/${compositionSlug}`}
           className="composition-link"
         >
           <i
@@ -170,7 +223,7 @@ class CompositionHeader extends React.Component {
     const { editingName } = this.state
     return (
       <div className="composition-select-container">
-        {this.compositionNameEditor()}
+        {editingName ? this.compositionNameEditor() : this.compositionSelect()}
         {editingName ? '' : (
           <button
             type="button"
@@ -206,13 +259,14 @@ class CompositionHeader extends React.Component {
 }
 
 CompositionHeader.propTypes = {
-  name: React.PropTypes.string,
-  slug: React.PropTypes.string,
+  compositionName: React.PropTypes.string,
+  compositionSlug: React.PropTypes.string,
   mapID: React.PropTypes.number.isRequired,
   mapSlug: React.PropTypes.string.isRequired,
   mapImage: React.PropTypes.string,
   onMapChange: React.PropTypes.func.isRequired,
-  onNameChange: React.PropTypes.func.isRequired,
+  onCompositionNameChange: React.PropTypes.func.isRequired,
+  onCompositionLoad: React.PropTypes.func.isRequired,
   disabled: React.PropTypes.bool.isRequired
 }
 

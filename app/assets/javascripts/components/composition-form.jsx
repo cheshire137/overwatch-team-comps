@@ -49,7 +49,7 @@ export default class CompositionForm extends React.Component {
     this.setState({ isRequestOut: false })
   }
 
-  onCompositionNameChange(name) {
+  onCompositionNameChange(name, create) {
     const { id, mapID } = this.state
     const api = new OverwatchTeamCompsApi()
 
@@ -57,10 +57,11 @@ export default class CompositionForm extends React.Component {
       name,
       map_id: mapID
     }
-    if (id) {
+    if (id && !create) {
       body.composition_id = id
     }
 
+    console.log('saving name', name, create ? 'as new composition' : 'to update existing composition')
     this.setState({ isRequestOut: true }, () => {
       api.saveComposition(body).
         then(newComp => this.onCompositionLoaded(newComp)).
@@ -152,6 +153,16 @@ export default class CompositionForm extends React.Component {
     })
   }
 
+  loadCompositionBySlug(slug) {
+    const api = new OverwatchTeamCompsApi()
+
+    this.setState({ isRequestOut: true }, () => {
+      api.getComposition(slug).
+        then(comp => this.onCompositionLoaded(comp)).
+        catch(err => this.onCompositionFetchError(err))
+    })
+  }
+
   createPlayer(playerName, position) {
     const { id, mapID } = this.state
     const body = {
@@ -216,13 +227,18 @@ export default class CompositionForm extends React.Component {
     return (
       <form className="composition-form">
         <CompositionFormHeader
-          name={name}
-          slug={slug}
+          compositionName={name}
+          compositionSlug={slug}
           mapID={mapID}
           mapSlug={mapSlug}
           mapImage={mapImage}
           disabled={isRequestOut}
-          onNameChange={newName => this.onCompositionNameChange(newName)}
+          onCompositionNameChange={(newName, create) =>
+            this.onCompositionNameChange(newName, create)
+          }
+          onCompositionLoad={slugToLoad =>
+            this.loadCompositionBySlug(slugToLoad)
+          }
           onMapChange={newMapID => this.onMapChange(newMapID)}
         />
         <div className="container">

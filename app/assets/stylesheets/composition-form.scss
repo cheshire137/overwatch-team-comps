@@ -260,6 +260,8 @@
 }
 
 .select.composition-select {
+  min-width: 11em;
+
   select {
     width: 100%;
   }
