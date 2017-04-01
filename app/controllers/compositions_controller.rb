@@ -2,8 +2,14 @@ class CompositionsController < ApplicationController
   def show
     @composition = Composition.friendly.find(params[:slug])
     @composition.touch_if_mine(user: current_user, session_id: session.id)
+
     @builder = CompositionFormBuilder.new(@composition)
-    @available_players = []
+
+    @available_players = if @composition.mine?(user: current_user, session_id: session.id)
+      @composition.available_players(user: current_user, session_id: session.id)
+    else
+      []
+    end
   end
 
   def last_composition

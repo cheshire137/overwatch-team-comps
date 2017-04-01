@@ -59,7 +59,6 @@ class CompositionHeader extends React.Component {
   }
 
   onMapsFetched(maps) {
-    console.log('loaded maps')
     this.setState({ maps })
   }
 
@@ -84,7 +83,6 @@ class CompositionHeader extends React.Component {
 
   compositionSelect() {
     const { disabled, compositionSlug } = this.props
-    console.log('selected comp', compositionSlug)
     const compositions = this.getCompositionsForSelectedMap()
 
     return (
