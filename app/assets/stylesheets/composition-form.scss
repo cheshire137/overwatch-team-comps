@@ -219,6 +219,24 @@
   }
 }
 
+.map-select-container {
+  display: table;
+
+  .fa,
+  .select.map-select {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .fa {
+    font-size: 1.3rem;
+    padding-right: 10px;
+    color: $soft-text;
+    line-height: 1;
+    height: 2.5rem;
+  }
+}
+
 .select.composition-select,
 .select.map-select {
   display: block;

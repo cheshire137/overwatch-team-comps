@@ -189,22 +189,28 @@ class CompositionHeader extends React.Component {
     const className = `select map-select ${disabled ? 'is-disabled' : ''}`
 
     return (
-      <span className={className}>
-        <select
-          aria-label="Choose a map"
-          id="composition_map_id"
-          value={mapID}
-          onChange={e => this.onMapChange(e)}
-          disabled={disabled}
-        >
-          {maps.map(map =>
-            <option
-              key={map.id}
-              value={map.id}
-            >{map.name}</option>
-          )}
-        </select>
-      </span>
+      <div className="map-select-container">
+        <label
+          htmlFor="composition_map_id"
+        ><i className="fa fa-map-marker" aria-hidden="true" /></label>
+        <span className={className}>
+          <select
+            aria-label="Choose a map"
+            title="Choose a map"
+            id="composition_map_id"
+            value={mapID}
+            onChange={e => this.onMapChange(e)}
+            disabled={disabled}
+          >
+            {maps.map(map =>
+              <option
+                key={map.id}
+                value={map.id}
+              >{map.name}</option>
+            )}
+          </select>
+        </span>
+      </div>
     )
   }
 
