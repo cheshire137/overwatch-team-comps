@@ -15,11 +15,7 @@ class CompositionHeader extends React.Component {
   }
 
   componentDidMount() {
-    const api = new OverwatchTeamCompsApi()
-
-    api.getMaps().
-      then(maps => this.onMapsFetched(maps)).
-      catch(err => CompositionHeader.onMapsError(err))
+    this.loadMaps()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -27,6 +23,14 @@ class CompositionHeader extends React.Component {
       compositionName: nextProps.compositionName,
       editingName: false,
       creatingNewComposition: false
+    }, () => {
+      const currentMap = (this.state.maps || []).filter(map => map.id === nextProps.mapID)[0]
+      if (currentMap) {
+        const knownSlugs = currentMap.compositions.map(comp => comp.slug)
+        if (knownSlugs.indexOf(nextProps.compositionSlug) < 0) {
+          this.loadMaps()
+        }
+      }
     })
   }
 
@@ -79,6 +83,14 @@ class CompositionHeader extends React.Component {
     }
 
     return []
+  }
+
+  loadMaps() {
+    const api = new OverwatchTeamCompsApi()
+
+    api.getMaps().
+      then(maps => this.onMapsFetched(maps)).
+      catch(err => CompositionHeader.onMapsError(err))
   }
 
   compositionSelect() {

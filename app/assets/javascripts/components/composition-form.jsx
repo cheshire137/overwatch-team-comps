@@ -61,7 +61,6 @@ export default class CompositionForm extends React.Component {
       body.composition_id = id
     }
 
-    console.log('saving name', name, create ? 'as new composition' : 'to update existing composition')
     this.setState({ isRequestOut: true }, () => {
       api.saveComposition(body).
         then(newComp => this.onCompositionLoaded(newComp)).
