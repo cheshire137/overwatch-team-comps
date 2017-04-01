@@ -82,7 +82,9 @@ class PlayerSelect extends React.Component {
             disabled={disabled}
             value={isPlayerSelected ? playerID : ''}
           >
-            <option value="">Player</option>
+            {isPlayerSelected ? '' : (
+              <option value="">Player</option>
+            )}
             {players.map(player => (
               <option
                 key={player.id}
