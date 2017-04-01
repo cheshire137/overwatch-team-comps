@@ -165,6 +165,18 @@ class CompositionHeader extends React.Component {
     )
   }
 
+  compositionSelect() {
+    const { name } = this.state
+
+    return (
+      <span className="select composition-select">
+        <select>
+          <option>{name}</option>
+        </select>
+      </span>
+    )
+  }
+
   render() {
     const { maps } = this.state
     if (typeof maps === 'undefined') {
@@ -178,7 +190,7 @@ class CompositionHeader extends React.Component {
           {this.mapPhotoContainer()}
           <div className="composition-meta">
             {this.mapSelect()}
-            {this.nameEditArea()}
+            {this.compositionSelect()}
             {this.shareLink()}
           </div>
         </div>
