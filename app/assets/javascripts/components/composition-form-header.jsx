@@ -25,6 +25,15 @@ class CompositionHeader extends React.Component {
     this.setState({ name: event.target.value })
   }
 
+  onNameKeyDown(event) {
+    if (event.keyCode === 27) { // Esc
+      event.target.blur() // defocus input field
+      this.setState({ editingName: false })
+    } else if (event.keyCode === 13) { // Enter
+      this.saveNewName(event)
+    }
+  }
+
   onMapsFetched(maps) {
     this.setState({ maps })
   }
@@ -35,7 +44,10 @@ class CompositionHeader extends React.Component {
 
   saveNewName(event) {
     event.preventDefault()
-    event.target.closest('button').blur() // defocus the button
+    const button = event.target.closest('button')
+    if (button) { // maybe user hit Enter to save, not clicked button
+      button.blur() // defocus the button
+    }
     const { name } = this.state
     if (name.trim().length < 1) {
       return
@@ -77,6 +89,7 @@ class CompositionHeader extends React.Component {
           id="composition_name"
           value={name || ''}
           disabled={disabled}
+          onKeyDown={e => this.onNameKeyDown(e)}
           onChange={e => this.onNameChange(e)}
           onFocus={() => this.setState({ editingName: true })}
           aria-label="Name of this team composition"
