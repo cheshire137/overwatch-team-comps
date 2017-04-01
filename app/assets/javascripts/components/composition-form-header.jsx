@@ -44,14 +44,17 @@ class CompositionHeader extends React.Component {
 
   saveNewName(event) {
     event.preventDefault()
+
     const button = event.target.closest('button')
     if (button) { // maybe user hit Enter to save, not clicked button
       button.blur() // defocus the button
     }
+
     const { name } = this.state
     if (name.trim().length < 1) {
       return
     }
+
     this.props.onNameChange(name)
   }
 
@@ -121,46 +124,60 @@ class CompositionHeader extends React.Component {
     )
   }
 
+  mapSelect() {
+    const { maps } = this.state
+    const { mapID, disabled } = this.props
+    const className = `select map-select ${disabled ? 'is-disabled' : ''}`
+
+    return (
+      <span className={className}>
+        <select
+          aria-label="Choose a map"
+          id="composition_map_id"
+          value={mapID}
+          onChange={e => this.onMapChange(e)}
+          disabled={disabled}
+        >
+          {maps.map(map =>
+            <option
+              key={map.id}
+              value={map.id}
+            >{map.name}</option>
+          )}
+        </select>
+      </span>
+    )
+  }
+
+  mapPhotoContainer() {
+    const { mapSlug, mapImage } = this.props
+
+    return (
+      <div className={`map-photo-container background-${mapSlug}`}>
+        {mapImage ? (
+          <img
+            src={mapImage}
+            alt={mapSlug}
+            className="map-photo"
+          />
+        ) : ''}
+      </div>
+    )
+  }
+
   render() {
     const { maps } = this.state
     if (typeof maps === 'undefined') {
       return null
     }
 
-    const { mapID, mapSlug, mapImage, disabled } = this.props
+    const { mapSlug } = this.props
     return (
       <header className={`composition-header gradient-${mapSlug}`}>
         <div className="container">
-          <div className={`map-photo-container background-${mapSlug}`}>
-            {mapImage ? (
-              <img
-                src={mapImage}
-                alt={mapSlug}
-                className="map-photo"
-              />
-            ) : ''}
-          </div>
+          {this.mapPhotoContainer()}
           <div className="composition-meta">
-            <div>
-              <span
-                className={`select map-select ${disabled ? 'is-disabled' : ''}`}
-              >
-                <select
-                  aria-label="Choose a map"
-                  id="composition_map_id"
-                  value={mapID}
-                  onChange={e => this.onMapChange(e)}
-                  disabled={disabled}
-                >
-                  {maps.map(map =>
-                    <option
-                      key={map.id}
-                      value={map.id}
-                    >{map.name}</option>
-                  )}
-                </select>
-              </span>
-            </div>
+            {this.mapSelect()}
             {this.nameEditArea()}
             {this.shareLink()}
           </div>

@@ -220,6 +220,8 @@
 }
 
 .select.map-select {
+  display: block;
+
   select {
     color: $white;
     font-size: 1.7rem;
