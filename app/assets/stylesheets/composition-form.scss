@@ -226,7 +226,6 @@
   select {
     color: $white;
     padding-left: 0;
-    padding-right: 0;
 
     &[disabled] {
       color: $soft-text;
@@ -264,6 +263,7 @@
 
   select {
     width: 100%;
+    padding-right: 2em;
   }
 }
 
@@ -272,6 +272,7 @@
     font-size: 1.7rem;
     line-height: 1;
     height: 2.3rem;
+    padding-right: 0;
   }
 
   &.is-disabled:after {
