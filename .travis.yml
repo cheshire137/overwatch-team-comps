@@ -14,6 +14,7 @@ cache:
     - vendor/bundle
     - node_modules
     - $HOME/.rvm/gems
+    - tmp/cache/assets/test/sprockets
 before_install:
   - rvm install 2.2.4
   - gem install bundler
