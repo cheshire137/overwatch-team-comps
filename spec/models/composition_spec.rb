@@ -120,19 +120,19 @@ describe Composition do
       user = create(:user)
       before_value = 1.week.ago
       composition = create(:composition, updated_at: before_value)
-      expect(composition.updated_at).to eq(before_value)
+      expect(composition.updated_at).to be_within(1.second).of(before_value)
 
       composition.touch_if_mine(user: user, session_id: nil)
-      expect(composition.reload.updated_at).to eq(before_value)
+      expect(composition.reload.updated_at).to be_within(1.second).of(before_value)
     end
 
     it 'does not change updated_at when anon user does not own comp' do
       before_value = 1.week.ago
       composition = create(:composition, updated_at: before_value)
-      expect(composition.updated_at).to eq(before_value)
+      expect(composition.updated_at).to be_within(1.second).of(before_value)
 
       composition.touch_if_mine(user: nil, session_id: '123')
-      expect(composition.reload.updated_at).to eq(before_value)
+      expect(composition.reload.updated_at).to be_within(1.second).of(before_value)
     end
   end
 end
