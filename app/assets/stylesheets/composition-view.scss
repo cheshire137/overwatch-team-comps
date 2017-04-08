@@ -1,9 +1,5 @@
-.composition-creator-and-date {
-  margin-top: 5px;
-
-  .composition-creator:after {
-    content: "\a0\b7\a0";
-  }
+.composition-creator:after {
+  content: "\a0\b7\a0";
 }
 
 .composition-map-name {
@@ -17,7 +13,6 @@
   color: $soft-header;
   font-size: 1.3rem;
   line-height: 1.3;
-  margin-bottom: 5px;
 }
 
 .players-view-table.players-table {
@@ -46,4 +41,10 @@
     margin-left: 10px;
     white-space: nowrap;
   }
+}
+
+.composition-updated-date {
+  text-transform: uppercase;
+  font-size: 12px;
+  margin: 40px 0;
 }
