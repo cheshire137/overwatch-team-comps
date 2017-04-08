@@ -18,7 +18,8 @@ before_install:
 before_script:
   - npm install
   - bundle install
-  - psql -c 'CREATE DATABASE db/test' -U postgres
+  - cp config/database.yml.travis config/database.yml
+  - psql -c 'CREATE DATABASE travis_ci_test' -U postgres
 script:
   - npm run style
   - npm run unit-test
