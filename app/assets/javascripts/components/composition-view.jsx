@@ -26,6 +26,7 @@ class CompositionView extends React.Component {
       name: null,
       mapName: null,
       mapSlug: null,
+      mapImage: null,
       players: [],
       selections: {},
       heroes: {}
@@ -51,7 +52,8 @@ class CompositionView extends React.Component {
       players: composition.players,
       selections: composition.selections,
       heroes: composition.heroes,
-      mapSlug: composition.map.slug
+      mapSlug: composition.map.slug,
+      mapImage: composition.map.image
     })
   }
 
@@ -80,7 +82,7 @@ class CompositionView extends React.Component {
 
   render() {
     const { mapName, mapSegments, name, players, selections,
-            heroes, notes, mapSlug } = this.state
+            heroes, notes, mapSlug, mapImage } = this.state
 
     if (typeof mapName === 'undefined') {
       return <p className="container">Loading...</p>
@@ -90,7 +92,15 @@ class CompositionView extends React.Component {
       <div>
         <header className={`composition-header gradient-${mapSlug}`}>
           <div className="container">
-            <div className="map-photo-container" />
+            <div className={`map-photo-container background-${mapSlug}`}>
+              {mapImage ? (
+                <img
+                  src={mapImage}
+                  alt={mapSlug}
+                  className="map-photo"
+                />
+              ) : ''}
+            </div>
             <div className="composition-meta">
               <div className="composition-map-name">
                 {mapName}
