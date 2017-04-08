@@ -29,3 +29,4 @@ script:
   - npm run unit-test
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - RAILS_ENV=test bundle exec rspec
+  - RAILS_ENV=test bundle exec rake db:seed
