@@ -7,6 +7,10 @@ addons:
   postgresql: '9.6'
 env:
   - DB=postgresql
+cache:
+  directories:
+    - vendor/bundle
+    - node_modules
 before_install:
   - rvm install 2.2.4
   - gem install bundler
