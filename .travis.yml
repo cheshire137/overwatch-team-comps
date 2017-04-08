@@ -9,15 +9,18 @@ addons:
 env:
   - DB=postgresql
 cache:
+  bundler: true
   directories:
     - vendor/bundle
     - node_modules
+    - $HOME/.rvm/gems
 before_install:
   - rvm install 2.2.4
   - gem install bundler
-before_script:
-  - npm install
+install:
   - bundle install
+  - npm install
+before_script:
   - cp config/database.yml.travis config/database.yml
   - psql -c 'CREATE DATABASE travis_ci_test' -U postgres
 script:
