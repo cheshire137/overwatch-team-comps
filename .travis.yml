@@ -1,0 +1,21 @@
+notifications:
+  email: false
+language: node_js
+node_js:
+- '6'
+addons:
+  postgresql: '9.6'
+env:
+  - DB=postgresql
+before_install:
+  - rvm install 2.2.4
+  - gem install bundler
+before_script:
+  - npm install
+  - bundle install
+  - psql -c 'CREATE DATABASE db/test' -U postgres
+script:
+  - npm run style
+  - npm run unit-test
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - RAILS_ENV=test bundle exec rspec
