@@ -76,7 +76,9 @@ class CompositionView extends React.Component {
     const month = date.getMonth()
     const year = date.getFullYear()
     return (
-      <span>Last updated: {days[day]}, {months[month]} {dayOfMonth}, {year}</span>
+      <p
+        className="composition-updated-date"
+      >Updated: {days[day]}, {months[month]} {dayOfMonth}, {year}</p>
     )
   }
 
@@ -108,10 +110,7 @@ class CompositionView extends React.Component {
               <div className="composition-name">
                 {name}
               </div>
-              <div className="composition-creator-and-date">
-                {this.compositionCreator()}
-                {this.compositionDate()}
-              </div>
+              {this.compositionCreator()}
             </div>
           </div>
         </header>
@@ -157,6 +156,7 @@ class CompositionView extends React.Component {
               {notes}
             </div>
           </div>
+          {this.compositionDate()}
         </div>
       </div>
     )
