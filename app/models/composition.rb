@@ -70,6 +70,22 @@ class Composition < ApplicationRecord
     ]
   end
 
+  # Returns true if this Composition is owned by the given user.
+  def mine?(user:, session_id:)
+    if user
+      self.user == user
+    else
+      self.user.anonymous? && self.session_id == session_id
+    end
+  end
+
+  # Updates this Composition's updated_at if it belongs to the given user.
+  def touch_if_mine(user:, session_id:)
+    return unless mine?(user: user, session_id: session_id)
+
+    touch
+  end
+
   private
 
   def user_has_not_used_name_before

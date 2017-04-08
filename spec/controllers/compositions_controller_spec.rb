@@ -1,9 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe CompositionsController do
+  before(:all) do
+    @anon_user = User.anonymous || create(:anonymous_user)
+  end
+
   before(:each) do
     @user = create(:user)
-    @anon_user = create(:anonymous_user)
     @map = create(:map)
     @map_segment1 = create(:map_segment, map: @map)
     @map_segment2 = create(:map_segment, map: @map)
