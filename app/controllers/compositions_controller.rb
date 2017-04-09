@@ -48,7 +48,7 @@ class CompositionsController < ApplicationController
 
   def composition_params
     params.permit(:composition_id, :hero_id, :map_segment_id, :player_id,
-                  :player_position, :map_id, :name, :notes)
+                  :player_position, :map_id, :name, :notes, :allow_duplicates)
   end
 
   def most_recent_composition

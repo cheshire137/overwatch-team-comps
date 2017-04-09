@@ -91,6 +91,10 @@ class CompositionSaver
       composition.notes = notes
     end
 
+    if (allow_duplicates = data[:allow_duplicates]).present?
+      composition.allow_duplicates = allow_duplicates
+    end
+
     composition
   end
 
