@@ -1,11 +1,10 @@
 notifications:
   email: false
 language: node_js
-dist: trusty
 node_js:
 - '6'
 addons:
-  postgresql: '9.6'
+  postgresql: '9.4'
 env:
   - DB=postgresql
 cache:
