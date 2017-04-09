@@ -1,3 +1,4 @@
+# A map in the game, such as Hanamura.
 class Map < ApplicationRecord
   extend FriendlyId
 

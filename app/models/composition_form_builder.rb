@@ -1,3 +1,6 @@
+# Used to construct JSON data for the front end to consume to display the
+# composition form. Has many rows, one per player. The columns are for
+# each map segment in the composition's selected map.
 class CompositionFormBuilder
   def initialize(composition)
     @composition = composition

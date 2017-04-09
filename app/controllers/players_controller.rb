@@ -1,3 +1,5 @@
+# For managing players in a team composition, including creating, deleting,
+# and updating them.
 class PlayersController < ApplicationController
   def create
     player = Player.new(player_params)

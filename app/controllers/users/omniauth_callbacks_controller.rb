@@ -1,3 +1,4 @@
+# For user OAuth authentication via Battle.net, using the Devise gem.
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def bnet
     auth = request.env['omniauth.auth']

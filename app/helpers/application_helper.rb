@@ -1,3 +1,4 @@
+# Helper methods for views.
 module ApplicationHelper
   def image_exists?(file_name)
     path = Rails.root.join('app', 'assets', 'images', file_name)

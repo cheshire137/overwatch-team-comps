@@ -1,3 +1,6 @@
+# Represents a person in a team composition. Not the same as a user. A user
+# is a user of this app. A single user can create multiple players, and will
+# have a single player tied to them that represents them in compositions.
 class Player < ApplicationRecord
   belongs_to :user
   belongs_to :creator, class_name: 'User'

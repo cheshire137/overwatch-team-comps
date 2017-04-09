@@ -1,3 +1,4 @@
+# A player's hero choice for a given map segment in a composition.
 class PlayerSelection < ApplicationRecord
   belongs_to :composition_player
   belongs_to :hero

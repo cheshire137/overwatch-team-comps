@@ -1,3 +1,7 @@
+# A user in the system. Not the same as a player in a team composition.
+# A single user might have several players associated with them, including
+# players they've created to add to their comps, as well as a player that
+# represents the user because it has the same battletag.
 class User < ApplicationRecord
   VALID_PLATFORMS = ['pc', 'psn', 'xbl'].freeze
   VALID_REGIONS = ['eu', 'us', 'kr', 'cn', 'global'].freeze

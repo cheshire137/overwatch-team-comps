@@ -1,3 +1,6 @@
+# Represents a row in the team composition form. There is one row per player.
+# The columns are each map segment. So this binds a player to a hero per
+# map segment.
 class CompositionRow
   attr_reader :player, :number
 

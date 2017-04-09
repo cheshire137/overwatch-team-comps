@@ -1,3 +1,4 @@
+# A hero you can play in Overwatch.
 class Hero < ApplicationRecord
   validates :name, presence: true
 

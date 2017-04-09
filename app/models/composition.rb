@@ -1,3 +1,5 @@
+# A team composition. An arrangement of players and the heroes they play
+# for each map segment in the selected map.
 class Composition < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged

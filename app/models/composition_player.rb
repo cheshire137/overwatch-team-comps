@@ -1,3 +1,6 @@
+# A player in a team composition. Has a unique numeric position, meaning
+# the row they're in. Has many selections, one per map segment for the
+# composition's selected map.
 class CompositionPlayer < ApplicationRecord
   belongs_to :composition
   belongs_to :player

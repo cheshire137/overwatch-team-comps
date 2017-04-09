@@ -1,3 +1,5 @@
+# For creating or updating a team composition based on given parameters,
+# for the specified user.
 class CompositionSaver
   attr_reader :error_type, :error_value, :composition
 
