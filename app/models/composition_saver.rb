@@ -40,9 +40,8 @@ class CompositionSaver
   def persist_composition(data)
     if data[:composition_id] || data[:name] || data[:notes] || @map
       @composition = init_composition(data)
-      is_unchanged = @composition.persisted? && !@composition.changed?
 
-      unless is_unchanged || @composition.save
+      unless is_unchanged?(@composition) || @composition.save
         @error_type = 'composition'
         @error_value = @composition.errors
         return false
@@ -52,12 +51,15 @@ class CompositionSaver
     true
   end
 
+  def is_unchanged?(record)
+    record.persisted? && !record.changed?
+  end
+
   def persist_composition_player(data, position:)
     if data[:player_id] && @composition
       @composition_player = init_composition_player(data, position: position)
-      is_unchanged = @composition_player.persisted? && !@composition_player.changed?
 
-      unless is_unchanged || @composition_player.save
+      unless is_unchanged?(@composition_player) || @composition_player.save
         @error_type = 'composition_player'
         @error_value = @composition_player.errors
         return false
@@ -83,8 +85,7 @@ class CompositionSaver
 
   def check_player_selection_results(selections)
     results = selections.map do |selection|
-      is_unchanged = selection.persisted? && !selection.changed?
-      is_unchanged || selection.save
+      is_unchanged?(selection) || selection.save
     end
 
     results.all?
