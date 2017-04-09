@@ -1,5 +1,7 @@
 # Overwatch Team Comps
 
+[![Build Status](https://travis-ci.org/cheshire137/overwatch-team-comps.svg?branch=master)](https://travis-ci.org/cheshire137/overwatch-team-comps)
+
 A web app that allows Overwatch players to plan out their team composition
 for every point of every map on both offense and defense. Players should be
 able to save their team comps as well as be able to easily share their team
