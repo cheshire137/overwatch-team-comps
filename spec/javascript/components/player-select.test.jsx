@@ -33,4 +33,15 @@ describe('PlayerSelect', () => {
     select.simulate('change', { target: { value: player2.id } })
     expect(selectedPlayerID).toBe(player2.id)
   })
+
+  test('can show new player text field', () => {
+    const rendered = shallow(component)
+
+    expect(rendered.find(`#${props.inputID}`).length).toBe(0)
+
+    const select = rendered.find('select')
+    select.simulate('change', { target: { value: 'new' } })
+
+    expect(rendered.find(`#${props.inputID}`).length).toBe(1)
+  })
 })
