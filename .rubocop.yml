@@ -1,0 +1,46 @@
+Style/AlignHash:
+  Enabled: false
+Style/DotPosition:
+  EnforcedStyle: trailing
+Style/Lambda:
+  Enabled: false
+Style/BlockComments:
+  Enabled: false
+Style/SpaceBeforeBlockBraces:
+  Enabled: false
+Metrics/LineLength:
+  Max: 100
+Metrics/AbcSize:
+  Max: 16
+Metrics/BlockLength:
+  Enabled: false
+Style/MultilineMethodCallIndentation:
+  IndentationWidth: 2
+  EnforcedStyle: indented
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+Lint/EndAlignment:
+  EnforcedStyleAlignWith: variable
+CaseIndentation:
+  EnforcedStyle: end
+  IndentOneStep: false
+Style/EmptyLiteral:
+  Enabled: false
+Style/PredicateName:
+  Enabled: false
+Style/AccessorMethodName:
+  Enabled: false
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+AllCops:
+  Exclude:
+    - db/schema.rb
+    - db/migrate/*
+    - config/spring.rb
+    - config/puma.rb
+    - config/initializers/inflections.rb
+    - config/initializers/friendly_id.rb
+    - config/initializers/devise.rb
+    - config/initializers/backtrace_silencers.rb
+    - config/application.rb
+    - bin/*
