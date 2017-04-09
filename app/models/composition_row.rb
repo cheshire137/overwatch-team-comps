@@ -46,12 +46,18 @@ class CompositionRow
       return
     end
 
-    selection = @player_selections.detect do |player_selection|
+    selection = find_player_selection(map_segment)
+
+    @selected_heroes[map_segment.id] = selection ? selection.hero_id : nil
+  end
+
+  private
+
+  def find_player_selection(map_segment)
+    @player_selections.detect do |player_selection|
       player_selection.position == number &&
         player_selection.map_segment_id == map_segment.id &&
         player_selection.player_id == player.id
     end
-
-    @selected_heroes[map_segment.id] = selection ? selection.hero_id : nil
   end
 end
