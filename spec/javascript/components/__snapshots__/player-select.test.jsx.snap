@@ -1,0 +1,43 @@
+exports[`PlayerSelect matches snapshot 1`] = `
+<div
+  className="player-select-container">
+  <label
+    className="label"
+    htmlFor="input-dom-id">
+    Player 1 selection
+  </label>
+  <div
+    className="existing-player-container">
+    <span
+      className="select player-select ">
+      <select
+        disabled={false}
+        onChange={[Function]}
+        value={1}>
+        
+        <option
+          value={1}>
+          Sally
+        </option>
+        <option
+          value={2}>
+          Jimmy
+        </option>
+        <option
+          value="new">
+          Add new player
+        </option>
+      </select>
+    </span>
+    <button
+      className="button-link edit-player-button"
+      disabled={false}
+      onClick={[Function]}
+      type="button">
+      <i
+        aria-hidden="true"
+        className="fa fa-cog" />
+    </button>
+  </div>
+</div>
+`;
