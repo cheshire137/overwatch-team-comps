@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 class HeroSelect extends React.Component {
   onChange(event) {
     const heroID = event.target.value
@@ -76,12 +78,12 @@ class HeroSelect extends React.Component {
 }
 
 HeroSelect.propTypes = {
-  heroes: React.PropTypes.array.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  selectedHeroID: React.PropTypes.number,
-  disabled: React.PropTypes.bool.isRequired,
-  selectID: React.PropTypes.string.isRequired,
-  isDuplicate: React.PropTypes.bool
+  heroes: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  selectedHeroID: PropTypes.number,
+  disabled: PropTypes.bool.isRequired,
+  selectID: PropTypes.string.isRequired,
+  isDuplicate: PropTypes.bool
 }
 
 export default HeroSelect

@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 import MapSegmentHeader from './map-segment-header.jsx'
@@ -164,7 +166,7 @@ class CompositionView extends React.Component {
 }
 
 CompositionView.propTypes = {
-  params: React.PropTypes.object.isRequired
+  params: PropTypes.object.isRequired
 }
 
 export default CompositionView

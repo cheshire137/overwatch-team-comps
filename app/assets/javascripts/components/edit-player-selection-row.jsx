@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import HeroSelect from './hero-select.jsx'
 import PlayerSelect from './player-select.jsx'
 
@@ -40,18 +42,18 @@ const EditPlayerSelectionRow = function(props) {
 }
 
 EditPlayerSelectionRow.propTypes = {
-  inputID: React.PropTypes.string.isRequired,
-  playerID: React.PropTypes.number,
-  players: React.PropTypes.array.isRequired,
-  onPlayerSelection: React.PropTypes.func.isRequired,
-  nameLabel: React.PropTypes.string.isRequired,
-  onHeroSelection: React.PropTypes.func.isRequired,
-  mapSegments: React.PropTypes.array.isRequired,
-  heroes: React.PropTypes.array.isRequired,
-  selections: React.PropTypes.object.isRequired,
-  duplicatePicks: React.PropTypes.object.isRequired,
-  editPlayer: React.PropTypes.func.isRequired,
-  disabled: React.PropTypes.bool.isRequired
+  inputID: PropTypes.string.isRequired,
+  playerID: PropTypes.number,
+  players: PropTypes.array.isRequired,
+  onPlayerSelection: PropTypes.func.isRequired,
+  nameLabel: PropTypes.string.isRequired,
+  onHeroSelection: PropTypes.func.isRequired,
+  mapSegments: PropTypes.array.isRequired,
+  heroes: PropTypes.array.isRequired,
+  selections: PropTypes.object.isRequired,
+  duplicatePicks: PropTypes.object.isRequired,
+  editPlayer: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired
 }
 
 export default EditPlayerSelectionRow

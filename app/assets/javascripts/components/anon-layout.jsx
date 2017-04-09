@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import Footer from './footer.jsx'
 
 const AnonLayout = function(props) {
@@ -29,8 +31,8 @@ const AnonLayout = function(props) {
 }
 
 AnonLayout.propTypes = {
-  children: React.PropTypes.object.isRequired,
-  location: React.PropTypes.object.isRequired
+  children: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 }
 
 export default AnonLayout

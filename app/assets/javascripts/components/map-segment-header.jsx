@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 class MapSegmentHeader extends React.Component {
   className() {
     const { index, isAttack } = this.props
@@ -46,12 +48,12 @@ class MapSegmentHeader extends React.Component {
 }
 
 MapSegmentHeader.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  filled: React.PropTypes.bool.isRequired,
-  isAttack: React.PropTypes.bool.isRequired,
-  isFirstOfKind: React.PropTypes.bool.isRequired,
-  isLastOfKind: React.PropTypes.bool.isRequired,
-  index: React.PropTypes.number.isRequired
+  name: PropTypes.string.isRequired,
+  filled: PropTypes.bool.isRequired,
+  isAttack: PropTypes.bool.isRequired,
+  isFirstOfKind: PropTypes.bool.isRequired,
+  isLastOfKind: PropTypes.bool.isRequired,
+  index: PropTypes.number.isRequired
 }
 
 export default MapSegmentHeader

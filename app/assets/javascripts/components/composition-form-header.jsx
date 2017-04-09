@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 class CompositionHeader extends React.Component {
@@ -275,15 +277,15 @@ class CompositionHeader extends React.Component {
 }
 
 CompositionHeader.propTypes = {
-  compositionName: React.PropTypes.string,
-  compositionSlug: React.PropTypes.string,
-  mapID: React.PropTypes.number.isRequired,
-  mapSlug: React.PropTypes.string.isRequired,
-  mapImage: React.PropTypes.string,
-  onMapChange: React.PropTypes.func.isRequired,
-  onCompositionNameChange: React.PropTypes.func.isRequired,
-  onCompositionLoad: React.PropTypes.func.isRequired,
-  disabled: React.PropTypes.bool.isRequired
+  compositionName: PropTypes.string,
+  compositionSlug: PropTypes.string,
+  mapID: PropTypes.number.isRequired,
+  mapSlug: PropTypes.string.isRequired,
+  mapImage: PropTypes.string,
+  onMapChange: PropTypes.func.isRequired,
+  onCompositionNameChange: PropTypes.func.isRequired,
+  onCompositionLoad: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired
 }
 
 export default CompositionHeader

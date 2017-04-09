@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
 class PlayerEditModal extends React.Component {
@@ -217,12 +219,12 @@ class PlayerEditModal extends React.Component {
 }
 
 PlayerEditModal.propTypes = {
-  playerID: React.PropTypes.number,
-  compositionID: React.PropTypes.number,
-  playerName: React.PropTypes.string,
-  battletag: React.PropTypes.string,
-  close: React.PropTypes.func.isRequired,
-  isOpen: React.PropTypes.bool.isRequired
+  playerID: PropTypes.number,
+  compositionID: PropTypes.number,
+  playerName: PropTypes.string,
+  battletag: PropTypes.string,
+  close: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired
 }
 
 export default PlayerEditModal

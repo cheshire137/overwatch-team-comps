@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 class PlayerRowView extends React.Component {
   mapSegment(segment, index) {
     const { heroes, selections } = this.props
@@ -55,10 +57,10 @@ class PlayerRowView extends React.Component {
 }
 
 PlayerRowView.propTypes = {
-  heroes: React.PropTypes.array.isRequired,
-  name: React.PropTypes.string.isRequired,
-  selections: React.PropTypes.object.isRequired,
-  mapSegments: React.PropTypes.array.isRequired
+  heroes: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
+  selections: PropTypes.object.isRequired,
+  mapSegments: PropTypes.array.isRequired
 }
 
 export default PlayerRowView

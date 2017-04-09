@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 class PlayerSelect extends React.Component {
   constructor(props) {
     super(props)
@@ -126,13 +128,13 @@ class PlayerSelect extends React.Component {
 }
 
 PlayerSelect.propTypes = {
-  inputID: React.PropTypes.string.isRequired,
-  playerID: React.PropTypes.number,
-  players: React.PropTypes.array.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  label: React.PropTypes.string.isRequired,
-  editPlayer: React.PropTypes.func.isRequired,
-  disabled: React.PropTypes.bool.isRequired
+  inputID: PropTypes.string.isRequired,
+  playerID: PropTypes.number,
+  players: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  editPlayer: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired
 }
 
 export default PlayerSelect

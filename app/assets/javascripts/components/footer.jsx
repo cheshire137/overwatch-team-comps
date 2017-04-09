@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 const Footer = function(props) {
   const { basePath } = props
   return (
@@ -15,7 +17,7 @@ const Footer = function(props) {
 }
 
 Footer.propTypes = {
-  basePath: React.PropTypes.string.isRequired
+  basePath: PropTypes.string.isRequired
 }
 
 export default Footer
