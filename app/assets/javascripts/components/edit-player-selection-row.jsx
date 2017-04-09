@@ -4,7 +4,7 @@ import PlayerSelect from './player-select.jsx'
 const EditPlayerSelectionRow = function(props) {
   const { inputID, playerID, nameLabel, onHeroSelection,
           mapSegments, onPlayerSelection, players, heroes,
-          selections, editPlayer, disabled } = props
+          selections, editPlayer, disabled, duplicatePicks } = props
   return (
     <tr>
       <td className="player-cell">
@@ -31,6 +31,7 @@ const EditPlayerSelectionRow = function(props) {
             selectedHeroID={selections[segment.id]}
             onChange={heroID => onHeroSelection(heroID, segment.id)}
             selectID={`${inputID}_segment_${segment.id}`}
+            isDuplicate={duplicatePicks[segment.id]}
           />
         </td>
       ))}
@@ -48,6 +49,7 @@ EditPlayerSelectionRow.propTypes = {
   mapSegments: React.PropTypes.array.isRequired,
   heroes: React.PropTypes.array.isRequired,
   selections: React.PropTypes.object.isRequired,
+  duplicatePicks: React.PropTypes.object.isRequired,
   editPlayer: React.PropTypes.func.isRequired,
   disabled: React.PropTypes.bool.isRequired
 }
