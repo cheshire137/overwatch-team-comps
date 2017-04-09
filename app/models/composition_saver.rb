@@ -119,23 +119,39 @@ class CompositionSaver
 
   def init_player_selections(data, composition_player:, map_segment:)
     hero = Hero.find(data[:hero_id])
-    all_segments = map_segment.map.segment_ids
-    filled_segments = composition_player.player_selections.pluck(:map_segment_id)
-    blank_segments = all_segments - filled_segments
+    blank_segments = get_blank_segments(map_segment: map_segment,
+                                        composition_player: composition_player)
 
     # All have already been initialized, just need to update the
     # specified map segment for the player to use the given hero.
     if blank_segments.empty?
-      updated_selection = PlayerSelection.
-        where(composition_player_id: composition_player,
-              map_segment_id: map_segment).first
-      updated_selection.hero = hero
-      [updated_selection]
+      update_player_selections(hero: hero, composition_player: composition_player,
+                               map_segment: map_segment)
     else
-      blank_segments.map do |map_segment_id|
-        PlayerSelection.new(hero: hero, map_segment_id: map_segment_id,
-                            composition_player: composition_player)
-      end
+      init_player_selections_for_segments(blank_segments, hero: hero,
+                                          composition_player: composition_player)
     end
+  end
+
+  def get_blank_segments(composition_player:, map_segment:)
+    all_segments = map_segment.map.segment_ids
+    filled_segments = composition_player.player_selections.pluck(:map_segment_id)
+
+    all_segments - filled_segments
+  end
+
+  def init_player_selections_for_segments(segment_ids, hero:, composition_player:)
+    segment_ids.map do |map_segment_id|
+      PlayerSelection.new(hero: hero, map_segment_id: map_segment_id,
+                          composition_player: composition_player)
+    end
+  end
+
+  def update_player_selections(hero:, composition_player:, map_segment:)
+    updated_selection = PlayerSelection.
+      where(composition_player_id: composition_player,
+            map_segment_id: map_segment).first
+    updated_selection.hero = hero
+    [updated_selection]
   end
 end
