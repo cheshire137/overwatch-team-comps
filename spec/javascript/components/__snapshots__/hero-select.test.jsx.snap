@@ -1,0 +1,30 @@
+exports[`HeroSelect matches snapshot 1`] = `
+<div
+  className="hero-select-container">
+  <label
+    htmlFor="hero-select-dom-id">
+    <img
+      alt="Hanzo"
+      className="hero-portrait"
+      src="/photo.jpg" />
+  </label>
+  <span
+    className="select">
+    <select
+      disabled={false}
+      id="hero-select-dom-id"
+      onChange={[Function]}
+      value={1}>
+      
+      <option
+        value={1}>
+        Hanzo
+      </option>
+      <option
+        value={2}>
+        Ana
+      </option>
+    </select>
+  </span>
+</div>
+`;
