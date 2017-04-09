@@ -58,7 +58,8 @@
     "collectCoverageFrom": [
       "app/assets/javascripts/**/*.{js,jsx}",
       "!app/assets/javascripts/application.js",
-      "!app/assets/javascripts/cable.js"
+      "!app/assets/javascripts/cable.js",
+      "!app/assets/javascripts/components.js"
     ],
     "setupFiles": [
       "<rootDir>/spec/setup-jest.js"
