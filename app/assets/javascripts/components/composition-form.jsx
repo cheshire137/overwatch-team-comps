@@ -1,3 +1,4 @@
+import AllowDuplicatesCheckbox from './allow-duplicates-checkbox.jsx'
 import CompositionFormHeader from './composition-form-header.jsx'
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
 import MapSegmentHeader from './map-segment-header.jsx'
@@ -146,6 +147,25 @@ export default class CompositionForm extends React.Component {
     return null
   }
 
+  changeAllowDuplicates(allow) {
+    const { id, mapID } = this.state
+    const api = new OverwatchTeamCompsApi()
+
+    const body = {
+      map_id: mapID,
+      allow_duplicates: allow
+    }
+    if (id) {
+      body.composition_id = id
+    }
+
+    this.setState({ isRequestOut: true }, () => {
+      api.saveComposition(body).
+        then(newComp => this.onCompositionLoaded(newComp)).
+        catch(err => this.onCompositionSaveError(err))
+    })
+  }
+
   loadComposition(mapID) {
     const api = new OverwatchTeamCompsApi()
 
@@ -219,7 +239,8 @@ export default class CompositionForm extends React.Component {
   render() {
     const { name, slug, mapID, mapSegments, players, heroes,
             selections, notes, mapSlug, editingPlayerID, id,
-            isRequestOut, mapImage, duplicatePicks } = this.state
+            isRequestOut, mapImage, duplicatePicks,
+            allowDuplicates } = this.state
 
     if (typeof mapID !== 'number') {
       return <p className="container">Loading...</p>
@@ -298,6 +319,14 @@ export default class CompositionForm extends React.Component {
                   />
                 )
               })}
+              <tr>
+                <td colSpan={mapSegments.length + 1}>
+                  <AllowDuplicatesCheckbox
+                    onChange={allow => this.changeAllowDuplicates(allow)}
+                    checked={allowDuplicates}
+                  />
+                </td>
+              </tr>
             </tbody>
           </table>
           <div className="composition-notes-wrapper">
