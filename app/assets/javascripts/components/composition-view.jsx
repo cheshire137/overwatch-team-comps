@@ -63,9 +63,9 @@ class CompositionView extends React.Component {
       return null
     }
     return (
-      <span className="composition-creator">
+      <p className="composition-creator">
         By <span>{battletag}</span>
-      </span>
+      </p>
     )
   }
 

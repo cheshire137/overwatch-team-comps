@@ -73,4 +73,5 @@ map_segments_by_map.each do |map_name, base_segments|
 end
 
 puts "Creating anonymous user"
-anon_user = User.create!(email: User::ANONYMOUS_EMAIL, password: "passworD1")
+anon_user = User.anonymous || User.create!(email: User::ANONYMOUS_EMAIL,
+                                           password: "passworD1")
