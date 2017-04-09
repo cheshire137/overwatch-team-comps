@@ -18,7 +18,7 @@ exports[`Settings matches snapshot 1`] = `
         onChange={[Function]}
         placeholder="Your email address"
         type="text"
-        value={undefined} />
+        value="user@example.com" />
     </div>
     <div
       className="field">
@@ -35,7 +35,7 @@ exports[`Settings matches snapshot 1`] = `
             id="platform"
             name="platform"
             onChange={[Function]}
-            value={undefined}>
+            value="xbl">
             <option
               value="" />
             <option
@@ -69,7 +69,7 @@ exports[`Settings matches snapshot 1`] = `
             id="region"
             name="region"
             onChange={[Function]}
-            value={undefined}>
+            value="eu">
             <option
               value="" />
             <option
