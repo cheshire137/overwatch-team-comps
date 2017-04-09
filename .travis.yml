@@ -1,12 +1,13 @@
 notifications:
   email: false
-language: node_js
-node_js:
-- '6'
+language: ruby
+rvm:
+  - 2.2.4
 addons:
   postgresql: '9.4'
 env:
   - DB=postgresql
+  - TRAVIS_NODE_VERSION="6"
 cache:
   bundler: true
   directories:
@@ -14,9 +15,6 @@ cache:
     - node_modules
     - $HOME/.rvm/gems
     - tmp/cache/assets/test/sprockets
-before_install:
-  - rvm install 2.2.4
-  - gem install bundler
 install:
   - bundle install
   - npm install
