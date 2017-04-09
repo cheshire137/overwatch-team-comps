@@ -67,7 +67,7 @@ class CompositionSaver
   def init_composition(data, map:)
     id = data[:composition_id]
 
-    composition = get_composition_for_user
+    composition = get_composition_for_user(id)
 
     if map
       composition.map = map
@@ -86,7 +86,7 @@ class CompositionSaver
     composition
   end
 
-  def get_composition_for_user
+  def get_composition_for_user(id)
     composition = if @user
       composition_for_authenticated_user(id: id)
     else
