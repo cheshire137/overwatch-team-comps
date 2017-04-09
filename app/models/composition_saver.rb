@@ -71,12 +71,7 @@ class CompositionSaver
     if @map_segment && @composition_player && data[:hero_id]
       selections = init_player_selections(data)
 
-      results = selections.map do |selection|
-        is_unchanged = selection.persisted? && !selection.changed?
-        is_unchanged || selection.save
-      end
-
-      unless results.all?
+      unless check_player_selection_results(selections)
         @error_type = 'player_selection'
         @error_value = selections.map(&:errors)
         return false
@@ -84,6 +79,15 @@ class CompositionSaver
     end
 
     true
+  end
+
+  def check_player_selection_results(selections)
+    results = selections.map do |selection|
+      is_unchanged = selection.persisted? && !selection.changed?
+      is_unchanged || selection.save
+    end
+
+    results.all?
   end
 
   def init_composition_player(data, position:)
