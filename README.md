@@ -11,14 +11,6 @@ Feature planning is done on [our Trello board](https://trello.com/b/STeIZ1td/pro
 
 If interested, see also [our requirements document](https://trello.com/c/GCIwE5We/5-end-user-requirements-version-1) that contains a high-level description of all the end-user features of this product.
 
-![Sample Mockup of Team Comp Form 01](https://raw.githubusercontent.com/cheshire137/overwatch-team-comps/master/readme%20screens%20-%20team%20comp%20form%2001.png)
-
-![Sample Mockup of Team Comp Form 02](https://raw.githubusercontent.com/cheshire137/overwatch-team-comps/master/readme%20screens%20-%20team%20comp%20form%2002.png)
-
-![Sample Mockup of Hero Pool Page](https://raw.githubusercontent.com/cheshire137/overwatch-team-comps/master/readme%20screens%20-%20hero%20pool.png)
-
-![Sample Mockup of Hero Select Drop Down Menu](https://raw.githubusercontent.com/cheshire137/overwatch-team-comps/master/readme%20screens%20-%20hero%20select%20drop%20down.png)
-
 ## App Structure
 
 - Ruby on Rails web app using [React](https://facebook.github.io/react/) for a speedy,
@@ -132,3 +124,13 @@ heroku run rake db:migrate
 heroku run rake db:seed
 heroku open
 ```
+
+## Mockups
+
+![Sample Mockup of Team Comp Form 01](https://raw.githubusercontent.com/cheshire137/overwatch-team-comps/master/mockups/readme%20screens%20-%20team%20comp%20form%2001.png)
+
+![Sample Mockup of Team Comp Form 02](https://raw.githubusercontent.com/cheshire137/overwatch-team-comps/master/mockups/readme%20screens%20-%20team%20comp%20form%2002.png)
+
+![Sample Mockup of Hero Pool Page](https://raw.githubusercontent.com/cheshire137/overwatch-team-comps/master/mockups/readme%20screens%20-%20hero%20pool.png)
+
+![Sample Mockup of Hero Select Drop Down Menu](https://raw.githubusercontent.com/cheshire137/overwatch-team-comps/master/mockups/readme%20screens%20-%20hero%20select%20drop%20down.png)
