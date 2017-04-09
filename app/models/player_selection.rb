@@ -11,6 +11,8 @@ class PlayerSelection < ApplicationRecord
   validates :composition_player_id, uniqueness: { scope: :map_segment_id }
   validate :map_segment_matches_composition_map
 
+  delegate :position, :player_id, :composition_id, to: :composition_player
+
   private
 
   def map_segment_matches_composition_map
