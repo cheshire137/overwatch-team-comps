@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 class HeroSelect extends React.Component {
   onChange(event) {
     const heroID = event.target.value
@@ -21,17 +23,38 @@ class HeroSelect extends React.Component {
     )
   }
 
+  selectSpanClass() {
+    const classes = ['select']
+    if (this.props.disabled) {
+      classes.push('is-disabled')
+    }
+    return classes.join(' ')
+  }
+
+  isFilled() {
+    return typeof this.props.selectedHeroID === 'number'
+  }
+
+  containerClass() {
+    const classes = ['hero-select-container']
+    if (!this.isFilled()) {
+      classes.push('not-filled')
+    }
+    if (this.props.isDuplicate) {
+      classes.push('is-duplicate')
+    }
+    return classes.join(' ')
+  }
+
   render() {
     const { heroes, selectedHeroID, disabled, selectID } = this.props
-    const isFilled = typeof selectedHeroID === 'number'
+    const isFilled = this.isFilled()
     return (
-      <div className={`hero-select-container ${isFilled ? '' : 'not-filled'}`}>
+      <div className={this.containerClass()}>
         <label
           htmlFor={selectID}
         >{this.heroPortrait()}</label>
-        <span
-          className={`select ${disabled ? 'is-disabled' : ''}`}
-        >
+        <span className={this.selectSpanClass()}>
           <select
             onChange={e => this.onChange(e)}
             value={isFilled ? selectedHeroID : ''}
@@ -55,11 +78,12 @@ class HeroSelect extends React.Component {
 }
 
 HeroSelect.propTypes = {
-  heroes: React.PropTypes.array.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  selectedHeroID: React.PropTypes.number,
-  disabled: React.PropTypes.bool.isRequired,
-  selectID: React.PropTypes.string.isRequired
+  heroes: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  selectedHeroID: PropTypes.number,
+  disabled: PropTypes.bool.isRequired,
+  selectID: PropTypes.string.isRequired,
+  isDuplicate: PropTypes.bool
 }
 
 export default HeroSelect

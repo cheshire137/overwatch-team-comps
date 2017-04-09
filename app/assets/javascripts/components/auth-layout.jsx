@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import Footer from './footer.jsx'
 
 import LocalStorage from '../models/local-storage'
@@ -140,8 +142,8 @@ class AuthLayout extends React.Component {
 }
 
 AuthLayout.propTypes = {
-  children: React.PropTypes.object.isRequired,
-  location: React.PropTypes.object.isRequired
+  children: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 }
 
 export default AuthLayout

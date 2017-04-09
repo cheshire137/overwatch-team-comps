@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 class HeroPoolChoice extends React.Component {
   onChange(event) {
     this.props.onChange(event.target.value)
@@ -65,13 +67,13 @@ class HeroPoolChoice extends React.Component {
 }
 
 HeroPoolChoice.propTypes = {
-  slug: React.PropTypes.string.isRequired,
-  image: React.PropTypes.string.isRequired,
-  id: React.PropTypes.number.isRequired,
-  confidence: React.PropTypes.number.isRequired,
-  name: React.PropTypes.string.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  ranks: React.PropTypes.object.isRequired
+  slug: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  confidence: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  ranks: PropTypes.object.isRequired
 }
 
 export default HeroPoolChoice

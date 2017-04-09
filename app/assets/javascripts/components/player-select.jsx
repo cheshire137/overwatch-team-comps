@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 class PlayerSelect extends React.Component {
   constructor(props) {
     super(props)
@@ -33,8 +35,8 @@ class PlayerSelect extends React.Component {
   saveNewName(event) {
     event.preventDefault()
 
-    const name = this.state.name
-    if (name.trim().length < 1) {
+    const name = this.state.name.trim()
+    if (name.length < 1) {
       return
     }
 
@@ -66,7 +68,7 @@ class PlayerSelect extends React.Component {
           <div className="button-wrapper">
             <button
               type="button"
-              className="button"
+              className="button save-new-name-button"
               disabled={disabled}
               onClick={e => this.saveNewName(e)}
             ><i className="fa fa-check" aria-hidden="true" /></button>
@@ -126,13 +128,13 @@ class PlayerSelect extends React.Component {
 }
 
 PlayerSelect.propTypes = {
-  inputID: React.PropTypes.string.isRequired,
-  playerID: React.PropTypes.number,
-  players: React.PropTypes.array.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  label: React.PropTypes.string.isRequired,
-  editPlayer: React.PropTypes.func.isRequired,
-  disabled: React.PropTypes.bool.isRequired
+  inputID: PropTypes.string.isRequired,
+  playerID: PropTypes.number,
+  players: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  editPlayer: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired
 }
 
 export default PlayerSelect

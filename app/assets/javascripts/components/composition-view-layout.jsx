@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 const CompositionViewLayout = function(props) {
   return (
     <div>
@@ -19,7 +21,7 @@ const CompositionViewLayout = function(props) {
 }
 
 CompositionViewLayout.propTypes = {
-  children: React.PropTypes.object.isRequired
+  children: PropTypes.object.isRequired
 }
 
 export default CompositionViewLayout

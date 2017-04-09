@@ -118,6 +118,11 @@
       background-color: #f5f5f6;
     }
 
+    &.is-duplicate {
+      border-color: #f0dbdc;
+      background-color: #fbf4f5;
+    }
+
     label,
     .select {
       display: table-cell;

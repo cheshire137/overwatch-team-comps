@@ -20,6 +20,7 @@ export default class CompositionForm extends React.Component {
       availablePlayers: [],
       heroes: {},
       selections: {},
+      duplicatePicks: {},
       notes: '',
       editingPlayerID: null,
       isRequestOut: false
@@ -118,6 +119,7 @@ export default class CompositionForm extends React.Component {
       availablePlayers: composition.availablePlayers,
       heroes: composition.heroes,
       selections: composition.selections,
+      duplicatePicks: composition.duplicatePicks,
       notes: composition.notes
     })
   }
@@ -215,7 +217,7 @@ export default class CompositionForm extends React.Component {
   render() {
     const { name, slug, mapID, mapSegments, players, heroes,
             selections, notes, mapSlug, editingPlayerID, id,
-            isRequestOut, mapImage } = this.state
+            isRequestOut, mapImage, duplicatePicks } = this.state
 
     if (typeof mapID !== 'number') {
       return <p className="container">Loading...</p>
@@ -269,6 +271,7 @@ export default class CompositionForm extends React.Component {
                 const key = `${player.name}${index}`
                 const playerHeroes = typeof player.id === 'number' ? heroes[player.id] : []
                 const playerSelections = typeof player.id === 'number' ? selections[player.id] : {}
+                const playerDupes = typeof player.id === 'number' ? duplicatePicks[player.id] : {}
                 const selectablePlayers = this.getPlayerOptionsForRow(player)
 
                 return (
@@ -280,6 +283,7 @@ export default class CompositionForm extends React.Component {
                     players={selectablePlayers}
                     heroes={playerHeroes}
                     selections={playerSelections}
+                    duplicatePicks={playerDupes || {}}
                     mapSegments={mapSegments}
                     nameLabel={String(index + 1)}
                     onHeroSelection={(heroID, mapSegmentID) =>

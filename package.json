@@ -31,6 +31,7 @@
     "browserify-incremental": "^3.1.1",
     "immutability-helper": "^2.1.2",
     "promise-polyfill": "^6.0.2",
+    "prop-types": "^15.5.6",
     "react": "^15.4.2",
     "react-debounce-input": "^2.4.2",
     "react-dom": "^15.4.2",
@@ -58,7 +59,8 @@
     "collectCoverageFrom": [
       "app/assets/javascripts/**/*.{js,jsx}",
       "!app/assets/javascripts/application.js",
-      "!app/assets/javascripts/cable.js"
+      "!app/assets/javascripts/cable.js",
+      "!app/assets/javascripts/components.js"
     ],
     "setupFiles": [
       "<rootDir>/spec/setup-jest.js"
