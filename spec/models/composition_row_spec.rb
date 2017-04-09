@@ -23,9 +23,12 @@ RSpec.describe CompositionRow, type: :model do
 
       heroes_by_segment = { @map_segment.id => [@hero1.id, @hero1.id] }
 
+      player_selections = @composition.player_selections.
+        select(:map_segment_id, :position, :player_id, :hero_id).to_a
+
       row = CompositionRow.new(number: 0, player: @player,
                                all_heroes: [@hero1, @hero2],
-                               player_selections: [ps1, ps2],
+                               player_selections: player_selections,
                                heroes_by_segment: heroes_by_segment)
 
       expect(row.duplicate?(@map_segment)).to eq(true)
@@ -37,9 +40,12 @@ RSpec.describe CompositionRow, type: :model do
 
       heroes_by_segment = { @map_segment.id => [@hero1.id] }
 
+      player_selections = @composition.player_selections.
+        select(:map_segment_id, :position, :player_id, :hero_id).to_a
+
       row = CompositionRow.new(number: 0, player: @player,
                                all_heroes: [@hero1, @hero2],
-                               player_selections: [ps1],
+                               player_selections: player_selections,
                                heroes_by_segment: heroes_by_segment)
 
       expect(row.duplicate?(@map_segment)).to eq(false)
@@ -55,9 +61,12 @@ RSpec.describe CompositionRow, type: :model do
 
       heroes_by_segment = { @map_segment.id => [@hero1.id, @hero2.id] }
 
+      player_selections = @composition.player_selections.
+        select(:map_segment_id, :position, :player_id, :hero_id).to_a
+
       row = CompositionRow.new(number: 0, player: @player,
                                all_heroes: [@hero1, @hero2],
-                               player_selections: [ps1, ps2],
+                               player_selections: player_selections,
                                heroes_by_segment: heroes_by_segment)
 
       expect(row.duplicate?(@map_segment)).to eq(false)
