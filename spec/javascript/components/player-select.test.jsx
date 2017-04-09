@@ -1,4 +1,5 @@
 import renderer from 'react-test-renderer'
+import { shallow } from 'enzyme'
 
 import PlayerSelect from '../../../app/assets/javascripts/components/player-select.jsx'
 
@@ -25,5 +26,11 @@ describe('PlayerSelect', () => {
   test('matches snapshot', () => {
     const tree = renderer.create(component).toJSON()
     expect(tree).toMatchSnapshot()
+  })
+
+  test('can change selected player', () => {
+    const select = shallow(component).find('select')
+    select.simulate('change', { target: { value: player2.id } })
+    expect(selectedPlayerID).toBe(player2.id)
   })
 })
