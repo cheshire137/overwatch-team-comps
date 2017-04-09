@@ -1,20 +1,38 @@
 class CompositionFormBuilder
   def initialize(composition)
     @composition = composition
+    @heroes_by_segment = get_heroes_by_segment
+  end
+
+  # Returns true if there are any duplicate hero selections in a given column,
+  # that is, for a given map segment.
+  def any_duplicates?
+    return @any_duplicates if defined? @any_duplicates
+
+    @any_duplicates = @heroes_by_segment.any? do |map_segment_id, hero_ids|
+      hero_ids.uniq.size != hero_ids.size
+    end
   end
 
   def rows
     return @rows if @rows
     @rows = []
+    all_heroes = heroes
 
     # A row for each player already in this composition
     @composition.players.each_with_index do |player, i|
-      @rows << CompositionRow.new(number: i, player: player, builder: self)
+      @rows << CompositionRow.new(number: i, player: player,
+                                  all_heroes: all_heroes,
+                                  player_selections: player_selections,
+                                  heroes_by_segment: @heroes_by_segment)
     end
 
     # A row for each additional player the user could specify:
     (@rows.length).upto(Composition::MAX_PLAYERS - 1) do |i|
-      @rows << CompositionRow.new(number: i, player: nil, builder: self)
+      @rows << CompositionRow.new(number: i, player: nil,
+                                  all_heroes: all_heroes,
+                                  player_selections: player_selections,
+                                  heroes_by_segment: @heroes_by_segment)
     end
 
     @rows
@@ -56,5 +74,19 @@ class CompositionFormBuilder
   def player_selections
     @player_selections ||= @composition.player_selections.
       select(:map_segment_id, :position, :player_id, :hero_id).to_a
+  end
+
+  private
+
+  # Returns a hash: map segment ID => array of hero IDs
+  def get_heroes_by_segment
+    result = {}
+
+    player_selections.each do |player_selection|
+      result[player_selection.map_segment_id] ||= []
+      result[player_selection.map_segment_id] << player_selection.hero_id
+    end
+
+    result
   end
 end

@@ -55,6 +55,23 @@ json.composition do
     end
   end
 
+  if @builder.any_duplicates?
+    # Hash of player ID => map segment ID => hero ID
+    json.duplicatePicks do
+      @builder.rows.each do |row|
+        json.set! row.player.id do
+          @builder.map_segments.each do |map_segment|
+            if row.duplicate?(map_segment)
+              json.set! map_segment.id, row.selected_hero(map_segment)
+            end
+          end
+        end
+      end
+    end
+  else
+    json.duplicatePicks Hash.new
+  end
+
   # Hash of player ID => map segment ID => hero ID
   json.selections do
     @builder.rows.each do |row|
