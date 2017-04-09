@@ -33,7 +33,7 @@ class Player < ApplicationRecord
   # Returns Player or nil.
   def self.find_if_allowed(id, user:, session_id:)
     scope = if user
-      where(id: id).where("creator_id = ? OR user_id = ?", user.id, user.id)
+      where(id: id).where('creator_id = ? OR user_id = ?', user.id, user.id)
     else
       where(id: id, creator_id: User.anonymous, creator_session_id: session_id)
     end

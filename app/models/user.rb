@@ -3,8 +3,8 @@
 # players they've created to add to their comps, as well as a player that
 # represents the user because it has the same battletag.
 class User < ApplicationRecord
-  VALID_PLATFORMS = ['pc', 'psn', 'xbl'].freeze
-  VALID_REGIONS = ['eu', 'us', 'kr', 'cn', 'global'].freeze
+  VALID_PLATFORMS = %w[pc psn xbl].freeze
+  VALID_REGIONS = %w[eu us kr cn global].freeze
 
   # Include default devise modules. Others available are:
   # :recoverable, :confirmable, :lockable, :registerable, :timeoutable

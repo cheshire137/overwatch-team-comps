@@ -12,7 +12,7 @@ class CompositionFormBuilder
   def any_duplicates?
     return @any_duplicates if defined? @any_duplicates
 
-    @any_duplicates = @heroes_by_segment.any? do |map_segment_id, hero_ids|
+    @any_duplicates = @heroes_by_segment.any? do |_, hero_ids|
       hero_ids.uniq.size != hero_ids.size
     end
   end
@@ -31,7 +31,7 @@ class CompositionFormBuilder
     end
 
     # A row for each additional player the user could specify:
-    (@rows.length).upto(Composition::MAX_PLAYERS - 1) do |i|
+    @rows.length.upto(Composition::MAX_PLAYERS - 1) do |i|
       @rows << CompositionRow.new(number: i, player: nil,
                                   all_heroes: all_heroes,
                                   player_selections: player_selections,

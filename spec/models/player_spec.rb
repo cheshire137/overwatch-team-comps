@@ -5,7 +5,7 @@ describe Player do
     @anon_user = User.anonymous || create(:anonymous_user)
   end
 
-  it "requires a name" do
+  it 'requires a name' do
     player = Player.new
     expect(player.valid?).to be_falsey
     expect(player.errors[:name].any?).to be_truthy
@@ -83,8 +83,7 @@ describe Player do
 
     comp_player1 = create(:composition_player, composition: comp,
                           position: 0, player: player1)
-    comp_player2 = create(:composition_player, composition: comp,
-                          position: 1, player: player2)
+    create(:composition_player, composition: comp, position: 1, player: player2)
     comp_player3 = create(:composition_player, composition: comp,
                           position: 2, player: player3)
 

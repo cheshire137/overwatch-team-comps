@@ -27,7 +27,7 @@ RSpec.describe Users::OmniauthCallbacksController do
     end
 
     it 'redirects to home for existing user' do
-      user = create(:user, provider: 'bnet', uid: '123456')
+      create(:user, provider: 'bnet', uid: '123456')
       expect { post :bnet }.not_to change { User.count }
       expect(session['devise.bnet_data']).to be_nil
       expect(response).to redirect_to('/')

@@ -30,12 +30,11 @@ class CompositionPlayer < ApplicationRecord
   def composition_does_not_have_max_players
     return unless composition
 
-    scope = composition.composition_players
-    scope = scope.where('id <> ?', id) if persisted?
+    comp_players = composition.composition_players
+    comp_players = comp_players.where('id <> ?', id) if persisted?
+    return if comp_players.count <= Composition::MAX_PLAYERS - 1
 
-    if scope.count > Composition::MAX_PLAYERS - 1
-      errors.add(:composition, 'has maximum number of players already.')
-    end
+    errors.add(:composition, 'has maximum number of players already')
   end
 
   def player_is_allowed_for_comp_owner

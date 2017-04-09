@@ -1,5 +1,6 @@
 require 'devise'
 
+# Used by Devise to handle error responses.
 class OverwatchTeamCompsDeviseFailureApp < Devise::FailureApp
   def respond
     if request.format == :json

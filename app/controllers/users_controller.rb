@@ -1,3 +1,4 @@
+# For viewing and updating the currently authenticated user.
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: [:update]
 

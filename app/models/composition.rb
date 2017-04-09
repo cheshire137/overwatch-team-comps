@@ -68,7 +68,7 @@ class Composition < ApplicationRecord
   # increasing order of specificity.
   def slug_candidates
     [
-      [:map_name, :name]
+      %i[map_name name]
     ]
   end
 
@@ -93,13 +93,12 @@ class Composition < ApplicationRecord
   def user_has_not_used_name_before
     return unless user && name
 
-    scope = self.class.where(name: name, user_id: user)
-    scope = scope.where(session_id: session_id) if user.anonymous?
-    scope = scope.where('id <> ?', id) if persisted?
+    compositions = self.class.where(name: name, user_id: user)
+    compositions = compositions.where(session_id: session_id) if user.anonymous?
+    compositions = compositions.where('id <> ?', id) if persisted?
+    return if compositions.count <= 0
 
-    if scope.count > 0
-      errors.add(:name, 'has already been used for one of your compositions.')
-    end
+    errors.add(:name, 'has already been used for one of your compositions')
   end
 
   def session_id_set_if_anonymous

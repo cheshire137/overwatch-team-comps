@@ -5,7 +5,7 @@ describe Composition do
     @anon_user = User.anonymous || create(:anonymous_user)
   end
 
-  it "requires a map" do
+  it 'requires a map' do
     composition = Composition.new
     expect(composition.valid?).to be_falsey
     expect(composition.errors[:map].any?).to be_truthy

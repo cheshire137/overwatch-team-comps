@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :anonymous_user, class: User do
     email { User::ANONYMOUS_EMAIL }
-    password "passworD1"
+    password 'passworD1'
   end
 
   factory :composition do

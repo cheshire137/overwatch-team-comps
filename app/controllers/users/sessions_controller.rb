@@ -6,7 +6,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def create
     return head :not_found if request.xhr?
-    render text: "Not found", status: :not_found
+    render text: 'Not found', status: :not_found
   end
 
   def destroy
