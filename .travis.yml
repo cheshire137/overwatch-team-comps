@@ -6,7 +6,6 @@ rvm:
 addons:
   postgresql: '9.4'
 env:
-  - DB=postgresql
   - TRAVIS_NODE_VERSION="6"
 cache:
   bundler: true
