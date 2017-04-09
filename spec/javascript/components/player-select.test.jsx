@@ -9,11 +9,15 @@ describe('PlayerSelect', () => {
   const player2 = { id: 2, name: 'Jimmy' }
   let selectedPlayerID = player1.id
   let wasEditPlayerCalled = false
+  let savedName = null
   const props = {
     inputID: 'input-dom-id',
     playerID: selectedPlayerID,
     players: [player1, player2],
-    onChange: newPlayerID => { selectedPlayerID = newPlayerID },
+    onChange: (newPlayerID, newName) => {
+      selectedPlayerID = newPlayerID
+      savedName = newName
+    },
     label: 'Player 1 selection',
     editPlayer: () => { wasEditPlayerCalled = true },
     disabled: false
@@ -43,5 +47,13 @@ describe('PlayerSelect', () => {
     select.simulate('change', { target: { value: 'new' } })
 
     expect(rendered.find(`#${props.inputID}`).length).toBe(1)
+  })
+
+  test('can update name of existing player', () => {
+    const rendered = shallow(component)
+    const button = rendered.find('.edit-player-button')
+    expect(button.length).toBe(1)
+    button.simulate('click', { currentTarget: { blur: () => {} } })
+    expect(wasEditPlayerCalled).toBe(true)
   })
 })
