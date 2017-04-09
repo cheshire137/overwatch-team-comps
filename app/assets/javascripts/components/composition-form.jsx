@@ -23,7 +23,8 @@ export default class CompositionForm extends React.Component {
       duplicatePicks: {},
       notes: '',
       editingPlayerID: null,
-      isRequestOut: false
+      isRequestOut: false,
+      allowDuplicates: false
     }
   }
 
@@ -120,7 +121,8 @@ export default class CompositionForm extends React.Component {
       heroes: composition.heroes,
       selections: composition.selections,
       duplicatePicks: composition.duplicatePicks,
-      notes: composition.notes
+      notes: composition.notes,
+      allowDuplicates: composition.allowDuplicates
     })
   }
 
