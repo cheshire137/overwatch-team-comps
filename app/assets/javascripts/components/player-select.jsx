@@ -33,8 +33,8 @@ class PlayerSelect extends React.Component {
   saveNewName(event) {
     event.preventDefault()
 
-    const name = this.state.name
-    if (name.trim().length < 1) {
+    const name = this.state.name.trim()
+    if (name.length < 1) {
       return
     }
 
