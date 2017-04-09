@@ -49,11 +49,30 @@ describe('PlayerSelect', () => {
     expect(rendered.find(`#${props.inputID}`).length).toBe(1)
   })
 
-  test('can update name of existing player', () => {
+  test('can create new player', () => {
     const rendered = shallow(component)
+
+    const select = rendered.find('select')
+    select.simulate('change', { target: { value: 'new' } })
+
+    const nameField = rendered.find(`#${props.inputID}`)
+    nameField.simulate('change', { target: { value: 'Terry  ' } })
+
+    const saveButton = rendered.find('.save-new-name-button')
+    expect(saveButton.length).toBe(1)
+
+    saveButton.simulate('click', { preventDefault: () => {} })
+    expect(savedName).toBe('Terry')
+  })
+
+  test('can open modal to edit player', () => {
+    const rendered = shallow(component)
+
     const button = rendered.find('.edit-player-button')
     expect(button.length).toBe(1)
+
     button.simulate('click', { currentTarget: { blur: () => {} } })
+
     expect(wasEditPlayerCalled).toBe(true)
   })
 })

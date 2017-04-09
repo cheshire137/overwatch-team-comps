@@ -66,7 +66,7 @@ class PlayerSelect extends React.Component {
           <div className="button-wrapper">
             <button
               type="button"
-              className="button"
+              className="button save-new-name-button"
               disabled={disabled}
               onClick={e => this.saveNewName(e)}
             ><i className="fa fa-check" aria-hidden="true" /></button>
