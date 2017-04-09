@@ -16,9 +16,8 @@ class PlayerSelection < ApplicationRecord
 
   def map_segment_matches_composition_map
     return unless map && composition
+    return if map == composition.map
 
-    unless map == composition.map
-      errors.add(:map_segment, 'must match the composition map.')
-    end
+    errors.add(:map_segment, 'must match the composition map')
   end
 end
