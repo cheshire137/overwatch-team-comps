@@ -38,7 +38,7 @@ class CompositionSaver
   end
 
   def persist_composition(data)
-    if data[:composition_id] || data[:name] || data[:notes] || @map
+    if have_composition_data?(data)
       @composition = init_composition(data)
 
       unless is_unchanged?(@composition) || @composition.save
@@ -49,6 +49,10 @@ class CompositionSaver
     end
 
     true
+  end
+
+  def have_composition_data?(data)
+    data[:composition_id] || data[:name] || data[:notes] || @map
   end
 
   def is_unchanged?(record)
