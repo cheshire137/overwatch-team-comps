@@ -97,24 +97,33 @@ class CompositionSaver
 
   def init_composition(data)
     id = data[:composition_id]
-
     composition = get_composition_for_user(id)
-
-    if @map
-      composition.map = @map
-      composition.slug = nil # will get regenerated based on map
-    end
-
-    if (name = data[:name]).present?
-      composition.name = name
-      composition.slug = nil # will get regenerated based on name
-    end
-
-    if (notes = data[:notes]).present?
-      composition.notes = notes
-    end
-
+    set_composition_map(composition)
+    set_composition_name(data, composition)
+    set_composition_notes(data, composition)
     composition
+  end
+
+  def set_composition_map(composition)
+    return unless @map
+
+    composition.map = @map
+    composition.slug = nil # will get regenerated based on map
+  end
+
+  def set_composition_name(data, composition)
+    name = data[:name]
+    return if name.blank?
+
+    composition.name = name
+    composition.slug = nil # will get regenerated based on name
+  end
+
+  def set_composition_notes(data, composition)
+    notes = data[:notes]
+    return if notes.blank?
+
+    composition.notes = notes
   end
 
   def get_composition_for_user(id)
