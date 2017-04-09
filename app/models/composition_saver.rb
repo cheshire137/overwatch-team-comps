@@ -67,15 +67,7 @@ class CompositionSaver
   def init_composition(data, map:)
     id = data[:composition_id]
 
-    composition = if @user
-      composition_for_authenticated_user(id: id)
-    else
-      composition_for_anonymous_user(id: id)
-    end
-
-    unless composition
-      raise CompositionSaver::Error, 'No such composition for creator'
-    end
+    composition = get_composition_for_user
 
     if map
       composition.map = map
@@ -89,6 +81,20 @@ class CompositionSaver
 
     if (notes = data[:notes]).present?
       composition.notes = notes
+    end
+
+    composition
+  end
+
+  def get_composition_for_user
+    composition = if @user
+      composition_for_authenticated_user(id: id)
+    else
+      composition_for_anonymous_user(id: id)
+    end
+
+    unless composition
+      raise CompositionSaver::Error, 'No such composition for creator'
     end
 
     composition
