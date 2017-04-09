@@ -21,6 +21,8 @@ class Player < ApplicationRecord
     end
   }
 
+  scope :named, ->(name) { where(name: name) }
+
   # Returns the Player with the given ID, but only if that Player is
   # owned by the given User/session or if that Player represents the given
   # user.
@@ -59,16 +61,10 @@ class Player < ApplicationRecord
   def name_is_unique_to_creator
     return unless name && creator
 
-    scope = self.class.where(name: name, creator_id: creator)
+    players = self.class.named(name).
+      created_by(user: creator, session_id: creator_session_id)
+    players = players.where('id <> ?', id) if persisted?
 
-    if creator.anonymous?
-      scope = scope.where(creator_session_id: creator_session_id)
-    end
-
-    scope = scope.where('id <> ?', id) if persisted?
-
-    if scope.count > 0
-      errors.add(:name, 'has already been taken.')
-    end
+    errors.add(:name, 'has already been taken') if players.count > 0
   end
 end
