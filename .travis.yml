@@ -16,8 +16,10 @@ cache:
     - tmp/cache/assets/test/sprockets
 install:
   - bundle install
+  - nvm install 6
   - npm install
 before_script:
+  - nvm use 6
   - cp config/database.yml.travis config/database.yml
   - psql -c 'CREATE DATABASE travis_ci_test' -U postgres
 script:
