@@ -1,3 +1,6 @@
+# Represents a row in the team composition form. There is one row per player.
+# The columns are each map segment. So this binds a player to a hero per
+# map segment.
 class CompositionRow
   attr_reader :player, :number
 
@@ -43,12 +46,18 @@ class CompositionRow
       return
     end
 
-    selection = @player_selections.detect do |player_selection|
+    selection = find_player_selection(map_segment)
+
+    @selected_heroes[map_segment.id] = selection ? selection.hero_id : nil
+  end
+
+  private
+
+  def find_player_selection(map_segment)
+    @player_selections.detect do |player_selection|
       player_selection.position == number &&
         player_selection.map_segment_id == map_segment.id &&
         player_selection.player_id == player.id
     end
-
-    @selected_heroes[map_segment.id] = selection ? selection.hero_id : nil
   end
 end

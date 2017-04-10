@@ -1,5 +1,6 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
+# This file should contain all the record creation needed to seed the database with its
+# default values. The data can then be loaded with the rails db:seed command (or created
+# alongside the database with db:setup).
 #
 # Examples:
 #
@@ -7,10 +8,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 heroes_by_role = {
-  support: ['Mercy', 'Zenyatta', 'Ana', 'Lúcio', 'Symmetra'],
+  support: %w[Mercy Zenyatta Ana Lúcio Symmetra],
   tank: ['D.Va', 'Winston', 'Reinhardt', 'Orisa', 'Roadhog', 'Zarya'],
   offense: ['McCree', 'Pharah', 'Genji', 'Tracer', 'Sombra', 'Soldier: 76', 'Reaper'],
-  defense: ['Hanzo', 'Widowmaker', 'Torbjörn', 'Bastion', 'Mei', 'Junkrat']
+  defense: %w[Hanzo Widowmaker Torbjörn Bastion Mei Junkrat]
 }
 
 heroes_by_role.each do |role, hero_names|
@@ -39,9 +40,9 @@ map_segments_by_map = {
   'Hanamura' => ['First Point', 'Second Point'],
   'Temple of Anubis' => ['First Point', 'Second Point'],
   'Volskaya Industries' => ['First Point', 'Second Point'],
-  'Ilios' => ['Well', 'Ruins', 'Lighthouse'],
+  'Ilios' => %w[Well Ruins Lighthouse],
   'Lijiang Tower' => ['Night Market', 'Control Center', 'Garden'],
-  'Nepal' => ['Village', 'Shrine', 'Sanctum'],
+  'Nepal' => %w[Village Shrine Sanctum],
   'Oasis' => ['City Center', 'Gardens', 'University'],
   'Hollywood' => ['Point 1', 'Payload 1', 'Payload 2'],
   'Dorado' => ['Payload 1', 'Payload 2', 'Payload 3'],
@@ -55,7 +56,7 @@ map_segments_by_map = {
 maps_without_defense = [
   'Ilios', 'Oasis', 'Lijiang Tower', 'Nepal'
 ]
-team_roles = ['Attack', 'Defend']
+team_roles = %w[Attack Defend]
 
 map_segments_by_map.each do |map_name, base_segments|
   map = Map.find_by_name(map_name)
@@ -72,6 +73,6 @@ map_segments_by_map.each do |map_name, base_segments|
   end
 end
 
-puts "Creating anonymous user"
-anon_user = User.anonymous || User.create!(email: User::ANONYMOUS_EMAIL,
-                                           password: "passworD1")
+puts 'Creating anonymous user'
+User.anonymous || User.create!(email: User::ANONYMOUS_EMAIL,
+                               password: 'passworD1')

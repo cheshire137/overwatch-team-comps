@@ -1,3 +1,6 @@
+# A player in a team composition. Has a unique numeric position, meaning
+# the row they're in. Has many selections, one per map segment for the
+# composition's selected map.
 class CompositionPlayer < ApplicationRecord
   belongs_to :composition
   belongs_to :player
@@ -27,27 +30,34 @@ class CompositionPlayer < ApplicationRecord
   def composition_does_not_have_max_players
     return unless composition
 
-    scope = composition.composition_players
-    scope = scope.where('id <> ?', id) if persisted?
+    comp_players = composition.composition_players
+    comp_players = comp_players.where('id <> ?', id) if persisted?
+    return if comp_players.count <= Composition::MAX_PLAYERS - 1
 
-    if scope.count > Composition::MAX_PLAYERS - 1
-      errors.add(:composition, 'has maximum number of players already.')
-    end
+    errors.add(:composition, 'has maximum number of players already')
   end
 
   def player_is_allowed_for_comp_owner
     return unless player && composition
 
     if player.creator.anonymous?
-      unless composition.user.anonymous? &&
-             composition.session_id == player.creator_session_id
-        errors.add(:player, 'is not valid.')
-      end
+      player_is_allowed_for_anonymous_creator
     else
-      unless composition.user == player.creator
-        errors.add(:player, 'is not valid.')
-      end
+      player_is_allowed_for_registered_creator
     end
+  end
+
+  def player_is_allowed_for_anonymous_creator
+    unless composition.user.anonymous? &&
+           composition.session_id == player.creator_session_id
+      errors.add(:player, 'is not valid')
+    end
+  end
+
+  def player_is_allowed_for_registered_creator
+    return if composition.user == player.creator
+
+    errors.add(:player, 'is not valid')
   end
 
   def decrement_positions

@@ -1,3 +1,5 @@
+# A team composition. An arrangement of players and the heroes they play
+# for each map segment in the selected map.
 class Composition < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
@@ -24,7 +26,7 @@ class Composition < ApplicationRecord
   # Returns a list of Compositions created by the given User, or by the anonymous
   # user in the given session if the User is nil.
   scope :created_by, ->(user:, session_id:) {
-    if user
+    if user && !user.anonymous?
       where(user_id: user)
     else
       where(user_id: User.anonymous, session_id: session_id)
@@ -66,7 +68,7 @@ class Composition < ApplicationRecord
   # increasing order of specificity.
   def slug_candidates
     [
-      [:map_name, :name]
+      %i[map_name name]
     ]
   end
 
@@ -91,13 +93,12 @@ class Composition < ApplicationRecord
   def user_has_not_used_name_before
     return unless user && name
 
-    scope = self.class.where(name: name, user_id: user)
-    scope = scope.where(session_id: session_id) if user.anonymous?
-    scope = scope.where('id <> ?', id) if persisted?
+    compositions = self.class.where(name: name).
+      created_by(user: user, session_id: session_id)
+    compositions = compositions.where('id <> ?', id) if persisted?
+    return if compositions.count <= 0
 
-    if scope.count > 0
-      errors.add(:name, 'has already been used for one of your compositions.')
-    end
+    errors.add(:name, 'has already been used for one of your compositions')
   end
 
   def session_id_set_if_anonymous

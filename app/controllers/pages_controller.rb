@@ -1,3 +1,4 @@
+# Renders informational pages.
 class PagesController < ApplicationController
   def show
     case params[:page]

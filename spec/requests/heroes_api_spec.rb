@@ -7,7 +7,7 @@ RSpec.describe 'heroes API', type: :request do
     @hero2 = create(:hero, name: 'Pharah')
   end
 
-  describe "GET pool" do
+  describe 'GET pool' do
     it 'includes all heroes for authenticated user' do
       sign_in @user
 

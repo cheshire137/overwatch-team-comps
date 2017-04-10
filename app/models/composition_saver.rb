@@ -1,3 +1,5 @@
+# For creating or updating a team composition based on given parameters,
+# for the specified user.
 class CompositionSaver
   attr_reader :error_type, :error_value, :composition
 
@@ -6,67 +8,134 @@ class CompositionSaver
   def initialize(user:, session_id:)
     @user = user
     @session_id = session_id
+    @composition = nil
+    @map = nil
+    @composition_player = nil
+    @map_segment = nil
+    @hero = nil
   end
 
   def save(data)
-    map = if data[:map_segment_id]
-      map_segment = MapSegment.find(data[:map_segment_id])
-      map_segment.map
-    elsif data[:map_id]
-      Map.find(data[:map_id])
-    end
-
-    if data[:composition_id] || data[:name] || data[:notes] || map
-      @composition = init_composition(data, map: map)
-      unless @composition.persisted? && !@composition.changed? || @composition.save
-        @error_type = 'composition'
-        @error_value = @composition.errors
-        return
-      end
-    end
+    @map = get_map(data)
+    return unless persist_composition(data)
 
     position = data[:player_position]
-
-    if data[:player_id] && @composition
-      comp_player = init_composition_player(data, position: position,
-                                            composition: @composition)
-      unless comp_player.persisted? && !comp_player.changed? || comp_player.save
-        @error_type = 'composition_player'
-        @error_value = comp_player.errors
-        return
-      end
-    end
-
-    if map_segment && comp_player && data[:hero_id]
-      selections = init_player_selections(data, composition_player: comp_player,
-                                          map_segment: map_segment)
-      results = selections.map do |selection|
-        selection.persisted? && !selection.changed? || selection.save
-      end
-      unless results.all?
-        @error_type = 'player_selection'
-        @error_value = selections.map(&:errors)
-        return
-      end
-    end
+    return unless persist_composition_player(data, position: position)
+    return unless persist_player_selections(data)
 
     true
   end
 
   private
 
-  def init_composition_player(data, position:, composition:)
+  def get_map(data)
+    if data[:map_segment_id]
+      @map_segment = MapSegment.find(data[:map_segment_id])
+      @map_segment.map
+    elsif data[:map_id]
+      Map.find(data[:map_id])
+    end
+  end
+
+  def persist_composition(data)
+    if have_composition_data?(data)
+      @composition = init_composition(data)
+
+      unless is_unchanged?(@composition) || @composition.save
+        @error_type = 'composition'
+        @error_value = @composition.errors
+        return false
+      end
+    end
+
+    true
+  end
+
+  def have_composition_data?(data)
+    data[:composition_id] || data[:name] || data[:notes] || @map
+  end
+
+  def is_unchanged?(record)
+    record.persisted? && !record.changed?
+  end
+
+  def persist_composition_player(data, position:)
+    if data[:player_id] && @composition
+      @composition_player = init_composition_player(data, position: position)
+
+      unless is_unchanged?(@composition_player) || @composition_player.save
+        @error_type = 'composition_player'
+        @error_value = @composition_player.errors
+        return false
+      end
+    end
+
+    true
+  end
+
+  def persist_player_selections(data)
+    if @map_segment && @composition_player && data[:hero_id]
+      selections = init_player_selections(data)
+
+      unless check_player_selection_results(selections)
+        @error_type = 'player_selection'
+        @error_value = selections.map(&:errors)
+        return false
+      end
+    end
+
+    true
+  end
+
+  def check_player_selection_results(selections)
+    results = selections.map do |selection|
+      is_unchanged?(selection) || selection.save
+    end
+
+    results.all?
+  end
+
+  def init_composition_player(data, position:)
     comp_player = CompositionPlayer.
-      where(composition_id: composition, position: position).
+      where(composition_id: @composition, position: position).
       first_or_initialize
 
     comp_player.player_id = data[:player_id]
     comp_player
   end
 
-  def init_composition(data, map:)
+  def init_composition(data)
     id = data[:composition_id]
+    composition = get_composition_for_user(id)
+    set_composition_map(composition)
+    set_composition_name(data, composition)
+    set_composition_notes(data, composition)
+    composition
+  end
 
+  def set_composition_map(composition)
+    return unless @map
+
+    composition.map = @map
+    composition.slug = nil # will get regenerated based on map
+  end
+
+  def set_composition_name(data, composition)
+    name = data[:name]
+    return if name.blank?
+
+    composition.name = name
+    composition.slug = nil # will get regenerated based on name
+  end
+
+  def set_composition_notes(data, composition)
+    notes = data[:notes]
+    return if notes.blank?
+
+    composition.notes = notes
+  end
+
+  def get_composition_for_user(id)
     composition = if @user
       composition_for_authenticated_user(id: id)
     else
@@ -75,20 +144,6 @@ class CompositionSaver
 
     unless composition
       raise CompositionSaver::Error, 'No such composition for creator'
-    end
-
-    if map
-      composition.map = map
-      composition.slug = nil # will get regenerated based on map
-    end
-
-    if (name = data[:name]).present?
-      composition.name = name
-      composition.slug = nil # will get regenerated based on name
-    end
-
-    if (notes = data[:notes]).present?
-      composition.notes = notes
     end
 
     composition
@@ -111,25 +166,39 @@ class CompositionSaver
     end
   end
 
-  def init_player_selections(data, composition_player:, map_segment:)
-    hero = Hero.find(data[:hero_id])
-    all_segments = map_segment.map.segment_ids
-    filled_segments = composition_player.player_selections.pluck(:map_segment_id)
-    blank_segments = all_segments - filled_segments
+  def init_player_selections(data)
+    @hero = Hero.find(data[:hero_id])
+    blank_segments = get_blank_segments
 
     # All have already been initialized, just need to update the
     # specified map segment for the player to use the given hero.
     if blank_segments.empty?
-      updated_selection = PlayerSelection.
-        where(composition_player_id: composition_player,
-              map_segment_id: map_segment).first
-      updated_selection.hero = hero
-      [updated_selection]
+      update_player_selections
     else
-      blank_segments.map do |map_segment_id|
-        PlayerSelection.new(hero: hero, map_segment_id: map_segment_id,
-                            composition_player: composition_player)
-      end
+      init_player_selections_for_segments(blank_segments)
     end
+  end
+
+  def get_blank_segments
+    all_segments = @map_segment.map.segment_ids
+    filled_segments = @composition_player.player_selections.pluck(:map_segment_id)
+
+    all_segments - filled_segments
+  end
+
+  def init_player_selections_for_segments(segment_ids)
+    segment_ids.map do |map_segment_id|
+      PlayerSelection.new(hero: @hero, map_segment_id: map_segment_id,
+                          composition_player: @composition_player)
+    end
+  end
+
+  def update_player_selections
+    updated_selection = PlayerSelection.
+      where(composition_player_id: @composition_player,
+            map_segment_id: @map_segment).first
+    updated_selection.hero = @hero
+
+    [updated_selection]
   end
 end

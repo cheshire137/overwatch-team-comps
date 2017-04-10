@@ -1,8 +1,10 @@
+# A hero you can play in Overwatch.
 class Hero < ApplicationRecord
   validates :name, presence: true
 
   def slug
-    @slug ||= case name
+    @slug ||=
+      case name
       when 'D.Va' then 'dva'
       when 'Lúcio' then 'lucio'
       when 'Soldier: 76' then 'soldier76'

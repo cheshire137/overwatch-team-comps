@@ -1,3 +1,5 @@
+# A particular portion of a map, such as the first capture point or an
+# escort segment.
 class MapSegment < ApplicationRecord
   belongs_to :map
 

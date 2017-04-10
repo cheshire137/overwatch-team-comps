@@ -1,3 +1,4 @@
+# For updating and viewing team compositions.
 class CompositionsController < ApplicationController
   def show
     @composition = Composition.friendly.find(params[:slug])

@@ -17,7 +17,7 @@ module OverwatchTeamComps
     config.browserify_rails.force = true
 
     # https://github.com/browserify-rails/browserify-rails#using-browserify-transforms
-    config.browserify_rails.commandline_options = "-t [ babelify --presets [ es2015 react ] ]"
+    config.browserify_rails.commandline_options = '-t [ babelify --presets [ es2015 react ] ]'
 
     config.generators do |g|
       g.view_specs false

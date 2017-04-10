@@ -1,3 +1,4 @@
+# For returning a list of the available maps.
 class MapsController < ApplicationController
   def index
     @maps = Map.includes(:segments).order(:name)

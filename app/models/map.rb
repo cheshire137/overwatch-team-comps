@@ -1,7 +1,8 @@
+# A map in the game, such as Hanamura.
 class Map < ApplicationRecord
   extend FriendlyId
 
-  has_many :segments, dependent: :destroy, class_name: "MapSegment"
+  has_many :segments, dependent: :destroy, class_name: 'MapSegment'
   has_many :compositions, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true

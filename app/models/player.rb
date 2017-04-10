@@ -1,3 +1,6 @@
+# Represents a person in a team composition. Not the same as a user. A user
+# is a user of this app. A single user can create multiple players, and will
+# have a single player tied to them that represents them in compositions.
 class Player < ApplicationRecord
   belongs_to :user
   belongs_to :creator, class_name: 'User'
@@ -14,12 +17,14 @@ class Player < ApplicationRecord
   # Returns a list of Players created by the given User, or by the anonymous
   # user in the given session if the User is nil.
   scope :created_by, ->(user:, session_id:) {
-    if user
+    if user && !user.anonymous?
       where(creator_id: user)
     else
       where(creator_id: User.anonymous, creator_session_id: session_id)
     end
   }
+
+  scope :named, ->(name) { where(name: name) }
 
   # Returns the Player with the given ID, but only if that Player is
   # owned by the given User/session or if that Player represents the given
@@ -28,7 +33,7 @@ class Player < ApplicationRecord
   # Returns Player or nil.
   def self.find_if_allowed(id, user:, session_id:)
     scope = if user
-      where(id: id).where("creator_id = ? OR user_id = ?", user.id, user.id)
+      where(id: id).where('creator_id = ? OR user_id = ?', user.id, user.id)
     else
       where(id: id, creator_id: User.anonymous, creator_session_id: session_id)
     end
@@ -59,16 +64,10 @@ class Player < ApplicationRecord
   def name_is_unique_to_creator
     return unless name && creator
 
-    scope = self.class.where(name: name, creator_id: creator)
+    players = self.class.named(name).
+      created_by(user: creator, session_id: creator_session_id)
+    players = players.where('id <> ?', id) if persisted?
 
-    if creator.anonymous?
-      scope = scope.where(creator_session_id: creator_session_id)
-    end
-
-    scope = scope.where('id <> ?', id) if persisted?
-
-    if scope.count > 0
-      errors.add(:name, 'has already been taken.')
-    end
+    errors.add(:name, 'has already been taken') if players.count > 0
   end
 end

@@ -43,14 +43,12 @@ json.composition do
 
   # Hash of player ID => heroes
   json.heroes do
-    @builder.rows.each do |row|
-      if row.player
-        json.set! row.player.id, row.heroes do |hero|
-          json.id hero.id
-          json.slug hero.slug
-          json.name hero.name
-          json.image image_path(hero.image_name)
-        end
+    @builder.rows.select(&:player).each do |row|
+      json.set! row.player.id, row.heroes do |hero|
+        json.id hero.id
+        json.slug hero.slug
+        json.name hero.name
+        json.image image_path(hero.image_name)
       end
     end
   end
@@ -58,12 +56,10 @@ json.composition do
   if @builder.any_duplicates?
     # Hash of player ID => map segment ID => Boolean
     json.duplicatePicks do
-      @builder.rows.each do |row|
-        if row.player
-          json.set! row.player.id do
-            @builder.map_segments.each do |map_segment|
-              json.set! map_segment.id, row.duplicate?(map_segment)
-            end
+      @builder.rows.select(&:player).each do |row|
+        json.set! row.player.id do
+          @builder.map_segments.each do |map_segment|
+            json.set! map_segment.id, row.duplicate?(map_segment)
           end
         end
       end
@@ -74,12 +70,10 @@ json.composition do
 
   # Hash of player ID => map segment ID => hero ID
   json.selections do
-    @builder.rows.each do |row|
-      if row.player
-        json.set! row.player.id do
-          @builder.map_segments.each do |map_segment|
-            json.set! map_segment.id, row.selected_hero(map_segment)
-          end
+    @builder.rows.select(&:player).each do |row|
+      json.set! row.player.id do
+        @builder.map_segments.each do |map_segment|
+          json.set! map_segment.id, row.selected_hero(map_segment)
         end
       end
     end

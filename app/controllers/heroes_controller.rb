@@ -1,3 +1,5 @@
+# Requires the user be logged in. For rendering and updating an authenticated
+# user's hero pool, that is, how confident they feel playing each hero.
 class HeroesController < ApplicationController
   before_action :authenticate_user!
 
