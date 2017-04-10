@@ -10,6 +10,8 @@ Style/SpaceBeforeBlockBraces:
   Enabled: false
 Metrics/LineLength:
   Max: 100
+Metrics/ClassLength:
+  Max: 200
 Metrics/AbcSize:
   Max: 16
 Metrics/BlockLength:
