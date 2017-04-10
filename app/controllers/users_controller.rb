@@ -12,17 +12,21 @@ class UsersController < ApplicationController
   end
 
   def update
-    attrs = {
-      email: params[:email], region: params[:region].presence,
-      platform: params[:platform].presence
-    }
-
-    if current_user.update_attributes(attrs)
+    if current_user.update_attributes(user_attrs)
       @user = current_user
       render template: 'users/show'
     else
       render json: { error: { user: current_user.errors } },
              status: :bad_request
     end
+  end
+
+  private
+
+  def user_attrs
+    {
+      email: params[:email], region: params[:region].presence,
+      platform: params[:platform].presence
+    }
   end
 end

@@ -1,3 +1,5 @@
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
 Style/AlignHash:
   Enabled: false
 Style/DotPosition:
