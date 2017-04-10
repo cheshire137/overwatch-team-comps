@@ -20,23 +20,17 @@ class CompositionFormBuilder
   def rows
     return @rows if @rows
     @rows = []
-    all_heroes = heroes
 
     # A row for each player already in this composition
     @composition.players.each_with_index do |player, i|
       @rows << CompositionRow.new(number: i, player: player,
-                                  all_heroes: all_heroes,
+                                  all_heroes: heroes,
                                   player_selections: player_selections,
                                   heroes_by_segment: @heroes_by_segment)
     end
 
     # A row for each additional player the user could specify:
-    @rows.length.upto(Composition::MAX_PLAYERS - 1) do |i|
-      @rows << CompositionRow.new(number: i, player: nil,
-                                  all_heroes: all_heroes,
-                                  player_selections: player_selections,
-                                  heroes_by_segment: @heroes_by_segment)
-    end
+    @rows.concat get_rows_without_players(@rows.length)
 
     @rows
   end
@@ -60,7 +54,7 @@ class CompositionFormBuilder
   # (attack v. defense) in the list of map segments.
   def map_segment_is_first_of_kind?(map_segment)
     index = map_segments.index(map_segment)
-    return true if index == 0
+    return true if index.zero?
     prev_map_segment = map_segments[index - 1]
     prev_map_segment.is_attack? != map_segment.is_attack?
   end
@@ -80,6 +74,19 @@ class CompositionFormBuilder
   end
 
   private
+
+  def get_rows_without_players(num_rows_already)
+    rows = []
+
+    num_rows_already.upto(Composition::MAX_PLAYERS - 1) do |i|
+      rows << CompositionRow.new(number: i, player: nil,
+                                 all_heroes: heroes,
+                                 player_selections: player_selections,
+                                 heroes_by_segment: @heroes_by_segment)
+    end
+
+    rows
+  end
 
   # Returns a hash: map segment ID => array of hero IDs
   def get_heroes_by_segment
