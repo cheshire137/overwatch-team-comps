@@ -41,15 +41,23 @@ class CompositionPlayer < ApplicationRecord
     return unless player && composition
 
     if player.creator.anonymous?
-      unless composition.user.anonymous? &&
-             composition.session_id == player.creator_session_id
-        errors.add(:player, 'is not valid.')
-      end
+      player_is_allowed_for_anonymous_creator
     else
-      unless composition.user == player.creator
-        errors.add(:player, 'is not valid.')
-      end
+      player_is_allowed_for_registered_creator
     end
+  end
+
+  def player_is_allowed_for_anonymous_creator
+    unless composition.user.anonymous? &&
+           composition.session_id == player.creator_session_id
+      errors.add(:player, 'is not valid')
+    end
+  end
+
+  def player_is_allowed_for_registered_creator
+    return if composition.user == player.creator
+
+    errors.add(:player, 'is not valid')
   end
 
   def decrement_positions
