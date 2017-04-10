@@ -93,8 +93,8 @@ class Composition < ApplicationRecord
   def user_has_not_used_name_before
     return unless user && name
 
-    compositions = self.class.where(name: name, user_id: user)
-    compositions = compositions.where(session_id: session_id) if user.anonymous?
+    compositions = self.class.where(name: name).
+      created_by(user: user, session_id: session_id)
     compositions = compositions.where('id <> ?', id) if persisted?
     return if compositions.count <= 0
 
