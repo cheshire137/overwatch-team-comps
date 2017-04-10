@@ -14,9 +14,8 @@ module ApplicationHelper
       if path.start_with?('/comp/')
         slug = path.split('/comp/').last
         composition = Composition.where(slug: slug).first
-        if composition
-          "#{composition.name} - #{composition.map.name}"
-        end
+
+        "#{composition.name} - #{composition.map.name}" if composition
       end
     end
   end
