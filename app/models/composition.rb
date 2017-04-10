@@ -26,7 +26,7 @@ class Composition < ApplicationRecord
   # Returns a list of Compositions created by the given User, or by the anonymous
   # user in the given session if the User is nil.
   scope :created_by, ->(user:, session_id:) {
-    if user
+    if user && !user.anonymous?
       where(user_id: user)
     else
       where(user_id: User.anonymous, session_id: session_id)

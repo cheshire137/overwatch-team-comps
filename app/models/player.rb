@@ -17,7 +17,7 @@ class Player < ApplicationRecord
   # Returns a list of Players created by the given User, or by the anonymous
   # user in the given session if the User is nil.
   scope :created_by, ->(user:, session_id:) {
-    if user
+    if user && !user.anonymous?
       where(creator_id: user)
     else
       where(creator_id: User.anonymous, creator_session_id: session_id)
