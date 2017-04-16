@@ -6,6 +6,7 @@ json.composition do
   json.user do
     json.battletag @composition.user.try(:battletag)
   end
+  json.allowDuplicates @composition.allow_duplicates?
   json.slug @composition.slug
   json.name @composition.name
   json.notes @composition.notes

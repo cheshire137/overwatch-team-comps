@@ -4,10 +4,12 @@ class CompositionFormBuilder
     @heroes_by_segment = get_heroes_by_segment
   end
 
-  # Returns true if there are any duplicate hero selections in a given column,
-  # that is, for a given map segment.
+  # Returns true if duplicates are disallowed and there are any duplicate hero
+  # selections in a given column, that is, for a given map segment.
   def any_duplicates?
     return @any_duplicates if defined? @any_duplicates
+
+    return @any_duplicates = false if @composition.allow_duplicates?
 
     @any_duplicates = @heroes_by_segment.any? do |map_segment_id, hero_ids|
       hero_ids.uniq.size != hero_ids.size

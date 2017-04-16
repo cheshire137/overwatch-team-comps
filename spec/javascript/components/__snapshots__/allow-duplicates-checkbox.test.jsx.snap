@@ -1,0 +1,12 @@
+exports[`AllowDuplicatesCheckbox matches snapshot 1`] = `
+<label
+  className="checkbox allow-duplicates-label"
+  htmlFor="allow-duplicates">
+  <input
+    checked={false}
+    id="allow-duplicates"
+    onChange={[Function]}
+    type="checkbox" />
+  Allow duplicate picks
+</label>
+`;

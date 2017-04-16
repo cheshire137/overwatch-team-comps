@@ -211,3 +211,22 @@
   }
 }
 
+.checkbox {
+  @include align-items(center);
+  cursor: pointer;
+  @include display-flex(inline-flex);
+  @include flex-wrap(wrap);
+  @include justify-content(flex-start);
+  line-height: 1.5;
+  position: relative;
+  vertical-align: top;
+
+  input {
+    cursor: pointer;
+    margin-right: 0.5em;
+  }
+}
+
+input[type="checkbox"] {
+  vertical-align: baseline;
+}
