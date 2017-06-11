@@ -19,7 +19,7 @@ const About = function() {
       competitive teams.</p>
       <p>We would love to hear from you! Have questions? Feedback?
       Requests for new features? Business inquiries? Send us an email at
-      <code>contact@owplanningtool.com</code>.</p>
+      <code> contact@owplanningtool.com</code>.</p>
       <h2>Thanks</h2>
       <p>
         Thanks to Blizzard for Overwatch. <i

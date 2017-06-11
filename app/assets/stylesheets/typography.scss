@@ -4,6 +4,11 @@ body, button, input, select, textarea {
   font-family: $font-stack;
 }
 
+pre, code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: inherit;
+}
+
 p {
   color: $soft-text;
   line-height: 1.4em;
