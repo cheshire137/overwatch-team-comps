@@ -2,6 +2,7 @@ import AllowDuplicatesCheckbox from './allow-duplicates-checkbox.jsx'
 import CompositionFormHeader from './composition-form-header.jsx'
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
 import MapSegmentHeader from './map-segment-header.jsx'
+import Notification from './notification.jsx'
 import PlayerEditModal from './player-edit-modal.jsx'
 
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
@@ -243,7 +244,11 @@ export default class CompositionForm extends React.Component {
             allowDuplicates } = this.state
 
     if (typeof mapID !== 'number') {
-      return <p className="container">Loading...</p>
+      if (isRequestOut) {
+        return <p className="container">Loading...</p>
+      }
+
+      return <Notification type="error" message="Oops! You've wandered too far into the dungeon." />
     }
 
     const editingPlayer = this.getPlayerToEdit()
