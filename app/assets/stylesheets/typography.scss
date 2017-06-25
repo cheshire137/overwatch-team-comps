@@ -4,6 +4,10 @@ body, button, input, select, textarea {
   font-family: $font-stack;
 }
 
+.text-center {
+  text-align: center;
+}
+
 pre, code {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: inherit;
@@ -58,3 +62,4 @@ h4 {
   font-weight: 700;
   letter-spacing: 1px;
 }
+

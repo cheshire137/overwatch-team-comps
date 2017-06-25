@@ -20,6 +20,28 @@
   width: 100%;
 }
 
+.inner-container {
+  @extend .container;
+  width: 1110px;
+  padding: 0;
+}
+
+.notice-alert {
+  z-index: 10;
+  height: 60px;
+  padding: 20px;
+  margin-top: -52px;
+  position: fixed;
+  color: $notice-message-text;
+  background: $notice-message-bg;
+}
+
+.error-alert {
+  @extend .notice-alert;
+  color: $error-message-text;
+  background: $error-message-bg;
+}
+
 .footer {
   padding: 3rem 1.5rem 6rem;
   background-color: $form;

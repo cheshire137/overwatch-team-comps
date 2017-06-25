@@ -11,17 +11,18 @@ class Notification extends React.Component {
   }
 
   render() {
-    const { message, type } = this.props
+    const { message, type } = this. props
 
     if (!this.state.visible) {
       return null
     }
 
     return (
-      <div className={`${type}-alert container-full`}>
-        <div className="container text-center">
+      <div className={`${type}-alert container`}>
+        <div className="inner-container text-center">
           {message}
           <button
+            className="button-close"
             type="button"
             onClick={() => this.toggle()}
           >╳</button>
