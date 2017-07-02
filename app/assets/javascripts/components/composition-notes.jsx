@@ -58,7 +58,8 @@ class CompositionNotes extends React.Component {
           </button>
         </p>
         <p className="tip">
-          <strong>Tip: </strong> include a YouTube video, Streamable video, Gfycat gif, or Twitch clip URL to embed it.
+          <strong>Tip: </strong> include a YouTube video, Streamable video,
+          Gfycat gif, or Twitch clip URL to embed it.
         </p>
         <p>
           <a
