@@ -12,10 +12,7 @@ class CompositionNotes extends React.Component {
   }
 
   onCompositionNotesChange(event) {
-    // TODO: actually POST this to the server to save the value,
-    // but not as the user types because we don't want a request
-    // going for every keystroke
-    this.setState({ notes: event.target.value })
+    this.props.saveNotes(event.target.value)
   }
 
   render() {
@@ -53,7 +50,8 @@ class CompositionNotes extends React.Component {
 
 CompositionNotes.propTypes = {
   isRequestOut: PropTypes.bool,
-  notes: PropTypes.string
+  notes: PropTypes.string,
+  saveNotes: PropTypes.func.isRequired
 }
 
 export default CompositionNotes

@@ -72,6 +72,25 @@ export default class CompositionForm extends React.Component {
     })
   }
 
+  onCompositionNotesChange(notes) {
+    const { id, mapID } = this.state
+    const api = new OverwatchTeamCompsApi()
+
+    const body = {
+      notes,
+      map_id: mapID
+    }
+    if (id) {
+      body.composition_id = id
+    }
+
+    this.setState({ isRequestOut: true }, () => {
+      api.saveComposition(body).
+        then(newComp => this.onCompositionLoaded(newComp)).
+        catch(err => this.onCompositionSaveError(err))
+    })
+  }
+
   onPlayerSelected(playerID, playerName, position) {
     if (playerID) {
       this.updatePlayer(playerID, position)
@@ -326,6 +345,7 @@ export default class CompositionForm extends React.Component {
           <CompositionNotes
             notes={notes}
             isRequestOut={isRequestOut}
+            saveNotes={n => this.onCompositionNotesChange(n)}
           />
         </div>
         <PlayerEditModal
