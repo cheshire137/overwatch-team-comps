@@ -2,22 +2,12 @@ import PropTypes from 'prop-types'
 import DebounceInput from 'react-debounce-input'
 
 class CompositionNotes extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { notes: props.notes }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ notes: nextProps.notes })
-  }
-
   onCompositionNotesChange(event) {
     this.props.saveNotes(event.target.value)
   }
 
   render() {
-    const { isRequestOut } = this.props
-    const { notes } = this.state
+    const { isRequestOut, notes } = this.props
 
     return (
       <div className="composition-notes-wrapper">
