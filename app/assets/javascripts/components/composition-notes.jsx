@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import DebounceInput from 'react-debounce-input'
+import Textarea from 'react-textarea-autosize'
 
 class CompositionNotes extends React.Component {
   onCompositionNotesChange(event) {
@@ -16,7 +17,7 @@ class CompositionNotes extends React.Component {
           className="label notes-label small-fat-header"
         >Notes</label>
         <DebounceInput
-          element="textarea"
+          element={Textarea}
           forceNotifyByEnter={false}
           debounceTimeout={500}
           id="composition_notes"
