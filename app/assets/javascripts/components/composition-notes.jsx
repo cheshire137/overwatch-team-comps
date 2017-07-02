@@ -16,7 +16,12 @@ class CompositionNotes extends React.Component {
   }
 
   saveNotes(event) {
-    event.target.blur()
+    if (this.state.isRequestOut) {
+      return
+    }
+    if (event) {
+      event.target.blur()
+    }
     this.props.saveNotes(this.state.notes)
   }
 
@@ -37,6 +42,7 @@ class CompositionNotes extends React.Component {
           placeholder="Notes for this team composition"
           value={notes || ''}
           onChange={e => this.onCompositionNotesChange(e)}
+          onBlur={() => this.saveNotes()}
         />
         <p>
           <button
