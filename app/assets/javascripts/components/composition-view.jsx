@@ -15,7 +15,7 @@ const months = [
 
 class CompositionView extends React.Component {
   static onCompositionFetchError(error) {
-    console.error('failed to load composition data', error)
+    console.error('failed to load composition data for view', error)
   }
 
   constructor(props) {

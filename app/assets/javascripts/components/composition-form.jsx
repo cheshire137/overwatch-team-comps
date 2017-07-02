@@ -1,5 +1,6 @@
 import AllowDuplicatesCheckbox from './allow-duplicates-checkbox.jsx'
 import CompositionFormHeader from './composition-form-header.jsx'
+import CompositionNotes from './composition-notes.jsx'
 import EditPlayerSelectionRow from './edit-player-selection-row.jsx'
 import MapSegmentHeader from './map-segment-header.jsx'
 import PlayerEditModal from './player-edit-modal.jsx'
@@ -34,7 +35,7 @@ export default class CompositionForm extends React.Component {
   }
 
   onCompositionFetchError(error) {
-    console.error('failed to load composition data', error)
+    console.error('failed to load composition data for form', error)
     this.setState({ isRequestOut: false })
   }
 
@@ -69,13 +70,6 @@ export default class CompositionForm extends React.Component {
         then(newComp => this.onCompositionLoaded(newComp)).
         catch(err => this.onCompositionSaveError(err))
     })
-  }
-
-  onCompositionNotesChange(event) {
-    // TODO: actually POST this to the server to save the value,
-    // but not as the user types because we don't want a request
-    // going for every keystroke
-    this.setState({ notes: event.target.value })
   }
 
   onPlayerSelected(playerID, playerName, position) {
@@ -329,27 +323,10 @@ export default class CompositionForm extends React.Component {
               </tr>
             </tbody>
           </table>
-          <div className="composition-notes-wrapper">
-            <label
-              htmlFor="composition_notes"
-              className="label notes-label small-fat-header"
-            >Notes</label>
-            <textarea
-              id="composition_notes"
-              className="textarea"
-              disabled={isRequestOut}
-              placeholder="Notes for this team composition"
-              value={notes || ''}
-              onChange={e => this.onCompositionNotesChange(e)}
-            />
-            <p>
-              <a
-                href="https://daringfireball.net/projects/markdown/syntax"
-                target="_blank"
-                rel="noopener noreferrer"
-              >Markdown supported</a>.
-            </p>
-          </div>
+          <CompositionNotes
+            notes={notes}
+            isRequestOut={isRequestOut}
+          />
         </div>
         <PlayerEditModal
           playerID={editingPlayerID}
