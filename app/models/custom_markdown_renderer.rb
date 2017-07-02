@@ -14,9 +14,15 @@ class CustomMarkdownRenderer < Redcarpet::Render::HTML
       embed_youtube_video(url)
     elsif is_twitch_clip_url?(url)
       embed_twitch_clip(url)
+    elsif is_streamable_video_url?(url)
+      embed_streamable_video(url)
     else
       normal_link(url)
     end
+  end
+
+  def is_streamable_video_url?(url)
+    url =~ /^(?:https?:\/\/)?(?:www\.)?streamable\.com/i
   end
 
   def is_twitch_clip_url?(url)
@@ -39,6 +45,14 @@ class CustomMarkdownRenderer < Redcarpet::Render::HTML
     params = get_url_params(uri)
     video_id = params['clip'] || uri.path[1..-1]
     %Q(<iframe src="https://clips.twitch.tv/embed?clip=#{video_id}&autoplay=false&tt_medium=clips_embed" width="#{VIDEO_WIDTH}" height="#{VIDEO_HEIGHT}" frameborder="0" scrolling="no" allowfullscreen="true"></iframe>)
+  end
+
+  def embed_streamable_video(url)
+    uri = URI.parse(url)
+    parts = uri.path.split('/').reject(&:blank?)
+    video_id = parts[0]
+    video_id = parts[1] if video_id.downcase == 's'
+    %Q(<iframe src="https://streamable.com/s/#{video_id}" frameborder="0" width="#{VIDEO_WIDTH}" height="#{VIDEO_HEIGHT}" allowfullscreen></iframe>)
   end
 
   def get_url_params(uri)
