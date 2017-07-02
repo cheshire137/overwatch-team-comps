@@ -49,8 +49,8 @@ class Composition < ApplicationRecord
     return unless notes
 
     @notes_html ||= begin
-      renderer = Redcarpet::Render::HTML.new(filter_html: true, no_styles: true,
-                                             safe_links_only: true, with_toc_data: true)
+      renderer = CustomMarkdownRenderer.new(filter_html: true, no_styles: true,
+                                            safe_links_only: true, with_toc_data: true)
       markdown = Redcarpet::Markdown.new(renderer, autolink: true)
       markdown.render(notes)
     end

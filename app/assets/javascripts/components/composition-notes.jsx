@@ -26,6 +26,9 @@ class CompositionNotes extends React.Component {
           value={notes || ''}
           onChange={e => this.onCompositionNotesChange(e)}
         />
+        <p className="tip">
+          <strong>Tip: </strong> include a YouTube video URL to embed it.
+        </p>
         <p>
           <a
             href="https://daringfireball.net/projects/markdown/syntax"
