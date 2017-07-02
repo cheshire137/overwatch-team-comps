@@ -9,7 +9,8 @@ json.composition do
   json.allowDuplicates @composition.allow_duplicates?
   json.slug @composition.slug
   json.name @composition.name
-  json.notes @composition.notes_html
+  json.notes @composition.notes
+  json.notesHTML @composition.notes_html
   json.map do
     json.id @composition.map.id
     json.name @composition.map.name

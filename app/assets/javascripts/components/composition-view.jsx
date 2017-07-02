@@ -46,7 +46,7 @@ class CompositionView extends React.Component {
 
   onCompositionFetched(composition) {
     this.setState({
-      notes: composition.notes,
+      notesHTML: composition.notesHTML,
       battletag: composition.user.battletag,
       mapSegments: composition.map.segments,
       updatedAt: composition.updatedAt,
@@ -87,7 +87,7 @@ class CompositionView extends React.Component {
 
   render() {
     const { mapName, mapSegments, name, players, selections,
-            heroes, notes, mapSlug, mapImage } = this.state
+            heroes, notesHTML, mapSlug, mapImage } = this.state
 
     if (typeof mapName === 'undefined') {
       return <p className="container">Loading...</p>
@@ -153,11 +153,11 @@ class CompositionView extends React.Component {
               })}
             </tbody>
           </table>
-          {notes && notes.length > 0 ? (
+          {notesHTML && notesHTML.length > 0 ? (
             <div className="composition-notes-wrapper">
               <p>Notes:</p>
               <div className="composition-notes">
-                {renderHTML(notes)}
+                {renderHTML(notesHTML)}
               </div>
             </div>
           ) : ''}
