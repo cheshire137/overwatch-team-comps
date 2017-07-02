@@ -156,7 +156,7 @@ class CompositionView extends React.Component {
           {notes && notes.length > 0 ? (
             <div className="composition-notes-wrapper">
               <p>Notes:</p>
-              <div>
+              <div className="composition-notes">
                 {renderHTML(notes)}
               </div>
             </div>

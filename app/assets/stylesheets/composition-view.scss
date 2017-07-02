@@ -50,3 +50,21 @@
   font-size: 12px;
   margin: 40px 0;
 }
+
+.composition-notes {
+  padding: 1.5rem;
+  background-color: $white;
+  @include box-shadow(0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1));
+
+  &, p {
+    color: $text;
+  }
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+
+  & > *:last-child {
+    margin-bottom: 0;
+  }
+}
