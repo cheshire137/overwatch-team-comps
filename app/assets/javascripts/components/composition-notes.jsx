@@ -1,14 +1,28 @@
 import PropTypes from 'prop-types'
-import DebounceInput from 'react-debounce-input'
 import Textarea from 'react-textarea-autosize'
 
 class CompositionNotes extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { notes: props.notes }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ notes: nextProps.notes })
+  }
+
   onCompositionNotesChange(event) {
-    this.props.saveNotes(event.target.value)
+    this.setState({ notes: event.target.value })
+  }
+
+  saveNotes(event) {
+    event.target.blur()
+    this.props.saveNotes(this.state.notes)
   }
 
   render() {
-    const { isRequestOut, notes } = this.props
+    const { isRequestOut } = this.props
+    const { notes } = this.state
 
     return (
       <div className="composition-notes-wrapper">
@@ -16,10 +30,7 @@ class CompositionNotes extends React.Component {
           htmlFor="composition_notes"
           className="label notes-label small-fat-header"
         >Notes</label>
-        <DebounceInput
-          element={Textarea}
-          forceNotifyByEnter={false}
-          debounceTimeout={500}
+        <Textarea
           id="composition_notes"
           className="textarea"
           disabled={isRequestOut}
@@ -27,6 +38,19 @@ class CompositionNotes extends React.Component {
           value={notes || ''}
           onChange={e => this.onCompositionNotesChange(e)}
         />
+        <p>
+          <button
+            type="button"
+            disabled={isRequestOut}
+            className="button save-notes-button"
+            onClick={e => this.saveNotes(e)}
+          >
+            {isRequestOut ? (
+              <i className="fa fa-spinner fa-spin" />
+            ) : ''}
+            Save notes
+          </button>
+        </p>
         <p className="tip">
           <strong>Tip: </strong> include a YouTube video, Streamable video, Gfycat gif, or Twitch clip URL to embed it.
         </p>
