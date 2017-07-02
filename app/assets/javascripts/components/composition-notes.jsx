@@ -27,7 +27,7 @@ class CompositionNotes extends React.Component {
           onChange={e => this.onCompositionNotesChange(e)}
         />
         <p className="tip">
-          <strong>Tip: </strong> include a YouTube video URL to embed it.
+          <strong>Tip: </strong> include a YouTube video or Twitch clip URL to embed it.
         </p>
         <p>
           <a
