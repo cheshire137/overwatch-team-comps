@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import renderHTML from 'react-render-html'
 
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
@@ -152,12 +153,14 @@ class CompositionView extends React.Component {
               })}
             </tbody>
           </table>
-          <div className="composition-notes-wrapper">
-            <p>Notes:</p>
-            <div>
-              {notes}
+          {notes && notes.length > 0 ? (
+            <div className="composition-notes-wrapper">
+              <p>Notes:</p>
+              <div>
+                {renderHTML(notes)}
+              </div>
             </div>
-          </div>
+          ) : ''}
           {this.compositionDate()}
         </div>
       </div>
