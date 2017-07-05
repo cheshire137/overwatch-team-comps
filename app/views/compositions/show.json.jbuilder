@@ -10,6 +10,7 @@ json.composition do
   json.slug @composition.slug
   json.name @composition.name
   json.notes @composition.notes
+  json.notesHTML @composition.notes_html
   json.map do
     json.id @composition.map.id
     json.name @composition.map.name

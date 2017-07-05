@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import renderHTML from 'react-render-html'
 
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
@@ -15,7 +16,7 @@ const months = [
 
 class CompositionView extends React.Component {
   static onCompositionFetchError(error) {
-    console.error('failed to load composition data', error)
+    console.error('failed to load composition data for view', error)
   }
 
   constructor(props) {
@@ -45,7 +46,7 @@ class CompositionView extends React.Component {
 
   onCompositionFetched(composition) {
     this.setState({
-      notes: composition.notes,
+      notesHTML: composition.notesHTML,
       battletag: composition.user.battletag,
       mapSegments: composition.map.segments,
       updatedAt: composition.updatedAt,
@@ -86,7 +87,7 @@ class CompositionView extends React.Component {
 
   render() {
     const { mapName, mapSegments, name, players, selections,
-            heroes, notes, mapSlug, mapImage } = this.state
+            heroes, notesHTML, mapSlug, mapImage } = this.state
 
     if (typeof mapName === 'undefined') {
       return <p className="container">Loading...</p>
@@ -152,12 +153,14 @@ class CompositionView extends React.Component {
               })}
             </tbody>
           </table>
-          <div className="composition-notes-wrapper">
-            <p>Notes:</p>
-            <div>
-              {notes}
+          {notesHTML && notesHTML.length > 0 ? (
+            <div className="composition-notes-wrapper">
+              <p>Notes:</p>
+              <div className="composition-notes">
+                {renderHTML(notesHTML)}
+              </div>
             </div>
-          </div>
+          ) : ''}
           {this.compositionDate()}
         </div>
       </div>

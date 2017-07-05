@@ -408,3 +408,22 @@
   font-size: 13px;
   color: $text;
 }
+
+.tip {
+  color: $text;
+  margin-bottom: 0;
+}
+
+.save-notes-button {
+  background-color: $defend;
+  color: $white;
+  @include transition-property(background-color);
+  @include transition-duration(0.2s);
+  @include transition-timing-function(ease-in-out);
+
+  &:hover,
+  &:focus {
+    background-color: $light-defend;
+    color: $defend;
+  }
+}

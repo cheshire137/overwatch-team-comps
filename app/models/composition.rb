@@ -45,6 +45,17 @@ class Composition < ApplicationRecord
     (player_pool | players).sort_by { |player| player.name.downcase }
   end
 
+  def notes_html
+    return unless notes
+
+    @notes_html ||= begin
+      renderer = CustomMarkdownRenderer.new(filter_html: true, no_styles: true,
+                                            safe_links_only: true, with_toc_data: true)
+      markdown = Redcarpet::Markdown.new(renderer, autolink: true)
+      markdown.render(notes)
+    end
+  end
+
   def set_name
     return unless user
     return if name.present?
