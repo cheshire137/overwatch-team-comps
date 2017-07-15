@@ -124,4 +124,4 @@ HeroSelect.propTypes = {
   isDuplicate: PropTypes.bool
 }
 
-export default onClickOutside(HeroSelect)
+export default process.env.NODE_ENV === 'test' ? HeroSelect : onClickOutside(HeroSelect)
