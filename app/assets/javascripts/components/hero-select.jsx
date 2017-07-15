@@ -9,6 +9,9 @@ class HeroSelect extends React.Component {
   onMenuItemClick(event, heroID) {
     event.preventDefault()
     event.target.blur()
+    if (this.props.disabled) {
+      return
+    }
     this.setState({ isOpen: false }, () => {
       this.props.onChange(heroID)
     })
@@ -63,7 +66,7 @@ class HeroSelect extends React.Component {
   }
 
   render() {
-    const { heroes, selectedHeroID } = this.props
+    const { heroes, selectedHeroID, disabled } = this.props
     const isFilled = this.isFilled()
     let selectedHeroName = 'Hero'
     if (isFilled) {
@@ -73,7 +76,8 @@ class HeroSelect extends React.Component {
       <div className={this.containerClass()}>
         <button
           type="button"
-          className="button menu-toggle"
+          disabled={disabled}
+          className={`button menu-toggle ${disabled ? 'is-disabled' : ''}`}
           onClick={e => this.toggleMenuOpen(e)}
         >
           {this.heroPortrait()} {selectedHeroName} <i className="fa fa-caret-down" />
