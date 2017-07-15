@@ -34,6 +34,18 @@
     border: 1px solid $form;
   }
 
+  &.menu-toggle {
+    @include display-flex(flex);
+    @include flex-grow(1);
+    @include align-items(center);
+    padding: 0 0 0 10px;
+    background-color: inherit;
+
+    .hero-portrait {
+      margin-right: 10px;
+    }
+  }
+
   &.is-primary {
     background-color: $defend;
     border-color: transparent;

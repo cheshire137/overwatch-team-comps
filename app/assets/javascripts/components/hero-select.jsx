@@ -1,6 +1,11 @@
 import PropTypes from 'prop-types'
 
 class HeroSelect extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { isOpen: false }
+  }
+
   onChange(event) {
     const heroID = event.target.value
     this.props.onChange(heroID)
@@ -23,8 +28,8 @@ class HeroSelect extends React.Component {
     )
   }
 
-  selectSpanClass() {
-    const classes = ['select']
+  menuClass() {
+    const classes = ['menu']
     if (this.props.disabled) {
       classes.push('is-disabled')
     }
@@ -36,25 +41,39 @@ class HeroSelect extends React.Component {
   }
 
   containerClass() {
-    const classes = ['hero-select-container']
+    const classes = ['hero-select-container menu-container']
     if (!this.isFilled()) {
       classes.push('not-filled')
     }
     if (this.props.isDuplicate) {
       classes.push('is-duplicate')
     }
+    if (this.state.isOpen) {
+      classes.push('open')
+    }
     return classes.join(' ')
+  }
+
+  toggleMenuOpen(event) {
+    event.target.blur()
+    this.setState({ isOpen: !this.state.isOpen })
   }
 
   render() {
     const { heroes, selectedHeroID, disabled, selectID } = this.props
     const isFilled = this.isFilled()
+    let selectedHeroName = 'Hero'
+    if (isFilled) {
+      selectedHeroName = heroes.filter(h => h.id === selectedHeroID)[0].name
+    }
     return (
       <div className={this.containerClass()}>
-        <label
-          htmlFor={selectID}
-        >{this.heroPortrait()}</label>
-        <span className={this.selectSpanClass()}>
+        <button
+          type="button"
+          className="button menu-toggle"
+          onClick={e => this.toggleMenuOpen(e)}
+        >{this.heroPortrait()} {selectedHeroName}</button>
+        <div className={this.menuClass()}>
           <select
             onChange={e => this.onChange(e)}
             value={isFilled ? selectedHeroID : ''}
@@ -71,7 +90,7 @@ class HeroSelect extends React.Component {
               >{hero.name}</option>
             ))}
           </select>
-        </span>
+        </div>
       </div>
     )
   }
