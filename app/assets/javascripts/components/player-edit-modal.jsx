@@ -34,6 +34,9 @@ class PlayerEditModal extends React.Component {
   onKeyDown(event) {
     if (event.keyCode === 27) { // Esc
       this.props.close()
+    } else if (event.keyCode === 13) { // Enter
+      event.preventDefault()
+      this.save(event)
     }
   }
 
