@@ -6,9 +6,12 @@ class HeroSelect extends React.Component {
     this.state = { isOpen: false }
   }
 
-  onChange(event) {
-    const heroID = event.target.value
-    this.props.onChange(heroID)
+  onMenuItemClick(event, heroID) {
+    event.preventDefault()
+    event.target.blur()
+    this.setState({ isOpen: false }, () => {
+      this.props.onChange(heroID)
+    })
   }
 
   heroPortrait() {
@@ -60,7 +63,7 @@ class HeroSelect extends React.Component {
   }
 
   render() {
-    const { heroes, selectedHeroID, disabled, selectID } = this.props
+    const { heroes, selectedHeroID } = this.props
     const isFilled = this.isFilled()
     let selectedHeroName = 'Hero'
     if (isFilled) {
@@ -72,24 +75,27 @@ class HeroSelect extends React.Component {
           type="button"
           className="button menu-toggle"
           onClick={e => this.toggleMenuOpen(e)}
-        >{this.heroPortrait()} {selectedHeroName}</button>
+        >
+          {this.heroPortrait()} {selectedHeroName} <i className="fa fa-caret-down" />
+        </button>
         <div className={this.menuClass()}>
-          <select
-            onChange={e => this.onChange(e)}
-            value={isFilled ? selectedHeroID : ''}
-            disabled={disabled}
-            id={selectID}
-          >
-            {isFilled ? '' : (
-              <option value="">Hero</option>
-            )}
-            {heroes.map(hero => (
-              <option
-                key={hero.id}
-                value={hero.id}
-              >{hero.name}</option>
-            ))}
-          </select>
+          {heroes.map(hero => (
+            <button
+              key={hero.id}
+              className="menu-item button"
+              onClick={e => this.onMenuItemClick(e, hero.id)}
+            >
+              <img
+                src={hero.image}
+                alt={hero.name}
+                className="hero-portrait"
+              />
+              {hero.name}
+              {hero.id === selectedHeroID ? (
+                <i className="fa fa-check menu-item-selected-indicator" />
+              ) : ''}
+            </button>
+          ))}
         </div>
       </div>
     )
@@ -101,7 +107,6 @@ HeroSelect.propTypes = {
   onChange: PropTypes.func.isRequired,
   selectedHeroID: PropTypes.number,
   disabled: PropTypes.bool.isRequired,
-  selectID: PropTypes.string.isRequired,
   isDuplicate: PropTypes.bool
 }
 

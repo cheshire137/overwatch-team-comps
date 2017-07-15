@@ -153,12 +153,38 @@ button.dropdown-item {
   }
 }
 
-.menu-container.open {
-  .menu {
-    display: block;
+.menu-container {
+  position: relative;
+
+  &.open {
+    .menu {
+      position: absolute;
+      display: block;
+      z-index: 1;
+      border: 1px solid $form;
+      @include border-radius(4px);
+      background-color: $white;
+      left: 0;
+      right: 0;
+      top: 36px;
+      box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+    }
   }
 }
 
 .menu {
   display: none;
+
+  .menu-item {
+    @include display-flex(flex);
+    @include flex-grow(1);
+    @include align-items(center);
+    width: 100%;
+
+    .menu-item-selected-indicator {
+      position: absolute;
+      right: 10px;
+      color: $success;
+    }
+  }
 }

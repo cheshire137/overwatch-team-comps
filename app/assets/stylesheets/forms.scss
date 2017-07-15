@@ -30,6 +30,18 @@
     color: $mix;
   }
 
+  .fa-caret-down {
+    position: absolute;
+    right: 10px;
+    color: $text;
+    line-height: 24px;
+  }
+
+  .hero-portrait,
+  .hero-portrait-placeholder {
+    margin-right: 10px;
+  }
+
   &.is-normal {
     border: 1px solid $form;
   }
@@ -40,10 +52,9 @@
     @include align-items(center);
     padding: 0 0 0 10px;
     background-color: inherit;
+  }
 
-    .hero-portrait {
-      margin-right: 10px;
-    }
+  &.menu-item {
   }
 
   &.is-primary {
