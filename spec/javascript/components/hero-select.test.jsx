@@ -13,7 +13,6 @@ describe('HeroSelect', () => {
     onChange: newHeroID => { heroIDSelected = newHeroID },
     selectedHeroID: heroIDSelected,
     disabled: false,
-    selectID: 'hero-select-dom-id',
     isDuplicate: false
   }
 
@@ -27,8 +26,17 @@ describe('HeroSelect', () => {
   })
 
   test('can change selected hero', () => {
-    const select = shallow(component).find(`#${props.selectID}`)
-    select.simulate('change', { target: { value: hero2.id } })
+    const rendered = shallow(component)
+
+    const select = rendered.find('.menu-toggle')
+    select.simulate('click', { target: { blur: () => {} } })
+
+    const newHeroButton = rendered.find('.menu-item.hero-ana')
+    newHeroButton.simulate('click', {
+      preventDefault: () => {},
+      target: { blur: () => {} }
+    })
+
     expect(heroIDSelected).toBe(hero2.id)
   })
 })
