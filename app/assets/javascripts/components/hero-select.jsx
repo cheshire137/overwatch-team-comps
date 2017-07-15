@@ -79,23 +79,26 @@ class HeroSelect extends React.Component {
           {this.heroPortrait()} {selectedHeroName} <i className="fa fa-caret-down" />
         </button>
         <div className={this.menuClass()}>
-          {heroes.map(hero => (
-            <button
-              key={hero.id}
-              className="menu-item button"
-              onClick={e => this.onMenuItemClick(e, hero.id)}
-            >
-              <img
-                src={hero.image}
-                alt={hero.name}
-                className="hero-portrait"
-              />
-              {hero.name}
-              {hero.id === selectedHeroID ? (
-                <i className="fa fa-check menu-item-selected-indicator" />
-              ) : ''}
-            </button>
-          ))}
+          {heroes.map(hero => {
+            const isSelected = hero.id === selectedHeroID
+            return (
+              <button
+                key={hero.id}
+                className={`menu-item button ${isSelected ? 'is-selected' : ''}`}
+                onClick={e => this.onMenuItemClick(e, hero.id)}
+              >
+                <img
+                  src={hero.image}
+                  alt={hero.name}
+                  className="hero-portrait"
+                />
+                {hero.name}
+                {isSelected ? (
+                  <i className="fa fa-check menu-item-selected-indicator" />
+                ) : ''}
+              </button>
+            )
+          })}
         </div>
       </div>
     )
