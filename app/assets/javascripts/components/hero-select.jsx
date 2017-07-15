@@ -95,7 +95,7 @@ class HeroSelect extends React.Component {
             return (
               <button
                 key={hero.id}
-                className={`menu-item button ${isSelected ? 'is-selected' : ''}`}
+                className={`hero-${hero.slug} menu-item button ${isSelected ? 'is-selected' : ''}`}
                 onClick={e => this.onMenuItemClick(e, hero.id)}
               >
                 <img

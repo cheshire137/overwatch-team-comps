@@ -5,9 +5,9 @@ import HeroSelect from '../../../app/assets/javascripts/components/hero-select.j
 
 describe('HeroSelect', () => {
   let component = null
-  const hero1 = { id: 1, image: '/photo.jpg', name: 'Hanzo' }
+  const hero1 = { id: 1, slug: 'hanzo', image: '/photo.jpg', name: 'Hanzo' }
   let heroIDSelected = hero1.id
-  const hero2 = { id: 2, image: '/pic.bmp', name: 'Ana' }
+  const hero2 = { id: 2, slug: 'ana', image: '/pic.bmp', name: 'Ana' }
   const props = {
     heroes: [hero1, hero2],
     onChange: newHeroID => { heroIDSelected = newHeroID },

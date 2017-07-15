@@ -19,8 +19,7 @@ exports[`HeroSelect matches snapshot 1`] = `
   <div
     className="menu">
     <button
-      className="menu-item button is-selected"
-      data-hero-id={1}
+      className="hero-hanzo menu-item button is-selected"
       onClick={[Function]}>
       <img
         alt="Hanzo"
@@ -31,8 +30,7 @@ exports[`HeroSelect matches snapshot 1`] = `
         className="fa fa-check menu-item-selected-indicator" />
     </button>
     <button
-      className="menu-item button "
-      data-hero-id={2}
+      className="hero-ana menu-item button "
       onClick={[Function]}>
       <img
         alt="Ana"
