@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import onClickOutside from 'react-onclickoutside'
 
 class HeroSelect extends React.Component {
   constructor(props) {
@@ -15,6 +16,12 @@ class HeroSelect extends React.Component {
     this.setState({ isOpen: false }, () => {
       this.props.onChange(heroID)
     })
+  }
+
+  handleClickOutside() {
+    if (this.state.isOpen) {
+      this.setState({ isOpen: false })
+    }
   }
 
   heroPortrait() {
@@ -117,4 +124,4 @@ HeroSelect.propTypes = {
   isDuplicate: PropTypes.bool
 }
 
-export default HeroSelect
+export default onClickOutside(HeroSelect)
