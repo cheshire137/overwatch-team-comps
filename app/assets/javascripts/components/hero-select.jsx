@@ -87,7 +87,10 @@ class HeroSelect extends React.Component {
           className={`button menu-toggle ${disabled ? 'is-disabled' : ''}`}
           onClick={e => this.toggleMenuOpen(e)}
         >
-          {this.heroPortrait()} {selectedHeroName} <i aria-hidden="true" className="fa fa-caret-down" />
+          {this.heroPortrait()} {selectedHeroName} <i
+            aria-hidden="true"
+            className="fa fa-caret-down"
+          />
         </button>
         <div className={this.menuClass()}>
           {heroes.map(hero => {
