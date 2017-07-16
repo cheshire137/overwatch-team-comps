@@ -62,3 +62,12 @@ h4 {
   font-weight: 700;
   letter-spacing: 1px;
 }
+
+.css-truncate {
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  text-align: left;
+}

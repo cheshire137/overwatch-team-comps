@@ -86,8 +86,13 @@ button.dropdown-item {
     @include display-flex(flex);
     @include flex-grow(1);
     @include align-items(center);
-    padding: 0;
+    padding: 0 13px 0 0;
     background-color: inherit;
+
+    > span {
+      @include display-flex(flex);
+      @include align-items(center);
+    }
 
     &.is-disabled {
       color: $soft-text;
@@ -106,6 +111,16 @@ button.dropdown-item {
 
   &.menu-item {
     padding: 0 10px;
+
+    .with-selected {
+      padding-right: 16px;
+    }
+
+    > span {
+      @include display-flex(flex);
+      @include align-items(center);
+      max-width: 100%;
+    }
   }
 }
 

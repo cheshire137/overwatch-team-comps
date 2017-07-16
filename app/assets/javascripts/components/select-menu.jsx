@@ -29,6 +29,9 @@ class SelectMenu extends React.Component {
     if (this.props.disabled) {
       classes.push('is-disabled')
     }
+    if (this.props.menuClass) {
+      classes.push(this.props.menuClass())
+    }
     return classes.join(' ')
   }
 
@@ -37,21 +40,21 @@ class SelectMenu extends React.Component {
     if (this.state.isOpen) {
       classes.push('open')
     }
+    if (this.props.containerClass) {
+      classes.push(this.props.containerClass())
+    }
     return classes.join(' ')
   }
 
   menuItemClass(item, isSelected) {
-    return `menu-item button ${isSelected ? 'is-selected' : ''}`
-  }
-
-  // Override in child classes
-  menuItemContent() {
-    return <span>Item</span>
-  }
-
-  // Override in child classes
-  menuToggleContents() {
-    return <span>Menu</span>
+    const classes = ['menu-item button']
+    if (isSelected) {
+      classes.push('is-selected')
+    }
+    if (this.props.menuItemClass) {
+      classes.push(this.props.menuItemClass(item, isSelected))
+    }
+    return classes.join(' ')
   }
 
   toggleMenuOpen(event) {
@@ -60,17 +63,17 @@ class SelectMenu extends React.Component {
   }
 
   render() {
-    const { items, selectedItemID, disabled } = this.props
+    const { items, selectedItemID, disabled, menuToggleContents } = this.props
 
     return (
       <div className={this.containerClass()}>
         <button
           type="button"
           disabled={disabled}
-          className={`button menu-toggle ${disabled ? 'is-disabled' : ''}`}
+          className={`button menu-toggle${disabled ? ' is-disabled' : ''}`}
           onClick={e => this.toggleMenuOpen(e)}
         >
-          {this.menuToggleContents()} <i
+          {menuToggleContents()} <i
             aria-hidden="true"
             className="fa fa-caret-down"
           />
@@ -84,7 +87,7 @@ class SelectMenu extends React.Component {
                 className={this.menuItemClass(item, isSelected)}
                 onClick={e => this.onMenuItemClick(e, item.id)}
               >
-                {this.menuItemContent()}
+                {this.props.menuItemContent(item, isSelected)}
                 {isSelected ? (
                   <i aria-hidden="true" className="fa fa-check menu-item-selected-indicator" />
                 ) : ''}
@@ -101,7 +104,12 @@ SelectMenu.propTypes = {
   items: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   selectedItemID: PropTypes.number,
-  disabled: PropTypes.bool.isRequired
+  disabled: PropTypes.bool.isRequired,
+  menuClass: PropTypes.func,
+  containerClass: PropTypes.func,
+  menuToggleContents: PropTypes.func.isRequired,
+  menuItemClass: PropTypes.func,
+  menuItemContent: PropTypes.func.isRequired
 }
 
 export default process.env.NODE_ENV === 'test' ? SelectMenu : onClickOutside(SelectMenu)
