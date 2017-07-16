@@ -14,6 +14,7 @@ exports[`HeroSelect matches snapshot 1`] = `
     Hanzo
      
     <i
+      aria-hidden="true"
       className="fa fa-caret-down" />
   </button>
   <div
@@ -27,6 +28,7 @@ exports[`HeroSelect matches snapshot 1`] = `
         src="/photo.jpg" />
       Hanzo
       <i
+        aria-hidden="true"
         className="fa fa-check menu-item-selected-indicator" />
     </button>
     <button
