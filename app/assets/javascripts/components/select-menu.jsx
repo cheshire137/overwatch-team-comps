@@ -101,14 +101,34 @@ class SelectMenu extends React.Component {
 }
 
 SelectMenu.propTypes = {
+  // List of objects for the menu. Each should have an `id` property.
   items: PropTypes.array.isRequired,
+
+  // Callback when a new item from the menu is chosen.
   onChange: PropTypes.func.isRequired,
+
+  // ID of one of the `items` in the menu.
   selectedItemID: PropTypes.number,
+
+  // Whether the menu should be disabled or not.
   disabled: PropTypes.bool.isRequired,
+
+  // Function returning a string to be applied to the menu.
   menuClass: PropTypes.func,
+
+  // Function returning a string to be applied to the container.
   containerClass: PropTypes.func,
+
+  // Function returning an element that should appear in the button
+  // that toggles the menu open/closed.
   menuToggleContents: PropTypes.func.isRequired,
+
+  // Function that returns a string for the CSS class for a given
+  // menu item.
   menuItemClass: PropTypes.func,
+
+  // Function returning an element that should appear in a given
+  // menu item's button.
   menuItemContent: PropTypes.func.isRequired
 }
 

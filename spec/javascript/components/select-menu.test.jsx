@@ -39,8 +39,8 @@ describe('SelectMenu', () => {
     const select = rendered.find('.menu-toggle')
     select.simulate('click', { target: { blur: () => {} } })
 
-    const newHeroButton = rendered.find('.menu-item.item-2')
-    newHeroButton.simulate('click', {
+    const menuItemButton = rendered.find('.menu-item.item-2')
+    menuItemButton.simulate('click', {
       preventDefault: () => {},
       target: { blur: () => {} }
     })
