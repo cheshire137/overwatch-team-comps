@@ -25,7 +25,7 @@ If interested, see also [our requirements document](https://trello.com/c/GCIwE5W
 
 ## How to Develop
 
-You will need Ruby, Rubygems, PostgreSQL, and npm installed.
+You will need Ruby, Rubygems, PostgreSQL, and npm installed. Then run:
 
 ```bash
 bundle install
