@@ -1,5 +1,4 @@
 import renderer from 'react-test-renderer'
-import { shallow } from 'enzyme'
 
 import HeroSelect from '../../../app/assets/javascripts/components/hero-select.jsx'
 
@@ -23,20 +22,5 @@ describe('HeroSelect', () => {
   test('matches snapshot', () => {
     const tree = renderer.create(component).toJSON()
     expect(tree).toMatchSnapshot()
-  })
-
-  test('can change selected hero', () => {
-    const rendered = shallow(component)
-
-    const select = rendered.find('.menu-toggle')
-    select.simulate('click', { target: { blur: () => {} } })
-
-    const newHeroButton = rendered.find('.menu-item.hero-ana')
-    newHeroButton.simulate('click', {
-      preventDefault: () => {},
-      target: { blur: () => {} }
-    })
-
-    expect(heroIDSelected).toBe(hero2.id)
   })
 })

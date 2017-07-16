@@ -1,0 +1,47 @@
+exports[`SelectMenu matches snapshot 1`] = `
+<div
+  className="menu-container custom-container-class">
+  <button
+    className="button menu-toggle"
+    disabled={false}
+    onClick={[Function]}
+    type="button">
+    <span>
+      Menu
+    </span>
+     
+    <i
+      aria-hidden="true"
+      className="fa fa-caret-down" />
+  </button>
+  <div
+    className="menu custom-menu-class">
+    <button
+      className="menu-item button is-selected item-1"
+      onClick={[Function]}>
+      <span
+        className="with-selected">
+        <span
+          className="css-truncate">
+          First item
+        </span>
+      </span>
+      <i
+        aria-hidden="true"
+        className="fa fa-check menu-item-selected-indicator" />
+    </button>
+    <button
+      className="menu-item button item-2"
+      onClick={[Function]}>
+      <span
+        className="">
+        <span
+          className="css-truncate">
+          Second item
+        </span>
+      </span>
+      
+    </button>
+  </div>
+</div>
+`;
