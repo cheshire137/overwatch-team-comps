@@ -1,0 +1,154 @@
+.dropdown-menu-content {
+  pointer-events: all;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: auto;
+  right: 6px;
+  z-index: 100;
+  width: 180px;
+  margin-top: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: $white;
+  background-clip: padding-box;
+  border: 1px solid rgba(27,31,35,0.15);
+  box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+  @include border-radius(4px);
+
+  &::before {
+    border: 8px solid transparent;
+    border-bottom-color: rgba(27,31,35,0.15);
+    top: -16px;
+    right: 9px;
+    left: auto;
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    display: inline-block;
+    content: "";
+  }
+}
+
+.dropdown-divider {
+  height: 1px;
+  margin: 8px 1px;
+  background-color: $form;
+}
+
+.dropdown-header {
+  padding: 4px 15px;
+  font-size: 14px;
+  color: $soft-text;
+  font-weight: 700;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 4px 10px 4px 15px;
+  overflow: hidden;
+  color: $text;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.dropdown-item,
+a.dropdown-item,
+button.dropdown-item {
+  &:hover,
+  &:focus {
+    color: $attack;
+  }
+}
+
+a.dropdown-item {
+  color: $text;
+  text-decoration: none;
+}
+
+button.dropdown-item {
+  @include user-select(none);
+  background-color: transparent;
+  border: 0;
+  @include appearance(none);
+  cursor: pointer;
+  font-size: inherit;
+}
+
+.button {
+  &.menu-toggle {
+    @include display-flex(flex);
+    @include flex-grow(1);
+    @include align-items(center);
+    padding: 0 0 0 10px;
+    background-color: inherit;
+
+    &.is-disabled {
+      color: $soft-text;
+      cursor: default;
+
+      &:hover,
+      &:focus {
+        color: $soft-text;
+      }
+
+      .fa-caret-down {
+        color: $soft-text;
+      }
+    }
+  }
+
+  &.menu-item {
+    padding: 0 10px;
+  }
+}
+
+.menu-container {
+  position: relative;
+
+  &.open {
+    .menu {
+      position: absolute;
+      display: block;
+      z-index: 1;
+      border: 1px solid $form;
+      @include border-radius(4px);
+      background-color: $white;
+      left: 0;
+      right: 0;
+      top: 36px;
+      height: 221px;
+      overflow: auto;
+      box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+    }
+  }
+}
+
+.menu {
+  display: none;
+
+  .menu-item {
+    @include display-flex(flex);
+    @include flex-grow(1);
+    @include align-items(center);
+    width: 100%;
+
+    &.is-selected {
+      background-color: #f9f9f9;
+      color: $defend;
+    }
+
+    .menu-item-selected-indicator {
+      position: absolute;
+      right: 10px;
+      color: $success;
+      line-height: 24px;
+    }
+  }
+}
