@@ -30,8 +30,46 @@
     color: $mix;
   }
 
+  .fa-caret-down {
+    position: absolute;
+    right: 10px;
+    color: $text;
+    line-height: 24px;
+  }
+
+  .hero-portrait,
+  .hero-portrait-placeholder {
+    margin-right: 10px;
+  }
+
   &.is-normal {
     border: 1px solid $form;
+  }
+
+  &.menu-toggle {
+    @include display-flex(flex);
+    @include flex-grow(1);
+    @include align-items(center);
+    padding: 0 0 0 10px;
+    background-color: inherit;
+
+    &.is-disabled {
+      color: $soft-text;
+      cursor: default;
+
+      &:hover,
+      &:focus {
+        color: $soft-text;
+      }
+
+      .fa-caret-down {
+        color: $soft-text;
+      }
+    }
+  }
+
+  &.menu-item {
+    padding: 0 10px;
   }
 
   &.is-primary {

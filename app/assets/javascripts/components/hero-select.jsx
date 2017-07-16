@@ -1,9 +1,27 @@
 import PropTypes from 'prop-types'
+import onClickOutside from 'react-onclickoutside'
 
 class HeroSelect extends React.Component {
-  onChange(event) {
-    const heroID = event.target.value
-    this.props.onChange(heroID)
+  constructor(props) {
+    super(props)
+    this.state = { isOpen: false }
+  }
+
+  onMenuItemClick(event, heroID) {
+    event.preventDefault()
+    event.target.blur()
+    if (this.props.disabled) {
+      return
+    }
+    this.setState({ isOpen: false }, () => {
+      this.props.onChange(heroID)
+    })
+  }
+
+  handleClickOutside() {
+    if (this.state.isOpen) {
+      this.setState({ isOpen: false })
+    }
   }
 
   heroPortrait() {
@@ -23,8 +41,8 @@ class HeroSelect extends React.Component {
     )
   }
 
-  selectSpanClass() {
-    const classes = ['select']
+  menuClass() {
+    const classes = ['menu']
     if (this.props.disabled) {
       classes.push('is-disabled')
     }
@@ -36,42 +54,63 @@ class HeroSelect extends React.Component {
   }
 
   containerClass() {
-    const classes = ['hero-select-container']
+    const classes = ['hero-select-container menu-container']
     if (!this.isFilled()) {
       classes.push('not-filled')
     }
     if (this.props.isDuplicate) {
       classes.push('is-duplicate')
     }
+    if (this.state.isOpen) {
+      classes.push('open')
+    }
     return classes.join(' ')
   }
 
+  toggleMenuOpen(event) {
+    event.target.blur()
+    this.setState({ isOpen: !this.state.isOpen })
+  }
+
   render() {
-    const { heroes, selectedHeroID, disabled, selectID } = this.props
+    const { heroes, selectedHeroID, disabled } = this.props
     const isFilled = this.isFilled()
+    let selectedHeroName = 'Hero'
+    if (isFilled) {
+      selectedHeroName = heroes.filter(h => h.id === selectedHeroID)[0].name
+    }
     return (
       <div className={this.containerClass()}>
-        <label
-          htmlFor={selectID}
-        >{this.heroPortrait()}</label>
-        <span className={this.selectSpanClass()}>
-          <select
-            onChange={e => this.onChange(e)}
-            value={isFilled ? selectedHeroID : ''}
-            disabled={disabled}
-            id={selectID}
-          >
-            {isFilled ? '' : (
-              <option value="">Hero</option>
-            )}
-            {heroes.map(hero => (
-              <option
+        <button
+          type="button"
+          disabled={disabled}
+          className={`button menu-toggle ${disabled ? 'is-disabled' : ''}`}
+          onClick={e => this.toggleMenuOpen(e)}
+        >
+          {this.heroPortrait()} {selectedHeroName} <i className="fa fa-caret-down" />
+        </button>
+        <div className={this.menuClass()}>
+          {heroes.map(hero => {
+            const isSelected = hero.id === selectedHeroID
+            return (
+              <button
                 key={hero.id}
-                value={hero.id}
-              >{hero.name}</option>
-            ))}
-          </select>
-        </span>
+                className={`hero-${hero.slug} menu-item button ${isSelected ? 'is-selected' : ''}`}
+                onClick={e => this.onMenuItemClick(e, hero.id)}
+              >
+                <img
+                  src={hero.image}
+                  alt={hero.name}
+                  className="hero-portrait"
+                />
+                {hero.name}
+                {isSelected ? (
+                  <i className="fa fa-check menu-item-selected-indicator" />
+                ) : ''}
+              </button>
+            )
+          })}
+        </div>
       </div>
     )
   }
@@ -82,8 +121,7 @@ HeroSelect.propTypes = {
   onChange: PropTypes.func.isRequired,
   selectedHeroID: PropTypes.number,
   disabled: PropTypes.bool.isRequired,
-  selectID: PropTypes.string.isRequired,
   isDuplicate: PropTypes.bool
 }
 
-export default HeroSelect
+export default process.env.NODE_ENV === 'test' ? HeroSelect : onClickOutside(HeroSelect)

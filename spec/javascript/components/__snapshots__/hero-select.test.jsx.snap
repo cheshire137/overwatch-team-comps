@@ -1,30 +1,44 @@
 exports[`HeroSelect matches snapshot 1`] = `
 <div
-  className="hero-select-container">
-  <label
-    htmlFor="hero-select-dom-id">
+  className="hero-select-container menu-container">
+  <button
+    className="button menu-toggle "
+    disabled={false}
+    onClick={[Function]}
+    type="button">
     <img
       alt="Hanzo"
       className="hero-portrait"
       src="/photo.jpg" />
-  </label>
-  <span
-    className="select">
-    <select
-      disabled={false}
-      id="hero-select-dom-id"
-      onChange={[Function]}
-      value={1}>
+     
+    Hanzo
+     
+    <i
+      className="fa fa-caret-down" />
+  </button>
+  <div
+    className="menu">
+    <button
+      className="hero-hanzo menu-item button is-selected"
+      onClick={[Function]}>
+      <img
+        alt="Hanzo"
+        className="hero-portrait"
+        src="/photo.jpg" />
+      Hanzo
+      <i
+        className="fa fa-check menu-item-selected-indicator" />
+    </button>
+    <button
+      className="hero-ana menu-item button "
+      onClick={[Function]}>
+      <img
+        alt="Ana"
+        className="hero-portrait"
+        src="/pic.bmp" />
+      Ana
       
-      <option
-        value={1}>
-        Hanzo
-      </option>
-      <option
-        value={2}>
-        Ana
-      </option>
-    </select>
-  </span>
+    </button>
+  </div>
 </div>
 `;

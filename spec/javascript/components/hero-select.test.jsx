@@ -5,15 +5,14 @@ import HeroSelect from '../../../app/assets/javascripts/components/hero-select.j
 
 describe('HeroSelect', () => {
   let component = null
-  const hero1 = { id: 1, image: '/photo.jpg', name: 'Hanzo' }
+  const hero1 = { id: 1, slug: 'hanzo', image: '/photo.jpg', name: 'Hanzo' }
   let heroIDSelected = hero1.id
-  const hero2 = { id: 2, image: '/pic.bmp', name: 'Ana' }
+  const hero2 = { id: 2, slug: 'ana', image: '/pic.bmp', name: 'Ana' }
   const props = {
     heroes: [hero1, hero2],
     onChange: newHeroID => { heroIDSelected = newHeroID },
     selectedHeroID: heroIDSelected,
     disabled: false,
-    selectID: 'hero-select-dom-id',
     isDuplicate: false
   }
 
@@ -27,8 +26,17 @@ describe('HeroSelect', () => {
   })
 
   test('can change selected hero', () => {
-    const select = shallow(component).find(`#${props.selectID}`)
-    select.simulate('change', { target: { value: hero2.id } })
+    const rendered = shallow(component)
+
+    const select = rendered.find('.menu-toggle')
+    select.simulate('click', { target: { blur: () => {} } })
+
+    const newHeroButton = rendered.find('.menu-item.hero-ana')
+    newHeroButton.simulate('click', {
+      preventDefault: () => {},
+      target: { blur: () => {} }
+    })
+
     expect(heroIDSelected).toBe(hero2.id)
   })
 })
