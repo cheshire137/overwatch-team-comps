@@ -1,5 +1,4 @@
 import renderer from 'react-test-renderer'
-import { shallow } from 'enzyme'
 
 import MapSelect from '../../../app/assets/javascripts/components/map-select.jsx'
 
@@ -36,20 +35,5 @@ describe('MapSelect', () => {
   test('matches snapshot', () => {
     const tree = renderer.create(component).toJSON()
     expect(tree).toMatchSnapshot()
-  })
-
-  test('can change selected map', () => {
-    const rendered = shallow(component)
-
-    const select = rendered.find('.menu-toggle')
-    select.simulate('click', { target: { blur: () => {} } })
-
-    const newMapButton = rendered.find('.menu-item.map-eichenwalde')
-    newMapButton.simulate('click', {
-      preventDefault: () => {},
-      target: { blur: () => {} }
-    })
-
-    expect(mapIDSelected).toBe(map2.id)
   })
 })
