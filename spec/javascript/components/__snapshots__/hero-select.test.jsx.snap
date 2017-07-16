@@ -1,17 +1,19 @@
 exports[`HeroSelect matches snapshot 1`] = `
 <div
-  className="hero-select-container menu-container">
+  className="menu-container hero-select-container">
   <button
-    className="button menu-toggle "
+    className="button menu-toggle"
     disabled={false}
     onClick={[Function]}
     type="button">
-    <img
-      alt="Hanzo"
-      className="hero-portrait"
-      src="/photo.jpg" />
-     
-    Hanzo
+    <span>
+      <img
+        alt="Hanzo"
+        className="hero-portrait"
+        src="/photo.jpg" />
+       
+      Hanzo
+    </span>
      
     <i
       aria-hidden="true"
@@ -20,25 +22,37 @@ exports[`HeroSelect matches snapshot 1`] = `
   <div
     className="menu">
     <button
-      className="hero-hanzo menu-item button is-selected"
+      className="menu-item button is-selected hero-hanzo"
       onClick={[Function]}>
-      <img
-        alt="Hanzo"
-        className="hero-portrait"
-        src="/photo.jpg" />
-      Hanzo
+      <span
+        className="with-selected">
+        <img
+          alt="Hanzo"
+          className="hero-portrait"
+          src="/photo.jpg" />
+        <span
+          className="css-truncate">
+          Hanzo
+        </span>
+      </span>
       <i
         aria-hidden="true"
         className="fa fa-check menu-item-selected-indicator" />
     </button>
     <button
-      className="hero-ana menu-item button "
+      className="menu-item button hero-ana"
       onClick={[Function]}>
-      <img
-        alt="Ana"
-        className="hero-portrait"
-        src="/pic.bmp" />
-      Ana
+      <span
+        className="">
+        <img
+          alt="Ana"
+          className="hero-portrait"
+          src="/pic.bmp" />
+        <span
+          className="css-truncate">
+          Ana
+        </span>
+      </span>
       
     </button>
   </div>

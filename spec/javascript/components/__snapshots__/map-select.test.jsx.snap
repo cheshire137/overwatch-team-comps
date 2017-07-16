@@ -1,16 +1,18 @@
 exports[`MapSelect matches snapshot 1`] = `
 <div
-  className="map-select-container menu-container">
+  className="menu-container map-select-container">
   <button
-    className="button menu-toggle "
+    className="button menu-toggle"
     disabled={false}
     onClick={[Function]}
     type="button">
-    <i
-      aria-hidden="true"
-      className="fa fa-map-marker" />
-     
-    Dorado
+    <span>
+      <i
+        aria-hidden="true"
+        className="fa fa-map-marker" />
+       
+      Dorado
+    </span>
      
     <i
       aria-hidden="true"
@@ -19,17 +21,29 @@ exports[`MapSelect matches snapshot 1`] = `
   <div
     className="menu">
     <button
-      className="map-dorado menu-item button is-selected"
+      className="menu-item button is-selected map-dorado"
       onClick={[Function]}>
-      Dorado
+      <span
+        className="with-selected">
+        <span
+          className="css-truncate">
+          Dorado
+        </span>
+      </span>
       <i
         aria-hidden="true"
         className="fa fa-check menu-item-selected-indicator" />
     </button>
     <button
-      className="map-eichenwalde menu-item button "
+      className="menu-item button map-eichenwalde"
       onClick={[Function]}>
-      Eichenwalde
+      <span
+        className="">
+        <span
+          className="css-truncate">
+          Eichenwalde
+        </span>
+      </span>
       
     </button>
   </div>
