@@ -1,0 +1,37 @@
+exports[`MapSelect matches snapshot 1`] = `
+<div
+  className="map-select-container menu-container">
+  <button
+    className="button menu-toggle "
+    disabled={false}
+    onClick={[Function]}
+    type="button">
+    <i
+      aria-hidden="true"
+      className="fa fa-map-marker" />
+     
+    Dorado
+     
+    <i
+      aria-hidden="true"
+      className="fa fa-caret-down" />
+  </button>
+  <div
+    className="menu">
+    <button
+      className="map-dorado menu-item button is-selected"
+      onClick={[Function]}>
+      Dorado
+      <i
+        aria-hidden="true"
+        className="fa fa-check menu-item-selected-indicator" />
+    </button>
+    <button
+      className="map-eichenwalde menu-item button "
+      onClick={[Function]}>
+      Eichenwalde
+      
+    </button>
+  </div>
+</div>
+`;

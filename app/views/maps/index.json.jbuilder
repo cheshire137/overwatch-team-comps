@@ -1,5 +1,6 @@
 json.maps @maps do |map|
   json.id map.id
+  json.slug map.slug
   json.name map.name
   json.type map.map_type
   json.segments map.segments do |map_segment|
