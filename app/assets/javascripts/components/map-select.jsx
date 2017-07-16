@@ -24,7 +24,7 @@ const MapSelect = function(props) {
       menuItemClass={map => `map-${map.slug}`}
       menuItemContent={(map, isSelected) => (
         <span className={isSelected ? 'with-selected' : ''}>
-          {map.name}
+          <span className="css-truncate">{map.name}</span>
         </span>
       )}
     />
