@@ -86,7 +86,7 @@ button.dropdown-item {
     @include display-flex(flex);
     @include flex-grow(1);
     @include align-items(center);
-    padding: 0 0 0 10px;
+    padding: 0;
     background-color: inherit;
 
     &.is-disabled {
@@ -111,12 +111,14 @@ button.dropdown-item {
 
 .menu-container {
   position: relative;
+  @include display-flex;
+  @include align-items(center);
 
   &.open {
     .menu {
       position: absolute;
       display: block;
-      z-index: 1;
+      z-index: 5;
       border: 1px solid $form;
       @include border-radius(4px);
       background-color: $white;
