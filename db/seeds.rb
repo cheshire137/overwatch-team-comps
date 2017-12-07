@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 heroes_by_role = {
-  support: ['Mercy', 'Zenyatta', 'Ana', 'Lúcio', 'Symmetra'],
+  support: ['Mercy', 'Zenyatta', 'Ana', 'Lúcio', 'Symmetra', 'Moira'],
   tank: ['D.Va', 'Winston', 'Reinhardt', 'Orisa', 'Roadhog', 'Zarya'],
   offense: ['McCree', 'Pharah', 'Genji', 'Tracer', 'Sombra', 'Soldier: 76', 'Reaper'],
   defense: ['Hanzo', 'Widowmaker', 'Torbjörn', 'Bastion', 'Mei', 'Junkrat']
