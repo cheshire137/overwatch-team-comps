@@ -35,7 +35,10 @@
     "react": "^15.4.2",
     "react-debounce-input": "^2.4.2",
     "react-dom": "^15.4.2",
+    "react-onclickoutside": "^6.4.0",
+    "react-render-html": "^0.2.0",
     "react-router": "^3.0.2",
+    "react-textarea-autosize": "^5.0.7",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {

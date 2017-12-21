@@ -1,18 +1,17 @@
-exports[`HeroSelect matches snapshot 1`] = `
+exports[`MapSelect matches snapshot 1`] = `
 <div
-  className="menu-container hero-select-container">
+  className="menu-container map-select-container">
   <button
     className="button menu-toggle"
     disabled={false}
     onClick={[Function]}
     type="button">
     <span>
-      <img
-        alt="Hanzo"
-        className="hero-portrait"
-        src="/photo.jpg" />
+      <i
+        aria-hidden="true"
+        className="fa fa-map-marker" />
        
-      Hanzo
+      Dorado
     </span>
      
     <i
@@ -22,17 +21,13 @@ exports[`HeroSelect matches snapshot 1`] = `
   <div
     className="menu">
     <button
-      className="menu-item button is-selected hero-hanzo"
+      className="menu-item button is-selected map-dorado"
       onClick={[Function]}>
       <span
         className="with-selected">
-        <img
-          alt="Hanzo"
-          className="hero-portrait"
-          src="/photo.jpg" />
         <span
           className="css-truncate">
-          Hanzo
+          Dorado
         </span>
       </span>
       <i
@@ -40,17 +35,13 @@ exports[`HeroSelect matches snapshot 1`] = `
         className="fa fa-check menu-item-selected-indicator" />
     </button>
     <button
-      className="menu-item button hero-ana"
+      className="menu-item button map-eichenwalde"
       onClick={[Function]}>
       <span
         className="">
-        <img
-          alt="Ana"
-          className="hero-portrait"
-          src="/pic.bmp" />
         <span
           className="css-truncate">
-          Ana
+          Eichenwalde
         </span>
       </span>
       

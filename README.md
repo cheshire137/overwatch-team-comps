@@ -127,6 +127,8 @@ heroku open
 
 ## Mockups
 
+These show the design we are building toward:
+
 ![Sample Mockup of Team Comp Form 01](https://raw.githubusercontent.com/cheshire137/overwatch-team-comps/master/mockups/readme%20screens%20-%20team%20comp%20form%2001.png)
 
 ![Sample Mockup of Team Comp Form 02](https://raw.githubusercontent.com/cheshire137/overwatch-team-comps/master/mockups/readme%20screens%20-%20team%20comp%20form%2002.png)

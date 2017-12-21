@@ -3,8 +3,8 @@ class User < ApplicationRecord
   VALID_REGIONS = ['eu', 'us', 'kr', 'cn', 'global'].freeze
 
   # Include default devise modules. Others available are:
-  # :recoverable, :confirmable, :lockable, :registerable, :timeoutable
-  devise :database_authenticatable, :rememberable, :trackable, :validatable
+  # :recoverable, :confirmable, :lockable, :registerable, :timeoutable, :trackable
+  devise :database_authenticatable, :rememberable, :validatable
 
   devise :omniauthable, omniauth_providers: [:bnet]
 

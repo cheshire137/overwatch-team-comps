@@ -32,7 +32,6 @@ const EditPlayerSelectionRow = function(props) {
             disabled={disabled || typeof playerID !== 'number'}
             selectedHeroID={selections[segment.id]}
             onChange={heroID => onHeroSelection(heroID, segment.id)}
-            selectID={`${inputID}_segment_${segment.id}`}
             isDuplicate={duplicatePicks[segment.id]}
           />
         </td>

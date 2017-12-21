@@ -1,43 +1,11 @@
 import PropTypes from 'prop-types'
 
+import SelectMenu from './select-menu.jsx'
+
 class HeroSelect extends React.Component {
-  onChange(event) {
-    const heroID = event.target.value
-    this.props.onChange(heroID)
-  }
-
-  heroPortrait() {
-    const { heroes, selectedHeroID } = this.props
-    if (typeof selectedHeroID !== 'number') {
-      return (
-        <span className="hero-portrait-placeholder" />
-      )
-    }
-    const hero = heroes.filter(h => h.id === selectedHeroID)[0]
-    return (
-      <img
-        src={hero.image}
-        alt={hero.name}
-        className="hero-portrait"
-      />
-    )
-  }
-
-  selectSpanClass() {
-    const classes = ['select']
-    if (this.props.disabled) {
-      classes.push('is-disabled')
-    }
-    return classes.join(' ')
-  }
-
-  isFilled() {
-    return typeof this.props.selectedHeroID === 'number'
-  }
-
   containerClass() {
     const classes = ['hero-select-container']
-    if (!this.isFilled()) {
+    if (typeof this.props.selectedHeroID !== 'number') {
       classes.push('not-filled')
     }
     if (this.props.isDuplicate) {
@@ -47,32 +15,42 @@ class HeroSelect extends React.Component {
   }
 
   render() {
-    const { heroes, selectedHeroID, disabled, selectID } = this.props
-    const isFilled = this.isFilled()
+    const { heroes, selectedHeroID, disabled, onChange } = this.props
+    const isFilled = typeof selectedHeroID === 'number'
+    let selectedHeroName = 'Hero'
+    let heroPortrait = <span className="hero-portrait-placeholder" />
+    if (isFilled) {
+      const selectedHero = heroes.filter(h => h.id === selectedHeroID)[0]
+      selectedHeroName = selectedHero.name
+      heroPortrait = (
+        <img
+          src={selectedHero.image}
+          alt={selectedHeroName}
+          className="hero-portrait"
+        />
+      )
+    }
+
     return (
-      <div className={this.containerClass()}>
-        <label
-          htmlFor={selectID}
-        >{this.heroPortrait()}</label>
-        <span className={this.selectSpanClass()}>
-          <select
-            onChange={e => this.onChange(e)}
-            value={isFilled ? selectedHeroID : ''}
-            disabled={disabled}
-            id={selectID}
-          >
-            {isFilled ? '' : (
-              <option value="">Hero</option>
-            )}
-            {heroes.map(hero => (
-              <option
-                key={hero.id}
-                value={hero.id}
-              >{hero.name}</option>
-            ))}
-          </select>
-        </span>
-      </div>
+      <SelectMenu
+        items={heroes}
+        disabled={disabled}
+        selectedItemID={selectedHeroID}
+        onChange={val => onChange(val)}
+        containerClass={() => this.containerClass()}
+        menuToggleContents={() => <span>{heroPortrait} {selectedHeroName}</span>}
+        menuItemClass={hero => `hero-${hero.slug}`}
+        menuItemContent={(hero, isSelected) => (
+          <span className={isSelected ? 'with-selected' : ''}>
+            <img
+              src={hero.image}
+              alt={hero.name}
+              className="hero-portrait"
+            />
+            <span className="css-truncate">{hero.name}</span>
+          </span>
+        )}
+      />
     )
   }
 }
@@ -82,7 +60,6 @@ HeroSelect.propTypes = {
   onChange: PropTypes.func.isRequired,
   selectedHeroID: PropTypes.number,
   disabled: PropTypes.bool.isRequired,
-  selectID: PropTypes.string.isRequired,
   isDuplicate: PropTypes.bool
 }
 

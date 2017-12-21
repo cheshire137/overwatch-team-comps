@@ -30,6 +30,18 @@
     color: $mix;
   }
 
+  .fa-caret-down {
+    position: absolute;
+    right: 10px;
+    color: $text;
+    line-height: 24px;
+  }
+
+  .hero-portrait,
+  .hero-portrait-placeholder {
+    margin-right: 10px;
+  }
+
   &.is-normal {
     border: 1px solid $form;
   }
@@ -52,6 +64,10 @@
       background-color: $light-attack;
       border-color: lighten($attack, 10%);
     }
+  }
+
+  .fa {
+    margin-right: 3px;
   }
 }
 

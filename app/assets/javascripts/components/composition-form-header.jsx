@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 
 import OverwatchTeamCompsApi from '../models/overwatch-team-comps-api'
 
+import MapSelect from './map-select.jsx'
+
 class CompositionHeader extends React.Component {
   static onMapsError(error) {
     console.error('failed to load maps', error)
@@ -66,10 +68,6 @@ class CompositionHeader extends React.Component {
 
   onMapsFetched(maps) {
     this.setState({ maps })
-  }
-
-  onMapChange(event) {
-    this.props.onMapChange(event.target.value)
   }
 
   getCompositionsForSelectedMap() {
@@ -185,37 +183,6 @@ class CompositionHeader extends React.Component {
     )
   }
 
-  mapSelect() {
-    const { maps } = this.state
-    const { mapID, disabled } = this.props
-    const className = `select map-select ${disabled ? 'is-disabled' : ''}`
-
-    return (
-      <div className="map-select-container">
-        <label
-          htmlFor="composition_map_id"
-        ><i className="fa fa-map-marker" aria-hidden="true" /></label>
-        <span className={className}>
-          <select
-            aria-label="Choose a map"
-            title="Choose a map"
-            id="composition_map_id"
-            value={mapID}
-            onChange={e => this.onMapChange(e)}
-            disabled={disabled}
-          >
-            {maps.map(map =>
-              <option
-                key={map.id}
-                value={map.id}
-              >{map.name}</option>
-            )}
-          </select>
-        </span>
-      </div>
-    )
-  }
-
   mapPhotoContainer() {
     const { mapSlug, mapImage } = this.props
 
@@ -260,13 +227,18 @@ class CompositionHeader extends React.Component {
       return null
     }
 
-    const { mapSlug } = this.props
+    const { mapSlug, mapID, disabled } = this.props
     return (
       <header className={`composition-header gradient-${mapSlug}`}>
         <div className="container">
           {this.mapPhotoContainer()}
           <div className="composition-meta">
-            {this.mapSelect()}
+            <MapSelect
+              selectedMapID={mapID}
+              maps={maps}
+              disabled={disabled}
+              onChange={id => this.props.onMapChange(id)}
+            />
             {this.compositionSelectAndEdit()}
             {this.shareLink()}
           </div>
