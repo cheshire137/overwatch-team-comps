@@ -89,10 +89,12 @@
     text-decoration: none;
   }
   .notice-alert & {
+    margin-top: -3.5px;
     color: $notice-dark;
     @extend .hover-white;
   }
   .error-alert & {
+    margin-top: -3.5px;
     color: $error-dark;
     @extend .hover-white;
   }

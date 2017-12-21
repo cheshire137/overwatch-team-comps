@@ -11,7 +11,9 @@
 .layout-children-container {
   flex: 1 0 auto;
 }
-
+.container-fluid{
+  width: 100%;
+}
 .container {
   position: relative;
   margin: 0 auto;
@@ -29,7 +31,7 @@
 .notice-alert {
   z-index: 10;
   height: 60px;
-  padding: 20px;
+  padding: 23px 20px 20px 20px;
   margin-top: -52px;
   position: fixed;
   color: $notice-message-text;
