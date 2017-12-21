@@ -89,6 +89,34 @@
     text-decoration: underline;
   }
 }
+.hover-white{
+  &:hover,
+  &:focus {
+    color: $white;
+  }
+}
+.button-close {
+  @extend .button-link;
+  float: right;
+  color: $white;
+  &:hover,
+  &:focus {
+    color: $white;
+    text-decoration: none;
+  }
+  .notice-alert & {
+    margin-top: -3.5px;
+    color: $notice-dark;
+    @extend .hover-white;
+  }
+  .error-alert & {
+    margin-top: -3.5px;
+    color: $error-dark;
+    @extend .hover-white;
+  }
+}
+
+
 
 .input {
   -moz-appearance: none;

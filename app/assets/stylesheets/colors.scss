@@ -14,7 +14,23 @@ $defend: #0E9ED2;
 $light-defend: #deeff8;
 $block: #111318;
 $form: #F6F6F7;
+
+$error: #d27c87;
+$error-dark: #7d4a50;
+$notice: $defend;
+$notice-dark: darken($notice, 50%);
+// Maybe a new color?
+$notice-me-senpai: #6289e0;
+
+// UI Colors - By Use
+$error-message-bg: $error;
+$error-message-border: $error;
+$error-message-text: $white;
+$notice-message-bg: $defend;
+$notice-message-border: $defend;
+$notice-message-text: $white;
 $success: #22c65b;
+
 
 // Heroes
 $ana: #408fff;
